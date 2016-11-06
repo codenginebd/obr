@@ -16,16 +16,26 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+# Modified Code
+
+ENVIRONMENT = os.environ
+
+#End Modified Code
+
+
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*-j$2tjv5rukl4s$((f(f3c&7xlhgw0mr=5-1*m=w#xowzj_%v'
+SECRET_KEY = ENVIRONMENT.get('SECRET_KEY', 'a^&%6yp#2eudk%+5v-7tkhn+hxfm2_zmm83rpp&!oe7(n@-tta')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ "127.0.0.1" ]
 
 
 # Application definition
@@ -49,12 +59,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'book_rental.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(SITE_ROOT, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'book_rental.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
@@ -118,3 +130,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Modification will be added here.
