@@ -1,0 +1,19 @@
+.navbar-default {
+}
+
+.navbar-transparent {
+    padding-top: 0px !important;
+    background-color: #06adad !important;
+}
+
+.br_color {
+    color: #06adad !important;
+}
+
+.white_color {
+    color: white !important;
+}
+
+.br_bg_color {
+    background-color: #06adad !important;
+}
