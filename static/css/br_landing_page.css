@@ -17,3 +17,9 @@
 .br_bg_color {
     background-color: #06adad !important;
 }
+
+.form-control {
+    border-color: #e2e1dc !important;
+    padding: 13px !important;
+    height: 50px !important;
+}

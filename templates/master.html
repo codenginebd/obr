@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="assets/img/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>{{ page_title }}</title>
+    {% include "scripts/stylesheet.html" %}
+    {% block more_stylesheet %}
+
+    {% endblock more_stylesheet %}
+
+    {% block more_js %}
+
+    {% endblock more_js %}
+</head>
+<body>
+{% block header %}
+    {% include "sections/header.html" %}
+{% endblock header %}
+<div class="section wrapper">
+    <div class="section section-we-are-1" style="min-height: 200px;">
+{% block content %}
+
+{% endblock content %}
+    </div>
+</div>
+{% block footer %}
+    {% include "sections/footer.html" %}
+{% endblock footer %}
+</body>
+{% include "scripts/javascripts.html" %}
+</html>
