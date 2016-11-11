@@ -1,0 +1,37 @@
+{% extends "master.html" %}
+{% block content %}
+    <div class=" " id="contact1">
+          <div class="container">
+              <div class="">
+                  <div class="contact-form" style="margin-top: 40px !important;">
+                      <div class="row">
+                          <div class="col-md-2 right-border">
+                              <div class="address add-animation-stopped animation-1">
+                                  <h4>Where to meet ?</h4>
+                                  <p class="text-gray">
+                                      2578 Paris Rue Abel, 12<br>
+                                      Rue Abel, 12<br>
+                                      France
+                                  </p>
+                                  <h4>Phone</h4>
+                                  <p class="text-gray">0456 / 71 21 39</p>
+                                  <h4>By the old way</h4>
+                                  <a href="mailto:hello@creative-tim.com">
+                                      <p class="text-gray">hello@creative-tim.com</p>
+                                  </a>
+                              </div>
+                          </div>
+                          <div class="col-md-10">
+                              <div class="col-md-12">
+                                    {% include "sections/book_browse_row.html" %}
+                                    {% include "sections/book_browse_row.html" %}
+                                    {% include "sections/book_browse_row.html" %}
+                                    {% include "sections/book_browse_row.html" %}
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+{% endblock content %}
