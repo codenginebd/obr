@@ -2,20 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d53eaea-be0a-4ecf-b49a-c0defd65aab9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/book/views/book_details.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/search_page.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/book_details.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/sections/pagination.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/sections/search_result_row.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/sections/top_rated_entry.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/sections/top_search_home.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/book/urls.py" afterPath="$PROJECT_DIR$/book/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/br_landing_page.css" afterPath="$PROJECT_DIR$/static/css/br_landing_page.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/book_browse.html" afterPath="$PROJECT_DIR$/templates/book_browse.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/book_search.html" afterPath="$PROJECT_DIR$/templates/book_search.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/public/home.html" afterPath="$PROJECT_DIR$/templates/public/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/sections/book_browse_entry.html" afterPath="$PROJECT_DIR$/templates/sections/book_browse_entry.html" />
     </list>
     <ignored path="online-book-rental.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -72,8 +60,8 @@
       <file leaf-file-name="br_landing_page.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/css/br_landing_page.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+            <state relative-caret-position="18">
+              <caret line="1" column="29" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -692,7 +680,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4367284" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24940239" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287037" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3287037" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1122,8 +1110,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/static/css/br_landing_page.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+        <state relative-caret-position="18">
+          <caret line="1" column="29" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
           <folding />
         </state>
       </provider>
