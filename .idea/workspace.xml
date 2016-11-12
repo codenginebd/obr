@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="2d53eaea-be0a-4ecf-b49a-c0defd65aab9" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/br_landing_page.css" afterPath="$PROJECT_DIR$/static/css/br_landing_page.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/public/home.html" afterPath="$PROJECT_DIR$/templates/public/home.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/sections/top_search_home.html" afterPath="$PROJECT_DIR$/templates/sections/top_search_home.html" />
     </list>
     <ignored path="online-book-rental.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,8 +48,8 @@
       <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/public/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="111" column="46" selection-start-line="111" selection-start-column="32" selection-end-line="111" selection-end-column="46" />
+            <state relative-caret-position="87">
+              <caret line="137" column="56" selection-start-line="137" selection-start-column="56" selection-end-line="137" selection-end-column="56" />
               <folding>
                 <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#button#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -57,7 +58,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="br_landing_page.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="br_landing_page.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/css/br_landing_page.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="18">
@@ -67,12 +68,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="top_search_home.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="top_search_home.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/sections/top_search_home.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="18">
-              <caret line="1" column="40" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="40" />
-              <folding />
+              <caret line="1" column="149" selection-start-line="1" selection-start-column="149" selection-end-line="1" selection-end-column="149" />
+              <folding>
+                <element signature="n#style#0;n#img#0;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -186,9 +189,9 @@
         <option value="$PROJECT_DIR$/book/views/book_details.py" />
         <option value="$PROJECT_DIR$/book/urls.py" />
         <option value="$PROJECT_DIR$/templates/book_details.html" />
-        <option value="$PROJECT_DIR$/templates/sections/top_search_home.html" />
-        <option value="$PROJECT_DIR$/templates/public/home.html" />
         <option value="$PROJECT_DIR$/static/css/br_landing_page.css" />
+        <option value="$PROJECT_DIR$/templates/public/home.html" />
+        <option value="$PROJECT_DIR$/templates/sections/top_search_home.html" />
       </list>
     </option>
   </component>
@@ -669,7 +672,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1301" height="744" extended-state="6" />
+    <frame x="65" y="24" width="1301" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2812749" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1081,14 +1084,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/sections/top_search_home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="40" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/search_page.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
@@ -1097,10 +1092,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/br_landing_page.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="29" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/public/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="111" column="46" selection-start-line="111" selection-start-column="32" selection-end-line="111" selection-end-column="46" />
+        <state relative-caret-position="87">
+          <caret line="137" column="56" selection-start-line="137" selection-start-column="56" selection-end-line="137" selection-end-column="56" />
           <folding>
             <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -1108,11 +1111,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/br_landing_page.css">
+    <entry file="file://$PROJECT_DIR$/templates/sections/top_search_home.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
-          <caret line="1" column="29" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
-          <folding />
+          <caret line="1" column="149" selection-start-line="1" selection-start-column="149" selection-end-line="1" selection-end-column="149" />
+          <folding>
+            <element signature="n#style#0;n#img#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
