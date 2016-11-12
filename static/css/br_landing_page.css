@@ -23,3 +23,7 @@
     padding: 13px !important;
     height: 50px !important;
 }
+
+.top_search_box {
+    background: linear-gradient(#dfefef, white) !important;
+}

@@ -1,0 +1,39 @@
+.cart_title {
+    font-weight: bold;
+    font-size: 15px;
+}
+.cart_content {
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.cart_block {
+    padding: 20px;
+    border: 1px solid #e3e3e3;
+}
+
+.search_action li > a {
+    font-size: 13px;
+    font-weight: bold;
+    border-color: #f9f6f6;
+}
+
+.search_action li > a:hover {
+    border-color: #f9f6f6;
+}
+
+.search_entry {
+    margin-bottom: 20px;
+}
+
+.light_badge {
+    background-color: #e5e5e5;
+    color: #8c8c8c;
+}
+
+.out_stock_label {
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 3px;
+}

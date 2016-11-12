@@ -109,12 +109,12 @@
 
 
     <div class="section section-we-are-1" id="whoWeAre1">
-          <div class="text-area">
+          <div class="text-area top_search_box">
               <div class="container">
                   <div class="row">
                       <div class="title add-animation-stopped animate">
                           <h5 class="text-gray"></h5>
-                          <h2>Finding your favourite book is just a click away</h2>
+                          <h2>Find your favourite Textbook</h2>
 {#                          <div class="separator-container">#}
 {#                              <div class="separator line-separator">✻</div>#}
 {#                          </div>#}
@@ -123,12 +123,23 @@
                   </div>
                   <div class="row">
                       <div class="col-md-7 col-md-offset-2">
-                          <input style="height: 40px; " type="text" class="  search-query form-control" placeholder="Search books by ISBN, Book Title, Author Name, Keywords" />
+                          <input style="height: 40px; border-color: #bce8f1 !important; " type="text" class="  search-query form-control" placeholder="Search books by ISBN, Book Title, Author Name, Keywords" />
                       </div>
                       <div class="col-md-3">
-                        <button style="width: 100px; height: 40px; " class="btn btn-danger br_bg_color white_color">Search</button>
+                        <button style="width: 100px; padding: 17px; opacity: 1.0; border: none; color: white; " class="btn btn-danger br_bg_color white_color">Search</button>
                           </div>
-                      </div>
+                  </div>
+                  <div class="row">
+                      <br/>
+                      <h5>Top Search</h5>
+                      <hr/>
+                  </div>
+                  <div class="row">
+                      {% include "sections/top_search_home.html" %}
+                      {% include "sections/top_search_home.html" %}
+                      {% include "sections/top_search_home.html" %}
+                      {% include "sections/top_search_home.html" %}
+                  </div>
                   </div>
               </div>
           </div>

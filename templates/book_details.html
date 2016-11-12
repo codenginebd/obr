@@ -14,10 +14,6 @@
                   <button style="margin-top: 20px; padding: 17px; background: #bc3526; color: white; opacity: 1.0; " class="btn btn-primary pull-right">Search</button>
                   <input type="text" style="margin-top: 20px; max-width: 450px; " class="form-control pull-right" name="book_search" placeholder="Search By ISBN, Book Title, Author Name, Keywords..."/>
               </div>
-              <div class="pull-right">
-                  <input id="id_exclude_out_of_stock" type="checkbox"/>
-                  <label class="out_stock_label" for="id_exclude_out_of_stock">Exclude Out of Stock Books</label>
-              </div>
           </div>
         </div>
         <div class="container" style="width: 100%;">
@@ -32,35 +28,39 @@
         </div>
           <div class="container">
               <div class="row">
-                  <div class="col-md-2 right-border">
-                      <div class="address add-animation-stopped animation-1">
-                          <h4>Where to meet ?</h4>
-                          <p class="text-gray">
-                              2578 Paris Rue Abel, 12<br>
-                              Rue Abel, 12<br>
-                              France
-                          </p>
-                          <h4>Phone</h4>
-                          <p class="text-gray">0456 / 71 21 39</p>
-                          <h4>By the old way</h4>
-                          <a href="mailto:hello@creative-tim.com">
-                              <p class="text-gray">hello@creative-tim.com</p>
-                          </a>
-                      </div>
-                  </div>
-                  <div class="col-md-8">
-                      <div class="col-md-12">
-                          {% include "sections/pagination.html" %}
-                          <div class="row">
-                              <div class="col-md-12">
-                                    {% include "sections/search_result_row.html" %}
-                                    {% include "sections/search_result_row.html" %}
-                                    {% include "sections/search_result_row.html" %}
-                                    {% include "sections/search_result_row.html" %}
-                              </div>
+                  <div class="col-md-10">
+                      <div class="row book_entry search_entry">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+
+                                        <img style="width: 200px; height: 200px; " src="https://s3-ap-southeast-1.amazonaws.com/ireads/images/books/9780425151877.jpg" class="img-responsive book-img-grid">
+                                                                                </div>
+                                    <div class="col-md-8 col-sm-8 col-xs-8 text-left pad-10 margin-left--8">
+                                         <div class="cart_title"> Games of State: Op...
+                                        </div>
+                                        <div class="cart_content"> Author:
+
+                                          Jeff Rovin Ste...</div>
+                                        <hr class="book-box-hr">
+                                        <div class="cart_content">MRP: <strike> Rs. 659 </strike><br>
+
+                                        <div class="badge light_badge"> Stock Available</div><br>
+                                        </div>
+                                        <div class="cart_content">Rating: 4.5/5.0</div>
+                                        <div>
+                                            <br/>
+                                            <ul class="list-inline search_action">
+                                              <li><a class="btn btn-danger" href="">Rent</a></li>
+                                              <li><a class="btn btn-danger" href="">Buy</a></li>
+                                              <li><a class="btn btn-danger" href="">Get Item Link</a></li>
+                                              <li><a class="btn btn-danger" href="">Send To A Friend</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            {% include "sections/pagination.html" %}
-                      </div>
+                        </div>
                   </div>
                   <div class="col-md-2 cart_block">
                       <div class="col-md-12">

@@ -1,27 +1,48 @@
 {% extends "master.html" %}
 {% block content %}
     <div class=" " id="contact1">
+        <div class="container" >
+          <div class="row">
+              <div class="col-md-2">
+
+              </div>
+              <div class="col-md-10" style="">
+                  <button style="margin-top: 20px; padding: 12px; background: #bc3526; color: white; opacity: 1.0; " class="btn btn-primary pull-right">Search</button>
+                  <input type="text" style="margin-top: 20px; max-width: 450px; height: 40px !important; " class="form-control pull-right" name="book_search" placeholder="Search By ISBN, Book Title, Author Name, Keywords..."/>
+              </div>
+          </div>
+        </div>
+        <div class="container" style="width: 100%;">
+          <div class="row " style="border-bottom: 1px solid #e7e7e7; margin-bottom: 10px; ">
+              <div class="col-md-2">
+
+              </div>
+              <div class="col-md-10" style="padding-right: 20px; ">
+
+              </div>
+          </div>
+        </div>
           <div class="container">
-              <div class="">
-                  <div class="contact-form" style="margin-top: 40px !important;">
-                      <div class="row">
-                          <div class="col-md-2 right-border">
-                              <div class="address add-animation-stopped animation-1">
-                                  <h4>Where to meet ?</h4>
-                                  <p class="text-gray">
-                                      2578 Paris Rue Abel, 12<br>
-                                      Rue Abel, 12<br>
-                                      France
-                                  </p>
-                                  <h4>Phone</h4>
-                                  <p class="text-gray">0456 / 71 21 39</p>
-                                  <h4>By the old way</h4>
-                                  <a href="mailto:hello@creative-tim.com">
-                                      <p class="text-gray">hello@creative-tim.com</p>
-                                  </a>
-                              </div>
-                          </div>
-                          <div class="col-md-10">
+              <div class="row">
+                  <div class="col-md-2 right-border">
+                      <div class="address add-animation-stopped animation-1">
+                          <h4>Where to meet ?</h4>
+                          <p class="text-gray">
+                              2578 Paris Rue Abel, 12<br>
+                              Rue Abel, 12<br>
+                              France
+                          </p>
+                          <h4>Phone</h4>
+                          <p class="text-gray">0456 / 71 21 39</p>
+                          <h4>By the old way</h4>
+                          <a href="mailto:hello@creative-tim.com">
+                              <p class="text-gray">hello@creative-tim.com</p>
+                          </a>
+                      </div>
+                  </div>
+                  <div class="col-md-10">
+                      <div class="col-md-12">
+                          <div class="row">
                               <div class="col-md-12">
                                     {% include "sections/book_browse_row.html" %}
                                     {% include "sections/book_browse_row.html" %}
