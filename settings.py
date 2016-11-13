@@ -50,6 +50,28 @@ STATICFILES_DIRS = (
 STATICFILES_DIRS += STATIC_FILES_DIRS
 
 
+USE_I18N = True
+
+LANGUAGE_CODE = 'en-us'
+
+LANGUAGES = (
+    ('en_US', 'English'),
+    ('zh_CN', 'Chinese'),
+)
+
+PROJECT_PATH = os.path.dirname(os.path.realpath(__file__))
+
+LOCALE_PATHS = (
+    os.path.join(PROJECT_PATH, 'locale'),
+)
+
+# End od Language Settings
+
+# If you set this to False, Django will not format dates, numbers and
+# calendars according to the current locale.
+USE_L10N = True
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -65,6 +87,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -72,6 +95,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'engine.middlewares.language_middleware.LanguageMiddleware'
 ]
 
 ROOT_URLCONF = 'urls'
@@ -88,6 +112,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.core.context_processors.i18n',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
