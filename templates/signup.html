@@ -1,5 +1,7 @@
 {% extends "master.html" %}
+{% load staticfiles %}
 {% block content %}
+    <link href="{% static "css/signup.css" %}" rel="stylesheet" />
     <div class=" " id="contact1">
           <div class="container">
               <div class="">
@@ -7,49 +9,64 @@
                       <div class="row">
                           <div class="col-md-6 right-border">
                               <div class="address add-animation-stopped animation-1">
-                                  <h4>Where to meet ?</h4>
+                                  <h4>It's So Easy!</h4>
                                   <p class="text-gray">
-                                      2578 Paris Rue Abel, 12<br>
-                                      Rue Abel, 12<br>
-                                      France
+                                      One click signup will help you to access thousands of text books.
                                   </p>
-                                  <h4>Phone</h4>
+                                  <p>
+                                      Once you are done we will send you a link. Please follow that link to activate your account.
+                                  </p>
+                                  <h4>Help Line</h4>
                                   <p class="text-gray">0456 / 71 21 39</p>
-                                  <h4>By the old way</h4>
+                                  <h4>Email Us</h4>
                                   <a href="mailto:hello@creative-tim.com">
-                                      <p class="text-gray">hello@creative-tim.com</p>
+                                      <p class="text-gray">support@sstlab.com</p>
                                   </a>
                               </div>
                           </div>
-                          <div class="col-md-5">
-                              <div style="background-color: teal; padding: 10px; color: white; width: 100%; ">
-                                  Sign Up
-                              </div>
-                              <br/>
-                              <form action="" method="post">
-                                  <div class="form-group add-animation-stopped animation-1">
-                                      {{ signup_form.first_name }}
-                                  </div>
+                          <div class="col-md-6">
+
+{#                              <form action="" method="post">#}
+{#                                  <div class="form-group add-animation-stopped animation-1">#}
+{#                                      {{ signup_form.first_name }}#}
+{#                                  </div>#}
 {#                                  <div class="form-group add-animation-stopped animation-2">#}
 {#                                      {{ signup_form.middle_name }}#}
 {#                                  </div>#}
-                                  <div class="form-group add-animation-stopped animation-3">
-                                      {{ signup_form.last_name }}
-                                  </div>
-                                  <div class="form-group add-animation-stopped animation-3">
-                                      {{ signup_form.email }}
-                                  </div>
-                                  <div class="form-group add-animation-stopped animation-3">
-                                      {{ signup_form.phone }}
-                                  </div>
-                                  <div>
-                                      <input type="checkbox"/> By clicking Sign Up i have confirmed that i have
-                                      read and understand the privacy policy.
-                                  </div>
-                                  <button class="btn btn-lg btn-danger pull-right" style="opacity: 1.0; background-color: #bc3526; color: white; ">
-                                      Sign Up
-                                  </button>
-                              </form>
+{#                                  <div class="form-group add-animation-stopped animation-3">#}
+{#                                      {{ signup_form.last_name }}#}
+{#                                  </div>#}
+{#                                  <div class="form-group add-animation-stopped animation-3">#}
+{#                                      {{ signup_form.email }}#}
+{#                                  </div>#}
+{#                                  <div class="form-group add-animation-stopped animation-3">#}
+{#                                      {{ signup_form.phone }}#}
+{#                                  </div>#}
+{#                                  <div>#}
+{#                                      <input type="checkbox" id="id_agree_pp"/> <labeL for="id_agree_pp">By clicking Sign Up i have confirmed that i have#}
+{#                                      read and understand the privacy policy.</labeL>#}
+{#                                  </div>#}
+{#                                  <button class="btn btn-lg btn-danger pull-right" style="opacity: 1.0; background-color: #bc3526; color: white; ">#}
+{#                                      Sign Up#}
+{#                                  </button>#}
+{#                              </form>#}
+                              <form class="signup_form" action="index.html" method="post">
+
+        <h1>Sign Up</h1>
+          <label for="name">First Name:</label>
+          <input type="text" id="name" name="first_name">
+            <label for="name">Last Name:</label>
+          <input type="text" id="name" name="last_name">
+
+          <label for="mail">Email:</label>
+          <input type="email" id="mail" name="user_email">
+
+            <label for="mail">Phone:</label>
+          <input type="email" id="mail" name="phone">
+
+
+        <button type="submit">Sign Up</button>
+      </form>
                           </div>
                       </div>
                   </div>
