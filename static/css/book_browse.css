@@ -1,0 +1,33 @@
+.opacity_08 {
+    opacity: 0.8;
+}
+
+.displaynone {
+    display: none;
+}
+
+.book_entry_action {
+    position: absolute;
+    bottom: 0%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    z-index: 10001;
+    background-color: teal;
+    opacity: 0.8;
+    padding: 20px;
+}
+
+.book_entry_action li a {
+    background-color: #bc3526;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.book_entry_action li a:hover {
+    background-color: #bc3526;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+}

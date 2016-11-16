@@ -1,5 +1,8 @@
 {% extends "master.html" %}
+{% load staticfiles %}
 {% block content %}
+    <script src="{% static "js/browse_books.js" %}"></script>
+    <link href="{% static "css/book_browse.css" %}" rel="stylesheet" />
     <div class=" " id="contact1">
         <div class="container" >
           <div class="row">
@@ -25,20 +28,29 @@
           <div class="container">
               <div class="row">
                   <div class="col-md-2 right-border">
-                      <div class="address add-animation-stopped animation-1">
-                          <h4>Where to meet ?</h4>
-                          <p class="text-gray">
-                              2578 Paris Rue Abel, 12<br>
-                              Rue Abel, 12<br>
-                              France
-                          </p>
-                          <h4>Phone</h4>
-                          <p class="text-gray">0456 / 71 21 39</p>
-                          <h4>By the old way</h4>
-                          <a href="mailto:hello@creative-tim.com">
-                              <p class="text-gray">hello@creative-tim.com</p>
-                          </a>
-                      </div>
+                      <ul class="nav nav-list">
+                <li><label class="tree-toggle nav-header">Bootstrap</label>
+                    <ul class="nav nav-list tree">
+                        <li><a href="#">JavaScript</a></li>
+                        <li><a href="#">CSS</a></li>
+                        <li><label class="tree-toggle nav-header">Buttons</label>
+                            <ul class="nav nav-list tree">
+                                <li><a href="#">Colors</a></li>
+                                <li><a href="#">Sizes</a></li>
+                                <li><label class="tree-toggle nav-header">Forms</label>
+                                    <ul class="nav nav-list tree">
+                                        <li><a href="#">Horizontal</a></li>
+                                        <li><a href="#">Vertical</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+
+
                   </div>
                   <div class="col-md-10">
                       <div class="col-md-12">
