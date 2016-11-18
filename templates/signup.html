@@ -1,8 +1,11 @@
 {% extends "master.html" %}
 {% load staticfiles %}
 {% block content %}
-    <script src="{% static "js/sign_up.js" %}"></script>
     <link href="{% static "css/signup.css" %}" rel="stylesheet" />
+    <script src="{% static "js/sign_up.js" %}"></script>
+    <style>
+
+    </style>
     <div class=" " id="contact1">
           <div class="container">
               <div class="">
@@ -20,7 +23,7 @@
                                   <h4>Help Line</h4>
                                   <p class="text-gray">0456 / 71 21 39</p>
                                   <h4>Email Us</h4>
-                                  <a href="mailto:hello@creative-tim.com">
+                                  <a href="#">
                                       <p class="text-gray">support@sstlab.com</p>
                                   </a>
                               </div>
@@ -29,21 +32,48 @@
                               <form id="id_signup_form" class="signup_form" action="#" method="post">
                                     {% csrf_token %}
                                     <h1>Sign Up</h1>
-                                      <label for="name">Name:</label>
-                                      {{ signup_form.name }}
-{#                                     <span class="error text-danger signup_field_error displaynone"></span>#}
-{#                                        <label for="name">Last Name:</label>#}
-{#                                      {{ signup_form.last_name }}#}
-{#                                    <span class="error text-danger signup_field_error displaynone"></span>#}
+                                      <div class="row">
+                                          <div class="col-md-6">
+                                              <label for="name">First Name:</label>
+                                              {{ signup_form.first_name }}
+                                             <span class="error text-danger signup_field_error displaynone"></span>
+                                          </div>
+                                          <div class="col-md-6">
+                                              <label for="name">Last Name:</label>
+                                              {{ signup_form.last_name }}
+                                            <span class="error text-danger signup_field_error displaynone"></span>
+                                          </div>
+                                      </div>
+
+
 
                                       <label for="mail">Email:</label>
                                       {{ signup_form.email }}
                                       <span class="error text-danger signup_field_error displaynone"></span>
-
-                                        <label for="mail">Phone:</label>
-                                      {{ signup_form.phone }}
-                                      <span class="error text-danger signup_field_error displaynone"></span>
-
+                                      <div class="row">
+                                          <div class="col-md-12">
+                                              <label for="mail">Phone:</label>
+                                              <div class="input-group phone-input">
+                                                <span class="input-group-btn">
+                                                    <label class="heading">(+880)</label>
+                                                </span>
+                                                {{ signup_form.phone }}
+                                              </div>
+                                              <span class="error text-danger signup_field_error displaynone"></span>
+                                          </div>
+                                      </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="mail">Password:</label>
+                                              {{ signup_form.password }}
+                                              <span class="error text-danger signup_field_error displaynone"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="mail">Repeat Password:</label>
+                                              {{ signup_form.password2 }}
+                                              <span class="error text-danger signup_field_error displaynone"></span>
+                                        </div>
+                                    </div>
 
                                     <button id="id_signup_button" type="submit">Sign Up</button>
                               </form>

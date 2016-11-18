@@ -2,21 +2,92 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d53eaea-be0a-4ecf-b49a-c0defd65aab9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bauth/views/ajax/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bauth/views/ajax/signup_view_ajax.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/engine/mixins/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/book_browse.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/vendor/mdb/mdb.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/vendor/mdb/mdb.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/browse_books.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/sign_up.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/vendor/raty/fonts/raty.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/vendor/raty/fonts/raty.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/vendor/raty/fonts/raty.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/bootstrap_tooltip_override.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/vendor/raty/fonts/raty.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/vendor/raty/jquery.raty2.7.1.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/ajax_handler.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/vendor/raty/jquery.raty2.7.1.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/admin.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/decorators.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/management/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/management/commands/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/management/commands/rqenqueue.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/management/commands/rqscheduler.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/management/commands/rqworker.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/models.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/queues.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/settings.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/templates/django_rq/clear_queue.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/templates/django_rq/confirm_action.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/templates/django_rq/delete_job.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/templates/django_rq/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/templates/django_rq/job_detail.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/templates/django_rq/jobs.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/templates/django_rq/requeue_all.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/templates/django_rq/stats.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/templates/django_rq/test.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/templatetags/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/templatetags/django_rq.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/templatetags/jquery_path.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/test_settings.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/tests/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/tests/tests.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/tests/urls.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/tests/views.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/thread_queue.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/urls.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/views.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq/workers.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq_dashboard/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq_dashboard/forms.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq_dashboard/models.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq_dashboard/static/rq/jquery.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq_dashboard/static/rq/rqdashboard.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq_dashboard/static/rq/underscore.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq_dashboard/templates/rq/job.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq_dashboard/templates/rq/queue.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq_dashboard/templates/rq/queue_actions.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq_dashboard/templates/rq/scheduler.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq_dashboard/templates/rq/stats.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq_dashboard/templates/rq/worker.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq_dashboard/urls.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/django_rq_dashboard/views.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/cli/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/cli/cli.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/cli/helpers.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/compat/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/compat/connections.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/compat/dictconfig.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/connections.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/contrib/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/contrib/legacy.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/contrib/sentry.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/decorators.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/defaults.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/dummy.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/exceptions.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/job.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/local.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/logutils.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/queue.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/registry.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/suspension.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/timeouts.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/utils.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/version.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/third_party/rq/worker.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bauth/forms/signup_form.py" afterPath="$PROJECT_DIR$/bauth/forms/signup_form.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bauth/views/signup_view.py" afterPath="$PROJECT_DIR$/bauth/views/signup_view.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/signup.css" afterPath="$PROJECT_DIR$/static/css/signup.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/book_browse.html" afterPath="$PROJECT_DIR$/templates/book_browse.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/master.html" afterPath="$PROJECT_DIR$/templates/master.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/sections/book_browse_entry.html" afterPath="$PROJECT_DIR$/templates/sections/book_browse_entry.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/sign_up.js" afterPath="$PROJECT_DIR$/static/js/sign_up.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/scripts/javascripts.html" afterPath="$PROJECT_DIR$/templates/scripts/javascripts.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/scripts/stylesheet.html" afterPath="$PROJECT_DIR$/templates/scripts/stylesheet.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/signup.html" afterPath="$PROJECT_DIR$/templates/signup.html" />
     </list>
     <ignored path="online-book-rental.iws" />
@@ -49,8 +120,28 @@
       <file leaf-file-name="signup.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/signup.html">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ajax_handler.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/js/ajax_handler.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="18">
+              <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sign_up.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/static/js/sign_up.js">
+          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="54">
-              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="66" />
+              <caret line="3" column="91" selection-start-line="3" selection-start-column="91" selection-end-line="3" selection-end-column="91" />
               <folding />
             </state>
           </provider>
@@ -59,51 +150,11 @@
       <file leaf-file-name="signup_form.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bauth/forms/signup_form.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="4" column="38" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="book_browse.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/book_browse.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
-              <caret line="42" column="73" selection-start-line="42" selection-start-column="40" selection-end-line="42" selection-end-column="73" />
+            <state relative-caret-position="144">
+              <caret line="8" column="77" selection-start-line="8" selection-start-column="77" selection-end-line="8" selection-end-column="77" />
               <folding>
-                <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <marker date="1479497107661" expanded="true" signature="55:905" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="browse_books.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/js/browse_books.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="6" column="67" selection-start-line="6" selection-start-column="67" selection-end-line="6" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="book_browse.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/css/book_browse.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rubick.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/css/vendor/rubick/rubick.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3672">
-              <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="5" selection-end-column="61" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -111,8 +162,8 @@
       <file leaf-file-name="signup.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/css/signup.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+            <state relative-caret-position="422">
+              <caret line="139" column="42" selection-start-line="139" selection-start-column="42" selection-end-line="139" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -136,16 +187,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/generics/views/base_view.py" />
-        <option value="$PROJECT_DIR$/generics/libs/template_loader.py" />
-        <option value="$PROJECT_DIR$/generics/loader/template_loader.py" />
-        <option value="$PROJECT_DIR$/home_view.py" />
-        <option value="$PROJECT_DIR$/config/directories.py" />
         <option value="$PROJECT_DIR$/templates/old/home.html" />
         <option value="$PROJECT_DIR$/static/css/navbar.css" />
-        <option value="$PROJECT_DIR$/templates/scripts/stylesheet.html" />
         <option value="$PROJECT_DIR$/templates/sections/footer.html" />
-        <option value="$PROJECT_DIR$/templates/scripts/javascripts.html" />
         <option value="$PROJECT_DIR$/bauth/urls.py" />
         <option value="$PROJECT_DIR$/templates/sections/header.html" />
         <option value="$PROJECT_DIR$/bauth/models/user.py" />
@@ -176,17 +220,24 @@
         <option value="$PROJECT_DIR$/templates/sections/top_search_home.html" />
         <option value="$PROJECT_DIR$/templates/login.html" />
         <option value="$PROJECT_DIR$/templates/master.html" />
-        <option value="$PROJECT_DIR$/static/js/sign_up.js" />
         <option value="$PROJECT_DIR$/bauth/views/signup_view.py" />
         <option value="$PROJECT_DIR$/bauth/views/ajax/signup_view_ajax.py" />
-        <option value="$PROJECT_DIR$/static/css/signup.css" />
-        <option value="$PROJECT_DIR$/templates/signup.html" />
-        <option value="$PROJECT_DIR$/bauth/forms/signup_form.py" />
         <option value="$PROJECT_DIR$/static/css/vendor/rubick/rubick.css" />
         <option value="$PROJECT_DIR$/static/js/browse_books.js" />
         <option value="$PROJECT_DIR$/templates/sections/book_browse_entry.html" />
         <option value="$PROJECT_DIR$/static/css/book_browse.css" />
         <option value="$PROJECT_DIR$/templates/book_browse.html" />
+        <option value="$PROJECT_DIR$/templates/scripts/javascripts.html" />
+        <option value="$PROJECT_DIR$/static/js/ajax_handler.js" />
+        <option value="$PROJECT_DIR$/bauth/forms/signup_form.py" />
+        <option value="$PROJECT_DIR$/static/css/third_party/password.strength.css" />
+        <option value="$PROJECT_DIR$/static/js/third_party/password.strength.js" />
+        <option value="$PROJECT_DIR$/static/js/password.strength.js" />
+        <option value="$PROJECT_DIR$/templates/signup.html" />
+        <option value="$PROJECT_DIR$/static/css/signup.css" />
+        <option value="$PROJECT_DIR$/templates/scripts/stylesheet.html" />
+        <option value="$PROJECT_DIR$/static/css/bootstrap_tooltip_override.css" />
+        <option value="$PROJECT_DIR$/static/js/sign_up.js" />
       </list>
     </option>
   </component>
@@ -230,8 +281,8 @@
       <pane id="ProjectPane">
         <subPane />
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -244,18 +295,19 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/static/css/vendor/mdb" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/templates/old" />
-      <recent name="$PROJECT_DIR$/static/js/vendor/rubick" />
-      <recent name="$PROJECT_DIR$/static/css/vendor/rubick/fonts" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/static/js" />
       <recent name="$PROJECT_DIR$/static/css" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/settings" />
       <recent name="$PROJECT_DIR$/generics/loader" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/static/css/vendor/raty" />
+      <recent name="$PROJECT_DIR$/static/js/vendor/raty" />
+      <recent name="$PROJECT_DIR$/third_party" />
+      <recent name="$PROJECT_DIR$/static/css/vendor/mdb" />
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunManager" selected="Django server.Online Book Rental2">
@@ -595,6 +647,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287037" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4367284" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -607,7 +660,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287037" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
     </layout>
@@ -636,63 +688,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../ENV/OBR/lib/python3.5/site-packages/django/contrib/auth/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-118">
-          <caret line="320" column="9" selection-start-line="320" selection-start-column="4" selection-end-line="320" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/clients/models/client_user.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="13" column="44" selection-start-line="13" selection-start-column="44" selection-end-line="13" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bauth/forms/login_form.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="72" selection-start-line="7" selection-start-column="72" selection-end-line="7" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/book/views/browse_view.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/book/models/book_publisher.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/book/models/keyword.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/book/models/category.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/inventory/models/warehouse.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/inventory/models/inventory.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
@@ -721,13 +716,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="8" column="17" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/scripts/stylesheet.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="71" />
         </state>
       </provider>
     </entry>
@@ -883,23 +871,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="75" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/master.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/scripts/javascripts.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -907,14 +878,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="62" column="37" selection-start-line="62" selection-start-column="37" selection-end-line="62" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/sign_up.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -931,25 +894,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-          <folding>
-            <marker date="1479315250452" expanded="true" signature="72:131" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/signup.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bauth/forms/signup_form.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="38" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -963,16 +907,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/static/css/vendor/rubick/rubick.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3672">
-          <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="5" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/signup.html">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="66" />
+          <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="5" selection-end-column="61" />
           <folding />
         </state>
       </provider>
@@ -989,12 +925,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="339">
           <caret line="78" column="66" selection-start-line="78" selection-start-column="66" selection-end-line="78" selection-end-column="66" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1008,7 +939,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/static/css/book_browse.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
+        <state relative-caret-position="180">
           <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
           <folding />
         </state>
@@ -1018,9 +949,131 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="468">
           <caret line="42" column="73" selection-start-line="42" selection-start-column="40" selection-end-line="42" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/third_party/django_rq_dashboard/static/rq/jquery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/third_party/django_rq/tests/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/third_party/rq/cli/cli.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/vendor/raty/jquery.raty2.7.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/scripts/javascripts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="20" column="80" selection-start-line="20" selection-start-column="80" selection-end-line="20" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bauth/forms/signup_form.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="77" selection-start-line="8" selection-start-column="77" selection-end-line="8" selection-end-column="77" />
+          <folding>
+            <marker date="1479497107661" expanded="true" signature="55:905" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/third_party/password.strength.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/password.strength.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="115" column="22" selection-start-line="115" selection-start-column="8" selection-end-line="115" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/signup.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/scripts/stylesheet.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="82" selection-start-line="10" selection-start-column="82" selection-end-line="10" selection-end-column="82" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/bootstrap_tooltip_override.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="26" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/master.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="33" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/signup.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="422">
+          <caret line="139" column="42" selection-start-line="139" selection-start-column="42" selection-end-line="139" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/ajax_handler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/sign_up.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="91" selection-start-line="3" selection-start-column="91" selection-end-line="3" selection-end-column="91" />
+          <folding />
         </state>
       </provider>
     </entry>
