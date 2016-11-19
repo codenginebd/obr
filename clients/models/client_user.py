@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
-from book_rental.models.base_entity import BaseEntity
+
 from clients.models.email import Email
 from clients.models.phone_number import PhoneNumber
+from generics.models.base_entity import BaseEntity
 
 
 class ClientUser(BaseEntity):

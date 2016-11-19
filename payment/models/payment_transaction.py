@@ -1,9 +1,11 @@
 from django.db import models
-from book_rental.models.base_entity import BaseEntity
+
 from clients.models.client_user import ClientUser
 from clients.models.delivery_agent import DeliveryAgent
+from generics.models.base_entity import BaseEntity
 from order.models.book_order import BookOrder
 from payment.models.payment_method import PaymentMethod
+
 
 class PaymentTransaction(BaseEntity):
     payment_method = models.ForeignKey(PaymentMethod)

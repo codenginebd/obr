@@ -29,7 +29,7 @@
                               </div>
                           </div>
                           <div class="col-md-5">
-                              <form id="id_signup_form" class="signup_form" action="#" method="post">
+                              <form id="id_signup_form" class="signup_form" action="#" method="post" data-action="{% url "bauth_ajax_signup_view" %}">
                                     {% csrf_token %}
                                     <h1>Sign Up</h1>
                                       <div class="row">

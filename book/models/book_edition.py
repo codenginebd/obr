@@ -4,7 +4,7 @@ from book.models.author import Author
 from book.models.book import Book
 from book.models.book_publisher import BookPublisher
 from book.models.keyword import TagKeyword
-from book_rental.models.base_entity import BaseEntity
+from generics.models.base_entity import BaseEntity
 
 class BookEdition(BaseEntity):
     isbn = models.CharField(max_length=500, blank=True)

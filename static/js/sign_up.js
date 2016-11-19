@@ -1,7 +1,11 @@
 $(document).ready(function () {
 
     function password_checker(password_value) {
-        return password_value.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/)
+        var matched_value = password_value.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{6,})$/)
+        if(matched_value) {
+            return true;
+        }
+        return false;
     }
 
     function is_valid_phone_number($field) {
@@ -51,8 +55,8 @@ $(document).ready(function () {
     var $signup_form_instance = $("#id_signup_form");
 
 
-    $signup_form_instance.find("#id_password").tooltip({'trigger':'focus', 'class': 'red-tooltip', 'title': 'Min 6 characters with at least 1 capital letter and digit'});
-    $signup_form_instance.find("#id_password2").tooltip({'trigger':'focus', 'title': 'Min 6 characters with at least 1 capital letter and digit'});
+    $signup_form_instance.find("#id_password").tooltip({'trigger':'focus', 'class': 'red-tooltip', 'title': 'Password should be minimum 6 characters long with at least 1 capital letter, 1 digit and 1 number'});
+    $signup_form_instance.find("#id_password2").tooltip({'trigger':'focus', 'title': 'Password should be minimum 6 characters long with at least 1 capital letter, 1 digit and 1 number'});
 
     var $first_name_field = $signup_form_instance.find("#id_first_name");
     $first_name_field.focusin(function (e) {
@@ -127,19 +131,19 @@ $(document).ready(function () {
     
     var $password_field = $signup_form_instance.find("#id_password");
     $password_field.focusin(function (e) {
-        $password_field.next(".signup_field_error").text("").addClass("displaynone");
+        $password_field.parent().find(".signup_field_error").text("").addClass("displaynone");
     }).focusout(
         function (e) {
             var password = $password_field.val();
             if(password == "") {
-                $password_field.next(".signup_field_error").text("This field is required").removeClass("displaynone");
+                $password_field.parent().find(".signup_field_error").text("This field is required").removeClass("displaynone");
             }
             else {
-                if(password_checker(password)) {
-                    $password_field.next(".signup_field_error").text("Enter a strong password").removeClass("displaynone");
+                if(!password_checker(password)) {
+                    $password_field.parent().find(".signup_field_error").text("Enter a strong password").removeClass("displaynone");
                 }
                 else {
-                    $password_field.next(".signup_field_error").text("").addClass("displaynone");
+                    $password_field.parent().find(".signup_field_error").text("").addClass("displaynone");
                 }
             }
         }
@@ -147,20 +151,25 @@ $(document).ready(function () {
     
     var $password2_field = $signup_form_instance.find("#id_password2");
     $password2_field.focusin(function (e) {
-        $password2_field.next(".signup_field_error").text("").addClass("displaynone");
+        $password2_field.parent().find(".signup_field_error").text("").addClass("displaynone");
     }).focusout(
         function (e) {
             var password = $signup_form_instance.find("#id_password").val();
             var password2 = $password2_field.val();
             if(password2 == "") {
-                $password2_field.next(".signup_field_error").text("This field is required").removeClass("displaynone");
+                $password2_field.parent().find(".signup_field_error").text("This field is required").removeClass("displaynone");
             }
             else {
                 if(password != password2) {
-                    $password2_field.next(".signup_field_error").text("Password mismatch").removeClass("displaynone");
+                    $password2_field.parent().find(".signup_field_error").text("Password mismatch").removeClass("displaynone");
                 }
                 else {
-                    $password2_field.next(".signup_field_error").text("").addClass("displaynone");
+                    if(!password_checker(password2)) {
+                        $password2_field.parent().find(".signup_field_error").text("Enter a strong password").removeClass("displaynone");
+                    }
+                    else {
+                        $password2_field.parent().find(".signup_field_error").text("").addClass("displaynone");
+                    }
                 }
             }
         }
@@ -232,7 +241,13 @@ $(document).ready(function () {
             $password_field.next(".signup_field_error").text("This field is required").removeClass("displaynone");
         }
         else {
-            $password_field.next(".signup_field_error").text("").addClass("displaynone");
+            if(!password_checker(password)) {
+                validated = false;
+                $password_field.parent().find(".signup_field_error").text("Enter a strong password").removeClass("displaynone");
+            }
+            else {
+                $password_field.parent().find(".signup_field_error").text("").addClass("displaynone");
+            }
         }
         
         var $password2_field = $form_instance.find("#id_password2");
@@ -248,7 +263,13 @@ $(document).ready(function () {
                 $password2_field.next(".signup_field_error").text("Password mismatch").removeClass("displaynone");
             }
             else {
-                $password2_field.next(".signup_field_error").text("").addClass("displaynone");
+                if(!password_checker(password2)) {
+                    validated = false;
+                    $password2_field.parent().find(".signup_field_error").text("Enter a strong password").removeClass("displaynone");
+                }
+                else {
+                    $password2_field.parent().find(".signup_field_error").text("").addClass("displaynone");
+                }
             }
         }
 
@@ -260,7 +281,24 @@ $(document).ready(function () {
     $("#id_signup_form").submit(function (e) {
         e.preventDefault();
         var validated = validate_signup_form($("#id_signup_form"));
-        alert(validated);
+        if(validated) {
+            var url = $("#id_signup_form").data("action");
+            var data = $("#id_signup_form").serialize();
+            window.call_ajax("POST", url, data, 
+                function (data) 
+                {
+                    alert(data.status);
+                }, 
+                function (jqxhr, status, error) {
+                    
+                }, 
+                function (msg) {
+
+                })
+        }
+        else {
+            return false;
+        }
         return false;
     });
     
