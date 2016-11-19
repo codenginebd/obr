@@ -1,5 +1,6 @@
 from django import forms
 
+
 class SignupForm(forms.Form):
     first_name = forms.CharField(max_length=200, required=True, widget=forms.TextInput(
         attrs={"class": "signup_field"}))
