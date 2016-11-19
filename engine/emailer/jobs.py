@@ -1,6 +1,6 @@
 
 from engine.emailer.email_client import EmailClient
-from third_party.rq.decorators import job
+from rq.decorators import job
 
 
 @job
