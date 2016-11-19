@@ -1,0 +1,31 @@
+{% extends "master.html" %}
+{% load staticfiles %}
+{% block content %}
+    <link href="{% static "css/signup.css" %}" rel="stylesheet" />
+    <script src="{% static "js/sign_up.js" %}"></script>
+    <style>
+
+    </style>
+    <div class=" " id="contact1">
+          <div class="container">
+              <div class="">
+                  <div class="contact-form" style="margin-top: 40px !important; min-height: 300px;">
+                      <div class="row">
+                          <div class="col-md-12 right-border">
+                              <div class="address add-animation-stopped animation-1">
+                                  <h4>Signup Complete!</h4>
+                                  <br/>
+                                  <p class="text-gray">
+                                      Congratulations! You have completed the signup process.
+                                  </p>
+                                  <p>
+                                      An email has been sent to {{ email }}. Please check your mailbox and follow the link to activate your account.
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+{% endblock content %}

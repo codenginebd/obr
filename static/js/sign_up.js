@@ -1,11 +1,20 @@
 $(document).ready(function () {
-
     function password_checker(password_value) {
         var matched_value = password_value.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{6,})$/)
         if(matched_value) {
             return true;
         }
         return false;
+    }
+
+    function check_phone_number_used(value, url, success_callback, error_callback, complete_callback) {
+        call_ajax("GET", url, { "value": value },
+            success_callback, error_callback, complete_callback);
+    }
+
+    function check_email_used(value, url, success_callback, error_callback, complete_callback) {
+        call_ajax("GET", url, { "value": value },
+            success_callback, error_callback, complete_callback);
     }
 
     function is_valid_phone_number($field) {
@@ -21,7 +30,7 @@ $(document).ready(function () {
     }
 
     function id_valid_email_address(email_address) {
-        var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
+        var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,4})+)$/i);
         var valid = emailRegex.test(email_address);
         return valid
     };
@@ -54,6 +63,9 @@ $(document).ready(function () {
 
     var $signup_form_instance = $("#id_signup_form");
 
+
+    var email_available = true;
+    var phone_available = true;
 
     $signup_form_instance.find("#id_password").tooltip({'trigger':'focus', 'class': 'red-tooltip', 'title': 'Password should be minimum 6 characters long with at least 1 capital letter, 1 digit and 1 number'});
     $signup_form_instance.find("#id_password2").tooltip({'trigger':'focus', 'title': 'Password should be minimum 6 characters long with at least 1 capital letter, 1 digit and 1 number'});
@@ -102,7 +114,27 @@ $(document).ready(function () {
                     $email_field.next(".signup_field_error").text("Enter a valid email address").removeClass("displaynone");
                 }
                 else {
-                    $email_field.next(".signup_field_error").text("").addClass("displaynone");
+                    check_email_used(email, $signup_form_instance.data("check-email-url"),
+                        function (data)
+                        {
+                            if(data.status == "SUCCESS") {
+                                if(data.code == 1) {
+                                    email_available = false;
+                                    var $email_field = $signup_form_instance.find("#id_email");
+                                    $email_field.next(".signup_field_error").text("This email is not available").removeClass("displaynone");
+                                }
+                                else {
+                                    var $email_field = $signup_form_instance.find("#id_email");
+                                    $email_field.next(".signup_field_error").text("").addClass("displaynone");
+                                }
+                            }
+                        },
+                        function (jqxhr, status, error) {
+
+                        },
+                        function (msg) {
+
+                        });
                 }
             }
         }
@@ -122,7 +154,26 @@ $(document).ready(function () {
                     $phone_field.parent().next(".signup_field_error").text("Enter a valid phone number").removeClass("displaynone");
                 }
                 else {
-                    $phone_field.parent().next(".signup_field_error").text("").addClass("displaynone");
+                    check_phone_number_used(phone, $signup_form_instance.data("check-phone-url"),
+                    function (data)
+                    {
+                        if(data.status == "SUCCESS") {
+                            if(data.code == 1) {
+                                phone_available = false;
+                                var $phone_field = $signup_form_instance.find("#id_phone");
+                                $phone_field.parent().next(".signup_field_error").text("This phone number is not available").removeClass("displaynone");
+                            }
+                            else {
+                                $phone_field.parent().next(".signup_field_error").text("").addClass("displaynone");
+                            }
+                        }
+                    },
+                    function (jqxhr, status, error) {
+
+                    },
+                    function (msg) {
+
+                    });
                 }
             }
         }
@@ -282,19 +333,24 @@ $(document).ready(function () {
         e.preventDefault();
         var validated = validate_signup_form($("#id_signup_form"));
         if(validated) {
-            var url = $("#id_signup_form").data("action");
-            var data = $("#id_signup_form").serialize();
-            window.call_ajax("POST", url, data, 
-                function (data) 
-                {
-                    alert(data.status);
-                }, 
-                function (jqxhr, status, error) {
-                    
-                }, 
-                function (msg) {
+            if(email_available && phone_available) {
+                var url = $("#id_signup_form").data("action");
+                var data = $("#id_signup_form").serialize();
+                window.call_ajax("POST", url, data,
+                    function (data)
+                    {
+                        location.href = $("#id_signup_form").data("post-signup-url")+"?email="+data.data.email;
+                    },
+                    function (jqxhr, status, error) {
 
-                })
+                    },
+                    function (msg) {
+
+                    })
+            }
+            else {
+                return false;
+            }
         }
         else {
             return false;
