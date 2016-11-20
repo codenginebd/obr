@@ -19,7 +19,7 @@ import bauth
 from home_view import HomeView
 
 urlpatterns = [
-    url(r'^$', HomeView.as_view()),
+    url(r'^$', HomeView.as_view(), name='home_view'),
     # url(r'^admin/', admin.site.urls),
     url(r'^auth/', include('bauth.urls')),
     url(r'^book/', include('book.urls')),

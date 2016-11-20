@@ -20,8 +20,8 @@ class SignupAjaxView(View, AjaxRendererMixin):
                     'password': signup_form_instance.cleaned_data['password'],
                     'is_active': False
                 }
-                auth_user = User(**auth_user_fields)
-                auth_user.save()
+
+                auth_user = User.objects.create_user(**auth_user_fields)
 
                 br_user_instance = BUser()
                 br_user_instance.user_id = auth_user.pk
