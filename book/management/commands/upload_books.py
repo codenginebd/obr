@@ -6,3 +6,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print("Book Initializing...")
         print("Now")
+        
+        
+        
