@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home_view'),
     # url(r'^admin/', admin.site.urls),
     url(r'^auth/', include('bauth.urls')),
-    url(r'^book/', include('book.urls')),
+    url(r'^books/', include('book.urls')),
 ]

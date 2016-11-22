@@ -1,9 +1,9 @@
 from django.db import models
-
 from book.models.author import Author
 from book.models.book import Book
 from book.models.book_publisher import BookPublisher
 from book.models.keyword import TagKeyword
+from book.models.price_currency import PriceCurrency
 from generics.models.base_entity import BaseEntity
 
 
@@ -18,3 +18,4 @@ class BookEdition(BaseEntity):
     language = models.CharField(max_length=100, blank=True)
     page_count = models.IntegerField(default=0)
     is_used = models.BooleanField(default=False)
+    base_prices = models.ManyToManyField(PriceCurrency)

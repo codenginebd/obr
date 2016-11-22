@@ -1,10 +1,89 @@
-<div class="row book_entry search_entry">
-    <div class="col-md-12">
-        <img style="width: 200px; height: 200px; " src="https://s3-ap-southeast-1.amazonaws.com/ireads/images/books/9780425151877.jpg" class="img-responsive book-img-grid">
-        <div class="cart_title"> Games of State: Op...
-                </div>
-                <div class="cart_content"> Author:
+{% load staticfiles %}
+<style>
+    .book_entry {
+        box-shadow: 3px 3px 3px 3px #eeeeee;
+        margin-bottom: 7px;
+    }
+    .book_entry p {
+        font-size: 14px;
+        font-family: sans-serif;
+    }
 
-                  Jeff Rovin Ste...</div>
+    .item_links {
+        font-size: 13px !important;
+    }
+</style>
+
+{#<div class="row">#}
+{#    <div class="col-md-12">#}
+{#        <div class="row" style="padding: 7px; border-right: 1px solid gray;  ">#}
+{#            <div class="col-sm-5">#}
+{#                <img style="width: 110px; height: 110px; " src="{% static "images/books/book_image.jpg" %}">#}
+{#            </div>#}
+{#            <div class="col-sm-7">#}
+{#                <div class="row">#}
+{#                    <div class="col-sm-12">#}
+{#                        <a class="book_entry">Practical Facebook Learning</a>#}
+{#                    </div>#}
+{#                    <div class="col-sm-12">#}
+{#                        <a class="book_entry">Author: Xing Xui Lung</a>#}
+{#                    </div>#}
+{#                    <div class="col-sm-12">#}
+{#                        <a class="book_entry">Rating 4.5/5.0</a>#}
+{#                    </div>#}
+{#                    <div class="col-sm-12">#}
+{#                        <a class="book_entry">Stock available</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="row">#}
+{#            <div class="col-md-12">#}
+{#                <a >Send by email</a>#}
+{#                <a class="btn btn-primary">Rent</a>#}
+{#                <a class="btn btn-primary">Quick View</a>#}
+{#                <a class="btn btn-primary">Buy</a>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+
+<div class="row book_entry">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-7 col-sm-7 col-xs-7 text-center" style="padding: 13px; ">
+
+                <img style="margin-left: auto;margin-right: auto; margin-top: 13px; width: 130px; height: 140px; " src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRi7lIOzjyCNhoVpyaJGRuYklrorcjra8xXCroxeXXZgrhxX-dPZg" class="img-responsive book-img-grid">
+            </div>
+            <div class="col-md-5 col-sm-5 col-xs-5" style="margin-top: 19px; padding: 3px; ">
+                <p class="book-box-price">
+                     Market Price: <strike> Rs. 659 </strike><br>
+                    Our Price: Rs. 450<br/>
+
+                <strong class="rent-start">Rent starts from Rs. 280                                            </strong><br>
+
+                <span class="margin-top-bot">Initial Payable Rs. 659                                            </span><br>
+                </p>
+            </div>
+        </div>
+        <div class="row" style="padding: 13px; ">
+            <div class="col-md-12 col-sm-12 col-xs-12 text-left pad-10 margin-left--8">
+                 <p> Introduction to Computer Science
+                </p>
+                <i style="font-size: 14px; float: right; "> - By Humayun Ahmed</i>
+                <br/>
+                <hr class="book-box-hr">
+                <ul class="list-inline text-center">
+                  <li><a class="btn-link item_links" href="">Quick View</a></li>
+                  <li><a class="btn-link item_links" href="">Rent</a></li>
+                  <li><a class="btn-link item_links" href="">Buy</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
+        </div>
+    </div>
+
 </div>
