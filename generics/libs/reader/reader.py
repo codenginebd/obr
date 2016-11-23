@@ -12,4 +12,7 @@ class Reader(FileReadMixin):
         self.file_name = file_name
         self.args = args
         self.kwargs = kwargs
-        self.data = self.read_file(file_name=file_name)
+        self.data = self.read_file()
+
+    def get_data(self):
+        return self.data

@@ -1,4 +1,4 @@
 class FileReadMixin(object):
 
-    def read_file(self, file_name=None):
+    def read_file(self):
         return []
