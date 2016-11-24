@@ -15,7 +15,7 @@ class BookEdition(BaseEntity):
     authors = models.ManyToManyField(Author)
     publish_date = models.DateField(null=True)
     tags = models.ManyToManyField(TagKeyword)
-    language = models.CharField(max_length=100, blank=True)
+    language = models.ForeignKey(Language)
     page_count = models.IntegerField(default=0)
     is_used = models.BooleanField(default=False)
     base_prices = models.ManyToManyField(PriceCurrency)

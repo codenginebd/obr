@@ -56,6 +56,10 @@ class Clock(object):
     def convert_to_utc(cls,datestring,format='%d/%m/%Y'):
         dt = datetime.strptime(datestring,format)
         return time.mktime(dt.timetuple())
+      
+    @classmethod
+    def convert_str_to_date(cls, datestring, format='%d-%m-%Y'):
+        return datetime.strptime(datestring, format)
 
     @classmethod
     def convert_local_to_utc(cls,timezone,dt):
