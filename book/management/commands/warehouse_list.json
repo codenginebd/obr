@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Central Warehouse",
+    "location": "Dhaka",
+    "contact_person": "Sohel",
+    "contact_phones": [
+        "01733693761", 
+        "01623067403"
+    ],
+    "emails": [
+      
+    ],
+    "address": ""
+  },
+  {
+    "name": "Chittagong Warehouse",
+    "address": "Chittagong",
+    "contact_person": "Sohel",
+    "contact_phones": [
+        "01733693761", 
+        "01623067403"
+    ],
+    "emails": [
+      
+    ],
+    "location": ""
+  }
+]
