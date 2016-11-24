@@ -1,5 +1,6 @@
 from django.db import transaction
 from book.models.category import BookCategory
+from br_blogger.models.error_log import ErrorLog
 
 class CategoryUploader(object):
     def __init__(self, data=[], *args, **kwargs):
@@ -19,7 +20,10 @@ class CategoryUploader(object):
                 
                 if not category_name:
                     # Log error
-                    continue
+                    error_log = ErrorLog()
+                    error_log.url = ''
+                    error_log.stacktrace = 'Category name is missing. Data %s' % str(row)
+                    error_log.save()
 
                 if code:
                     category_objects = BookCategory.objects.filter(code=code)
@@ -45,7 +49,10 @@ class CategoryUploader(object):
                             category_object.save()
 
                     else:
-                        pass # Log error
+                        error_log = ErrorLog()
+                        error_log.url = ''
+                        error_log.stacktrace = 'Invalid code given. Data %s' % str(row)
+                        error_log.save()
                 else:
                     category_object = BookCategory()
                     if parent_name:
