@@ -13,6 +13,7 @@ class Command(BaseCommand):
         data = excel_reader.get_data()
         category_uploader = CategoryUploader(data=data)
         category_uploader.handle_upload()
+        print("Upload done!")
         
         
         

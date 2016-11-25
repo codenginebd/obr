@@ -1,5 +1,7 @@
 from django.core.management.base import BaseCommand
-from book.libs.uploader.category_uploader import LanguageUploader
+
+from book.libs.uploader.language_uploader import LanguageUploader
+from generics.libs.reader.json_file_reader import JSONFileReader
 
 
 class Command(BaseCommand):

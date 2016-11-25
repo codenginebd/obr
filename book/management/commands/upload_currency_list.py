@@ -1,5 +1,7 @@
 from django.core.management.base import BaseCommand
-from book.libs.uploader.category_uploader import CurrencyUploader
+
+from book.libs.uploader.currency_uploader import CurrencyUploader
+from generics.libs.reader.json_file_reader import JSONFileReader
 
 
 class Command(BaseCommand):

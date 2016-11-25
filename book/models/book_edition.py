@@ -3,6 +3,7 @@ from book.models.author import Author
 from book.models.book import Book
 from book.models.book_publisher import BookPublisher
 from book.models.keyword import TagKeyword
+from book.models.language import Language
 from book.models.price_currency import PriceCurrency
 from generics.models.base_entity import BaseEntity
 

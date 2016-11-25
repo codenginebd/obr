@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from br_logger.models.email_log import EmailLog
+from brlogger.models.email_log import EmailLog
 from engine.emailer.jobs import send_email_job
 
 __author__ = 'Sohel'
