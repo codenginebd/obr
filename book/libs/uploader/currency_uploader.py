@@ -24,6 +24,8 @@ class CurrencyUploader(Uploader):
 
     def handle_upload(self):
 
+        Currency.objects.all().delete()
+
         self.data = self.data_as_list()
 
         for row in self.data:

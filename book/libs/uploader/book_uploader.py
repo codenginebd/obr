@@ -236,11 +236,11 @@ class BookUploader(object):
                 book_edition_instance = BookEdition()
                 book_edition_instance.isbn = isbn
                 
-                book_objects = Book.objects.filter(title=book_title, subtitle=sub_title)
+                book_objects = Book.objects.filter(title=book_title.strip(), subtitle=sub_title.strip())
                 if not book_objects.exists():
                     book_object = Book()
-                    book_object.title = book_title
-                    book_object.subtitle = sub_title
+                    book_object.title = book_title.strip()
+                    book_object.subtitle = sub_title.strip()
                     book_object.description = description
                     book_object.category_id = category_object.pk
                     book_object.save()
