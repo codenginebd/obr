@@ -8,7 +8,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print("Upload Initialized")
         print("Now")
-        fname = '/home/codenginebd/Desktop/Projects/online-book-rental/book/management/commands/category_list.xlsx'
+        fname = '/home/codenginebd/Desktop/Projects/online-book-rental/book/management/commands/uploads/category_list1.xlsx'
         excel_reader = ExcelFileReader(file_name=fname, sheet_name='Sheet1')
         data = excel_reader.get_data()
         category_uploader = CategoryUploader(data=data)
