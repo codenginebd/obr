@@ -10,5 +10,5 @@ class EmailLog(BaseEntity):
     html_body = models.TextField()
     text_body = models.TextField()
     job_id = models.CharField(max_length=500)
-    status = models.CharField(max_length=20,blank=True) ###SUCCESS, FAILED
+    status = models.CharField(max_length=20,blank=True)  # SUCCESS, FAILED
     exception_stacktrace = models.TextField(blank=True)

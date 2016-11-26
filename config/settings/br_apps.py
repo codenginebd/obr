@@ -1,6 +1,6 @@
 BR_APPS = [
     'generics',
-    'brlogger',
     'bauth',
+    'brlogger',
     'book',
 ]
