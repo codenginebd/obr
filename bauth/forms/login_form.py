@@ -1,5 +1,6 @@
 from django import forms
 
+
 class LoginForm(forms.Form):
     username = forms.EmailField(max_length=200, required=True, widget=forms.TextInput(
         attrs={'name': 'email', "class": "form-control login_email", "required": "true",
