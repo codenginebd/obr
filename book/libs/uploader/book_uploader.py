@@ -108,10 +108,9 @@ class BookUploader(object):
                         "description": author_description
                     }
                 ]
-                
-            
+
             # Validate data
-            
+
             # Check if code given. If given then check if book_edition exists else set book instance to None
             book_edition_instance = None
             if code:
@@ -135,8 +134,7 @@ class BookUploader(object):
                 error_log.stacktrace = 'Missing data: %s' % str(row)
                 error_log.save()
                 continue
-                
-            
+
             if len(isbn) != 10 and len(isbn) != 13:
                 error_log = ErrorLog()
                 error_log.url = ''

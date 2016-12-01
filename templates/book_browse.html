@@ -10,7 +10,7 @@
 
               </div>
               <div class="col-md-10" style="">
-                  <form class="navbar-form navbar-right search-form" role="search">
+                  <form class="navbar-form navbar-right search-form" role="search" style="margin-bottom: 0px !important;">
                     <div class="col-md-12" style="margin-right: 30px; ">
                         <button style="margin: 0px 0px; padding: 13px; background: #bc3526; color: white; opacity: 1.0; " class="btn btn-primary pull-right">Search</button>
                       <input type="text" style="min-width: 350px; max-width: 500px; height: 42px !important; " class="form-control pull-right" name="book_search" placeholder="Search By ISBN, Book Title, Author Name, Keywords..."/>
@@ -30,32 +30,42 @@
               </div>
           </div>
         </div>
+        <style>
+            .list-group-item {
+                border: none !important;
+                padding-right: 0px !important;
+                font-size: 14px !important;
+            }
+            .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+                background-color: #e2e8ec !important;
+                font-weight:bold;
+            }
+        </style>
           <div class="container">
               <div class="row">
                   <div class="col-md-2 right-border">
-                      <ul class="nav nav-list">
-                <li><label class="tree-toggle nav-header">Bootstrap</label>
-                    <ul class="nav nav-list tree">
-                        <li><a href="#">JavaScript</a></li>
-                        <li><a href="#">CSS</a></li>
-                        <li><label class="tree-toggle nav-header">Buttons</label>
-                            <ul class="nav nav-list tree">
-                                <li><a href="#">Colors</a></li>
-                                <li><a href="#">Sizes</a></li>
-                                <li><label class="tree-toggle nav-header">Forms</label>
-                                    <ul class="nav nav-list tree">
-                                        <li><a href="#">Horizontal</a></li>
-                                        <li><a href="#">Vertical</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-
-
-
+                      <ul class="list-group">
+                          <li href="#" class="list-group-item"><a href="#">Medical</a></li>
+                          <li href="#" class="list-group-item"><a href="#">General</a>
+                              <ul class="list-group">
+                                  <li class="list-group-item"><a href="#">Engineering</a></li>
+                                  <li href="#" class="list-group-item">
+                                      <ul class="list-group">
+                                          <li class="list-group-item"><a href="#">Computer Science and Engineering</a></li>
+                                          <li class="list-group-item">
+                                              <a href="#">Data Structure & Algorithm</a>
+                                              <ul class="list-group">
+                                                  <li class="list-group-item active"><a href="#">Algorithm 1</a></li>
+                                                  <li class="list-group-item"><a href="#">Digital Logic Design</a></li>
+                                              </ul>
+                                          </li>
+                                          <li class="list-group-item"><a href="#">Electrical Engineering</a></li>
+                                      </ul>
+                                  </li>
+                                  <li class="list-group-item"><a href="#">Architecture</a></li>
+                              </ul>
+                          </li>
+                        </ul>
                   </div>
                   <div class="col-md-10">
                       <div class="col-md-12">
