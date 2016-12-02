@@ -1,0 +1,15 @@
+{# filename: book_categories.html #}
+<ul class="list-group">
+{% for cat_object in categories %}
+<li href="#" class="list-group-item">
+    <a href="#">{{ cat_object.name }}</a>
+    {% if cat_object.children %}
+    {% with "sections/book_categories.html" as filename %}
+    {% with cat_object.children as categories %}
+        {% include filename %}
+    {% endwith %}
+    {% endwith %}
+    {% endif %}
+</li>
+{% endfor %}
+</ul>

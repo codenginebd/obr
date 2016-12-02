@@ -43,29 +43,11 @@
         </style>
           <div class="container">
               <div class="row">
-                  <div class="col-md-2 right-border">
-                      <ul class="list-group">
-                          <li href="#" class="list-group-item"><a href="#">Medical</a></li>
-                          <li href="#" class="list-group-item"><a href="#">General</a>
-                              <ul class="list-group">
-                                  <li class="list-group-item"><a href="#">Engineering</a></li>
-                                  <li href="#" class="list-group-item">
-                                      <ul class="list-group">
-                                          <li class="list-group-item"><a href="#">Computer Science and Engineering</a></li>
-                                          <li class="list-group-item">
-                                              <a href="#">Data Structure & Algorithm</a>
-                                              <ul class="list-group">
-                                                  <li class="list-group-item active"><a href="#">Algorithm 1</a></li>
-                                                  <li class="list-group-item"><a href="#">Digital Logic Design</a></li>
-                                              </ul>
-                                          </li>
-                                          <li class="list-group-item"><a href="#">Electrical Engineering</a></li>
-                                      </ul>
-                                  </li>
-                                  <li class="list-group-item"><a href="#">Architecture</a></li>
-                              </ul>
-                          </li>
-                        </ul>
+                  <div class="col-md-2 right-border" style="border-right: 1px solid #eeeeee !important;">
+                     {% include "sections/book_categories.html" %}
+
+
+
                   </div>
                   <div class="col-md-10">
                       <div class="col-md-12">
