@@ -20,7 +20,7 @@ class APILoginView(APIView):
 
             if user_instance:
                 with transaction.atomic():
-                    token, created = Token.objects.get_or_create(user_id=user_instance.pk)
+                    token, created = Token.objects.get_or_create(user=user_instance)
                     return Response({'token': token.key, 'success': True})
         return Response({'message': 'Cannot login with provided credentials.', 'success': False},
                         status=status.HTTP_400_BAD_REQUEST)
