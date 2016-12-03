@@ -14,7 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-import bauth
+from book.api.router import book_router
+from book.api.viewsets.category_api_view import BookCategoryAPIView
 
 from home_view import HomeView
 
@@ -24,3 +25,15 @@ urlpatterns = [
     url(r'^auth/', include('bauth.urls')),
     url(r'^books/', include('book.urls')),
 ]
+
+# Include API's
+urlpatterns += [
+    # url(r'^api/v1/$', book_router.get_api_root_view(), name=book_router.root_view_name),
+]
+
+urlpatterns += [
+    url('^api/v1/category-list/$', BookCategoryAPIView.as_view())
+]
+
+
+urlpatterns += book_router.urls

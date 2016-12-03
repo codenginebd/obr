@@ -1,6 +1,6 @@
 {% load category_tags %}
 {# filename: book_categories.html #}
-<ul class="list-group">
+<ul class="list-group" {% if cat_object.children %}style="margin-left: 10px !important;" {% endif %}>
 {% for cat_object in categories %}
 <li href="#"
     class="{% if cat_object.id|has_any_children:all_parents %}{% if cat_object.id in explored_chain %}glyphicon glyphicon-minus {% else %}glyphicon glyphicon-plus {% endif %}{% endif %}list-group-item category-list-item {% if not cat_object.id in current_chain %}{% if cat_object.parent %}displaynone{% endif %}{% endif %}">
