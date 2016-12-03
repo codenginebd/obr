@@ -31,3 +31,27 @@
     border-radius: 5px;
     font-weight: bold;
 }
+
+.list-group
+{
+    margin-bottom: 0px !important;
+}
+.list-group-item {
+    border: none !important;
+    padding-right: 0px !important;
+    font-size: 14px !important;
+    margin-bottom: 2px !important;
+    padding-bottom: 0px !important;
+}
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: #e2e8ec !important;
+    font-weight:bold;
+}
+.list-group-item > .active, .list-group-item > .active:focus, .list-group-item > .active:hover {
+    font-color: #e2e8ec !important;
+    font-weight:bold;
+}
+
+.list-group-item > a {
+    cursor: pointer !important;
+}

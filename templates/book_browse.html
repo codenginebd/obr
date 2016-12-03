@@ -30,24 +30,17 @@
               </div>
           </div>
         </div>
-        <style>
-            .list-group-item {
-                border: none !important;
-                padding-right: 0px !important;
-                font-size: 14px !important;
-            }
-            .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
-                background-color: #e2e8ec !important;
-                font-weight:bold;
-            }
-        </style>
           <div class="container">
               <div class="row">
-                  <div class="col-md-2 right-border" style="border-right: 1px solid #eeeeee !important;">
+                  <script>
+                      $(document).ready(function () {
+                            $(".category-list-item").click(function (e) {
+                                e.stopPropagation();
+                            }); 
+                      });
+                  </script>
+                  <div id="id_category_container" class="col-md-2 right-border" style="border-right: 1px solid #eeeeee !important;">
                      {% include "sections/book_categories.html" %}
-
-
-
                   </div>
                   <div class="col-md-10">
                       <div class="col-md-12">

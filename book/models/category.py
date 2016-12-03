@@ -13,6 +13,66 @@ class BookCategory(BaseEntity):
         super(BookCategory, self).save(*args, **kwargs)
 
     @classmethod
+    def get_category_explorer_chain(cls, cat_id): # Get current cat to the top most parent and next child if any
+        cat_chain = [ cat_id ]
+        book_cat_object = BookCategory.objects.get(pk=cat_id)
+        while book_cat_object.parent:
+            book_cat_object = BookCategory.objects.get(pk=book_cat_object.parent_id)
+            cat_chain += [ book_cat_object.pk ]
+
+            # Include all siblings
+            book_cat_childs = BookCategory.objects.filter(parent_id=book_cat_object.pk).values_list('pk', flat=True)
+            cat_chain += book_cat_childs
+
+        book_cat_objects = BookCategory.objects.filter(parent_id=cat_id)
+        if book_cat_objects.exists():
+            cat_chain += book_cat_objects.values_list('pk', flat=True)
+
+        cat_chain = list(set(cat_chain))
+
+        return cat_chain
+
+    @classmethod
+    def get_explored_chain(cls, cat_id):
+        cat_chain = [cat_id]
+        book_cat_object = BookCategory.objects.get(pk=cat_id)
+        while book_cat_object.parent:
+            book_cat_object = BookCategory.objects.get(pk=book_cat_object.parent_id)
+            cat_chain += [book_cat_object.pk]
+        cat_chain = list(set(cat_chain))
+
+        return cat_chain
+
+    @classmethod
+    def category_explorer_slug_url_chain(cls, cat_ids=[]):
+        cat_dict = {}
+
+        all_cat_dict = {}
+        book_cat_objects = BookCategory.objects.all()
+        cat_ids = book_cat_objects.values_list('pk', flat=True)
+        if cat_ids:
+            book_cat_objects = BookCategory.objects.filter(pk__in=cat_ids)
+            cat_ids = book_cat_objects.values_list('pk', flat=True)
+        for cat_object in book_cat_objects:
+            all_cat_dict[cat_object.pk] = cat_object
+
+        for cat_id in cat_ids:
+            cat_slug_chain = []
+            book_cat_object = all_cat_dict[cat_id]
+            cat_slug_chain += [book_cat_object.slug]
+            while book_cat_object.parent:
+                book_cat_object = all_cat_dict[book_cat_object.parent_id]
+                cat_slug_chain += [book_cat_object.slug]
+
+            # cat_slug_chain += [book_cat_object.slug]
+
+            cat_slug_chain = cat_slug_chain[::-1]
+
+            cat_dict[cat_id] = '/'.join(cat_slug_chain)
+
+        return cat_dict
+
+    @classmethod
     def get_all_subcategories(cls, main_categories, parent_categories={}):
         all_categories = []
         for cat_object in main_categories:
@@ -22,7 +82,8 @@ class BookCategory(BaseEntity):
             cat_object = {
                 "id": cat_object.pk,
                 "name": cat_object.name,
-                "children": childrens
+                "parent": cat_object.parent,
+                "children": []
             }
             if childrens:
                 temp_categories = cls.get_all_subcategories(childrens, parent_categories)
@@ -31,7 +92,7 @@ class BookCategory(BaseEntity):
         return all_categories
 
     @classmethod
-    def get_all_book_categories(cls, filter=None):
+    def get_all_book_categories(cls, **kwargs):
         categories = {}
 
         all_categories = cls.objects.all() #.values_list('pk', 'name', 'parent_id')
@@ -45,11 +106,11 @@ class BookCategory(BaseEntity):
                 else:
                     parents[each_cat.parent_id] += [each_cat]
 
-        # print(parents)
+        cls.all_parents = parents
 
         main_categories = cls.objects.filter(parent__isnull=True) #.values_list('pk', 'name')
 
-        # print([ i.pk for i in main_categories ])
+        print([ i.pk for i in main_categories ])
 
         cat_list = cls.get_all_subcategories(main_categories, parents)
 
