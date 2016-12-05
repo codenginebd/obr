@@ -11,7 +11,7 @@ from book.models.category import BookCategory
 from book.models.currency import Currency
 from book.models.keyword import TagKeyword
 from book.models.language import Language
-from brlogger.models.error_log import ErrorLog
+from logger.models.error_log import ErrorLog
 from engine.clock.Clock import Clock
 
 
@@ -22,8 +22,11 @@ class BookUploader(object):
         self.kwargs = kwargs
 
     def handle_upload(self):
-        for row in self.data:
-          
+        for index, row in enumerate(self.data):
+
+            if index == 0:
+                continue
+
             index = 0
             code = row[index]
             
@@ -34,7 +37,7 @@ class BookUploader(object):
             sub_title = row[index]
             
             index += 1
-            isbn = row[index]
+            isbn = str(int(row[index]))
             
             index += 1
             description = row[index]
@@ -96,7 +99,7 @@ class BookUploader(object):
                 }
             ]
             
-            while index < len(row):
+            while index < len(row) - 1:
                 author_name = row[index]
                 index += 1
                 author_description = row[index]
@@ -211,7 +214,7 @@ class BookUploader(object):
                 continue
                 
             try:
-                published_date = Clock(published_date)
+                published_date = published_date.date()
             except Exception as exp:
                 error_log = ErrorLog()
                 error_log.url = ''

@@ -2,7 +2,7 @@ from django.db import transaction
 
 from book.libs.uploader.uploader import Uploader
 from book.models.currency import Currency
-from brlogger.models.error_log import ErrorLog
+from logger.models.error_log import ErrorLog
 from engine.exceptions.br_exception import BRException
 
 

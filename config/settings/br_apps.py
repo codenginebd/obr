@@ -1,6 +1,10 @@
 BR_APPS = [
     'generics',
-    'brlogger',
+    'logger',
+    'clients',
     'bauth',
     'book',
+    'inventory',
+    'order',
+    'payment'
 ]
