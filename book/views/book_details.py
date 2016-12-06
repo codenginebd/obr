@@ -1,5 +1,5 @@
-from django.views.generic.base import TemplateView
+from generics.views.base_template_view import BaseTemplateView
 
 
-class BookDetailsView(TemplateView):
+class BookDetailsView(BaseTemplateView):
     template_name = "book_details.html"

@@ -1,9 +1,8 @@
-from django.views.generic.base import TemplateView
-
 from book.models.category import BookCategory
+from generics.views.base_template_view import BaseTemplateView
 
 
-class BookBrowseView(TemplateView):
+class BookBrowseView(BaseTemplateView):
     template_name = "book_browse.html"
 
     def get_context_data(self, **kwargs):

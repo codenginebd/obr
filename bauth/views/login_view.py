@@ -1,9 +1,8 @@
-from django.views.generic.base import TemplateView
-
 from bauth.forms.login_form import LoginForm
+from generics.views.base_template_view import BaseTemplateView
 
 
-class LoginView(TemplateView):
+class LoginView(BaseTemplateView):
     template_name = "login.html"
 
     def get_context_data(self, **kwargs):
