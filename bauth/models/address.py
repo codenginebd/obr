@@ -1,5 +1,4 @@
 from django.db import models
-
 from bauth.models.country import Country
 from bauth.models.district import District
 from bauth.models.state import State
