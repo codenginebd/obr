@@ -18,8 +18,8 @@ class LanguageUploader(Uploader):
 
         data_list = []
 
-        for currency_code, name in self.data.items():
-            data_list += [[ currency_code.upper(), name ]]
+        for record in self.data:
+            data_list += [[ record.alpha2.lower(), record.English ]]
         return data_list
 
     def handle_upload(self):
