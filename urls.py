@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 
 from bauth.api.views.api_login_view import APILoginView
 from book.api.router import book_router
+from book.api.viewsets.BookListAPIView import BookListAPIView
 from book.api.viewsets.category_api_view import BookCategoryAPIView
 
 from home_view import HomeView
@@ -35,6 +36,7 @@ urlpatterns += [
 
 urlpatterns += [
     url('^api/v1/category-list/$', BookCategoryAPIView.as_view()),
+    url('^api/v1/book-list/$', BookListAPIView.as_view()),
     url('^api/v1/login/$', APILoginView.as_view())
 ]
 

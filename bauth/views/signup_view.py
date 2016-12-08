@@ -1,9 +1,8 @@
-from django.views.generic.base import TemplateView
-
 from bauth.forms.signup_form import SignupForm
+from generics.views.base_template_view import BaseTemplateView
 
 
-class SignupView(TemplateView):
+class SignupView(BaseTemplateView):
     template_name = "signup.html"
 
     def get_context_data(self, **kwargs):

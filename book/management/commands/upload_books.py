@@ -9,7 +9,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print("Book Initializing...")
         print("Now")
-        fname = '/home/codenginebd/Desktop/Projects/online-book-rental/book/management/commands/book_list.xlsx'
+        fname = '/home/codenginebd/Desktop/Projects/online-book-rental/book/management/commands/uploads/book_list.xlsx'
         excel_reader = ExcelFileReader(file_name=fname, sheet_name='Sheet1')
         data = excel_reader.get_data()
         book_uploader = BookUploader(data=data)

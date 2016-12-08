@@ -2,7 +2,7 @@ from django.db import transaction
 
 from book.libs.uploader.uploader import Uploader
 from book.models.language import Language
-from brlogger.models.error_log import ErrorLog
+from logger.models.error_log import ErrorLog
 from engine.exceptions.br_exception import BRException
 
 
@@ -18,17 +18,19 @@ class LanguageUploader(Uploader):
 
         data_list = []
 
-        for record in self.data:
-            data_list += [[ record.alpha2.lower(), record.English ]]
+        for entry in self.data:
+            data_list += [[ entry['alpha2'], entry['English'] ]]
         return data_list
 
     def handle_upload(self):
+
+        Language.objects.all().delete()
 
         self.data = self.data_as_list()
 
         for row in self.data:
 
-            if len(row) != 3:
+            if len(row) != 2:
                 error_log = ErrorLog()
                 error_log.url = ''
                 error_log.stacktrace = 'Invalid format in language upload'

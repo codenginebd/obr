@@ -1,7 +1,7 @@
-from django.views.generic.base import TemplateView
+from generics.views.base_template_view import BaseTemplateView
 
 
-class PostSignupView(TemplateView):
+class PostSignupView(BaseTemplateView):
     template_name = "post_signup_view.html"
 
     def get_context_data(self, **kwargs):
