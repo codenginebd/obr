@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.query_utils import Q
 from generics.middleware.br_middleware import BRRequestMiddleware
 
 
@@ -11,12 +12,11 @@ class BaseEntityModelManager(models.Manager):
         self.kwargs = kwargs
 
     def get_queryset(self):
-        if self._filter is not None:
-            return super().get_queryset().filter(Q(**self._filter))
-
         current_request = BRRequestMiddleware.get_request()
 
         queryset = super().get_queryset()
+        if self._filter:
+            queryset = queryset.filter(Q(**self._filter))
         queryset = self.model.apply_permissions(queryset, request=current_request, **(self.kwargs))
         queryset = self.model.apply_filter(queryset, request=current_request, **(self.kwargs))
         queryset = self.model.apply_search(queryset, request=current_request, **(self.kwargs))

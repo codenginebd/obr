@@ -1,10 +1,16 @@
-from django.db import models
-
-from bauth.models.country import Country
-from generics.models.base_entity import BaseEntity
+from generics.manager.modelmanager.base_entity_model_manager import BaseEntityModelManager
+from generics.models.location_entity import LocationEntity
 
 
-class State(BaseEntity):
-    name = models.CharField(max_length=200)
-    short_name = models.CharField(max_length=200, blank=True)
-    parent = models.ForeignKey(Country)
+class State(LocationEntity):
+
+    objects = BaseEntityModelManager(filter={'type': 'State'})
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.type = self.__class__.__name__
+        super(State, self).save(force_insert=force_insert, force_update=force_update,
+                                using=using, update_fields=update_fields)
+
+    class Meta:
+        proxy = True
