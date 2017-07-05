@@ -1,3 +1,3 @@
 STATIC_FILES_DIRS = (
-    '/home/codenginebd/Desktop/Projects/online-book-rental/static',
+    '/home/codenginebd/Desktop/online-book-rental/static',
 )
