@@ -10,3 +10,11 @@ class SignupView(BaseTemplateView):
         context["page_title"] = "Sign Up"
         context['signup_form'] = SignupForm()
         return context
+    
+    def post(self, **kwargs):
+        form_instance = SignupForm(self.request.POST)
+        if form_instance.is_valid():
+            form_instance.save()
+            #Send email here
+        else:
+            pass

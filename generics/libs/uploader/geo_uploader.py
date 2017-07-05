@@ -40,4 +40,12 @@ class GEOUploader(object):
                     self.upazilla_list += [ upazila_name ]
 
 
-
+                for cname in self.country_list:
+                    c_objects = Country.objects.filter(name=country_name)
+                    if c_objects.exists():
+                        c_object = c_objects.first()
+                    else:
+                        c_object = Country()
+                        c_object.name = cname
+                        c_object.save()
+                        self.country_dict[cname] = c_object
