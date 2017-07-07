@@ -14,27 +14,25 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # All config import
-from config.static_directory import *
 from config.settings.database import *
 from config.settings.br_apps import *
-
+from config.static_directory import *
 import pymysql
+
 pymysql.install_as_MySQLdb()
 
 # End config import
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Modified Code
 
 ENVIRONMENT = os.environ
 
-#End Modified Code
+# End Modified Code
 
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -45,18 +43,18 @@ SECRET_KEY = ENVIRONMENT.get('SECRET_KEY', 'a^&%6yp#2eudk%+5v-7tkhn+hxfm2_zmm83r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ "127.0.0.1" ]
-
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 # Additional locations of static files
+
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(SITE_ROOT, 'static'),
 )
 
 STATICFILES_DIRS += STATIC_FILES_DIRS
-
 
 USE_I18N = True
 
@@ -78,7 +76,6 @@ LOCALE_PATHS = (
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale.
 USE_L10N = True
-
 
 # Application definition
 
@@ -104,7 +101,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'engine.middlewares.language_middleware.LanguageMiddleware',
+    # 'engine.middlewares.language_middleware.LanguageMiddleware',
     'generics.middleware.br_middleware.BRRequestMiddleware'
 ]
 
@@ -130,12 +127,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = DATABASES_CONFIG
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -155,7 +150,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -165,10 +159,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/

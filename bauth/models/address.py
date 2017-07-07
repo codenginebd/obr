@@ -6,7 +6,7 @@ from bauth.models.upazila import Upazila
 from generics.models.base_entity import BaseEntity
 
 
-class Adress(BaseEntity):
+class Address(BaseEntity):
     type = models.CharField(max_length=20)
     street1 = models.CharField(max_length=500)
     street2 = models.CharField(max_length=500, blank=True)
