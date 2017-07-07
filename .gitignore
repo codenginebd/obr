@@ -101,6 +101,6 @@ ENV/
 migrations
 .idea
 *.iml
-/database.py
+database.py
 media
 *.json
