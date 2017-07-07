@@ -11,7 +11,6 @@ class SignupAjaxView(View, AjaxRendererMixin):
         signup_form_instance = SignupForm(request.POST)
         if signup_form_instance.is_valid():
             with transaction.atomic():
-
                 auth_user_fields = {
                     'first_name': signup_form_instance.cleaned_data['first_name'],
                     'last_name': signup_form_instance.cleaned_data['last_name'],
@@ -29,10 +28,10 @@ class SignupAjaxView(View, AjaxRendererMixin):
                 br_user_instance.social_signup = False
                 br_user_instance.save()
 
-        self.response['status'] = 'SUCCESS'
-        self.response['message'] = 'Successful'
-        self.response['data'] = {
-            'email': br_user_instance.user.email
-        }
+            self.response['status'] = 'SUCCESS'
+            self.response['message'] = 'Successful'
+            self.response['data'] = {
+                'email': br_user_instance.user.email
+            }
         ajax_response = self.render_json(self.response)
         return ajax_response
