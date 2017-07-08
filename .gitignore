@@ -98,3 +98,10 @@ ENV/
 # mypy
 .mypy_cache/
 *.pyc
+migrations
+.idea
+*.iml
+database.py
+media
+*.json
+
