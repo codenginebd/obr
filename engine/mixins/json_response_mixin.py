@@ -3,5 +3,5 @@ import json
 
 
 class JSONResponseMixin(object):
-    def render_to_json(self,data):
+    def render_to_json(self, data):
         return HttpResponse(json.dumps(data))

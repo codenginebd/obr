@@ -153,11 +153,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
-USE_I18N = True
 
 USE_TZ = True
 
@@ -167,3 +163,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Modification will be added here.
+
+# google reCapatcha configurations
+GOOGLE_RECAPTCHA_SITE_KEY = '6LcYVygUAAAAAIGFaK1DCUbCELTevyY30XOv-Ypc'
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LcYVygUAAAAADCiuiaYsCU-zPNGAhCo9Rp1qgRk'

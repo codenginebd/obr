@@ -1,48 +1,59 @@
 {% extends "master.html" %}
 {% load staticfiles %}
-{% block content %}
-    <link href="{% static "css/login.css" %}" rel="stylesheet" />
+
+{% block more_stylesheet %}
+    <link href="{% static "css/login.css" %}" rel="stylesheet"/>
+{% endblock %}
+{% block more_js %}
     <script src="{% static "js/login.js" %}"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+{% endblock %}
+{% block content %}
     <div class=" " id="contact1">
-          <div class="container">
-              <div class="">
-                  <div class="contact-form" style="margin-top: 40px !important;">
-                      <div class="row">
-                          <div class="col-md-7 right-border">
-                              <div class="address add-animation-stopped animation-1">
-                                  <h4>It's So Easy!</h4>
-                                  <p class="text-gray">
-                                      One click signup will help you to access thousands of text books.
-                                  </p>
-                                  <p>
-                                      Once you are done we will send you a link. Please follow that link to activate your account.
-                                  </p>
-                                  <h4>Help Line</h4>
-                                  <p class="text-gray">0456 / 71 21 39</p>
-                                  <h4>Email Us</h4>
-                                  <a href="mailto:hello@creative-tim.com">
-                                      <p class="text-gray">support@sstlab.com</p>
-                                  </a>
-                              </div>
-                          </div>
-                          <div class="col-md-5">
-                              <form id="id_signin_form" class="signin_form" data-action="{% url "bauth_ajax_login_view" %}" action="#" method="post">
+        <div class="container">
+            <div class="">
+                <div class="contact-form" style="margin-top: 40px !important;">
+                    <div class="row">
+                        <div class="col-md-7 right-border">
+                            <div class="address add-animation-stopped animation-1">
+                                <h4>It's So Easy!</h4>
+                                <p class="text-gray">
+                                    One click signup will help you to access thousands of text books.
+                                </p>
+                                <p>
+                                    Once you are done we will send you a link. Please follow that link to activate your
+                                    account.
+                                </p>
+                                <h4>Help Line</h4>
+                                <p class="text-gray">0456 / 71 21 39</p>
+                                <h4>Email Us</h4>
+                                <a href="mailto:hello@creative-tim.com">
+                                    <p class="text-gray">support@sstlab.com</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <form id="id_signin_form" class="signin_form"
+                                  data-action="{% url "bauth_ajax_login_view" %}" action="#" method="post">
                                 {% csrf_token %}
                                 <h1>Sign In</h1>
-                                  <label for="mail">Email or Phone:</label>
-                                  {{ login_form.username }}
+                                <label for="mail">Email or Phone:</label>
+                                {{ login_form.username }}
+                                <span class="error text-danger signup_field_error displaynone"></span>
+                                <label for="mail">Password:</label>
+                                {{ login_form.password }}
 
-                                    <label for="mail">Password:</label>
-                                  {{ login_form.password }}
+                                <div class="g-recaptcha" data-sitekey="{{ captcha_site_key }}"></div>
+                                <br>
 
                                 <p class="alert alert-danger fade in alert-dismissable signin_error displaynone">
                                 </p>
                                 <button id="id_signin_button" type="submit">Sign In</button>
-                              </form>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
