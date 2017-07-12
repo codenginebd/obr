@@ -11,4 +11,4 @@ class TemplateLoader(object):
             cntxt = Context(context)
             return template.render(cntxt)
         except Exception as exp:
-            pass
+            print("No Template Found")
