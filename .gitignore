@@ -102,5 +102,6 @@ migrations
 .idea
 *.iml
 database.py
+email_config.py
 media
 *.json
