@@ -103,5 +103,6 @@ migrations
 *.iml
 database.py
 email_config.py
+google_recaptcha_config.py
 media
 *.json
