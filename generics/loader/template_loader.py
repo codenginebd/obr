@@ -12,3 +12,4 @@ class TemplateLoader(object):
             return template.render(cntxt)
         except Exception as exp:
             print("No Template Found")
+            print(str(exp))
