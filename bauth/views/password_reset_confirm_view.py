@@ -11,7 +11,7 @@ from engine.mixins.ajax_renderer_mixin import AjaxRendererMixin
 
 class PasswordResetConfirmView(FormView, AjaxRendererMixin):
     template_name = "reset_password_confirm.html"
-    success_url = '/account/login'
+    success_url = '/auth/login/'
     form_class = SetPasswordForm
 
     def post(self, request, uidb64=None, token=None, *arg, **kwargs):
@@ -19,13 +19,12 @@ class PasswordResetConfirmView(FormView, AjaxRendererMixin):
         View that checks the hash in a password reset link and presents a
         form for entering a new password.
         """
-        UserModel = User
         form = self.form_class(request.POST)
         assert uidb64 is not None and token is not None  # checked by URLconf
         try:
             uid = urlsafe_base64_decode(uidb64)
-            user = UserModel.objects.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
 
         if user is not None and default_token_generator.check_token(user, token):

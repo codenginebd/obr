@@ -173,3 +173,6 @@ STATIC_URL = '/static/'
 # google reCapatcha configurations
 GOOGLE_RECAPTCHA_SITE_KEY = GOOGLE_RECAPTCHA_SITE_KEY
 GOOGLE_RECAPTCHA_SECRET_KEY = GOOGLE_RECAPTCHA_SECRET_KEY
+
+# after 7 days password reset link will disable automatically
+PASSWORD_RESET_TIMEOUT_DAYS = 7

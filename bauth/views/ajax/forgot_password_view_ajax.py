@@ -48,7 +48,7 @@ class ResetPasswordRequestAjaxView(View, AjaxRendererMixin):
                         email = loader.render_to_string(email_template_name, c)
 
                         # sending email
-                        # send_mail(subject, email, DEFAULT_FROM_EMAIL, [b_user.user.email], fail_silently=False)
+                        send_mail(subject, email, DEFAULT_FROM_EMAIL, [b_user.user.email], fail_silently=False)
 
                         self.response['status'] = 'SUCCESS'
                         self.response['message'] = 'Forgot Password Request successful'
