@@ -17,6 +17,7 @@ import os
 from config.settings.database import *
 from config.settings.br_apps import *
 from config.static_directory import *
+from config.settings.hosts import BR_ALLOWED_HOSTS
 import pymysql
 from config.settings.email_config import *
 
@@ -44,7 +45,7 @@ SECRET_KEY = ENVIRONMENT.get('SECRET_KEY', 'a^&%6yp#2eudk%+5v-7tkhn+hxfm2_zmm83r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = BR_ALLOWED_HOSTS
 
 SITE_ID = 1
 SITE_NAME = 'bookrental'

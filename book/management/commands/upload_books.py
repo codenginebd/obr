@@ -9,8 +9,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print("Book Initializing...")
         print("Now")
-        PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-        fname = PROJECT_ROOT + 'book/management/commands/uploads/book_list.xlsx'
+        PROJECT_ROOT = os.path.abspath(os.path.dirname(__name__))
+        fname = PROJECT_ROOT + '/book/management/commands/uploads/book_list.xlsx'
         excel_reader = ExcelFileReader(file_name=fname, sheet_name='Sheet1')
         data = excel_reader.get_data()
         book_uploader = BookUploader(data=data)

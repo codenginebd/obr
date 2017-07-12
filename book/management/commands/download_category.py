@@ -11,8 +11,8 @@ from generics.libs.writer.writter import Writter
 class Command(BaseCommand):
     def handle(self, *args, **options):
         print("Download Initialized")
-        PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-        fname = PROJECT_ROOT+ 'book/management/commands/downloads/category_list1.xlsx'
+        PROJECT_ROOT = os.path.abspath(os.path.dirname(__name__))
+        fname = PROJECT_ROOT+ '/book/management/commands/downloads/category_list1.xlsx'
         #print(issubclass(ExcelFileWriter, Writter))
         category_downloader = CategoryDownloader(file_name=fname, writer=ExcelFileWriter)
         category_downloader.download()
