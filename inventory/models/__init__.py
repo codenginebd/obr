@@ -6,5 +6,5 @@ from inventory.models.warehouse_inventory import WarehouseInventory
 
 
 __all__ = ['BookWarehouse']
-__all__ += ['WarehouseInventory']
 __all__ += ['Inventory']
+__all__ += ['WarehouseInventory']

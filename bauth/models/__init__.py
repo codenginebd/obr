@@ -8,9 +8,9 @@ from bauth.models.upazila import Upazila
 from bauth.models.user import BUser
 
 
-__all__ = ['BUser']
+__all__ = ['Address']
 __all__ += ['Country']
+__all__ += ['Upazila']
 __all__ += ['District']
 __all__ += ['State']
-__all__ += ['Upazila']
-__all__ += ['Address']
+__all__ += ['BUser']

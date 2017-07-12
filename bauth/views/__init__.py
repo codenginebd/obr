@@ -10,11 +10,11 @@ from bauth.views.post_signup_view import PostSignupView
 from bauth.views.signup_view import SignupView
 
 
-__all__ = ['LogoutView']
-__all__ += ['SignupAjaxView']
-__all__ += ['CheckPhoneView']
-__all__ += ['CheckEmailView']
+__all__ = ['SignupAjaxView']
 __all__ += ['SignupView']
 __all__ += ['LoginView']
+__all__ += ['CheckPhoneView']
+__all__ += ['CheckEmailView']
 __all__ += ['SigninAjaxView']
+__all__ += ['LogoutView']
 __all__ += ['PostSignupView']
