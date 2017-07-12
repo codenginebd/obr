@@ -17,6 +17,7 @@ import os
 from config.static_directory import *
 from config.settings.database import *
 from config.settings.br_apps import *
+from config.settings.hosts import BR_ALLOWED_HOSTS
 
 import pymysql
 pymysql.install_as_MySQLdb()
@@ -45,7 +46,7 @@ SECRET_KEY = ENVIRONMENT.get('SECRET_KEY', 'a^&%6yp#2eudk%+5v-7tkhn+hxfm2_zmm83r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ "127.0.0.1" ]
+ALLOWED_HOSTS = BR_ALLOWED_HOSTS
 
 
 # Additional locations of static files
