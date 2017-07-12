@@ -8,8 +8,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print("Upload Initialized")
         print("Now")
-        PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-        fname = PROJECT_ROOT + 'book/management/commands/uploads/category_list1.xlsx'
+        PROJECT_ROOT = os.path.abspath(os.path.dirname(__name__))
+        fname = PROJECT_ROOT + '/book/management/commands/uploads/category_list1.xlsx'
         excel_reader = ExcelFileReader(file_name=fname, sheet_name='Sheet1')
         data = excel_reader.get_data()
         category_uploader = CategoryUploader(data=data)
