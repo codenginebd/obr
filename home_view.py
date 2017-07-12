@@ -9,6 +9,6 @@ class HomeView(BaseView):
     template_name = "public/home.html"
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
-            return HttpResponseRedirect(reverse('book_browse_view'))
+        # if request.user.is_authenticated():
+        #     return HttpResponseRedirect(reverse('book_browse_view'))
         return HttpResponse(TemplateLoader.load_template(self.template_name, {}))

@@ -18,6 +18,7 @@ from config.settings.database import *
 from config.settings.br_apps import *
 from config.static_directory import *
 import pymysql
+from config.settings.email_config import *
 
 pymysql.install_as_MySQLdb()
 
@@ -44,6 +45,9 @@ SECRET_KEY = ENVIRONMENT.get('SECRET_KEY', 'a^&%6yp#2eudk%+5v-7tkhn+hxfm2_zmm83r
 DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1"]
+
+SITE_ID = 1
+SITE_NAME = 'bookrental'
 
 # Additional locations of static files
 
@@ -111,7 +115,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(SITE_ROOT, '../online-book-rental/templates'),
+            os.path.join(SITE_ROOT, 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {

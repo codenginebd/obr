@@ -6,5 +6,5 @@ from book.views.browse_view import BookBrowseView
 
 
 __all__ = ['BookDetailsView']
-__all__ += ['BookBrowseView']
 __all__ += ['BookSearchView']
+__all__ += ['BookBrowseView']
