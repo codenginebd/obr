@@ -8,8 +8,6 @@ class TemplateLoader(object):
     def load_template(cls, template_name, context={}):
         try:
             template = loader.get_template(template_name)
-            cntxt = Context(context)
-            return template.render(cntxt)
+            return template.render(context)
         except Exception as exp:
-            print("No Template Found")
-            print(str(exp))
+            pass
