@@ -3,7 +3,7 @@ __author__ = 'codengine'
 DATABASES_CONFIG = {
     'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'book_rental',
+            'NAME': 'book_rental_dev',
             'USER': 'root',
             'PASSWORD': 'root',
             'HOST': '127.0.0.1',
