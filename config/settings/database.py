@@ -4,8 +4,8 @@ DATABASES_CONFIG = {
     'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'book_rental',
-            'USER': 'codenginebd',
-            'PASSWORD': '',
+            'USER': 'root',
+            'PASSWORD': 'root',
             'HOST': '127.0.0.1',
             'PORT': '',
             'OPTIONS': {
