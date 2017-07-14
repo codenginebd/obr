@@ -19,11 +19,12 @@ from bauth.api.views.api_login_view import APILoginView
 from book.api.router import book_router
 from book.api.viewsets.BookListAPIView import BookListAPIView
 from book.api.viewsets.category_api_view import BookCategoryAPIView
+from book.views.browse_view import BookBrowseView
 
 from home_view import HomeView
 
 urlpatterns = [
-    url(r'^$', HomeView.as_view(), name='home_view'),
+    url(r'^$', BookBrowseView.as_view(), name='home_view'),
     # url(r'^admin/', admin.site.urls),
     url(r'^auth/', include('bauth.urls')),
     url(r'^books/', include('book.urls')),
