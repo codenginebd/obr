@@ -1,5 +1,6 @@
 from bauth.forms.signup_form import SignupForm
 from generics.views.base_template_view import BaseTemplateView
+from settings import FACEBOOK_APP_ID
 
 
 class SignupView(BaseTemplateView):
@@ -9,6 +10,7 @@ class SignupView(BaseTemplateView):
         context = super(SignupView, self).get_context_data(**kwargs)
         context["page_title"] = "Sign Up"
         context['signup_form'] = SignupForm()
+        context['facebook_app_id'] = FACEBOOK_APP_ID
         return context
     
     def post(self, **kwargs):

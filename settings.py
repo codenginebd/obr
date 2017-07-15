@@ -21,6 +21,7 @@ from config.settings.hosts import BR_ALLOWED_HOSTS
 import pymysql
 from config.settings.email_config import *
 from config.settings.google_recaptcha_config import *
+from config.settings.social_login_config import *
 
 pymysql.install_as_MySQLdb()
 
@@ -108,7 +109,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'engine.middlewares.language_middleware.LanguageMiddleware',
-    'generics.middleware.br_middleware.BRRequestMiddleware'
+    'generics.middleware.br_middleware.BRRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'urls'
@@ -174,5 +175,12 @@ STATIC_URL = '/static/'
 GOOGLE_RECAPTCHA_SITE_KEY = GOOGLE_RECAPTCHA_SITE_KEY
 GOOGLE_RECAPTCHA_SECRET_KEY = GOOGLE_RECAPTCHA_SECRET_KEY
 
+# social login configurations
+FACEBOOK_APP_ID = FACEBOOK_APP_ID
+
 # after 7 days password reset link will disable automatically
 PASSWORD_RESET_TIMEOUT_DAYS = 7
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)

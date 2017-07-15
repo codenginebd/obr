@@ -2,7 +2,6 @@
 {% load staticfiles %}
 {% block content %}
     <link href="{% static "css/signup.css" %}" rel="stylesheet"/>
-    <script src="{% static "js/sign_up.js" %}"></script>
     <script src="{% static "js/social_signup.js" %}"></script>
     <style>
 
@@ -31,13 +30,11 @@
                             </div>
                         </div>
                         <div class="col-md-5">
-                            <form id="id_signup_form" class="signup_form" action="#" method="post"
-                                  data-action="{% url "bauth_ajax_signup_view" %}"
+                            <form id="id_social_signup_form" class="signup_form" action="#" method="post"
+                                  data-action="{% url "bauth_ajax_social_signup_view" %}"
                                   data-check-email-url="{% url "bauth_ajax_check_email_view" %}"
                                   data-check-phone-url="{% url "bauth_ajax_check_phone_view" %}"
-                                  data-social-signup-url="{% url "bauth_social_signup_view" %}"
                                   data-account-activate-url="{% url "bauth_ajax_account_activate_view" %}"
-                                  data-facebook_app_id="{{ facebook_app_id }}"
                                   data-post-signup-url="{% url "bauth_post_signup_view" %}">
                                 {% csrf_token %}
                                 <h1>Sign Up</h1>
@@ -54,7 +51,6 @@
                                     </div>
                                 </div>
 
-
                                 <label for="mail">Email:</label>
                                 {{ signup_form.email }}
                                 <span class="error text-danger signup_field_error displaynone"></span>
@@ -70,22 +66,9 @@
                                         <span class="error text-danger signup_field_error displaynone"></span>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label for="mail">Password:</label>
-                                        {{ signup_form.password }}
-                                        <span class="error text-danger signup_field_error displaynone"></span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="mail">Repeat Password:</label>
-                                        {{ signup_form.password2 }}
-                                        <span class="error text-danger signup_field_error displaynone"></span>
-                                    </div>
-                                </div>
+                                {{ signup_form.is_verified }}
 
-                                <button id="id_signup_button" type="submit">Sign Up</button>
-                                <div id="fb-root"></div>
-                                <a id="id_fb_login" href="#" onclick="facebook_signin()">Sign up with Facebook</a>
+                                <button id="id_social_signup_button" type="submit">Sign Up</button>
                             </form>
                         </div>
                     </div>
