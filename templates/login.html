@@ -6,6 +6,7 @@
 {% endblock %}
 {% block more_js %}
     <script src="{% static "js/login.js" %}"></script>
+    <script src="{% static "js/social_login.js" %}"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
 {% endblock %}
 {% block content %}
@@ -34,7 +35,10 @@
                         </div>
                         <div class="col-md-5">
                             <form id="id_signin_form" class="signin_form"
-                                  data-action="{% url "bauth_ajax_login_view" %}" action="#" method="post">
+                                  data-action="{% url "bauth_ajax_login_view" %}"
+                                  data-social_login_url="{% url "bauth_ajax_social_login_view" %}"
+                                  data-facebook_app_id="{{ facebook_app_id }}"
+                                  action="#" method="post">
                                 {% csrf_token %}
                                 <h1>Sign In</h1>
                                 <label for="mail">Email or Phone:</label>
@@ -49,7 +53,19 @@
                                 <p class="alert alert-danger fade in alert-dismissable signin_error displaynone">
                                 </p>
                                 <button id="id_signin_button" type="submit">Sign In</button>
-                                <p style="text-align:center">
+                                <div style="text-align: center;">
+                                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"
+                                                     size="xlarge">Continue with Facebook</fb:login-button>
+                                </div>
+                                <div style="text-align: center;">
+                                    <span style="margin-top: 2px; margin-bottom: 2px;font-weight: bold">Or</span>
+                                </div>
+{#                                <div style="text-align: center;">#}
+{#                                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"#}
+{#                                                     size="xlarge">Continue with Google</fb:login-button>#}
+{#                                </div>#}
+
+                                <p style="text-align:center; margin-top: 2px;">
                                     <a href="{% url 'bauth_forgot_password' %}">Forgot Password?</a>
                                 </p>
                             </form>

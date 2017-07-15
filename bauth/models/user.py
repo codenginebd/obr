@@ -8,6 +8,7 @@ from generics.models.base_entity import BaseEntity
 class BUser(BaseEntity):
     user = models.OneToOneField(User)
     phone = models.CharField(max_length=200, blank=True)
+    is_verified = models.BooleanField(default=False)
     social_signup = models.BooleanField(default=False)
     gender = models.CharField(max_length=10, blank=True)
     addresses = models.ManyToManyField(Address)

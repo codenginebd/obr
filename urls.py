@@ -41,5 +41,4 @@ urlpatterns += [
     url('^api/v1/login/$', APILoginView.as_view())
 ]
 
-
 urlpatterns += book_router.urls

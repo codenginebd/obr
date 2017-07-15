@@ -1,6 +1,6 @@
 from bauth.forms.login_form import LoginForm
 from generics.views.base_template_view import BaseTemplateView
-from settings import GOOGLE_RECAPTCHA_SITE_KEY
+from settings import GOOGLE_RECAPTCHA_SITE_KEY, FACEBOOK_APP_ID
 
 
 class LoginView(BaseTemplateView):
@@ -11,4 +11,5 @@ class LoginView(BaseTemplateView):
         context['login_form'] = LoginForm()
         context['page_title'] = 'Sign In'
         context['captcha_site_key'] = GOOGLE_RECAPTCHA_SITE_KEY
+        context['facebook_app_id'] = FACEBOOK_APP_ID
         return context

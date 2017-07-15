@@ -102,5 +102,8 @@ migrations
 .idea
 *.iml
 database.py
+email_config.py
+google_recaptcha_config.py
+social_login_config.py
 media
 *.json
