@@ -14,3 +14,5 @@ class Address(BaseEntity):
     district = models.ForeignKey(District, null=True, related_name='+')
     state = models.ForeignKey(State, null=True, related_name='+')
     country = models.ForeignKey(Country, null=True, related_name='+')
+    nearest_landmark = models.CharField(max_length=500, blank=True, null=True)
+    verified = models.BooleanField(default=False)
