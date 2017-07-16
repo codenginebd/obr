@@ -20,6 +20,7 @@ from book.api.router import book_router
 from book.api.viewsets.BookListAPIView import BookListAPIView
 from book.api.viewsets.category_api_view import BookCategoryAPIView
 from book.views.browse_view import BookBrowseView
+from cart_view import BasketView
 
 from home_view import HomeView
 
@@ -28,6 +29,7 @@ urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^auth/', include('bauth.urls')),
     url(r'^books/', include('book.urls')),
+    url(r'^my-basket/', BasketView.as_view(), name='my_basket_view'),
 ]
 
 # Include API's
