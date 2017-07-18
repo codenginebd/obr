@@ -5,6 +5,7 @@ BR_APPS = [
     'bauth',
     'book',
     'inventory',
+    'promotion',
     'order',
     'payment'
 ]

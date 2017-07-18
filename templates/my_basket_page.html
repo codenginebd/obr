@@ -1,0 +1,112 @@
+{% extends "master.html" %}
+{% load staticfiles %}
+{% block more_stylesheet %}
+<link href="{% static "css/search_page.css" %}" rel="stylesheet" />
+{% endblock more_stylesheet %}
+{% block content %}
+    <div class=" " id="contact1">
+        <div class="container" >
+          <div class="row">
+              <div class="col-md-2">
+
+              </div>
+              <div class="col-md-10" style="">
+                  <button style="margin-top: 20px; padding: 17px; background: #bc3526; color: white; opacity: 1.0; " class="btn btn-primary pull-right">Search</button>
+                  <input type="text" style="margin-top: 20px; max-width: 450px; " class="form-control pull-right" name="book_search" placeholder="Search By ISBN, Book Title, Author Name, Keywords..."/>
+              </div>
+          </div>
+        </div>
+        <div class="container" style="width: 100%;">
+          <div class="row " style="border-bottom: 1px solid #e7e7e7; margin-bottom: 10px; ">
+              <div class="col-md-2">
+
+              </div>
+              <div class="col-md-10" style="padding-right: 20px; ">
+
+              </div>
+          </div>
+        </div>
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-9">
+                      <div class="col-md-12">
+                          <div class="row">
+                              <div class="col-lg-12 col-md-12">
+                                    <h4>
+                                        <span class="glyphicon glyphicon-shopping-cart"></span> My Basket
+                                    </h4>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-12">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+
+                                                </th>
+                                                <th>
+                                                    Book
+                                                </th>
+                                                <th>
+                                                    Purchase Type
+                                                </th>
+                                                <th>
+                                                    Period
+                                                </th>
+                                                <th>
+                                                    Unit Price
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% include "sections/my_basket_item.html" %}
+                                            {% include "sections/my_basket_item.html" %}
+                                            {% include "sections/my_basket_item.html" %}
+                                            {% include "sections/my_basket_item.html" %}
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td colspan="4">
+                                               <button class="btn btn-success pull-right">Proceed To Checkout</button>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                              </div>
+                            </div>
+                      </div>
+                  </div>
+                  <div class="col-md-3 cart_block">
+                      <div class="col-md-12">
+                          <div class="cart_title">
+                              Apply Coupon
+                              <hr/>
+                          </div>
+                          <div class="cart_content">
+                              <p class="p">Enter your coupon code below if you have any</p>
+                              <p>
+                                  <input class="form form-control" type="text" name="coupon_code_input"/>
+                                  <button class="btn btn-dark-green btn-success" name="coupon_code_submit">Apply Coupon</button>
+                              </p>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <br/>
+                          <div class="cart_title">
+                              Similar Books
+                              <hr/>
+                          </div>
+                          <div class="cart_content">
+                              {% include "sections/similar_item.html" %}
+                              {% include "sections/similar_item.html" %}
+                              <p>
+                                  <a class="pull-right btn btn-success" href="#">View More</a>
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+{% endblock content %}

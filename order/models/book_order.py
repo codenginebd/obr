@@ -5,6 +5,7 @@ from inventory.models.warehouse import BookWarehouse
 from order.models.order_breakdown import BookOrderBreakdown
 from bauth.models.address import Address
 from payment.models.payment_transaction import PaymentTransaction
+from promotion.models.promotion import Promotion
 
 
 class BookOrder(BaseEntity):
@@ -16,3 +17,7 @@ class BookOrder(BaseEntity):
     delivered_by = models.ForeignKey(User, related_name='order_delivered_by', null=True)
     payment_status = models.IntegerField(default=0) # Not Processed, Processed and Successful, Processed and Failed
     payment = models.ForeignKey(PaymentTransaction, null=True)
+    coupon_applied = models.BooleanField(default=False)
+    coupon_code = models.CharField(max_length=200, blank=True, null=True)
+    promotion_applied = models.BooleanField(default=False)
+    promotion = models.ForeignKey(Promotion, null=True)

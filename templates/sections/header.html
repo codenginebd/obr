@@ -1,10 +1,5 @@
 {% load settings_tags %}
 {% if request.user.is_authenticated %}
-    <script>
-        $(document).ready(function () {
-            $('.dropdown-toggle').dropdown();
-        });
-    </script>
     <style>
         nav.navbar-webmaster {
         }
@@ -78,7 +73,7 @@
         }
 
         .mega-dropdown-menu {
-            padding: 20px 0px;
+            padding: 20px 0;
             width: 100%;
             box-shadow: none;
             -webkit-box-shadow: none;
@@ -135,27 +130,54 @@
     </style>
     <script>
         $(document).ready(function () {
+            $('.dropdown-toggle').dropdown();
             $(".dropdown").hover(
-                    function () {
-                        $('.dropdown-menu', this).not('.in .dropdown-menu').stop(true, true).show();
-                        $(this).toggleClass('open');
-                    },
-                    function () {
-                        $('.dropdown-menu', this).not('.in .dropdown-menu').stop(true, true).hide();
-                        $(this).toggleClass('open');
-                    }
+                function () {
+                    $('.dropdown-menu', this).not('.in .dropdown-menu').stop(true, true).show();
+                    $(this).toggleClass('open');
+                },
+                function () {
+                    $('.dropdown-menu', this).not('.in .dropdown-menu').stop(true, true).hide();
+                    $(this).toggleClass('open');
+                }
             );
+
+            $('#id_logout_button').on('click', function () {
+                // check login state if logged in then simply logged out
+                checkLoginState();
+
+            });
         });
+
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+                if (response.status === 'connected') {
+                    FB.logout();
+                }
+            });
+        }
 
         window.fbAsyncInit = function () {
             FB.init({
-                appId: 'random_string' | facebook_app_id,
-                cookie: true,  // enable cookies to allow the server to access
-                               // the session
-                xfbml: true,  // parse social plugins on this page
-                version: 'v2.8' // use graph api version 2.8
+                appId: {{ 'randomvalue'|facebook_app_id }},
+                status: true, // check login status
+                cookie: true, // enable cookies to allow the server to access the session
+                xfbml: true  // parse XFBML
             });
         };
+
+        (function (d) {
+            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement('script');
+            js.id = id;
+            js.async = true;
+            js.src = "https://connect.facebook.net/en_US/all.js";
+            ref.parentNode.insertBefore(js, ref);
+        }(document));
+
     </script>
     <div class="navbar-wrapper navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
@@ -285,7 +307,7 @@
                                     <li><a href="#">Profile</a></li>
                                     <li><a href="#">Change Password</a></li>
                                     <li><a href="#">My Cart</a></li>
-                                    <li><a href="{% url "bauth_logout_view" %}" onclick="FB.logout();">Logout</a></li>
+                                    <li><a id="id_logout_button" href="{% url "bauth_logout_view" %}">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
