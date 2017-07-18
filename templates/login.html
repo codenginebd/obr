@@ -36,6 +36,7 @@
                         <div class="col-md-5">
                             <form id="id_signin_form" class="signin_form"
                                   data-action="{% url "bauth_ajax_login_view" %}"
+                                  data-check-user-url="{% url "bauth_ajax_check_email_view" %}"
                                   data-social_login_url="{% url "bauth_ajax_social_login_view" %}"
                                   data-facebook_app_id="{{ facebook_app_id }}"
                                   action="#" method="post">

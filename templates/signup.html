@@ -1,12 +1,15 @@
 {% extends "master.html" %}
-{% load staticfiles %}
-{% block content %}
+{% block more_stylesheet %}
     <link href="{% static "css/signup.css" %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block more_js %}
     <script src="{% static "js/sign_up.js" %}"></script>
     <script src="{% static "js/social_signup.js" %}"></script>
-    <style>
 
-    </style>
+{% endblock %}
+
+{% block content %}
     <div class=" " id="contact1">
         <div class="container">
             <div class="">

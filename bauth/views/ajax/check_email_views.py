@@ -1,13 +1,14 @@
 from django.contrib.auth.models import User
 from django.views.generic.base import View
 
+from bauth.models.user import BUser
 from engine.mixins.ajax_renderer_mixin import AjaxRendererMixin
 
 
 class CheckEmailView(View, AjaxRendererMixin):
     def get(self, request, *args, **kwargs):
         email = request.GET.get('value')
-        if User.objects.filter(username=email).exists():
+        if BUser.objects.filter(user__username=email).exists():
             self.response['status'] = 'SUCCESS'
             self.response['message'] = 'Already Exists'
             self.response['code'] = 1

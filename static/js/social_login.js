@@ -1,3 +1,8 @@
+function check_user_exist(value, url, success_callback, error_callback, complete_callback) {
+    call_ajax("GET", url, {"value": value},
+        success_callback, error_callback, complete_callback);
+}
+
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
     console.log('statusChangeCallback');
@@ -56,32 +61,37 @@ window.fbAsyncInit = function () {
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
 function getInfo(authkey) {
-    FB.api('/me?fields=id,email,first_name,last_name', function (response) {
-        console.log('Good to see you, ' + response.id + '.');
+    FB.api('/me?fields=email,first_name,last_name', function (response) {
         console.log(response.email);
-        var url = $("#id_signin_form").data("social_login_url");
-        var _data = {
-            'email': response.email
-        };
-        call_ajax("GET", url, _data, function (data) {
+        check_user_exist(response.email, $("#id_signin_form").data("check-user-url"),
+            function (data) {
                 if (data.status == "SUCCESS") {
-                    location.href = data.data.url;
-                    $(".signin_error").text("").addClass("displaynone");
-                }
-                else {
-                    $(".signin_error").text(data.data.message).removeClass("displaynone");
+                    var url = $("#id_signin_form").data("social_login_url");
+                    var _data = {
+                        'email': response.email
+                    };
+                    call_ajax("GET", url, _data, function (data) {
+                            if (data.status == "SUCCESS") {
+                                location.href = data.data.url;
+                                $(".signin_error").text("").addClass("displaynone");
+                            }
+                            else {
+                                $(".signin_error").text(data.data.message).removeClass("displaynone");
+                            }
+                        },
+                        function (jqxhr, status, error) {
+                            $(".signin_error").text("Problem with sign in. Please try again later").removeClass("displaynone");
+                        },
+                        function (msg) {
+                            $("#id_signin_button").prop("disabled", false);
+                            $("#id_signin_button").text("Sign In");
+                            $("#id_signin_button").removeClass("signin_disabled");
+                        });
                 }
             },
             function (jqxhr, status, error) {
-                $(".signin_error").text("Problem with sign in. Please try again later").removeClass("displaynone");
             },
             function (msg) {
-                $("#id_signin_button").prop("disabled", false);
-                $("#id_signin_button").text("Sign In");
-                $("#id_signin_button").removeClass("signin_disabled");
             });
-        // location.href = $("#id_signup_form").data("social-signup-url") +
-        //     "?email=" + response.email + "&first_name=" + response.first_name +
-        //     "&last_name=" + response.last_name;
     });
 }
