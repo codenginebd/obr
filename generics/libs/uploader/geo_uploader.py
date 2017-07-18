@@ -1,5 +1,5 @@
 from django.db import transaction
-from book.models.category import BookCategory
+from book_rental.models.category import BookCategory
 # from brlogger.models.error_log import ErrorLog
 
 

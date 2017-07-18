@@ -3,9 +3,8 @@ BR_APPS = [
     'logger',
     'clients',
     'bauth',
-    'book',
+    'book_rental',
     'inventory',
     'promotion',
-    'order',
     'payment'
 ]

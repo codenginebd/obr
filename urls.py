@@ -16,10 +16,10 @@ Including another URLconf
 from django.conf.urls import url, include
 
 from bauth.api.views.api_login_view import APILoginView
-from book.api.router import book_router
-from book.api.viewsets.BookListAPIView import BookListAPIView
-from book.api.viewsets.category_api_view import BookCategoryAPIView
-from book.views.browse_view import BookBrowseView
+from book_rental.api.router import book_router
+from book_rental.api.viewsets.BookListAPIView import BookListAPIView
+from book_rental.api.viewsets.category_api_view import BookCategoryAPIView
+from book_rental.views.browse_view import BookBrowseView
 from cart_view import BasketView
 
 from home_view import HomeView
@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^$', BookBrowseView.as_view(), name='home_view'),
     # url(r'^admin/', admin.site.urls),
     url(r'^auth/', include('bauth.urls')),
-    url(r'^books/', include('book.urls')),
+    url(r'^books/', include('book_rental.urls')),
     url(r'^my-basket/', BasketView.as_view(), name='my_basket_view'),
 ]
 
@@ -39,7 +39,7 @@ urlpatterns += [
 
 urlpatterns += [
     url('^api/v1/category-list/$', BookCategoryAPIView.as_view()),
-    url('^api/v1/book-list/$', BookListAPIView.as_view()),
+    url('^api/v1/book_rental-list/$', BookListAPIView.as_view()),
     url('^api/v1/login/$', APILoginView.as_view())
 ]
 
