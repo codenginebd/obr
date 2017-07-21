@@ -26,7 +26,7 @@ from home_view import HomeView
 
 urlpatterns = [
     url(r'^$', BookBrowseView.as_view(), name='home_view'),
-    # url(r'^admin/', admin.site.urls),
+    url(r'^admin/', include('bradmin.urls')),
     url(r'^auth/', include('bauth.urls')),
     url(r'^books/', include('book_rental.urls')),
     url(r'^my-basket/', BasketView.as_view(), name='my_basket_view'),

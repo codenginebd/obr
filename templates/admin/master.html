@@ -1,0 +1,57 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="assets/img/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>{{ page_title }}</title>
+    {% include "scripts/admin/stylesheets.html" %}
+    {% include "scripts/admin/javascripts.html" %}
+    {% block more_stylesheet %}
+
+    {% endblock more_stylesheet %}
+
+    {% block more_js %}
+
+    {% endblock more_js %}
+</head>
+<body>
+{% include "sections/admin/header.html" %}
+{% block header %}
+
+{% endblock header %}
+<div class="section wrapper">
+    <div class="section section-we-are-1" style="min-height: 200px;">
+{% block content %}
+<div class="row" style="min-height: 400px">
+ <div class="side-menu">
+{% block category_sidemenu %}
+
+{% endblock category_sidemenu %}
+    </div>
+    <!-- Main Content -->
+    <div class="container-fluid">
+        <div class="side-body">
+            <div class="row">
+                {% if messages %}
+                    {% for message in messages %}
+                    <p class="alert-danger">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            {% block category_content %}
+
+             {% endblock category_content %}
+        </div>
+    </div>
+</div>s
+{% endblock content %}
+    </div>
+</div>
+{% block footer %}
+    {% include "sections/admin/footer.html" %}
+{% endblock footer %}
+</body>
+</html>

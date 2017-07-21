@@ -1,0 +1,4 @@
+.modal.in .modal-dialog {
+    z-index: 1041 !important;
+    width: 80% !important;
+}

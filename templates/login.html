@@ -2,74 +2,118 @@
 {% load staticfiles %}
 
 {% block more_stylesheet %}
-    <link href="{% static "css/login.css" %}" rel="stylesheet"/>
+
 {% endblock %}
 {% block more_js %}
     <script src="{% static "js/login.js" %}"></script>
     <script src="{% static "js/social_login.js" %}"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
+    <style>
+    #id_signin_form input {
+        width: 350px;
+        margin-bottom: 20px;
+    }
+    </style>
 {% endblock %}
 {% block content %}
     <div class=" " id="contact1">
         <div class="container">
             <div class="">
-                <div class="contact-form" style="margin-top: 40px !important;">
+                <div style="margin-top: 40px !important;">
                     <div class="row">
-                        <div class="col-md-7 right-border">
-                            <div class="address add-animation-stopped animation-1">
-                                <h4>It's So Easy!</h4>
-                                <p class="text-gray">
-                                    One click signup will help you to access thousands of text books.
-                                </p>
-                                <p>
-                                    Once you are done we will send you a link. Please follow that link to activate your
-                                    account.
-                                </p>
-                                <h4>Help Line</h4>
-                                <p class="text-gray">0456 / 71 21 39</p>
-                                <h4>Email Us</h4>
-                                <a href="mailto:hello@creative-tim.com">
-                                    <p class="text-gray">support@sstlab.com</p>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <form id="id_signin_form" class="signin_form"
-                                  data-action="{% url "bauth_ajax_login_view" %}"
-                                  data-social_login_url="{% url "bauth_ajax_social_login_view" %}"
-                                  data-facebook_app_id="{{ facebook_app_id }}"
-                                  action="#" method="post">
-                                {% csrf_token %}
-                                <h1>Sign In</h1>
-                                <label for="mail">Email or Phone:</label>
-                                {{ login_form.username }}
-                                <span class="error text-danger signup_field_error displaynone"></span>
-                                <label for="mail">Password:</label>
-                                {{ login_form.password }}
-
-                                <div class="g-recaptcha" data-sitekey="{{ captcha_site_key }}"></div>
-                                <br>
-
-                                <p class="alert alert-danger fade in alert-dismissable signin_error displaynone">
-                                </p>
-                                <button id="id_signin_button" type="submit">Sign In</button>
-                                <div style="text-align: center;">
-                                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"
-                                                     size="xlarge">Continue with Facebook</fb:login-button>
+                        <div class="col-md-12 right-border">
+<div class="panel panel-login">
+					<div class="panel-body" style="max-width: 400px; margin-left: auto; margin-right: auto;">
+						<div class="row">
+							<div class="col-lg-12">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <h2>Login</h2>
+                                    </div>
+                                    <hr>
                                 </div>
-                                <div style="text-align: center;">
-                                    <span style="margin-top: 2px; margin-bottom: 2px;font-weight: bold">Or</span>
-                                </div>
-{#                                <div style="text-align: center;">#}
-{#                                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"#}
-{#                                                     size="xlarge">Continue with Google</fb:login-button>#}
-{#                                </div>#}
 
-                                <p style="text-align:center; margin-top: 2px;">
-                                    <a href="{% url 'bauth_forgot_password' %}">Forgot Password?</a>
-                                </p>
-                            </form>
+								<form id="login-form" action="https://phpoll.com/login/process" method="post" role="form" style="display: block;">
+									<div class="form-group">
+										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+									</div>
+									<div class="form-group">
+										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+									</div>
+									<div class="form-group text-center">
+										<div class="g-recaptcha" data-sitekey="{{ captcha_site_key }}"></div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-6 col-sm-offset-3">
+												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-success btn-lg" value="Log In">
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="text-center">
+													<a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">Forgot Password?</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
                         </div>
+{#                        <div class="col-md-6">#}
+{#                            <div>#}
+{#                                <form id="id_signin_form" class="signin_form"#}
+{#                                      data-action="{% url "bauth_ajax_login_view" %}"#}
+{#                                      data-social_login_url="{% url "bauth_ajax_social_login_view" %}"#}
+{#                                      data-facebook_app_id="{{ facebook_app_id }}"#}
+{#                                      action="#" method="post">#}
+{#                                    {% csrf_token %}#}
+{#                                    <div class="row">#}
+{#                                        <div class="col-md-12">#}
+{#                                            <h1><label class="pull-left">Sign In</label><label class="pull-right"><a style="color: blue; font-size: 14px;" href="#">Sign Up</a></label></h1>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="row">#}
+{#                                        <div class="col-md-12">#}
+{#                                            {{ login_form.username }}#}
+{#                                            <span class="error text-danger signup_field_error displaynone"></span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="row">#}
+{#                                        <div class="col-md-12">#}
+{#                                            {{ login_form.password }}#}
+{#                                        </div>#}
+{#                                    </div>#}
+{##}
+{#                                    <div class="g-recaptcha" data-sitekey="{{ captcha_site_key }}"></div>#}
+{#                                    <br>#}
+{##}
+{#                                    <p class="alert alert-danger fade in alert-dismissable signin_error displaynone">#}
+{#                                    </p>#}
+{#                                    <button id="id_signin_button" class="btn btn-success btn-lg" type="submit">Sign In</button>#}
+{#                                    <div style="text-align: center;">#}
+{#                                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"#}
+{#                                                         size="xlarge">Continue with Facebook</fb:login-button>#}
+{#                                    </div>#}
+{#                                    <div style="text-align: center;">#}
+{#                                        <span style="margin-top: 2px; margin-bottom: 2px;font-weight: bold">Or</span>#}
+{#                                    </div>#}
+    {#                                <div style="text-align: center;">#}
+    {#                                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"#}
+    {#                                                     size="xlarge">Continue with Google</fb:login-button>#}
+    {#                                </div>#}
+{##}
+{#                                    <p style="text-align:center; margin-top: 2px;">#}
+{#                                        <a href="{% url 'bauth_forgot_password' %}">Forgot Password?</a>#}
+{#                                    </p>#}
+{#                                </form>#}
+{#                            </div>#}
+{#                        </div>#}
                     </div>
                 </div>
             </div>

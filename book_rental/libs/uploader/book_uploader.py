@@ -39,7 +39,7 @@ class BookUploader(object):
             description = row[index]
             
             index += 1
-            category_name = row[index]
+            category_code = row[index]
 
             index += 1
             edition = row[index]
@@ -48,16 +48,10 @@ class BookUploader(object):
             total_page = row[index]
 
             index += 1
-            publisher_name = row[index]
-
-            index += 1
-            publisher_description = row[index]
+            publisher_code = row[index]
 
             index += 1
             published_date = row[index]
-
-            index += 1
-            total_items = row[index]
 
             index += 1
             cover_photo = row[index]
@@ -83,30 +77,9 @@ class BookUploader(object):
             authors = []
             
             index += 1
-            author_name = row[index]
+            author_codes = row[index]
 
-            index += 1
-            author_description = row[index]
-            
-            authors += [
-                {
-                    "name": author_name,
-                    "description": author_description
-                }
-            ]
-            
-            while index < len(row) - 1:
-                author_name = row[index]
-                index += 1
-                author_description = row[index]
-                index += 1
-              
-                authors += [
-                    {
-                        "name": author_name,
-                        "description": author_description
-                    }
-                ]
+            authors = author_codes.split(',')
 
             # Validate data
 

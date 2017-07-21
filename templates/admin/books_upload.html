@@ -1,0 +1,16 @@
+{% extends "admin/books_master.html" %}
+{% load staticfiles %}
+
+{% block category_content %}
+<div class="row">
+<h3>Upload File</h3>
+<hr/>
+<p>
+    <form enctype="multipart/form-data" method="POST" action="#">
+     <div class="row"></div><input type="file" name="cat_file"/></div>
+    <br/>
+     <button class="btn btn-success">Submit</button>
+    </form>
+</p>
+</div>
+{% endblock category_content %}

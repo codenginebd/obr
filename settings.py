@@ -38,6 +38,10 @@ ENVIRONMENT = os.environ
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/home/media/media.lawrence.com/media/"
+MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -184,3 +188,5 @@ PASSWORD_RESET_TIMEOUT_DAYS = 7
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
+
+MEDIA_TEMP_PATH = os.path.join(MEDIA_ROOT,"temp")

@@ -1,0 +1,12 @@
+{% extends "admin/master.html" %}
+{% load staticfiles %}
+{% block category_sidemenu %}
+    <nav class="navbar navbar-default" role="navigation">
+    <div class="side-menu-container">
+        <ul class="nav navbar-nav">
+            <li><a href="{% url "admin_books_upload_view" %}"><span></span> Upload/Update Books</a></li>
+            <li class="active"><a href="#"><span></span> All Books</a></li>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+</nav>
+{% endblock category_sidemenu %}

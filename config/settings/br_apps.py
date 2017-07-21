@@ -6,5 +6,6 @@ BR_APPS = [
     'book_rental',
     'inventory',
     'promotion',
-    'payment'
+    'payment',
+    'bradmin'
 ]
