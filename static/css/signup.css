@@ -3,7 +3,6 @@
 form.signup_form {
   margin: 10px auto;
   padding: 10px 20px;
-  background: #f4f7f8;
   border-radius: 8px;
 }
 
@@ -32,7 +31,6 @@ select {
   outline: 0;
   padding: 15px;
   width: 100%;
-  background-color: #e8eeef;
   color: #8a97a0;
   box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
   margin-bottom: 30px;
@@ -47,7 +45,6 @@ label.heading {
   outline: 0;
   padding: 15px;
   width: 100%;
-  background-color: #e8eeef;
   color: #8a97a0;
   box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
   margin-bottom: 30px;
@@ -67,7 +64,6 @@ select {
 button {
   padding: 19px 39px 18px 39px;
   color: #FFF;
-  background-color: #4bc970;
   font-size: 18px;
   text-align: center;
   font-style: normal;
@@ -100,7 +96,6 @@ label.light {
 }
 
 .number {
-  background-color: #5fcf80;
   color: #fff;
   height: 30px;
   width: 30px;
