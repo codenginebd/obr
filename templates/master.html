@@ -25,14 +25,20 @@
 {% endblock header %}
 <div class="section wrapper">
     <div class="section section-we-are-1" style="min-height: 200px;">
+{% block tbanner %}
+
+{% endblock tbanner %}
 {% block content %}
 
 {% endblock content %}
     </div>
 </div>
+<div style="margin-top: 40px !important;">
+
+</div>
+<hr/>
 {% block footer %}
     {% include "sections/footer.html" %}
 {% endblock footer %}
 </body>
-{% include "scripts/javascripts.html" %}
 </html>

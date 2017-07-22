@@ -1,11 +1,23 @@
 {% extends "master.html" %}
 {% load staticfiles %}
 {% block content %}
-    <link href="{% static "css/signup.css" %}" rel="stylesheet"/>
+    <link href="{% static "css/signup_form.css" %}" rel="stylesheet">
     <script src="{% static "js/sign_up.js" %}"></script>
     <script src="{% static "js/social_signup.js" %}"></script>
-    <style>
-
+    <style type="text/css">
+    .signup-panel {
+        padding: 20px;
+        border: 1px solid #eceaea !important;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        border-radius: 20px;
+        max-width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .signup-panel input {
+        padding: 20px !important;
+    }
     </style>
     <div class=" " id="contact1">
         <div class="container">
@@ -36,6 +48,7 @@
                             </div>
                         </div>
                         <div class="col-md-5">
+                            <div class="signup-panel">
                             <form id="id_signup_form" class="signup_form" action="#" method="post"
                                   data-action="{% url "bauth_ajax_signup_view" %}"
                                   data-check-email-url="{% url "bauth_ajax_check_email_view" %}"
@@ -45,27 +58,28 @@
                                   data-facebook_app_id="{{ facebook_app_id }}"
                                   data-post-signup-url="{% url "bauth_post_signup_view" %}">
                                 {% csrf_token %}
-                                <h1>Sign Up</h1>
+                                <h2>Sign Up</h2>
+                                <hr/>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label for="name">First Name:</label>
                                         {{ signup_form.first_name }}
                                         <span class="error text-danger signup_field_error displaynone"></span>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="name">Last Name:</label>
                                         {{ signup_form.last_name }}
                                         <span class="error text-danger signup_field_error displaynone"></span>
                                     </div>
                                 </div>
-
-
-                                <label for="mail">Email:</label>
-                                {{ signup_form.email }}
-                                <span class="error text-danger signup_field_error displaynone"></span>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        {{ signup_form.email }}
+                                        <span class="error text-danger signup_field_error displaynone"></span>
+                                    </div>
+                                </div>
+                                <br/>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label for="mail">Phone:</label>
                                         <div class="input-group phone-input">
                                                 <span class="input-group-btn">
                                                     <label class="heading">(+880)</label>
@@ -75,23 +89,22 @@
                                         <span class="error text-danger signup_field_error displaynone"></span>
                                     </div>
                                 </div>
+                                <br/>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label for="mail">Password:</label>
                                         {{ signup_form.password }}
                                         <span class="error text-danger signup_field_error displaynone"></span>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="mail">Repeat Password:</label>
                                         {{ signup_form.password2 }}
                                         <span class="error text-danger signup_field_error displaynone"></span>
                                     </div>
                                 </div>
-
-                                <button id="id_signup_button" type="submit">Sign Up</button>
-                                <div id="fb-root"></div>
-                                <a id="id_fb_login" href="#" onclick="facebook_signin()">Sign up with Facebook</a>
+                                <br/>
+                                <button id="id_signup_button" class="btn btn-lg btn-danger" style="width: 100%;" type="submit">Sign Up for free</button>
+                                <p class="hint" style="font-style: italic; font-size: 13px; color: #1C2331;">By clicking 'Signup for free' I agree to the terms and conditions, privacy policy and usage policy of site name</p>
                             </form>
+                            </div>
                         </div>
                     </div>
                 </div>

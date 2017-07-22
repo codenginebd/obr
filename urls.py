@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^admin/', include('bradmin.urls')),
     url(r'^auth/', include('bauth.urls')),
     url(r'^books/', include('book_rental.urls')),
-    url(r'^my-basket/', BasketView.as_view(), name='my_basket_view'),
+    url(r'^my-cart/', BasketView.as_view(), name='my_cart_view'),
 ]
 
 # Include API's
