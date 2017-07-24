@@ -13,5 +13,5 @@ class BookPublisher(BaseEntity):
     address = models.ForeignKey(Address, null=True)
     phones = models.ManyToManyField(Phone)
     emails = models.ManyToManyField(Email)
-    image = models.ImageField(max_length=500, upload_to=settings.MEDIA_PUBLISHER_PATH, null=True)
-    thumbnail = models.ImageField(max_length=500, upload_to=settings.MEDIA_PUBLISHER_THUMB_PATH, null=True)
+    image = models.ImageField(max_length=500, upload_to='publisher/', null=True)
+    thumbnail = models.ImageField(max_length=500, upload_to='publisher/thumbnails/', null=True)
