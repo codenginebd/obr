@@ -2,9 +2,19 @@
 {% load staticfiles %}
 {% block more_stylesheet %}
 <link href="{% static "css/search_page.css" %}" rel="stylesheet" />
+<style type="text/css">
+.search-page-body .pagination>li>a, .pagination>li>span {
+    border: none !important;
+    text-decoration: underline;
+
+}
+.search-page-body .pagination>li:first-child>a, .pagination>li:first-child>span {
+    border: none !important;
+}
+</style>
 {% endblock more_stylesheet %}
 {% block content %}
-    <div class=" " id="contact1">
+    <div class="search-page-body" id="contact1">
         <div class="container" style="width: 100%;">
           <div class="row " style="border-bottom: 1px solid #e7e7e7; margin-bottom: 10px; ">
               <div class="col-md-2">

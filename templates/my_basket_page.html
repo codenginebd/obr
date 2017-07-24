@@ -2,6 +2,22 @@
 {% load staticfiles %}
 {% block more_stylesheet %}
 <link href="{% static "css/search_page.css" %}" rel="stylesheet" />
+<style type="text/css">
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none;
+}
+.ralign {
+    text-align: right !important;
+}
+.tborder-top {
+    border-top: 1px solid #bce8f1 !important;
+}
+</style>
 {% endblock more_stylesheet %}
 {% block content %}
     <div class=" " id="contact1">
@@ -70,6 +86,34 @@
                       </div>
                   </div>
                   <div class="col-md-3 cart_block">
+                      <div class="col-md-12">
+                          <div class="cart_title">
+                              Order Summary
+                              <hr/>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="cart_content">
+                              <table class="table table-borderless">
+                                  <tr>
+                                      <td>Order Subtotal: </td>
+                                      <td class="ralign">BDT 2010</td>
+                                  </tr>
+                                  <tr>
+                                      <td>Discount Applied: </td>
+                                      <td class="ralign">BDT 210</td>
+                                  </tr>
+                                  <tr>
+                                      <td>Shipping Total: </td>
+                                      <td class="ralign">BDT 30</td>
+                                  </tr>
+                                  <tr class="tborder-top">
+                                      <td>Order Total: </td>
+                                      <td class="ralign">BDT 1830</td>
+                                  </tr>
+                              </table>
+                          </div>
+                      </div>
                       <div class="col-md-12">
                           <div class="cart_title">
                               Apply Coupon

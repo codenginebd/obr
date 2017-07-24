@@ -13,6 +13,7 @@ class Author(BaseEntity):
     date_of_birth = models.DateField(null=True)
     address = models.ForeignKey(Address, null=True)
     phones = models.ManyToManyField(Phone)
+    rating = models.FloatField(default=0)
     emails = models.ManyToManyField(Email)
     image = models.ImageField(max_length=500, upload_to=settings.MEDIA_AUTHOR_PATH, null=True)
     thumbnail = models.ImageField(max_length=500, upload_to=settings.MEDIA_AUTHOR_THUMB_PATH, null=True)

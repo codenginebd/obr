@@ -40,7 +40,6 @@ class AuthorUploader(object):
                 else:
                     phones = []
                 index += 1
-                number_of_books_published = row[index] if row[index] else None
 
                 author_object = None
 
@@ -56,7 +55,10 @@ class AuthorUploader(object):
                     try:
                         date_of_birth = datetime.strptime(date_of_birth, "%d/%m/%Y")
                     except Exception as exp:
-                        pass
+                        date_of_birth = None
+
+                    if date_of_birth:
+                        author_object.date_of_birth = date_of_birth
 
                 author_object.name = author_name
                 author_object.description = author_description

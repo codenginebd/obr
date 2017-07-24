@@ -192,5 +192,5 @@ AUTHENTICATION_BACKENDS = (
 MEDIA_TEMP_PATH = os.path.join(MEDIA_ROOT,"temp")
 MEDIA_AUTHOR_PATH = os.path.join(MEDIA_ROOT,"author")
 MEDIA_PUBLISHER_PATH = os.path.join(MEDIA_ROOT,"publisher")
-MEDIA_AUTHOR_THUMB_PATH = os.path.join(MEDIA_AUTHOR_PATH,"thumbnail")
-MEDIA_PUBLISHER_THUMB_PATH = os.path.join(MEDIA_PUBLISHER_PATH,"thumbnail")
+MEDIA_AUTHOR_THUMB_PATH = os.path.join(MEDIA_AUTHOR_PATH,"thumbnails")
+MEDIA_PUBLISHER_THUMB_PATH = os.path.join(MEDIA_PUBLISHER_PATH,"thumbnails")
