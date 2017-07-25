@@ -1,3 +1,6 @@
+import os
+from django.conf import settings
+from django.core.files.base import File
 from django.db import transaction
 from datetime import datetime
 from bauth.models.email import Email
@@ -50,6 +53,12 @@ class AuthorUploader(object):
 
                 if not author_object:
                     author_object = Author()
+
+                if author_image:
+                    image_full_path = os.path.join(settings.MEDIA_AUTHOR_PATH, author_image)
+                    if os.path.exists(image_full_path):
+                        image_file = File(open(image_full_path))
+                        author_object.image = image_file
 
                 if date_of_birth:
                     try:
