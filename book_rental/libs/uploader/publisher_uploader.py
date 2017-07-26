@@ -1,6 +1,12 @@
+from django.conf import settings
 from django.db import transaction
-# from brlogger.models.error_log import ErrorLog
+import os
+
+from bauth.models.email import Email
+from bauth.models.phone import Phone
 from book_rental.models.book_publisher import BookPublisher
+from generics.libs.utils import get_relative_path_to_media
+from logger.models.error_log import ErrorLog
 
 
 class PublisherUploader(object):
@@ -24,33 +30,49 @@ class PublisherUploader(object):
                 emails = row[index] if row[index] else None
                 index += 1
                 phones = row[index] if row[index] else None
+
+                if not publisher_name:
+                    error_log = ErrorLog()
+                    error_log.url = ''
+                    error_log.stacktrace = 'Publisher name must be given'
+                    error_log.save()
+                    continue
+
+                if not publisher_description:
+                    error_log = ErrorLog()
+                    error_log.url = ''
+                    error_log.stacktrace = 'Publisher description must be given'
+                    error_log.save()
+                    continue
                 
                 if code:
                     publisher_objects = BookPublisher.objects.filter(code=code)
-                    if publlisher_objects.exists():
+                    if publisher_objects.exists():
                        publisher_object = publisher_objects.first()
                     else:
-                        raise Exception("Publisher with code %s not exist in the system." % code)
+                        error_log = ErrorLog()
+                        error_log.url = ''
+                        error_log.stacktrace = 'Publisher with code %s not found. skipping...' % code
+                        error_log.save()
+                        continue
                 else:
                     publisher_object = BookPublisher()
-                    
-                if not publisher_name:
-                    pass #Log error message
-                    
-                if not publisher_description:
-                    pass #Log error
                 
-                publisher_object.name = publisher_name
-                publisher_object.description  = publisher_description
-                
-                
+                publisher_object.name = str(publisher_name)
+                publisher_object.description  = str(publisher_description)
+
                 if publisher_image:
                     image_full_path = os.path.join(settings.MEDIA_PUBLISHER_PATH, publisher_image)
                     if os.path.exists(image_full_path):
-                        image_file = File(open(image_full_path))
-                        publisher_object.image = image_file
-                
-                
+                        image_name_relative_media = get_relative_path_to_media(image_full_path)
+                        publisher_object.image.name = image_name_relative_media
+                    else:
+                        error_log = ErrorLog()
+                        error_log.url = ''
+                        error_log.stacktrace = 'Publisher image %s not found. skipping...' % publisher_image
+                        error_log.save()
+                        continue
+
                 publisher_object.save()
                 
                 publisher_object.emails.clear()

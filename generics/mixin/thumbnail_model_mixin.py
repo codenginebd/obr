@@ -1,14 +1,13 @@
 from io import StringIO
 from PIL import Image
+from django.conf import settings
+
+from generics.libs.utils import get_relative_path_to_media
+
 
 class ThumbnailModelMixin(object):
     def create_thumbnail(self):
         try:
-            # original code for this method came from
-            # http://snipt.net/danfreak/generate-thumbnails-in-django-with-pil/
-
-            # If there is no image associated with this.
-            # do not create thumbnail
             if not self.image:
                 return
             if self.image.name.endswith("jpg") or self.image.name.endswith("jpeg") or self.image.name.endswith("png"):
@@ -31,33 +30,18 @@ class ThumbnailModelMixin(object):
                 elif DJANGO_TYPE == 'image/png':
                     PIL_TYPE = 'png'
                     FILE_EXTENSION = 'png'
-                print("Now!")
                 # Open original photo which we want to thumbnail using PIL's Image
-                image = Image.open(StringIO(self.image.read()), 'rb')
-                # Convert to RGB if necessary
-                # Thanks to Limodou on DjangoSnippets.org
-                # http://www.djangosnippets.org/snippets/20/
-                #
-                # I commented this part since it messes up my png files
-                #
-                #if image.mode not in ('L', 'RGB'):
-                #    image = image.convert('RGB')
-                # We use our PIL Image object to create the thumbnail, which already
-                # has a thumbnail() convenience method that contrains proportions.
-                # Additionally, we use Image.ANTIALIAS to make the image look better.
-                # Without antialiasing the image pattern artifacts may result.
+                image = Image.open(self.image)
                 image.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
                 # Save the thumbnail
-                temp_handle = StringIO()
-                image.save(temp_handle, PIL_TYPE)
-                temp_handle.seek(0)
-
-                # Save image to a SimpleUploadedFile which can be saved into
-                # ImageField
-                suf = SimpleUploadedFile(os.path.split(self.image.name)[-1],
-                     temp_handle.read(), content_type=DJANGO_TYPE)
-                # Save SimpleUploadedFile into image field
-                self.thumbnail = suf
-        except:
-            pass
+                file_name = self.image.name.split('/')[-1:][0]
+                image_path = self.image.name[:self.image.name.rindex('/')]
+                image_thumb_dir = os.path.join(settings.MEDIA_ROOT, image_path, 'thumbnails', 'thumb_'+file_name)
+                image_file_write = open(image_thumb_dir, 'wb')
+                image.save(image_file_write, PIL_TYPE)
+                image_file_write.close()
+                image_name_relative_media = get_relative_path_to_media(image_thumb_dir)
+                self.thumbnail.name = image_name_relative_media
+        except Exception as ex:
+            print("Exp1: " + str(ex))
 

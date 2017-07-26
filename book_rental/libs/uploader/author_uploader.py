@@ -1,11 +1,12 @@
 import os
 from django.conf import settings
-from django.core.files.base import File
 from django.db import transaction
 from datetime import datetime
 from bauth.models.email import Email
 from bauth.models.phone import Phone
 from book_rental.models.author import Author
+from generics.libs.utils import get_relative_path_to_media
+from logger.models.error_log import ErrorLog
 
 
 class AuthorUploader(object):
@@ -31,6 +32,20 @@ class AuthorUploader(object):
                 index += 1
                 emails = str(row[index]) if row[index] else None
 
+                if not author_name:
+                    error_log = ErrorLog()
+                    error_log.url = ''
+                    error_log.stacktrace = 'Author name must be given'
+                    error_log.save()
+                    continue
+
+                if not author_description:
+                    error_log = ErrorLog()
+                    error_log.url = ''
+                    error_log.stacktrace = 'Author description must be given'
+                    error_log.save()
+                    continue
+
                 if emails:
                     emails = emails.split(',')
                 else:
@@ -50,6 +65,12 @@ class AuthorUploader(object):
                     author_objects = Author.objects.filter(code=code)
                     if author_objects.exists():
                         author_object = author_objects.first()
+                    else:
+                        error_log = ErrorLog()
+                        error_log.url = ''
+                        error_log.stacktrace = 'Author with code %s not found. skipping...' % code
+                        error_log.save()
+                        continue
 
                 if not author_object:
                     author_object = Author()
@@ -57,20 +78,31 @@ class AuthorUploader(object):
                 if author_image:
                     image_full_path = os.path.join(settings.MEDIA_AUTHOR_PATH, author_image)
                     if os.path.exists(image_full_path):
-                        image_file = File(open(image_full_path))
-                        author_object.image = image_file
+                        image_name_relative_media = get_relative_path_to_media(image_full_path)
+                        author_object.image.name = image_name_relative_media
+                    else:
+                        error_log = ErrorLog()
+                        error_log.url = ''
+                        error_log.stacktrace = 'Author image %s not found. skipping...' % author_image
+                        error_log.save()
+                        continue
 
                 if date_of_birth:
                     try:
                         date_of_birth = datetime.strptime(date_of_birth, "%d/%m/%Y")
                     except Exception as exp:
                         date_of_birth = None
+                        error_log = ErrorLog()
+                        error_log.url = ''
+                        error_log.stacktrace = 'Author date of birth format incorrect. Correct format: dd/mm/yyyy. skipping...'
+                        error_log.save()
+                        continue
 
                     if date_of_birth:
                         author_object.date_of_birth = date_of_birth
 
-                author_object.name = author_name
-                author_object.description = author_description
+                author_object.name = str(author_name)
+                author_object.description = str(author_description)
                 author_object.save()
 
                 author_object.emails.clear()
