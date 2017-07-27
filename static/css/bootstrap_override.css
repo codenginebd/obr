@@ -6,3 +6,9 @@
 .navbar-default .navbar-nav>li>a {
     color: #352c50 !important;
 }
+
+* { 
+    font-family: Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size: 15px;
+    color: #2F4F4F;
+    }
