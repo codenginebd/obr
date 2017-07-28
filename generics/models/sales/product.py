@@ -2,16 +2,15 @@ from django.db import models
 from generics.models.base_entity import BaseEntity
 from generics.models.sales.category import ProductCategory
 from generics.models.sales.keyword import TagKeyword
-from generics.models.sales.price_currency import PriceCurrency
 
 
 class Product(BaseEntity):
     title = models.CharField(max_length=500)
     subtitle = models.CharField(max_length=500)
     description = models.TextField(blank=True)
-    category = models.ForeignKey(ProductCategory, null=True)
-    base_prices = models.ManyToManyField(PriceCurrency)
+    categories = models.ManyToManyField(ProductCategory)
     sale_available = models.BooleanField(default=True)
+    rent_available = models.BooleanField(default=False)
     tags = models.ManyToManyField(TagKeyword)
     mfg_date = models.IntegerField(default=0)
     expire_date = models.IntegerField(default=0)

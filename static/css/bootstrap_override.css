@@ -4,13 +4,16 @@
 }
 
 .navbar-default .navbar-nav>li>a {
-    color: #352c50 !important;
+    font-family: Roboto,"Helvetica Neue",Arial,sans-serif !important;
+    font-size: 16px !important;
+    color: #2F4F4F !important;
+    line-height: 30px !important;
 }
 
-body { 
-    font-family: Roboto,"Helvetica Neue",Arial,sans-serif;
-    font-size: 16px;
-    color: #2F4F4F;
-    line-height: 30px;
+body, a {
+    font-family: Roboto,"Helvetica Neue",Arial,sans-serif !important;
+    font-size: 16px !important;
+    color: #2F4F4F !important;
+    line-height: 30px !important;
     //font-family: 'Qualtrics Grotesque', "Helvetica Neue", Helvetica, Arial, sans-serif;
     }

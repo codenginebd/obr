@@ -1,14 +1,9 @@
-from decimal import Decimal
-
 from book_rental.models.author import Author
-from book_rental.models.book import Book
-from book_rental.models.book_edition import BookEdition
 from book_rental.models.book_publisher import BookPublisher
-from book_rental.models.category import BookCategory
-from book_rental.models.currency import Currency
-from book_rental.models.keyword import TagKeyword
-from book_rental.models.language import Language
+from book_rental.models.language import BookLanguage
 from book_rental.models.sales.book import Book
+from generics.models.sales.category import ProductCategory
+from generics.models.sales.keyword import TagKeyword
 from logger.models.error_log import ErrorLog
 
 
@@ -40,7 +35,7 @@ class BookUploader(object):
             description = row[index]
             
             index += 1
-            category_code = row[index]
+            category_codes = row[index]
 
             index += 1
             edition = row[index]
@@ -56,18 +51,6 @@ class BookUploader(object):
 
             index += 1
             cover_photo = row[index]
-
-            index += 1
-            base_price = row[index]
-
-            index += 1
-            initial_payable_rent_price = row[index]
-            
-            index += 1
-            initial_payable_buy_price = row[index]
-
-            index += 1
-            currency_name = row[index]
             
             index += 1
             language = row[index]
@@ -84,37 +67,29 @@ class BookUploader(object):
             author_codes = row[index]
 
             authors = author_codes.split(',')
+            authors = [ str(acode) for acode in authors ]
+
+            index += 1
+            sale_available = row[index]
+
+            index += 1
+            rent_available = row[index]
 
             # Validate data
-
-            # Check if code given. If given then check if book_edition exists else set book_rental instance to None
-            book_edition_instance = None
-            if code:
-                book_edition_objects = BookEdition.objects.filter(code=code)
-                if book_edition_objects.exists():
-                    book_edition_instance = book_edition_objects.first()
-                else:
-                    error_log = ErrorLog()
-                    error_log.url = ''
-                    error_log.stacktrace = 'Invalid code given. Data %s' % str(row)
-                    error_log.save()
-                    continue
-            
-            if any( [ not item for item in [ book_title, sub_title, description, isbn, category_code,
-                                            edition, total_page, publisher_code, published_date, total_items,
-                                            cover_photo, base_price, initial_payable_rent_price, initial_payable_buy_price,
-                                            currency_name, language, keywords, authors
-                                           ] ] ):
+            if any([not item for item in [book_title, sub_title, description, isbn,
+                                          edition, total_page, publisher_code, published_date,
+                                          cover_photo, language, keywords, authors
+                                          ]]):
                 error_log = ErrorLog()
                 error_log.url = ''
-                error_log.stacktrace = 'Missing data: %s' % str(row)
+                error_log.stacktrace = 'Book Upload missing data: %s. Skipping...' % str(row)
                 error_log.save()
                 continue
 
             if len(isbn) != 10 and len(isbn) != 13:
                 error_log = ErrorLog()
                 error_log.url = ''
-                error_log.stacktrace = 'ISBN number must be 10 or 13 digit long. Data %s' % str(row)
+                error_log.stacktrace = 'ISBN number must be 10 or 13 digit long. Skipping... Data %s' % str(row)
                 error_log.save()
                 continue
                 
@@ -123,7 +98,7 @@ class BookUploader(object):
             except Exception as exp:
                 error_log = ErrorLog()
                 error_log.url = ''
-                error_log.stacktrace = 'Invalid edition. Must be number. data: %s' % str(row)
+                error_log.stacktrace = 'Invalid edition. Must be number. Skipping... data: %s' % str(row)
                 error_log.save()
                 continue
                 
@@ -132,105 +107,107 @@ class BookUploader(object):
             except Exception as exp:
                 error_log = ErrorLog()
                 error_log.url = ''
-                error_log.stacktrace = 'Total page must be number. data: %s' % str(row)
+                error_log.stacktrace = 'Total page must be number. Skipping... data: %s' % str(row)
                 error_log.save()
                 continue
-                
-            try:
-                total_items = int(total_items)
-            except Exception as exp:
+
+            book_languages = BookLanguage.objects.filter(short_name=language)
+            if not book_languages.exists():
                 error_log = ErrorLog()
                 error_log.url = ''
-                error_log.stacktrace = 'Total number of items must be number. data: %s' % str(row)
+                error_log.stacktrace = 'Invalid language code given. Skipping... Data: %s' % str(row)
                 error_log.save()
                 continue
-                
-            try:
-                base_price = Decimal(base_price)
-            except Exception as exp:
-                error_log = ErrorLog()
-                error_log.url = ''
-                error_log.stacktrace = 'Base price must be decimal number. data: %s' % str(row)
-                error_log.save()
-                continue
-                
-            try:
-                initial_payable_rent_price = Decimal(initial_payable_rent_price)
-            except Exception as exp:
-                error_log = ErrorLog()
-                error_log.url = ''
-                error_log.stacktrace = 'Initial payable rent price must be decimal number. data: %s' % str(row)
-                error_log.save()
-                continue
-                
-            try:
-                initial_payable_buy_price = Decimal(initial_payable_buy_price)
-            except Exception as exp:
-                error_log = ErrorLog()
-                error_log.url = ''
-                error_log.stacktrace = 'Initial payable buy price must be decimal number. data: %s' % str(row)
-                error_log.save()
-                continue
-                
-            if not Currency.objects.filter(short_name=currency_name).exists():
-                error_log = ErrorLog()
-                error_log.url = ''
-                error_log.stacktrace = 'Invalid currency code given. Data: %s' % str(row)
-                error_log.save()
-                continue
-                
-            if not Language.objects.filter(short_name=language).exists():
-                error_log = ErrorLog()
-                error_log.url = ''
-                error_log.stacktrace = 'Invalid language code given. Data: %s' % str(row)
-                error_log.save()
-                continue
+            else:
+                language = book_languages.first().pk
                 
             try:
                 published_date = published_date.date()
             except Exception as exp:
                 error_log = ErrorLog()
                 error_log.url = ''
-                error_log.stacktrace = 'Invalid published date format given. Data: %s' % str(row)
+                error_log.stacktrace = 'Invalid published date format given. Skipping... Data: %s' % str(row)
                 error_log.save()
                 continue
                 
-                
-            # Create Book Object
-            category_objects = BookCategory.objects.filter(code=category_code)
-            if not category_objects.exists():
+            cat_ids = []
+            if category_codes:
+                category_codes = category_codes.split(',')
+                # Create Book Object
+                cat_not_found = False
+                category_objects = ProductCategory.objects.filter(code__in=category_codes).values('id','code')
+                for cat_object in category_objects:
+                    if not cat_object['code'] in category_codes:
+                        cat_not_found = True
+                        break
+                    else:
+                        cat_ids += [ cat_object['id'] ]
+
+                if cat_not_found:
+                    error_log = ErrorLog()
+                    error_log.url = ''
+                    error_log.stacktrace = 'Invalid category code given. Skipping... Data: %s' % str(row)
+                    error_log.save()
+                    continue
+            else:
                 error_log = ErrorLog()
                 error_log.url = ''
-                error_log.stacktrace = 'Invalid category code given. Data: %s' % str(row)
+                error_log.stacktrace = 'No Category found. Skipping... Data: %s' % str(row)
                 error_log.save()
                 continue
-            category_object = category_objects.first()
 
-            publisher_objects = BookPublisher.objects.filter(code=publisher_code)
+            publisher_objects = BookPublisher.objects.filter(code=str(publisher_code))
             if not publisher_objects.exists():
                 error_log = ErrorLog()
                 error_log.url = ''
                 error_log.stacktrace = 'Invalid publisher code given. Data: %s' % str(row)
                 error_log.save()
                 continue
-            publisher_object = publisher_objects.first()
+            publisher_id = publisher_objects.first().pk
 
-            author_object_list = []
-            athr_not_found = False
-            for author_code in authors:
-                athr_objects = Author.objects.filter(code=str(author_code))
-                if not athr_objects.exists():
-                    error_log = ErrorLog()
-                    error_log.url = ''
-                    error_log.stacktrace = 'Invalid publisher code given. Data: %s' % str(row)
-                    error_log.save()
-                    athr_not_found = True
-                    break
+            author_object_ids = []
+            if authors:
+                athr_not_found = False
+                for author_code in authors:
+                    athr_objects = Author.objects.filter(code=str(author_code))
+                    if not athr_objects.exists():
+                        error_log = ErrorLog()
+                        error_log.url = ''
+                        error_log.stacktrace = 'Invalid publisher code given. Data: %s' % str(row)
+                        error_log.save()
+                        athr_not_found = True
+                        break
 
-                author_object_list += [athr_objects.first()]
+                    author_object_ids += [athr_objects.first().pk]
 
-            if athr_not_found:
+                    if athr_not_found:
+                        error_log = ErrorLog()
+                        error_log.url = ''
+                        error_log.stacktrace = 'Invalid author code given. Data: %s' % str(row)
+                        error_log.save()
+                        continue
+            else:
+                error_log = ErrorLog()
+                error_log.url = ''
+                error_log.stacktrace = 'NO author found. Data: %s' % str(row)
+                error_log.save()
                 continue
+
+            try:
+               sale_available = int(sale_available)
+            except:
+                sale_available = False
+
+            if sale_available:
+                sale_available = True
+
+            try:
+                rent_available = int(rent_available)
+            except:
+                rent_available = False
+
+            if rent_available:
+                rent_available = True
 
             keyword_object_list = []
 
@@ -245,7 +222,8 @@ class BookUploader(object):
 
                 keyword_object_list += [keyword_instance]
 
-
+            # Check if code given. If given then check if book_edition exists else set book_rental instance to None
+            book_edition_instance = None
             if code:
                 book_objects = Book.objects.filter(code=code)
                 if book_objects.exists():
@@ -253,16 +231,44 @@ class BookUploader(object):
                 else:
                     error_log = ErrorLog()
                     error_log.url = ''
-                    error_log.stacktrace = 'Book with code %s not found.' % str(code)
+                    error_log.stacktrace = 'Invalid code given for book. Skipping.... Data %s' % str(row)
                     error_log.save()
                     continue
-
             else:
                 book_object = Book()
 
-            book_object.title = book_title
-            book_object.subtitle = sub_title
-            book_object.description = description
+            book_object.title = str(book_title)
+            book_object.subtitle = str(sub_title)
+            book_object.description = str(description)
+            book_object.sale_available = sale_available
+            book_object.rent_available = rent_available
+            book_object.publish_date = published_date
+            book_object.isbn = str(isbn)
+            book_object.edition = edition
+            book_object.publisher_id = publisher_id
+            book_object.language_id = language
+            book_object.page_count = total_page
+            book_object.save()
+
+            book_object.tags.clear()
+
+            book_object.tags.add(*keyword_object_list)
+
+            book_object.categories.clear()
+
+            cat_object_list = []
+            for cat_id in cat_ids:
+                cat_obj = ProductCategory.objects.get(pk=cat_id)
+                cat_object_list += [ cat_obj ]
+
+            book_object.categories.add(*cat_object_list)
+
+            print("Done!")
+
+
+
+
+
 
             
             

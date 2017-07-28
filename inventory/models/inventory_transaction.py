@@ -9,3 +9,5 @@ class InventoryTransaction(BaseEntity):
     counter_part_model = models.CharField(max_length=100)
     product_id = models.BigIntegerField(default=0)
     product_model = models.CharField(max_length=100)
+    is_new = models.IntegerField(default=0)
+    print_type = models.CharField(max_length=50)  # COL, ORI, ECO

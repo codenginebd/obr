@@ -1,5 +1,6 @@
 from django.db import models
 from generics.models.base_entity import BaseEntity
+from generics.models.sales.currency import Currency
 from generics.models.sales.rent_plan import RentPlan
 
 
@@ -17,3 +18,4 @@ class PriceMatrix(BaseEntity):
     print_type = models.CharField(max_length=50)  # COL, ORI, ECO
     base_price = models.DecimalField(max_digits=20, decimal_places=2)
     market_price = models.DecimalField(max_digits=20, decimal_places=2)
+    currency = models.ForeignKey(Currency)
