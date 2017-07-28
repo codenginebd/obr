@@ -10,3 +10,5 @@ class PromotionRule(BaseEntity):
     by_qty = models.BooleanField(null=False)
     by_amount = models.BooleanField(null=False)
     by_books = models.BooleanField(null=False)
+    start_date = models.BigIntegerField(default=0)
+    end_date = models.BigIntegerField(default=0)

@@ -14,5 +14,3 @@ class Book(Product):
     publish_date = models.DateField(null=True)
     language = models.ForeignKey(BookLanguage)
     page_count = models.IntegerField(default=0)
-    is_used = models.BooleanField(default=False)
-    original_available = models.BooleaanField(default=False)

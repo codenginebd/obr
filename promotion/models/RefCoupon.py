@@ -6,6 +6,7 @@ from promotion.models.ref_coupon_product import RefCouponProduct
 
 class RefCoupon(BaseEntity):
     coupon_code = models.CharField(max_length=200)
+    start_time = models.BigIntegerField(default=0)
     expiry_time = models.IntegerField(default=0)
     referrer = models.ForeignKey(User)
     used_count = models.IntegerField(default=0)

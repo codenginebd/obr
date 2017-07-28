@@ -260,7 +260,6 @@ class BookUploader(object):
             else:
                 book_object = Book()
 
-
             book_object.title = book_title
             book_object.subtitle = sub_title
             book_object.description = description

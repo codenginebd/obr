@@ -9,3 +9,5 @@ class Promotion(BaseEntity):
     description = models.TextField(default='')
     rules = models.ManyToManyField(PromotionRule)
     rewards = models.ManyToManyField(PromotionReward)
+    start_date = models.BigIntegerField(default=0)
+    end_date = models.BigIntegerField(default=0)
