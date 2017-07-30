@@ -37,7 +37,17 @@ class PriceMatrixUploader(object):
                 index += 1
                 currency = row[index]
                 
+                if any( [ not item for item in [ product_code, is_new, print_type, market_price, base_price, is_special_sale, currency ] ] ):
+                    error_log = ErrorLog()
+                    error_log.url = ''
+                    error_log.stacktrace = 'Missing data.'
+                    error_log.save()
+                    continue
+                    
+                if not print_type in settings.SUPPORTED_PRINTING_TYPES:
+                    pass
                 
+                price_objects = PriceMatrix.objects.filter(product_model='Book', product_code=product_code, is_new=is_new, print_type=print_type)
                 
         
     def handle_rent_price_upload(self):
