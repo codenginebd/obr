@@ -18,6 +18,7 @@ from config.settings.database import *
 from config.settings.br_apps import *
 from config.static_directory import *
 from config.initialize import * 
+from config.parameters import SUPPORTED_PRINTING_TYPES
 from config.settings.hosts import BR_ALLOWED_HOSTS
 import pymysql
 from config.settings.email_config import *
