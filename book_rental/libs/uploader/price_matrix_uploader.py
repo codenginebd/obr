@@ -19,4 +19,4 @@ class PriceMatrixUploader(object):
             with transaction.atomic():
                 pass
                 # code	product_code	is new	print type	market price	base price	is special sale offer	special offer rate	offer start date	offer end date	currency	has rent price
-                # rent_code	product_code	is new	print type	price in percentage	special rent offer
+                # rent_code	product_code	is new	print type	price in percentage	special rent offer	offer start date	offer end date
