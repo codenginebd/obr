@@ -44,8 +44,54 @@ class PriceMatrixUploader(object):
                     error_log.save()
                     continue
                     
+                product_objects = Product.objects.filter(code=product_code)
+                if product_objects.exists():
+                    product_object = product_objects.first()
+                else:
+                    ErrorLog.log(url='', stacktrace='Invalid product code supplied. Skipping... Data %s' % product_code)
+                    continue
+                    
+                try:
+                    is_new = int(is_new)
+                    if is_new != 1 and is_new != 0:
+                        ErrorLog.log(url='', stacktrace='Invalid is_new supplied. 1 or 0 expected. Skipping... Data %s' % row)
+                        continue
+                    if is_new == 1:
+                        is_new = True
+                    else:
+                        is_new = False
+                except:
+                    ErrorLog.log(url='', stacktrace='Invalid is_new supplied. 1 or 0 expected. Skipping... Data %s' % row)
+                    continue
+                    
                 if not print_type in settings.SUPPORTED_PRINTING_TYPES:
-                    pass
+                    ErrorLog.log(url='', stacktrace='printing type must be in %s. Skipping...' % settings.SUPPORTED_PRINTING_TYPES)
+                    continue
+                    
+                try:
+                    market_price = Decimal(market_price)
+                except:
+                    ErrorLog.log(url='', stacktrace='Invalid market_price value. Decimal expected. Given: %s' % row)
+                    continue
+                    
+                try:
+                    base_price = Decimal(base_price)
+                except:
+                    ErrorLog.log(url='', stacktrace='Invalid base_price value. Decimal expected. Given: %s' % row)
+                    continue
+                    
+                try:
+                    is_special_sale = int(is_special_sale)
+                    if is_special_sale != 1 and is_special_sale != 0:
+                        ErrorLog.log(url='', stacktrace='Invalid is_special_sale supplied. 1 or 0 expected. Skipping... Data %s' % row)
+                        continue
+                    if is_special_sale == 1:
+                        is_special_sale = True
+                    else:
+                        is_special_sale = False
+                except:
+                    ErrorLog.log(url='', stacktrace='Invalid is_special_sale supplied. 1 or 0 expected. Skipping... Data %s' % row)
+                    continue
                 
                 price_objects = PriceMatrix.objects.filter(product_model='Book', product_code=product_code, is_new=is_new, print_type=print_type)
                 
