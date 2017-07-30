@@ -16,12 +16,53 @@ class PriceMatrixUploader(object):
     def handle_sale_price_upload(self):
         for row in self.data:
             with transaction.atomic():
-                pass
+                index = 0
+                product_code = row[index]
+                index += 1
+                is_new = row[index]
+                index += 1
+                print_type = row[index]
+                index += 1
+                market_price = row[index]
+                index += 1
+                base_price = row[index]
+                index += 1
+                is_special_sale = row[index]
+                index += 1
+                special_sale_rate = row[index]
+                index += 1
+                offer_start_date = row[index]
+                index += 1
+                offer_end_date = row[index]
+                index += 1
+                currency = row[index]
+                
+                
+                
         
     def handle_rent_price_upload(self):
         for row in self.data:
             with transaction.atomic():
-                pass
+                index = 0
+                rent_code = row[index]
+                index += 1
+                product_code = row[index]
+                index += 1
+                is_new = row[index]
+                index += 1
+                print_type = row[index]
+                index += 1
+                price_in_percentage = row[index]
+                index += 1
+                is_special_rent = row[index]
+                index += 1
+                special_rent_rate = row[index]
+                index += 1
+                offer_start_date = row[index]
+                index += 1
+                offer_end_date = row[index]
+                index += 1
+                currency = row[index]
 
     def handle_upload(self):
         self.data = self.data[1:]
@@ -29,8 +70,8 @@ class PriceMatrixUploader(object):
             self.handle_rent_price_upload()
         else:
             self.handle_sale_price_upload()
-        # code	product_code	is new	print type	market price	base price	is special sale offer	special offer rate	offer start date	offer end date	currency	has rent price
-        # rent_code	product_code	is new	print type	price in percentage	special rent offer	offer start date	offer end date
+        # product_code	is new	print type	market price	base price	is special sale offer	special offer rate	offer start date	offer end date	currency
+        # rent_code	product_code	is new	print type	price in percentage	special rent offer  special rent rate	offer start date	offer end date currency
                 
                 
                 
