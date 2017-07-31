@@ -120,6 +120,30 @@ class PriceMatrixUploader(object):
                     
                 price_objects = PriceMatrix.objects.filter(product_model='Book', product_code=product_code, is_new=is_new, print_type=print_type)
                 
+                if price_objects.exists():
+                    price_object = price_objects.first()
+                else:
+                    price_object = PriceMatrix(product_model='Book', product_code=product_code, is_new=is_new, print_type=print_type)
+                    
+                price_object.is_rent = False
+                price_object.market_price = market_price
+                price_object.base_price = base_price
+                price_object.currency_id = currency_object.pk
+                price_object.offer_date_start = Clock.toUTCTimeStamp(offer_date_start)
+                price_object.offer_date_end = Clock.toUTCTimeStamp(offer_date_end)
+                price_object.special_price = is_special_sale
+                if is_special_sale:
+                    price_object.offer_price_p = special_sale_rate / 100
+                    price_object.offer_price_v = base_price * price_object.offer_price_p
+                else:
+                    price_object.offer_price_p = 1.0
+                    price_object.offer_price_v = base_price
+                    
+                price_object.save()
+                
+                #Price Saved.
+                
+                
         
     def handle_rent_price_upload(self):
         for row in self.data:
