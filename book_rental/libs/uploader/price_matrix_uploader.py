@@ -268,6 +268,8 @@ class PriceMatrixUploader(object):
                 rent_rel_object.start_time = Clock.toUTCTimeStamp(offer_date_start)
                 rent_rel_object.end_time = Clock.toUTCTimeStamp(offer_date_end)
                 rent_rel_object.save()
+                
+                # Done. Continue to next.
                     
 
     def handle_upload(self):
