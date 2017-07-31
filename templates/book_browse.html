@@ -5,7 +5,7 @@
     <script src="{% static "js/browse_books.js" %}"></script>
     <div class=" " id="contact1">
 
-        <div class="container" style="width: 100%;">
+        <div class="container">
           <div class="row " style="border-bottom: 1px solid #e7e7e7; margin-bottom: 10px; ">
               <div class="col-md-2">
 
@@ -27,15 +27,50 @@
                   <div id="id_category_container" class="col-md-2 right-border" style="border-right: 1px solid #eeeeee !important;">
                      {% include "sections/book_categories.html" %}
                   </div>
-                  <div class="col-md-8">
-                      <div class="col-md-12">
-                          <div class="row">
-                              <div class="col-md-12">
-                                    {% include "sections/book_browse_row.html" %}
-                                    {% include "sections/book_browse_row.html" %}
-                                    {% include "sections/book_browse_row.html" %}
-                                    {% include "sections/book_browse_row.html" %}
+                  <div class="col-md-10">
+                      <div class="row">
+                          <div class="col-md-12">
+                                {% include "sections/book_browse_row.html" %}
+                                {% include "sections/book_browse_row.html" %}
+                                {% include "sections/book_browse_row.html" %}
+                                {% include "sections/book_browse_row.html" %}
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-lg-12">
+                              <h3>Best Seller</h3>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-lg-12">
+                              <style type="text/css">
+                                .carousel-inner{
+                                    //height: 200px;
+                                }
+
+                            </style>
+                            <div id="fav_books" class="carousel slide" data-ride="carousel">
+                              <div class="carousel-inner">
+                                <div class="item active">
+                                  {% include "sections/book_browse_row.html" %}
+                                </div>
+                                <div class="item">
+                                  {% include "sections/book_browse_row.html" %}
+                                </div>
+                                <div class="item">
+                                  {% include "sections/book_browse_row.html" %}
+                                </div>
                               </div>
+                                <div style="text-align: center;">
+                                    <a class="left text-center" style="left: 0px;" href="#fav_books" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                      </a>
+                                      <a class="right text-center" style="right: 0px;" href="#fav_books" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                      </a>
+                                </div>
+
+                            </div>
                           </div>
                       </div>
                   </div>

@@ -2,6 +2,7 @@ from django.db import models
 from generics.models.base_entity import BaseEntity
 from generics.models.sales.currency import Currency
 from generics.models.sales.rent_plan import RentPlan
+from generics.models.sales.rent_plan_relation import RentPlanRelation
 
 
 class PriceMatrix(BaseEntity):

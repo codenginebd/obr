@@ -1,5 +1,4 @@
 from book_rental.libs.downloader.downloader import Downloader
-from book_rental.models.category import BookCategory
 from engine.exceptions.br_exception import BRException
 from generics.libs.writer.excel_file_writer import ExcelFileWriter
 from generics.libs.writer.writter import Writter

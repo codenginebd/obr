@@ -1,8 +1,8 @@
 from book_rental.libs.downloader.downloader import Downloader
-from book_rental.models.currency import Currency
 from engine.exceptions.br_exception import BRException
 from generics.libs.writer.json_file_writer import JSONFileWriter
 from generics.libs.writer.writter import Writter
+from generics.models.sales.currency import Currency
 
 
 class CurrencyDownloader(Downloader):

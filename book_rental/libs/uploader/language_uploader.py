@@ -1,7 +1,7 @@
 from django.db import transaction
 
 from book_rental.libs.uploader.uploader import Uploader
-from book_rental.models.language import Language
+from generics.models.language import Language
 from logger.models.error_log import ErrorLog
 from engine.exceptions.br_exception import BRException
 

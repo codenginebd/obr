@@ -1,7 +1,7 @@
 from django.db import transaction
 
 from book_rental.libs.uploader.uploader import Uploader
-from book_rental.models.currency import Currency
+from generics.models.sales.currency import Currency
 from logger.models.error_log import ErrorLog
 from engine.exceptions.br_exception import BRException
 

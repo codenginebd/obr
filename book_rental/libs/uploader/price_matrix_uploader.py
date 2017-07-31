@@ -1,9 +1,12 @@
-import os
+from decimal import Decimal
 from django.conf import settings
 from django.db import transaction
-from datetime import datetime
+from engine.clock.Clock import Clock
+from generics.models.sales.currency import Currency
 from generics.models.sales.price_matrix import PriceMatrix
-from generics.libs.utils import get_relative_path_to_media
+from generics.models.sales.product import Product
+from generics.models.sales.rent_plan import RentPlan
+from generics.models.sales.rent_plan_relation import RentPlanRelation
 from logger.models.error_log import ErrorLog
 
 
@@ -129,8 +132,8 @@ class PriceMatrixUploader(object):
                 price_object.market_price = market_price
                 price_object.base_price = base_price
                 price_object.currency_id = currency_object.pk
-                price_object.offer_date_start = Clock.toUTCTimeStamp(offer_date_start)
-                price_object.offer_date_end = Clock.toUTCTimeStamp(offer_date_end)
+                price_object.offer_date_start = Clock.convert_datetime_to_timestamp(offer_start_date)
+                price_object.offer_date_end = Clock.convert_datetime_to_timestamp(offer_end_date)
                 price_object.special_price = is_special_sale
                 if is_special_sale:
                     price_object.offer_price_p = special_sale_rate / 100
@@ -142,9 +145,7 @@ class PriceMatrixUploader(object):
                 price_object.save()
                 
                 #Price Saved.
-                
-                
-        
+
     def handle_rent_price_upload(self):
         for row in self.data:
             with transaction.atomic():
@@ -265,8 +266,8 @@ class PriceMatrixUploader(object):
                 else:
                     rent_rel_object = RentPlanRelation(plan_id=rent_plan_object.pk, price_matrix_id=price_object.pk)
                     
-                rent_rel_object.start_time = Clock.toUTCTimeStamp(offer_date_start)
-                rent_rel_object.end_time = Clock.toUTCTimeStamp(offer_date_end)
+                rent_rel_object.start_time = Clock.toUTCTimeStamp(offer_start_date)
+                rent_rel_object.end_time = Clock.toUTCTimeStamp(offer_end_date)
                 rent_rel_object.save()
                 
                 # Done. Continue to next.
