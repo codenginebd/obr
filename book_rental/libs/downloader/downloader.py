@@ -15,8 +15,21 @@ class Downloader(object):
 
         ]
 
-    def download(self, queryset=None, writer=None, *args, **kwargs):
-        pass
+    def download(self, data=None, writer=None, *args, **kwargs):
+        if data is None:
+            return
+            
+        if not type(data) is list and not type(data) is tuple:
+            return
 
-    def download_as_json(self, queryset=None, encoding='utf-8', writer=None, *args, **kwargs):
+        writer_class = writer if writer else self.get_default_writer()
+
+        if issubclass(writer_class, Writter):
+            writer_instance = writer_class(data=data,header=self.get_header_names(),
+            file_path=self.file_name, *args, **kwargs)
+            writer_instance.write()
+        else:
+            raise BRException("Writer must be an instance of Writter")
+
+    def download_as_json(self, data=None, encoding='utf-8', writer=None, *args, **kwargs):
         pass
