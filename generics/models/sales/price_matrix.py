@@ -5,7 +5,7 @@ from generics.models.sales.rent_plan import RentPlan
 
 
 class PriceMatrix(BaseEntity):
-    plan = models.ForeignKey(RentPlan, null=True)
+    plans = models.ManyToManyField(RentPlan)
     is_rent = models.BooleanField(default=False)
     offer_price_p = models.DecimalField(max_digits=20, decimal_places=2, default=0)  # value in percentage
     offer_price_v = models.DecimalField(max_digits=20, decimal_places=2, default=0)  # value in value
