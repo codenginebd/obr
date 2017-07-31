@@ -92,7 +92,32 @@ class PriceMatrixUploader(object):
                 except:
                     ErrorLog.log(url='', stacktrace='Invalid is_special_sale supplied. 1 or 0 expected. Skipping... Data %s' % row)
                     continue
-                
+                    
+                try:
+                    special_sale_rate = Decimal(special_sale_rate)
+                except:
+                    ErrorLog.log(url='', stacktrace='Invalid special_sale_rate value. Decimal expected. Given: %s' % row)
+                    continue
+                    
+                try:
+                    offer_start_date = offer_start_date.date()
+                except:
+                    ErrorLog.log(url='', stacktrace='Invalid offer_start_date value. Skipping... Expected format: dd/mm/yyyy. Given' % row)
+                    continue
+                    
+                try:
+                    offer_end_date = offer_end_date.date()
+                except:
+                    ErrorLog.log(url='', stacktrace='Invalid offer_end_date value. Skipping... Expected format: dd/mm/yyyy. Given' % row)
+                    continue
+                    
+                currency_objects = Currency.objects.filter(short_name=currency)
+                if currency_objects.exists():
+                    currency_object = currency_objects.first()
+                else:
+                    ErrorLog.log(url='', stacktrace='Invalid currency code value. Skipping...Data: ' % row)
+                    continue
+                    
                 price_objects = PriceMatrix.objects.filter(product_model='Book', product_code=product_code, is_new=is_new, print_type=print_type)
                 
         
