@@ -263,7 +263,12 @@ class PriceMatrixUploader(object):
                 if rent_rel_objects.exists():
                     rent_rel_object = rent_rel_objects.first()
                 else:
-                    rent_rel_objects = RentPlanRelation(plan_id=rent_plan_object.pk, price_matrix_id=price_object.pk)
+                    rent_rel_object = RentPlanRelation(plan_id=rent_plan_object.pk, price_matrix_id=price_object.pk)
+                    
+                rent_rel_object.start_time = Clock.toUTCTimeStamp(offer_date_start)
+                rent_rel_object.end_time = Clock.toUTCTimeStamp(offer_date_end)
+                rent_rel_object.save()
+                    
 
     def handle_upload(self):
         self.data = self.data[1:]
