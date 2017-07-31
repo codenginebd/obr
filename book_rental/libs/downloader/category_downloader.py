@@ -18,20 +18,5 @@ class CategoryDownloader(Downloader):
             "Code", "Category Name", "Parent"
         ]
 
-    def download(self, queryset=None, writer=None, *args, **kwargs):
-        if queryset is None:
-            queryset = BookCategory.objects.all()
-
-        contents = queryset.values_list('code', 'name', 'parent__name')
-
-        writer_class = writer if writer else self.get_default_writer()
-
-        if issubclass(writer_class, Writter):
-            writer_instance = writer_class(data=contents,header=self.get_header_names(),
-            file_path=self.file_name, *args, **kwargs)
-            writer_instance.write()
-        else:
-            raise BRException("Writer must be an instance of Writter")
-
 
 
