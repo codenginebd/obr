@@ -12,7 +12,7 @@ class PriceMatrix(BaseEntity):
     special_price = models.BooleanField(default=False)
     offer_date_start = models.BigIntegerField(default=0)
     offer_date_end = models.BigIntegerField(default=0)
-    product_id = models.BigIntegerField(null=False)
+    product_code = models.BigIntegerField(null=False)
     product_model = models.CharField(max_length=100)
     is_new = models.IntegerField(default=0)
     print_type = models.CharField(max_length=50)  # COL, ORI, ECO
