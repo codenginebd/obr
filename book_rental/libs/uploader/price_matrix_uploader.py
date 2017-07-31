@@ -251,6 +251,19 @@ class PriceMatrixUploader(object):
                 else:
                     ErrorLog.log(url='', stacktrace='No price matrix object exists for this. Skipping...Data: ' % row)
                     continue
+                    
+                rent_plan_objects = RentPlan.objects.filter(code=rent_code)
+                if rent_plan_objects.exists():
+                    rent_plan_object = rent_plan_objects.first()
+                else:
+                    ErrorLog.log(url='', stacktrace='No rent plan exists. Skipping...Data: ' % row)
+                    continue
+                    
+                rent_rel_objects = RentPlanRelation.objects.filter(plan_id=rent_plan_object.pk, price_matrix_id=price_object.pk)
+                if rent_rel_objects.exists():
+                    rent_rel_object = rent_rel_objects.first()
+                else:
+                    rent_rel_objects = RentPlanRelation(plan_id=rent_plan_object.pk, price_matrix_id=price_object.pk)
 
     def handle_upload(self):
         self.data = self.data[1:]
