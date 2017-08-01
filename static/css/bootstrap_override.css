@@ -23,3 +23,7 @@ body, a {
     padding: 10px 15px;
     padding-bottom: -10px !important;
 }
+
+label {
+    font-family: Roboto,"Helvetica Neue",Arial,sans-serif !important;
+}

@@ -24,10 +24,70 @@
                             }); 
                       });
                   </script>
-                  <div id="id_category_container" class="col-md-2 right-border" style="border-right: 1px solid #eeeeee !important;">
-                     {% include "sections/book_categories.html" %}
+                  <div id="id_category_container" class="col-md-3 right-border" style="border-right: 1px solid #eeeeee !important;">
+                     <!-- {% include "sections/book_categories.html" %} !-->
+                      <div class="panel panel-default">
+                            <div class="panel-heading">Browse By Category<a class="pull-right" href="#">View All</a></div>
+                          <div class="panel-body">
+                              <div class="checkbox">
+                              <label><input type="checkbox" value=""><a href="#">Dibya Prokashoni</a></label>
+                            </div>
+                            <div class="checkbox">
+                              <label><input type="checkbox" value=""><a href="#">Onno ProkaSoni</a></label>
+                            </div>
+                            <div class="checkbox disabled">
+                              <label><input type="checkbox" value=""><a href="#">Amar Boi</a></label>
+                            </div>
+                          </div>
+
+                      </div>
+                      <div class="panel panel-default">
+                            <div class="panel-heading">Browse By Publishers<a class="pull-right" href="#">View All</a></div>
+                          <div class="panel-body">
+                              <div class="checkbox">
+                              <label><input type="checkbox" value=""><a href="#">Dibya Prokashoni</a></label>
+                            </div>
+                            <div class="checkbox">
+                              <label><input type="checkbox" value=""><a href="#">Onno ProkaSoni</a></label>
+                            </div>
+                            <div class="checkbox disabled">
+                              <label><input type="checkbox" value=""><a href="#">Amar Boi</a></label>
+                            </div>
+                          </div>
+
+                      </div>
+                      <div class="panel panel-default">
+                            <div class="panel-heading">Browse By Publishers<a class="pull-right" href="#">View All</a></div>
+                          <div class="panel-body">
+                              <div class="checkbox">
+                              <label><input type="checkbox" value="">Option 1</label>
+                            </div>
+                            <div class="checkbox">
+                              <label><input type="checkbox" value="">Option 2</label>
+                            </div>
+                            <div class="checkbox disabled">
+                              <label><input type="checkbox" value="" disabled>Option 3</label>
+                            </div>
+                          </div>
+
+                      </div>
+                      <div class="panel panel-default">
+                            <div class="panel-heading">Browse By Discount</div>
+                          <div class="panel-body">
+                              <div class="checkbox">
+                              <label><input type="checkbox" value="">Option 1</label>
+                            </div>
+                            <div class="checkbox">
+                              <label><input type="checkbox" value="">Option 2</label>
+                            </div>
+                            <div class="checkbox disabled">
+                              <label><input type="checkbox" value="" disabled>Option 3</label>
+                            </div>
+                          </div>
+
+                      </div>
                   </div>
-                  <div class="col-md-10">
+                  <div class="col-md-9">
                       <div class="row">
                           <div class="col-md-12">
                                 {% include "sections/book_browse_row.html" %}
@@ -36,9 +96,11 @@
                                 {% include "sections/book_browse_row.html" %}
                           </div>
                       </div>
+                      <br/>
                       <div class="row">
                           <div class="col-lg-12">
                               <h3>Best Seller</h3>
+                              <hr/>
                           </div>
                       </div>
                       <div class="row">
@@ -75,7 +137,7 @@
                       </div>
                   </div>
                   <div id="id_category_container" class="col-md-2 right-border" style="border-right: 1px solid #eeeeee !important;">
-                     {% include "sections/book_categories.html" %}
+{#                     {% include "sections/book_categories.html" %}#}
                   </div>
               </div>
           </div>
