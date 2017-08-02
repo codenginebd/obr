@@ -268,6 +268,10 @@ class PriceMatrixUploader(object):
                     
                 rent_rel_object.start_time = Clock.toUTCTimeStamp(offer_start_date)
                 rent_rel_object.end_time = Clock.toUTCTimeStamp(offer_end_date)
+                
+                rent_rel_object.is_special_offer  = is_special_rent
+                rent_rel_object.special_rate  = float(special_rent_rate)/100
+                
                 rent_rel_object.save()
                 
                 # Done. Continue to next.
