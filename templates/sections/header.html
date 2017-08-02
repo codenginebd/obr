@@ -323,7 +323,7 @@
         {#    </div>#}
     </div>
 {% else %}
-    <div class="navbar-wrapper navbar navbar-default navbar-fixed-top">
+    <div class="navbar-wrapper navbar navbar-default navbar-fixed-top" style="height: 35px;">
         <div class="container-fluid">
             <nav class="">
                 <div class="container">
@@ -335,13 +335,15 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#">
-                            Logo
+                        <a class="navbar-brand" href="#" style="float: left;">
+                            <span class="glyphicon glyphicon-phone"></span> +880162563767
+                        </a>
+                        <a class="navbar-brand" href="#" style="float: left;">
+                            <span class="glyphicon glyphicon-envelope"></span> support@bdreads.com
                         </a>
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav pull-right">
-                            <li class=""><a href="{% url "book_browse_view" %}">Browse Books</a></li>
                             <li class=""><a href="#">How It Works?</a></li>
                             <li class=""><a href="{% url "bauth_signup_view" %}">Register</a></li>
                             <li class=""><a href="{% url "bauth_login_view" %}">Login</a></li>
@@ -355,57 +357,99 @@
 <div class="container" style="margin-top: 50px;">
   <div class="row">
       <div class="col-md-2">
-{#            <img src="{% static "images/logo.png" %}" style="width: 200px; height: 200px;"/>#}
+            <img src="{% static "images/logo.png" %}" style="width: 300px; height: 90px;"/>
       </div>
       <div class="col-md-10">
-          <form action="{% url "book_search_view" %}" class="navbar-form navbar-right search-form" role="search" style="margin-bottom: 0px !important;">
-            <div class="input-group add-on">
-              <input class="form-control" style="width: 400px; padding: 20px !important; "  placeholder="Search by title, ISBN, Author, Keywords..." name="keyword" id="id_book_search_term" type="text">
-              <div class="input-group-btn">
-                <button class="btn btn-default" style="padding: 10px;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-              </div>
-            </div>
-              <a href="{% url "my_cart_view" %}" style="color: #352c50 !important;">
-              <span class="glyphicon glyphicon-shopping-cart"></span> My Cart
-            </a>
-        </form>
+                <form action="{% url "book_search_view" %}" class="navbar-form navbar-right search-form" role="search" style="margin-bottom: 0px !important; margin-top: 14px !important; ">
+                    <div class="well" style="background-color: #edecf5;">
+                    <div class="input-group add-on">
+                      <input class="form-control" style="width: 400px; padding: 20px !important; "  placeholder="Search by title, ISBN, Author, Keywords..." name="keyword" id="id_book_search_term" type="text">
+                      <div class="input-group-btn">
+                        <button class="btn btn-default" style="padding: 10px;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                      </div>
+                    </div>
+                      <a href="{% url "my_cart_view" %}" style="color: #38525a !important">
+                      <span class="glyphicon glyphicon-shopping-cart"></span> My Cart
+                    </a>
+                    </div>
+                </form>
       </div>
   </div>
 </div>
-<nav class="navbar navbar-default" style="margin-top: 8px;">
+<nav class="navbar navbar-default" role="navigation" style="margin-top: 8px;">
   <div class="container">
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Home</a></li>
-        <li class="dropdown mega-dropdown">
+        <li class="dropdown" style="position: static !important;">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse Books <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></a>
 
-          <div class="dropdown-menu mega-dropdown-menu row">
-            <div class="container" style="width: 90%;">
+          <ul class="dropdown-menu" style="left: 0px !important; right: 0px !important; background-color: aliceblue !important;">
+            <div class="container">
               <div class="row">
                   <div class="col-lg-12">
-                      <div class="list-group">
-                            <div class="list-group-item">
-                                Engineering
+                        <h4>
+                            All Categories
+                            <hr/>
+                        </h4>
+                        <div>
+                            <div class="list-group" style="float: left; width: auto; ">
+                                <div class="list-group-item">
+                                    <a href="#">Engineering</a>
+                                    <div class="list-group">
+                                        <div class="list-group-item">
+                                            <a href="#">Electrical and Electronix Engineering</a>
+                                        </div>
+                                        <div class="list-group-item">
+                                            <a href="#">Computer Science and Engineering</a>
+                                        </div>
+                                        <div class="list-group-item">
+                                            <a href="#">CSE</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                          <div class="list-group-item">
-                                Engineering
+                            <div class="list-group" style="float: left; width: auto; ">
+                                <div class="list-group-item">
+                                    <a href="#">Engineering</a>
+                                    <div class="list-group">
+                                        <div class="list-group-item">
+                                            <a href="#">Electrical and Electronix Engineering</a>
+                                        </div>
+                                        <div class="list-group-item">
+                                            <a href="#">Computer Science and Engineering</a>
+                                        </div>
+                                        <div class="list-group-item">
+                                            <a href="#">CSE</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                          <div class="list-group-item">
-                                Engineering
+                            <div class="list-group" style="float: left; width: auto; ">
+                                <div class="list-group-item">
+                                    <a href="#">Engineering</a>
+                                    <div class="list-group">
+                                        <div class="list-group-item">
+                                            <a href="#">Electrical and Electronix Engineering</a>
+                                        </div>
+                                        <div class="list-group-item">
+                                            <a href="#">Computer Science and Engineering</a>
+                                        </div>
+                                        <div class="list-group-item">
+                                            <a href="#">CSE</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                          <div class="list-group-item">
-                                Engineering
-                            </div>
-                          <div class="list-group-item">
-                                Engineering
-                            </div>
-                      </div>
+
+                        </div>
                   </div>
               </div>
             </div>
-          </div>
+          </ul>
 
         </li>
+        <li><a href="#">Authors</a></li>
+        <li><a href="#">Publishers</a></li>
       <li><a href="#">New Books</a></li>
       <li><a href="#">Most Popular Books</a></li>
       <li><a href="#">College Books</a></li>
