@@ -18,6 +18,8 @@ class Author(BaseEntity, ThumbnailModelMixin):
     emails = models.ManyToManyField(Email)
     image = models.ImageField(max_length=500, upload_to='author/', null=True)
     thumbnail = models.ImageField(max_length=500, upload_to='author/thumbnails/', null=True)
+    nationalities = models.ManyToManyField(Country)
+    languages = models.ManyToManyField(Language)
 
     def save(self):
         try:
