@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-
+from django.template.defaultfilters import slugify
 from bauth.models.address import Address
 from bauth.models.email import Email
 from bauth.models.phone import Phone
@@ -20,11 +20,27 @@ class Author(BaseEntity, ThumbnailModelMixin):
     thumbnail = models.ImageField(max_length=500, upload_to='author/thumbnails/', null=True)
     nationalities = models.ManyToManyField(Country)
     languages = models.ManyToManyField(Language)
+    slug = models.SlugField()
 
     def save(self):
+        self.slug = slugify(self.name)
         try:
             self.create_thumbnail()
             # self.save()
         except Exception as msg:
             print("Thumbnail creation failed.")
         super(Author, self).save()
+        
+        
+    @classmethod
+    def get_all_authors(cls, product_cat=None, **kwargs):
+        all_authors = cls.objects.none()
+        if not product_cat:
+            if kwargs.get('compact', False) == True:
+                all_authors = cls.objects.all().values('id', 'name', 'slug', 'thumbnail')
+            else:
+                all_authors = cls.objects.all()
+        else:
+            pass
+        return all_authors
+        
