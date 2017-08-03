@@ -115,4 +115,38 @@ class ProductCategory(BaseEntity):
         cat_list = cls.get_all_subcategories(main_categories, parents)
 
         return cat_list
+        
+    @classmethod
+    def get_all_children(cls, cat_id=None, **kwargs):
+        all_categories = []
+        
+        if not cat_id:
+            # For All Categories
+            # Get All categories whose parent is None
+            all_parent_categories = ProductCategory.objects.filter(parent__isnull=True)
+            for parent_cat in all_parent_categories:
+                direct_childs = ProductCategory.objects.filter(parent_id=parent_cat.pk)
+                all_categories += [
+                    {
+                        "id": parent_cat.pk,
+                        "name": parent_cat.name,
+                        "slug": parent_cat.slug,
+                        "instance": parent_cat,
+                        "children": direct_childs
+                    }
+                ]
+        else:
+            parent_cat = ProductCategory.objects.get(pk=cat_id)
+            direct_childs = ProductCategory.objects.filter(parent_id=cat_id)
+            all_categories = {
+                    "id": parent_cat.pk,
+                    "name": parent_cat.name,
+                    "slug": parent_cat.slug,
+                    "instance": parent_cat,
+                    "children": direct_childs
+                }
+            
+        return all_categories
+        
+        
 
