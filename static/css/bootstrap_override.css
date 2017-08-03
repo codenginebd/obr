@@ -16,7 +16,12 @@ body, a {
     color: #38525a !important;
     line-height:20px !important;
     //font-family: 'Qualtrics Grotesque', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    //background-color: #f2f3f5 !important;
     }
+
+.container {
+    //background-color: #f2f3f5 !important
+}
 
 .list-group-item {
     border: none !important;
@@ -26,4 +31,23 @@ body, a {
 
 label {
     font-family: Roboto,"Helvetica Neue",Arial,sans-serif !important;
+}
+
+.menu-navbar, .navbar-default {
+    background-color: white;
+}
+
+.menu-navbar .navbar-nav>li>a {
+    color: #1b0733 !important;
+}
+
+.active {
+    font-weight: bold !important;
+    background-color: transparent !important;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+    //font-weight: bold !important;
+    color: #4abde8 !important;
+    background-color: transparent !important;
 }

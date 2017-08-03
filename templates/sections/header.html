@@ -356,34 +356,45 @@
 {% endif %}
 <div class="container" style="margin-top: 50px;">
   <div class="row">
-      <div class="col-md-2">
-            <img src="{% static "images/logo.png" %}" style="width: 300px; height: 90px;"/>
+      <div class="col-md-3">
+            <img src="{% static "images/logo.png" %}" style="width: 200px; height: 60px;"/>
+            <h5 class="pull-right"> - Read Anywhere, Anytime</h5>
       </div>
-      <div class="col-md-10">
+      <div class="col-md-9">
                 <form action="{% url "book_search_view" %}" class="navbar-form navbar-right search-form" role="search" style="margin-bottom: 0px !important; margin-top: 14px !important; ">
-                    <div class="well" style="background-color: #edecf5;">
+                    <div>
                     <div class="input-group add-on">
                       <input class="form-control" style="width: 400px; padding: 20px !important; "  placeholder="Search by title, ISBN, Author, Keywords..." name="keyword" id="id_book_search_term" type="text">
                       <div class="input-group-btn">
                         <button class="btn btn-default" style="padding: 10px;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                       </div>
                     </div>
-                      <a href="{% url "my_cart_view" %}" style="color: #38525a !important">
-                      <span class="glyphicon glyphicon-shopping-cart"></span> My Cart
-                    </a>
+                      <div class="dropdown" href="#" style="color: #38525a !important; display: inline-table; ">
+                      <button class="dropdown-toggle btn btn-info" style="padding: 9px;" data-toggle="dropdown" ><span class="glyphicon glyphicon-shopping-cart"></span> My Cart(2)<span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></button>
+                      <ul class="dropdown-menu">
+                          <div style="padding: 20px;">
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <img class="img-rounded" style="margin-left: auto;margin-right: auto; margin-top: 13px; width: 130px; height: 140px; " src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRi7lIOzjyCNhoVpyaJGRuYklrorcjra8xXCroxeXXZgrhxX-dPZg" class="img-responsive book-img-grid">
+                                  </div>
+                              </div>
+                              <a class="pull-right" href="{% url "my_cart_view" %}">View Cart</a>
+                          </div>
+                      </ul>
+                    </div>
                     </div>
                 </form>
       </div>
   </div>
 </div>
-<nav class="navbar navbar-default" role="navigation" style="margin-top: 8px;">
+<nav class="navbar navbar-default menu-navbar" role="navigation" style="margin-top: 8px;">
   <div class="container">
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
+      <li><a href="{% url "home_view" %}">Home</a></li>
         <li class="dropdown" style="position: static !important;">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse Books <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></a>
 
-          <ul class="dropdown-menu" style="left: 0px !important; right: 0px !important; background-color: aliceblue !important;">
+          <ul class="dropdown-menu" style="left: 15px !important; right: 15px !important; background-color: aliceblue !important;">
             <div class="container">
               <div class="row">
                   <div class="col-lg-12">

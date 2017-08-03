@@ -2,10 +2,12 @@ from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import slugify
 from bauth.models.address import Address
+from bauth.models.country import Country
 from bauth.models.email import Email
 from bauth.models.phone import Phone
 from generics.mixin.thumbnail_model_mixin import ThumbnailModelMixin
 from generics.models.base_entity import BaseEntity
+from generics.models.language import Language
 
 
 class Author(BaseEntity, ThumbnailModelMixin):
