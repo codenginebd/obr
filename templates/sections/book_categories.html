@@ -1,20 +1,20 @@
 {% load category_tags %}
 <style type="text/css">
 .category-item > a {
-        font-size: 15px;
+        font-size: 14px;
         font-family: Roboto,"Helvetica Neue",Arial,sans-serif !important;
         color: #2F4F4F !important;
-        line-height: 20px !important;
+        line-height: 18px !important;
     }
 .category-list-group > .category-list-group {
     margin-bottom: -20px !important;
 }
 .category-list-group > .category-item {
-    margin-left: 10px !important;
+    margin-left: 0px !important;
 }
 </style>
 {# filename: book_categories.html #}
-<ul class="category-list-group list-group" {% if cat_object.children %}style="margin-left: 10px !important; margin-bottom: -10px !important;" {% endif %}>
+<ul class="category-list-group list-group" {% if cat_object.children %}style="margin-left: 0px !important; margin-bottom: -10px !important;" {% endif %}>
 {% for cat_object in categories %}
 <li href="#"
     class="{% if cat_object.id|has_any_children:all_parents %}{% if cat_object.id in explored_chain %}glyphicon glyphicon-minus {% else %}glyphicon glyphicon-plus {% endif %}{% endif %}list-group-item category-list-item category-item {% if not cat_object.id in current_chain %}{% if cat_object.parent %}displaynone{% endif %}{% endif %}">
