@@ -117,6 +117,10 @@ class ProductCategory(BaseEntity):
         return cat_list
         
     @classmethod
+    def get_all_descendants(cls, cat_id=None, **kwargs):
+        pass
+        
+    @classmethod
     def get_all_children(cls, cat_id=None, **kwargs):
         all_categories = []
         
