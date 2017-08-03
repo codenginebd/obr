@@ -20,13 +20,11 @@ class CategoryUploader(object):
                 parent_name = row[index] if row[index] else None
                 
                 if not category_name:
+                    error_log = ErrorLog()
+                    error_log.url = ''
+                    error_log.stacktrace = 'Category name is missing. Data %s' % str(row)
+                    error_log.save()
                     continue
-                    # Log error
-                    # error_log = ErrorLog()
-                    # error_log.url = ''
-                    # error_log.stacktrace = 'Category name is missing. Data %s' % str(row)
-                    # error_log.save()
-                    # continue
 
                 if code:
                     category_objects = ProductCategory.objects.filter(code=code)
