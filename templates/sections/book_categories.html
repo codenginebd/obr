@@ -2,7 +2,7 @@
 {% if filter_category_show %}
 {# filename: book_categories.html #}
 <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" style="background-color: transparent;">
         {% if linkable %}
         <a href="{% url "book_browse_view" slug %}">{{ filter_category_header }}</a>
         {% else %}
