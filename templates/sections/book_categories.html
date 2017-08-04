@@ -1,31 +1,29 @@
 {% load category_tags %}
-<style type="text/css">
-.category-item > a {
-        font-size: 14px;
-        font-family: Roboto,"Helvetica Neue",Arial,sans-serif !important;
-        color: #2F4F4F !important;
-        line-height: 18px !important;
-    }
-.category-list-group > .category-list-group {
-    margin-bottom: -20px !important;
-}
-.category-list-group > .category-item {
-    margin-left: 0px !important;
-}
-</style>
+{% if filter_category_show %}
 {# filename: book_categories.html #}
-<ul class="category-list-group list-group" {% if cat_object.children %}style="margin-left: 0px !important; margin-bottom: -10px !important;" {% endif %}>
-{% for cat_object in categories %}
-<li href="#"
-    class="{% if cat_object.id|has_any_children:all_parents %}{% if cat_object.id in explored_chain %}glyphicon glyphicon-minus {% else %}glyphicon glyphicon-plus {% endif %}{% endif %}list-group-item category-list-item category-item {% if not cat_object.id in current_chain %}{% if cat_object.parent %}displaynone{% endif %}{% endif %}">
-    <a {% with cat_object.id as id %} href="{% url "book_browse_view" category_slug_urls|slug_url_from_dict:id %}" {% endwith %} {% if current_item and cat_object.id == current_item %}class="active"{% endif %}>{{ cat_object.name }}</a>
-    {% if cat_object.children %}
-    {% with "sections/book_categories.html" as filename %}
-    {% with cat_object.children as categories %}
-        {% include filename %}
-    {% endwith %}
-    {% endwith %}
-    {% endif %}
-</li>
-{% endfor %}
-</ul>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {% if linkable %}
+        <a href="{% url "book_browse_view" slug %}">{{ filter_category_header }}</a>
+        {% else %}
+        {{ filter_category_header }}
+        {% endif %}
+    </div>
+    <div class="panel-body">
+        {% if show_search %}
+        <div style="padding: 6px; text-align: right;">
+            <input type="text" class="form-control" placeholder="Search ..."/>
+        </div>
+        {% endif %}
+        <div style="max-height: 400px; overflow-x: hidden; overflow-y: auto;">
+            <ul class="category-list-group list-group" style="list-style: none !important;">
+            {% for cat_item in filter_categories %}
+            <li class="category-item" style="padding: 3px; ">
+            <a href="{% url "book_browse_view" cat_item.slug %}">{{ cat_item.name }}</a>
+            </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endif %}
