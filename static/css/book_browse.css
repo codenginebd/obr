@@ -9,6 +9,15 @@
       line-height: 20px !important;
   }
 
+  .book_entry .action-bar a {
+    color: whitesmoke !important;
+    font-weight: bold !important;
+  }
+
+  .book_entry .action-bar {
+    opacity: 1.0 !important;
+  }
+
   .item_links {
       font-size: 15px !important;
   }
@@ -26,3 +35,18 @@
   .browse_item_hover_color img {
     opacity: 0.5 !important;
   }
+
+  .browse-tabs li a {
+     text-transform: uppercase;
+  }
+
+  .browse-tabs > li, .nav-pills > li {
+    float:none;
+    display:inline-block;
+    *display:inline; /* ie7 fix */
+     zoom:1; /* hasLayout ie7 trigger */
+}
+
+.browse-tabs, .nav-pills {
+    text-align:center;
+}
