@@ -9,10 +9,10 @@ from book_rental.models.book_publisher import BookPublisher
 from book_rental.models.author import Author
 
 
-__all__ = ['BookLanguage']
-__all__ += ['BookOrder']
-__all__ += ['BookUploadHistory']
-__all__ += ['BookOrderBreakdown']
-__all__ += ['Book']
+__all__ = ['BookOrderBreakdown']
 __all__ += ['Author']
+__all__ += ['BookOrder']
 __all__ += ['BookPublisher']
+__all__ += ['Book']
+__all__ += ['BookLanguage']
+__all__ += ['BookUploadHistory']

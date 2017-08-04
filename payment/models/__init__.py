@@ -7,8 +7,8 @@ from payment.models.payment_method import PaymentMethod
 from payment.models.payment_transaction import PaymentTransaction
 
 
-__all__ = ['PaymentTransaction']
+__all__ = ['WalletCreditBreakdown']
+__all__ += ['PaymentMethod']
 __all__ += ['CreditPayHistory']
 __all__ += ['PaymentWallet']
-__all__ += ['PaymentMethod']
-__all__ += ['WalletCreditBreakdown']
+__all__ += ['PaymentTransaction']
