@@ -32,21 +32,30 @@
                       <div class="row">
                           <div class="col-md-12">
                                 <ul class="nav nav-tabs browse-tabs">
-                                  <li class="active"><a href="#">All</a></li>
-                                  <li><a href="#">New Books</a></li>
-                                  <li><a href="#">Most Popular Books</a></li>
+                                  <li class="active"><a data-toggle="tab" href="#browse_page_tab1">All</a></li>
+                                  <li><a data-toggle="tab" href="#browse_page_tab2">New Books</a></li>
+                                  <li><a data-toggle="tab" href="#browse_page_tab3">Most Popular Books</a></li>
                                 </ul>
+                              <div class="tab-content" style="font-weight: normal !important;">
+                                  <div id="browse_page_tab1" class="tab-pane fade in active">
+                                    <div style="padding-top: 20px;">
+                                        {% include "sections/book_browse_row.html" %}
+                                        {% include "sections/book_browse_row.html" %}
+                                        {% include "sections/book_browse_row.html" %}
+                                    </div>
+                                  </div>
+                                  <div id="browse_page_tab2" class="tab-pane fade">
+                                    <h4>New Books</h4>
+                                     <hr/>
+                                    {% include "sections/book_browse_row.html" %}
+                                  </div>
+                                  <div id="browse_page_tab3" class="tab-pane fade">
+                                    <h4>Most Popular Books</h4>
+                                     <hr/>
+                                    {% include "sections/book_browse_row.html" %}
+                                      </div>
+                                </div>
 
-
-
-                                <h4>Most Popular Books</h4>
-                                 <hr/>
-                                {% include "sections/book_browse_row.html" %}
-                                <h4>Engineering</h4>
-                                <hr/>
-                                {% include "sections/book_browse_row.html" %}
-                                {% include "sections/book_browse_row.html" %}
-                                {% include "sections/book_browse_row.html" %}
                           </div>
                       </div>
                       <br/>

@@ -38,10 +38,10 @@ label {
     background-color: white;
 }
 
-.active a {
-    font-weight: bold !important;
-    background-color: transparent !important;
-}
+/*.active a {*/
+    /*font-weight: bold !important;*/
+    /*background-color: transparent !important;*/
+/*}*/
 
 .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
     //font-weight: bold !important;
@@ -78,4 +78,23 @@ input[type="color"]:focus,
 
 .displaynone {
     display: none!important;
+}
+
+footer {
+    /*background-color: #31b0d5 !important;*/
+}
+
+footer, footer a {
+    /*color: white !important;*/
+}
+
+  .browse-tabs > li, .nav-pills > li {
+    float:none;
+    display:inline-block;
+    *display:inline; /* ie7 fix */
+     zoom:1; /* hasLayout ie7 trigger */
+}
+
+.browse-tabs, .nav-pills {
+    text-align:center;
 }

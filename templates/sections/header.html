@@ -1,393 +1,69 @@
 {% load staticfiles %}
 {% load settings_tags %}
-{% if request.user.is_authenticated and not request.user.is_staff %}
-    <style>
-        nav.navbar-webmaster {
-        }
-
-        nav.navbar-webmaster a {
-            color: #fff;
-        }
-
-        nav.navbar-webmaster ul.navbar-nav a {
-        }
-
-        nav.navbar-webmaster ul.navbar-nav a:hover,
-        nav.navbar-webmaster ul.navbar-nav a:visited,
-        nav.navbar-webmaster ul.navbar-nav a:focus,
-        nav.navbar-webmaster ul.navbar-nav a:active {
-            background: #3b4045;
-        }
-
-        nav.navbar-webmaster ul.navbar-nav a:hover {
-            border-color: #5fb000;
-        }
-
-        nav.navbar-webmaster li.divider {
-            background: #ccc;
-        }
-
-        nav.navbar-webmaster button.navbar-toggle {
-            background: #1b242c;
-            border-radius: 2px;
-        }
-
-        nav.navbar-webmaster button.navbar-toggle:hover {
-            background: #999;
-        }
-
-        nav.navbar-webmaster button.navbar-toggle > span.icon-bar {
-            background: #fff;
-        }
-
-        nav.navbar-webmaster ul.dropdown-menu {
-            border: 0;
-            background: #fff;
-            border-radius: 4px;
-            margin: 4px 0;
-            box-shadow: 0 0 4px 0 #ccc;
-        }
-
-        nav.navbar-webmaster ul.dropdown-menu > li > a {
-            color: #444;
-        }
-
-        nav.navbar-webmaster ul.dropdown-menu > li > a:hover {
-            background: teal;
-            color: #fff;
-        }
-
-        nav.navbar-webmaster span.badge {
-            background: #f14444;
-            font-weight: normal;
-            font-size: 11px;
-            margin: 0 4px;
-        }
-
-        nav.navbar-webmaster span.badge.new {
-            background: rgba(255, 0, 0, 0.8);
-            color: #fff;
-        }
-
-        .mega-dropdown {
-            position: static !important;
-        }
-
-        .mega-dropdown-menu {
-            padding: 20px 0;
-            width: 100%;
-            box-shadow: none;
-            -webkit-box-shadow: none;
-        }
-
-        .mega-dropdown-menu > li > ul {
-            padding: 0;
-            margin: 0;
-        }
-
-        .mega-dropdown-menu > li > ul > li {
-            list-style: none;
-        }
-
-        .mega-dropdown-menu > li > ul > li > a {
-            display: block;
-            color: #222;
-            padding: 3px 5px;
-        }
-
-        .mega-dropdown-menu > li ul > li > a:hover,
-        .mega-dropdown-menu > li ul > li > a:focus {
-            text-decoration: none;
-        }
-
-        .mega-dropdown-menu .dropdown-header {
-            font-size: 18px;
-            color: #ff3546;
-            padding: 5px 60px 5px 5px;
-            line-height: 30px;
-        }
-
-        .carousel-control {
-            width: 30px;
-            height: 30px;
-            top: -35px;
-
-        }
-
-        .left.carousel-control {
-            right: 30px;
-            left: inherit;
-        }
-
-        .carousel-control .glyphicon-chevron-left,
-        .carousel-control .glyphicon-chevron-right {
-            font-size: 12px;
-            background-color: #fff;
-            line-height: 30px;
-            text-shadow: none;
-            color: #333;
-            border: 1px solid #ddd;
-        }
-    </style>
-    <script>
-        $(document).ready(function () {
-            $('.dropdown-toggle').dropdown();
-            $(".dropdown").hover(
-                function () {
-                    $('.dropdown-menu', this).not('.in .dropdown-menu').stop(true, true).show();
-                    $(this).toggleClass('open');
-                },
-                function () {
-                    $('.dropdown-menu', this).not('.in .dropdown-menu').stop(true, true).hide();
-                    $(this).toggleClass('open');
-                }
-            );
-
-            $('#id_logout_button').on('click', function () {
-                // check login state if logged in then simply logged out
-                checkLoginState();
-
-            });
-        });
-
-        function checkLoginState() {
-            FB.getLoginStatus(function (response) {
-                if (response.status === 'connected') {
-                    FB.logout();
-                }
-            });
-        }
-
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: {{ 'randomvalue'|facebook_app_id }},
-                status: true, // check login status
-                cookie: true, // enable cookies to allow the server to access the session
-                xfbml: true  // parse XFBML
-            });
-        };
-
-        (function (d) {
-            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-            if (d.getElementById(id)) {
-                return;
-            }
-            js = d.createElement('script');
-            js.id = id;
-            js.async = true;
-            js.src = "https://connect.facebook.net/en_US/all.js";
-            ref.parentNode.insertBefore(js, ref);
-        }(document));
-
-    </script>
-    <div class="navbar-wrapper navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <nav class=" navbar-webmaster">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                                data-target="#navbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="">Bookozi</a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="navbar">
-                        <ul class="nav navbar-nav navbar-right">
-
-                            <li class="dropdown mega-dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse Books <span
-                                        class="caret"></span></a>
-                                <ul class="dropdown-menu mega-dropdown-menu">
-                                    <li class="col-sm-3">
-                                        <ul>
-                                            <li class="dropdown-header">Features</li>
-                                            <li><a href="#">Auto Carousel</a></li>
-                                            <li><a href="#">Carousel Control</a></li>
-                                            <li><a href="#">Left & Right Navigation</a></li>
-                                            <li><a href="#">Four Columns Grid</a></li>
-                                            <li class="divider"></li>
-                                            <li class="dropdown-header">Fonts</li>
-                                            <li><a href="#">Glyphicon</a></li>
-                                            <li><a href="#">Google Fonts</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="col-sm-3">
-                                        <ul>
-                                            <li class="dropdown-header">Plus</li>
-                                            <li><a href="#">Navbar Inverse</a></li>
-                                            <li><a href="#">Pull Right Elements</a></li>
-                                            <li><a href="#">Coloured Headers</a></li>
-                                            <li><a href="#">Primary Buttons & Default</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="col-sm-3">
-                                        <ul>
-                                            <li class="dropdown-header">Much more</li>
-                                            <li><a href="#">Easy to Customize</a></li>
-                                            <li><a href="#">Calls to action</a></li>
-                                            <li><a href="#">Custom Fonts</a></li>
-                                            <li><a href="#">Slide down on Hover</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="col-sm-3">
-                                        <ul>
-                                            <li class="dropdown-header">Women Collection</li>
-                                            <div id="womenCollection" class="carousel slide" data-ride="carousel">
-                                                <div class="carousel-inner">
-                                                    <div class="item active">
-                                                        <a href="#"><img
-                                                                src="http://placehold.it/254x150/3498db/f5f5f5/&text=New+Collection"
-                                                                class="img-responsive" alt="product 1"></a>
-                                                        <h4>
-                                                            <small>Summer dress floral prints</small>
-                                                        </h4>
-                                                        <button class="btn btn-primary" type="button">49,99 €</button>
-                                                        <button href="#" class="btn btn-default" type="button"><span
-                                                                class="glyphicon glyphicon-heart"></span> Add to
-                                                            Wishlist
-                                                        </button>
-                                                    </div><!-- End Item -->
-                                                    <div class="item">
-                                                        <a href="#"><img
-                                                                src="http://placehold.it/254x150/ff3546/f5f5f5/&text=New+Collection"
-                                                                class="img-responsive" alt="product 2"></a>
-                                                        <h4>
-                                                            <small>Gold sandals with shiny touch</small>
-                                                        </h4>
-                                                        <button class="btn btn-primary" type="button">9,99 €</button>
-                                                        <button href="#" class="btn btn-default" type="button"><span
-                                                                class="glyphicon glyphicon-heart"></span> Add to
-                                                            Wishlist
-                                                        </button>
-                                                    </div><!-- End Item -->
-                                                    <div class="item">
-                                                        <a href="#"><img
-                                                                src="http://placehold.it/254x150/2ecc71/f5f5f5/&text=New+Collection"
-                                                                class="img-responsive" alt="product 3"></a>
-                                                        <h4>
-                                                            <small>Denin jacket stamped</small>
-                                                        </h4>
-                                                        <button class="btn btn-primary" type="button">49,99 €</button>
-                                                        <button href="#" class="btn btn-default" type="button"><span
-                                                                class="glyphicon glyphicon-heart"></span> Add to
-                                                            Wishlist
-                                                        </button>
-                                                    </div><!-- End Item -->
-                                                </div><!-- End Carousel Inner -->
-                                                <!-- Controls -->
-                                                <a class="left carousel-control" href="#womenCollection" role="button"
-                                                   data-slide="prev">
-                                                    <span class="glyphicon glyphicon-chevron-left"
-                                                          aria-hidden="true"></span>
-                                                    <span class="sr-only">Previous</span>
-                                                </a>
-                                                <a class="right carousel-control" href="#womenCollection" role="button"
-                                                   data-slide="next">
-                                                    <span class="glyphicon glyphicon-chevron-right"
-                                                          aria-hidden="true"></span>
-                                                    <span class="sr-only">Next</span>
-                                                </a>
-                                            </div><!-- /.carousel -->
-                                            <li class="divider"></li>
-                                            <li><a href="#">View all Collection <span
-                                                    class="glyphicon glyphicon-chevron-right pull-right"></span></a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="#">How It Works</a></li>
-                            <li class="active"><a href="#">View My Cart</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-expanded="false">Md <span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Profile</a></li>
-                                    <li><a href="#">Change Password</a></li>
-                                    <li><a href="#">My Cart</a></li>
-                                    <li><a id="id_logout_button" href="{% url "bauth_logout_view" %}">Logout</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                    </div>
+<div class="navbar-wrapper navbar navbar-default navbar-fixed-top" style="background: #31b0d5; color: white !important; height: 35px;">
+    <div class="container-fluid">
+        <nav class="">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#" style="color: white !important; float: left;">
+                        <span class="glyphicon glyphicon-phone"></span> +880162563767
+                    </a>
+                    <a class="navbar-brand" href="#" style="color: white !important; float: left;">
+                        <span class="glyphicon glyphicon-envelope" style="top:2px;"></span> support@bdreads.com
+                    </a>
                 </div>
-            </nav>
-        </div>
-
-        {#    <div style="background-color: teal; width: 100%; height: 40px; ">#}
-        {#    asd#}
-        {#    </div>#}
-    </div>
-{% else %}
-    <div class="navbar-wrapper navbar navbar-default navbar-fixed-top" style="height: 35px;">
-        <div class="container-fluid">
-            <nav class="">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                                data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#" style="float: left;">
-                            <span class="glyphicon glyphicon-phone"></span> +880162563767
-                        </a>
-                        <a class="navbar-brand" href="#" style="float: left;">
-                            <span class="glyphicon glyphicon-envelope"></span> support@bdreads.com
-                        </a>
-                    </div>
-                    <div id="navbar" class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav pull-right">
-                            <li class=""><a href="#">How It Works?</a></li>
-                            {% if request.user.is_authenticated and not request.user.is_admin %}
-                            <li class="" class="dropdown" href="#">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
-                              <span class="glyphicon glyphicon-user"></span> Md Shariful Islam <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></a>
-                              <ul class="dropdown-menu">
-                                  <div style="padding: 20px;">
-                                      <ul class="list" style="list-style-type:none; padding-left: 0px; font-size: 14px;">
-                                          <li class="list-item" style="padding-bottom: 10px;">
-                                             <a href="#">My Orders</a>
-                                          </li>
-                                          <li class="list-item" style="padding-bottom: 10px;">
-                                             <a href="#">My Profile</a>
-                                          </li>
-                                          <li class="list-item" style="padding-bottom: 10px;">
-                                             <a href="#">Return Books</a>
-                                          </li>
-                                          <li class="list-item" style="padding-bottom: 10px;">
-                                             <a href="#">My Payments</a>
-                                          </li>
-                                          <li class="list-item" style="padding-bottom: 10px;">
-                                              <a href="#">Settings</a>
-                                          </li>
-                                          <li class="list-item" style="padding-bottom: 10px;">
-                                              <a href="#">Change Password</a>
-                                          </li>
-                                          <li class="list-item" style="padding-bottom: 10px;">
-                                             <a href="#">Logout</a>
-                                          </li>
-                                      </ul>
-                                  </div>
-                              </ul>
-                            </li>
-                            {% elif not request.user.is_authenticated %}
-                            <li class=""><a href="{% url "bauth_signup_view" %}">Register</a></li>
-                            <li class=""><a href="{% url "bauth_login_view" %}">Login</a></li>
-                            {% endif %}
-                        </ul>
-                    </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav pull-right" style="color: white !important; ">
+                        <li class=""><a href="#" style="color: white !important; ">How It Works?</a></li>
+                        {% if request.user.is_authenticated and not request.user.is_staff %}
+                        <li class="" class="dropdown" href="#">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: white !important; ">
+                          <span class="glyphicon glyphicon-user"></span> Md Shariful Islam <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></a>
+                          <ul class="dropdown-menu">
+                              <div style="padding: 20px;">
+                                  <ul class="list" style="list-style-type:none; padding-left: 0px; font-size: 14px;">
+                                      <li class="list-item" style="padding-bottom: 10px;">
+                                         <a href="#">My Orders</a>
+                                      </li>
+                                      <li class="list-item" style="padding-bottom: 10px;">
+                                         <a href="#">My Profile</a>
+                                      </li>
+                                      <li class="list-item" style="padding-bottom: 10px;">
+                                         <a href="#">Return Books</a>
+                                      </li>
+                                      <li class="list-item" style="padding-bottom: 10px;">
+                                         <a href="#">My Payments</a>
+                                      </li>
+                                      <li class="list-item" style="padding-bottom: 10px;">
+                                          <a href="#">Settings</a>
+                                      </li>
+                                      <li class="list-item" style="padding-bottom: 10px;">
+                                          <a href="#">Change Password</a>
+                                      </li>
+                                      <li class="list-item" style="padding-bottom: 10px;">
+                                         <a href="#">Logout</a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </ul>
+                        </li>
+                        {% elif not request.user.is_authenticated %}
+                        <li class=""><a style="color: white !important;" href="{% url "bauth_signup_view" %}">Register</a></li>
+                        <li class=""><a style="color: white !important;" href="{% url "bauth_login_view" %}">Login</a></li>
+                        {% endif %}
+                    </ul>
                 </div>
-            </nav>
-        </div>
+            </div>
+        </nav>
     </div>
-{% endif %}
+</div>
 <div class="container" style="margin-top: 50px;">
   <div class="row">
       <div class="col-md-3">
@@ -404,7 +80,7 @@
                       </div>
                     </div>
                       <div class="dropdown" href="#" style="color: #38525a !important; display: inline-table; ">
-                      <button class="dropdown-toggle btn btn-info" style="padding: 9px;" data-toggle="dropdown" ><span class="glyphicon glyphicon-shopping-cart"></span> My Cart(2) <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></button>
+                      <button class="dropdown-toggle btn btn-danger" style="padding: 9px;" data-toggle="dropdown" ><span class="glyphicon glyphicon-shopping-cart"></span> My Cart(2) <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></button>
                       <ul class="dropdown-menu">
                           <div style="padding: 20px;">
                               <div class="row">
@@ -426,7 +102,7 @@
     <ul class="nav navbar-nav">
       <li><a href="{% url "home_view" %}">Home</a></li>
         <li class="dropdown" style="position: static !important;">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse Books <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse Books <span style="top: 2px;" class="glyphicon glyphicon-chevron-down"></span></a>
 
           <ul class="dropdown-menu" style="left: 15px !important; right: 15px !important; ">
             {% include "sections/header_categories.html" %}
@@ -506,4 +182,4 @@ ul.breadcrumb li a:hover {
     </div>
 </div>
 
-<!-- {% include "sections/top_banner.html" %} !-->
+{% include "sections/top_banner.html" %}

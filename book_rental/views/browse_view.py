@@ -17,6 +17,9 @@ class BookBrowseView(BaseTemplateView, CommonDataMixin):
             if slug:
                 slug = slug[0]
 
+        if not slug:
+            context["filter_categories"] = self.get_all_parent_categiries()
+
         book_category_objects = ProductCategory.objects.filter(slug=slug)
 
         context['all_categories'] = self.get_all_categories()
