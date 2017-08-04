@@ -1,4 +1,28 @@
-.form-control:focus {
-  border-color: #FF0000 !important;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6) !important;
-}
+.book_entry {
+      box-shadow: 3px 3px 3px 3px #eeeeee;
+      margin-bottom: 7px;
+  }
+  .book_entry p {
+      font-size: 13px;
+      font-family: Roboto,"Helvetica Neue",Arial,sans-serif !important;
+      color: #2F4F4F !important;
+      line-height: 20px !important;
+  }
+
+  .item_links {
+      font-size: 15px !important;
+  }
+
+  .browse_item_hover {
+     //opacity: 0.8 !important;
+     border-radius: 8px;
+  }
+  .browse_item_hover_color {
+    border-radius: 8px !important;
+  }
+  .browse_item_hover_color p, .browse_item_hover_color i, .browse_item_hover_color a {
+    color: #575e80 !important;
+  }
+  .browse_item_hover_color img {
+    opacity: 0.5 !important;
+  }

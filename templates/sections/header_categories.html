@@ -1,0 +1,104 @@
+<!--
+<style type="text/css">
+    .table-borderless > tbody > tr > td,
+    .table-borderless > tbody > tr > th,
+    .table-borderless > tfoot > tr > td,
+    .table-borderless > tfoot > tr > th,
+    .table-borderless > thead > tr > td,
+    .table-borderless > thead > tr > th {
+        border: none;
+        padding: 3px !important;
+    }
+    .navbar ul.dropdown-menu li {
+        list-style-type: none;
+        border-bottom: solid 1px #eeeeee;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 4px 0;
+    }
+</style>
+<div style="max-height: 400px !important; overflow-x: hidden !important; overflow-y: auto !important;">
+  <div class="row">
+      <div class="col-lg-12">
+            <div style="font-size: 15px; font-weight: bold;padding: 10px; border-bottom: 1px solid grey; text-transform: uppercase; ">
+                All Categories
+            </div>
+            <div>
+                {% for cat_dict in all_categories %}
+                    <div class="pull-left" style="padding: 10px !important; display: flex;flex-flow: row nowrap; /* is default: columns along the main-axis (row) and no wrapping to next lines */
+  align-items: flex-end; /* bottom */ ">
+                        <table class="table table-borderless">
+                            <thead>
+                            <tr>
+                                <th style="border-bottom: 1px dotted lightslategray; text-transform: uppercase; ">
+                                    <a href="{% url "book_browse_view" cat_dict.slug %}">{{ cat_dict.name }}</a>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for child in cat_dict.children %}
+                                <tr>
+                                    <td style="font-size: 13px; text-transform: uppercase; "><a href="{% url "book_browse_view" child.slug %}">{{ child.name }}</a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endfor %}
+            </div>
+      </div>
+  </div>
+</div>
+
+
+!-->
+
+<style type="text/css">
+    .table-borderless > tbody > tr > td,
+    .table-borderless > tbody > tr > th,
+    .table-borderless > tfoot > tr > td,
+    .table-borderless > tfoot > tr > th,
+    .table-borderless > thead > tr > td,
+    .table-borderless > thead > tr > th {
+        border: none;
+        padding: 3px !important;
+    }
+
+.cols {
+    -webkit-column-count:6;
+    -webkit-column-gap:10px;
+    padding-top: 20px;
+}
+</style>
+
+<div style="padding: 0px 20px 20px 20px; max-height: 400px !important; overflow-x: hidden !important; overflow-y: auto !important;">
+  <div class="row">
+      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+            <div style="font-size: 15px; font-weight: bold;padding: 10px; border-bottom: 1px solid lightgrey; text-transform: uppercase; ">
+                All Categories
+            </div>
+            <div class="cols">
+                {% for cat_dict in all_categories %}
+                    <table class="table table-borderless">
+                        <thead>
+                        <tr>
+                            <th style="border-bottom: 1px dotted lightslategray; text-transform: uppercase; ">
+                                <a href="{% url "book_browse_view" cat_dict.slug %}">{{ cat_dict.name }}</a>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for child in cat_dict.children %}
+                            <tr>
+                                <td style="text-transform: uppercase; ">
+                                    <a style="font-size: 12px !important; " href="{% url "book_browse_view" child.slug %}">{{ child.name }}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endfor %}
+            </div>
+      </div>
+  </div>
+</div>

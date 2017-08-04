@@ -12,6 +12,13 @@
     <title>{{ page_title }}</title>
     {% include "scripts/stylesheet.html" %}
     {% include "scripts/javascripts.html" %}
+    <script>
+    $(document).ready(function () {
+        $(document).on( 'click', '.dropdown-menu', function (e){
+            e.stopPropagation();
+        });
+    });
+    </script>
     {% block more_stylesheet %}
 
     {% endblock more_stylesheet %}

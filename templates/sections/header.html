@@ -345,8 +345,42 @@
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav pull-right">
                             <li class=""><a href="#">How It Works?</a></li>
+                            {% if request.user.is_authenticated and not request.user.is_admin %}
+                            <li class="" class="dropdown" href="#">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+                              <span class="glyphicon glyphicon-user"></span> Md Shariful Islam <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></a>
+                              <ul class="dropdown-menu">
+                                  <div style="padding: 20px;">
+                                      <ul class="list" style="list-style-type:none; padding-left: 0px; font-size: 14px;">
+                                          <li class="list-item" style="padding-bottom: 10px;">
+                                             <a href="#">My Orders</a>
+                                          </li>
+                                          <li class="list-item" style="padding-bottom: 10px;">
+                                             <a href="#">My Profile</a>
+                                          </li>
+                                          <li class="list-item" style="padding-bottom: 10px;">
+                                             <a href="#">Return Books</a>
+                                          </li>
+                                          <li class="list-item" style="padding-bottom: 10px;">
+                                             <a href="#">My Payments</a>
+                                          </li>
+                                          <li class="list-item" style="padding-bottom: 10px;">
+                                              <a href="#">Settings</a>
+                                          </li>
+                                          <li class="list-item" style="padding-bottom: 10px;">
+                                              <a href="#">Change Password</a>
+                                          </li>
+                                          <li class="list-item" style="padding-bottom: 10px;">
+                                             <a href="#">Logout</a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </ul>
+                            </li>
+                            {% elif not request.user.is_authenticated %}
                             <li class=""><a href="{% url "bauth_signup_view" %}">Register</a></li>
                             <li class=""><a href="{% url "bauth_login_view" %}">Login</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -370,7 +404,7 @@
                       </div>
                     </div>
                       <div class="dropdown" href="#" style="color: #38525a !important; display: inline-table; ">
-                      <button class="dropdown-toggle btn btn-info" style="padding: 9px;" data-toggle="dropdown" ><span class="glyphicon glyphicon-shopping-cart"></span> My Cart(2)<span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></button>
+                      <button class="dropdown-toggle btn btn-info" style="padding: 9px;" data-toggle="dropdown" ><span class="glyphicon glyphicon-shopping-cart"></span> My Cart(2) <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></button>
                       <ul class="dropdown-menu">
                           <div style="padding: 20px;">
                               <div class="row">
@@ -387,75 +421,15 @@
       </div>
   </div>
 </div>
-<nav class="navbar navbar-default menu-navbar" role="navigation" style="margin-top: 8px;">
+<nav class="navbar navbar-default menu-navbar" role="navigation" style="font-size: 10px; text-transform: uppercase; margin-top: 8px;">
   <div class="container">
     <ul class="nav navbar-nav">
       <li><a href="{% url "home_view" %}">Home</a></li>
         <li class="dropdown" style="position: static !important;">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse Books <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></a>
 
-          <ul class="dropdown-menu" style="left: 15px !important; right: 15px !important; background-color: aliceblue !important;">
-            <div class="container">
-              <div class="row">
-                  <div class="col-lg-12">
-                        <h4>
-                            All Categories
-                            <hr/>
-                        </h4>
-                        <div>
-                            <div class="list-group" style="float: left; width: auto; ">
-                                <div class="list-group-item">
-                                    <a href="#">Engineering</a>
-                                    <div class="list-group">
-                                        <div class="list-group-item">
-                                            <a href="#">Electrical and Electronix Engineering</a>
-                                        </div>
-                                        <div class="list-group-item">
-                                            <a href="#">Computer Science and Engineering</a>
-                                        </div>
-                                        <div class="list-group-item">
-                                            <a href="#">CSE</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="list-group" style="float: left; width: auto; ">
-                                <div class="list-group-item">
-                                    <a href="#">Engineering</a>
-                                    <div class="list-group">
-                                        <div class="list-group-item">
-                                            <a href="#">Electrical and Electronix Engineering</a>
-                                        </div>
-                                        <div class="list-group-item">
-                                            <a href="#">Computer Science and Engineering</a>
-                                        </div>
-                                        <div class="list-group-item">
-                                            <a href="#">CSE</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="list-group" style="float: left; width: auto; ">
-                                <div class="list-group-item">
-                                    <a href="#">Engineering</a>
-                                    <div class="list-group">
-                                        <div class="list-group-item">
-                                            <a href="#">Electrical and Electronix Engineering</a>
-                                        </div>
-                                        <div class="list-group-item">
-                                            <a href="#">Computer Science and Engineering</a>
-                                        </div>
-                                        <div class="list-group-item">
-                                            <a href="#">CSE</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                  </div>
-              </div>
-            </div>
+          <ul class="dropdown-menu" style="left: 15px !important; right: 15px !important; ">
+            {% include "sections/header_categories.html" %}
           </ul>
 
         </li>

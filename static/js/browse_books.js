@@ -1,9 +1,11 @@
 $(document).ready(function () {
-    $(".book_entry").hover(function (e) {
-        $(this).addClass("opacity_08");
+    $(".book_entry_content").hover(function (e) {
+        $(this).addClass("browse_item_hover");
+        $(this).parent(".book_entry").addClass("browse_item_hover_color");
         $(this).find(".book_entry_action").removeClass("displaynone");
     }, function (e) {
-        $(this).removeClass("opacity_08");
+        $(this).removeClass("browse_item_hover");
+        $(this).parent(".book_entry").removeClass("browse_item_hover_color");
         $(this).find(".book_entry_action").addClass("displaynone");
     });
 
@@ -12,5 +14,11 @@ $(document).ready(function () {
         //alert("adsa");
         $("#product_view").modal('show');
         return false;
+    });
+    $(document).on("mousein", ".book_entry", function (e) {
+        $(this).addClass("browse_item_hover");
+    });
+    $(document).on("mouseout", ".book_entry", function (e) {
+        $(this).removeClass("browse_item_hover");
     });
 })
