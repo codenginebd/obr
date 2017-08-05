@@ -32,6 +32,10 @@ class Author(BaseEntity, ThumbnailModelMixin):
         except Exception as msg:
             print("Thumbnail creation failed.")
         super(Author, self).save()
+
+
+    def get_author_image_url(self):
+        return settings.MEDIA_URL + '/' + str(self.thumbnail)
         
         
     @classmethod

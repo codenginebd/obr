@@ -53,5 +53,6 @@ class BookBrowseView(BaseTemplateView, CommonDataMixin):
 
         context['header_categories'] = self.get_all_categories()
         context["header_authors"] = self.get_all_authors()
+        context["header_publishers"] = self.get_all_publishers()
 
         return context

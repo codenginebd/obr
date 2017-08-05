@@ -1,4 +1,5 @@
 from book_rental.models.author import Author
+from book_rental.models.book_publisher import BookPublisher
 from generics.models.sales.category import ProductCategory
 
 
@@ -15,3 +16,6 @@ class CommonDataMixin(object):
 
     def get_all_authors(self):
         return Author.objects.all()
+
+    def get_all_publishers(self):
+        return BookPublisher.objects.all()

@@ -19,6 +19,11 @@
     -webkit-column-gap:10px;
     padding-top: 20px;
 }
+.cols-five {
+    -webkit-column-count:5;
+    -webkit-column-gap:10px;
+    padding-top: 20px;
+}
 </style>
 
 <div style="padding: 0px 20px 20px 20px; max-height: 400px !important; overflow-x: hidden !important; overflow-y: auto !important;">
@@ -39,7 +44,7 @@
                                 <thead>
                                 <tr>
                                     <th style="border-bottom: 1px dotted lightslategray; text-transform: uppercase; ">
-                                        <a href="{% url "book_browse_view" cat_dict.slug %}">{{ cat_dict.name }}</a>
+                                        <a data-toggle="tooltip"  title="View all books for {{ cat_dict.name }}" href="{% url "book_browse_view" cat_dict.slug %}">{{ cat_dict.name }}</a>
                                     </th>
                                 </tr>
                                 </thead>
@@ -47,7 +52,7 @@
                                 {% for child in cat_dict.children %}
                                     <tr>
                                         <td style="text-transform: uppercase; ">
-                                            <a style="font-size: 12px !important; " href="{% url "book_browse_view" child.slug %}">{{ child.name }}</a>
+                                            <a data-toggle="tooltip"  title="View all books for {{ child.name }}" style="font-size: 12px !important; " href="{% url "book_browse_view" child.slug %}">{{ child.name }}</a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -57,19 +62,34 @@
                     </div>
                   </div>
                   <div id="browse_menuba" class="tab-pane fade">
-                    <div class="cols-four">
+                    <div class="cols-five">
                         {% for author in header_authors %}
-                            <table class="table table-borderless">
+                            <table class="table table-borderless" style="margin-bottom: 0px !important;">
                                 <tbody>
-                                <span class="glyphicon glyphicon-user"></span> <a href="#">{{ author.name }}</a>
+                                <tr>
+                                    <td align="right">
+                                        {% if author.thumbnail %}
+                                        <a href="#"><span><img data-toggle="tooltip" data-placement="top"  title="View author profile"  class="img-responsive img-rounded" width="60" height="60" src="{{ author.get_author_image_url }}"></span></a>
+                                        {% else %}
+                                        <a href="#"><span data-toggle="tooltip" data-placement="top" title="View author profile"  class="glyphicon glyphicon-user"></span></a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div><a data-toggle="tooltip"  title="View all books by {{ author.name }}" href="#">{{ author.name }}</a></div>
+                                        <div><p style="text-transform: capitalize; ">{{ author.description }}</p></div>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         {% endfor %}
                     </div>
                   </div>
                   <div id="browse_menu_bp" class="tab-pane fade">
-                    <h3>Menu 2</h3>
-                    <p>Some content in menu 2.</p>
+                    <div class="cols-five">
+                        {% for publisher in header_publishers %}
+                            <div><a data-toggle="tooltip"  title="View all books by {{ publisher.name }}" style="text-transform: capitalize; " href="#">{{ publisher.name }}</a></div>
+                        {% endfor %}
+                    </div>
                   </div>
                 </div>
             </div>

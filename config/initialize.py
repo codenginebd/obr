@@ -18,7 +18,7 @@ def init_book_languages():
         if blang_objects.exists():
             blang_object = blang_objects.first()
         else:
-            blang_object = BookLanguage()
+            blang_object = BookLanguage(short_name=lang['short_name'])
             
         blang_object.name = lang['long_name']
         blang_object.save()

@@ -23,4 +23,5 @@ $(document).ready(function () {
     $(document).on("mouseout", ".book_entry", function (e) {
         $(this).removeClass("browse_item_hover");
     });
+    $('[data-toggle="tooltip"]').tooltip();
 })

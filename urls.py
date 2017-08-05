@@ -14,7 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-
+from django.conf import settings
+from django.conf.urls.static import static
 from bauth.api.views.api_login_view import APILoginView
 from book_rental.api.router import book_router
 from book_rental.api.viewsets.BookListAPIView import BookListAPIView
@@ -44,3 +45,5 @@ urlpatterns += [
 ]
 
 urlpatterns += book_router.urls
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

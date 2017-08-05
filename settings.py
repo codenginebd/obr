@@ -175,6 +175,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+
 # Modification will be added here.
 
 # google reCapatcha configurations
@@ -194,5 +196,7 @@ AUTHENTICATION_BACKENDS = (
 MEDIA_TEMP_PATH = os.path.join(MEDIA_ROOT,"temp")
 MEDIA_AUTHOR_PATH = os.path.join(MEDIA_ROOT,"author")
 MEDIA_PUBLISHER_PATH = os.path.join(MEDIA_ROOT,"publisher")
+MEDIA_BOOK_PATH = os.path.join(MEDIA_ROOT,"books")
 MEDIA_AUTHOR_THUMB_PATH = os.path.join(MEDIA_AUTHOR_PATH,"thumbnails")
 MEDIA_PUBLISHER_THUMB_PATH = os.path.join(MEDIA_PUBLISHER_PATH,"thumbnails")
+MEDIA_BOOK_THUMB_PATH = os.path.join(MEDIA_BOOK_PATH,"thumbnails")
