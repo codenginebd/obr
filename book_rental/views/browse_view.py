@@ -8,7 +8,7 @@ class BookBrowseView(BaseTemplateView, CommonDataMixin):
 
     def get_context_data(self, **kwargs):
         context = super(BookBrowseView, self).get_context_data(**kwargs)
-        context['page_title'] = 'Browse Books'
+        context['page_title'] = 'Buy, Sale, Rent Books Online | bdreads.com'
 
         slug = kwargs.get('slug')
 
@@ -51,6 +51,7 @@ class BookBrowseView(BaseTemplateView, CommonDataMixin):
             else:
                 context["filter_category_show"] = False
 
-        context['all_categories'] = self.get_all_categories()
+        context['header_categories'] = self.get_all_categories()
+        context["header_authors"] = self.get_all_authors()
 
         return context
