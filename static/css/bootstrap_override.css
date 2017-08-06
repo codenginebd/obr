@@ -8,6 +8,7 @@
     font-size: 15px !important;
     color: #38525a !important;
     //line-height: 30px !important;
+    font-weight: bold !important;
 }
 
 body, a {
@@ -50,9 +51,10 @@ label {
 }
 
 .menu-navbar .navbar-nav>li>a {
-    color: #1b0733 !important;
+    color: #146780 !important;
     font-size: 12px !important;
     text-transform: uppercase !important;
+    font-weight: bold !important;
 }
 
 textarea:focus,

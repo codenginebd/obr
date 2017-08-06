@@ -3,12 +3,12 @@ $(document).ready(function () {
         $(this).addClass("browse_item_hover");
         $(this).parent(".book_entry").addClass("browse_item_hover_color");
         $(this).find(".book_entry_action").removeClass("displaynone");
-        $(this).find(".action-bar").removeClass("displaynone");
+        $(this).find(".action-bar").slideDown("slow");
     }, function (e) {
         $(this).removeClass("browse_item_hover");
         $(this).parent(".book_entry").removeClass("browse_item_hover_color");
         $(this).find(".book_entry_action").addClass("displaynone");
-        $(this).find(".action-bar").addClass("displaynone");
+        $(this).find(".action-bar").slideUp("slow");
     });
 
     $(".product-quick-view").click(function (e) {
