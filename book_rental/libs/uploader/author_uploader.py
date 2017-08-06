@@ -24,7 +24,11 @@ class AuthorUploader(object):
                 index += 1
                 author_name = row[index] if row[index] else None
                 index += 1
+                author_name_bn = row[index] if row[index] else None
+                index += 1
                 author_description = row[index] if row[index] else None
+                index += 1
+                author_description_bn = row[index] if row[index] else None
                 index += 1
                 author_image = row[index] if row[index] else None
                 index += 1
