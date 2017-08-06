@@ -75,8 +75,13 @@
                                         {% endif %}
                                     </td>
                                     <td>
+                                        {% if author.show_bn %}
+                                        <div><a style="font-size: 17px !important; " data-toggle="tooltip"  title="View all books by {{ author.name_bn }}" href="#">{{ author.name_bn }}</a></div>
+                                        <div><p style="text-transform: capitalize; ">{{ author.description_bn }}</p></div>
+                                        {% else %}
                                         <div><a data-toggle="tooltip"  title="View all books by {{ author.name }}" href="#">{{ author.name }}</a></div>
                                         <div><p style="text-transform: capitalize; ">{{ author.description }}</p></div>
+                                        {% endif %}
                                     </td>
                                 </tr>
                                 </tbody>
@@ -87,7 +92,11 @@
                   <div id="browse_menu_bp" class="tab-pane fade">
                     <div class="cols-five">
                         {% for publisher in header_publishers %}
-                            <div><a data-toggle="tooltip"  title="View all books by {{ publisher.name }}" style="text-transform: capitalize; " href="#">{{ publisher.name }}</a></div>
+                            {% if publisher.show_bn %}
+                            <div><a data-toggle="tooltip"  title="View all books by {{ publisher.name_bn }}" style="font-size: 17px!important; text-transform: capitalize; " href="#">{{ publisher.name_bn }}</a></div>
+                            {% else %}
+                                <div><a data-toggle="tooltip"  title="View all books by {{ publisher.name }}" style="text-transform: capitalize; " href="#">{{ publisher.name }}</a></div>
+                            {% endif %}
                         {% endfor %}
                     </div>
                   </div>

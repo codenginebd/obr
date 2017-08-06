@@ -15,6 +15,7 @@ class Author(BaseEntity, ThumbnailModelMixin):
     name_bn = models.CharField(max_length=500, blank=True)
     description = models.TextField(blank=True)
     description_bn = models.TextField(blank=True)
+    show_bn = models.BooleanField(default=False)
     date_of_birth = models.DateField(null=True)
     address = models.ForeignKey(Address, null=True)
     phones = models.ManyToManyField(Phone)
@@ -25,6 +26,14 @@ class Author(BaseEntity, ThumbnailModelMixin):
     nationalities = models.ManyToManyField(Country)
     languages = models.ManyToManyField(Language)
     slug = models.SlugField()
+
+    @property
+    def render_author_name_bn(self):
+        return str(self.name_bn).decode('unicode_escape')
+
+    @property
+    def render_description_bn(self):
+        return str(self.description_bn).decode('unicode_escape')
 
     def save(self):
         self.slug = slugify(self.name)

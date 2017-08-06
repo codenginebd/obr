@@ -12,6 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print("Upload Initialized")
         print("Now")
+        BookPublisher.objects.all().delete()
         PROJECT_ROOT = os.path.abspath(os.path.dirname(__name__))
         fname = PROJECT_ROOT + '/book_rental/management/commands/uploads/publisher_upload.xlsx'
         excel_reader = ExcelFileReader(file_name=fname, sheet_name='Sheet1')

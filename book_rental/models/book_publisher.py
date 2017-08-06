@@ -10,7 +10,10 @@ from generics.models.base_entity import BaseEntity
 
 class BookPublisher(BaseEntity, ThumbnailModelMixin):
     name = models.CharField(max_length=500)
+    name_bn = models.CharField(max_length=500, blank=True)
     description = models.TextField(blank=True)
+    description_bn = models.TextField(blank=True)
+    show_bn = models.BooleanField(default=False)
     address = models.ForeignKey(Address, null=True)
     phones = models.ManyToManyField(Phone)
     emails = models.ManyToManyField(Email)

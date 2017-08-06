@@ -30,6 +30,8 @@ class AuthorUploader(object):
                 index += 1
                 author_description_bn = row[index] if row[index] else None
                 index += 1
+                show_bn = row[index] if row[index] else None
+                index += 1
                 author_image = row[index] if row[index] else None
                 index += 1
                 date_of_birth = row[index] if row[index] else None
@@ -47,6 +49,24 @@ class AuthorUploader(object):
                     error_log = ErrorLog()
                     error_log.url = ''
                     error_log.stacktrace = 'Author description must be given'
+                    error_log.save()
+                    continue
+
+                try:
+                    if not show_bn:
+                        show_bn = 0
+                    show_bn = int(show_bn)
+                    if show_bn == 1:
+                        if not author_name_bn or not author_description_bn:
+                            error_log = ErrorLog()
+                            error_log.url = ''
+                            error_log.stacktrace = 'Author name bn and author description bn missing. Data: %s skipping...' % row
+                            error_log.save()
+                            continue
+                except Exception as exp:
+                    error_log = ErrorLog()
+                    error_log.url = ''
+                    error_log.stacktrace = 'Show BN must be number. Given %s. skipping...' % show_bn
                     error_log.save()
                     continue
 
@@ -78,6 +98,14 @@ class AuthorUploader(object):
 
                 if not author_object:
                     author_object = Author()
+
+                if author_name_bn:
+                    author_object.name_bn = author_name_bn
+
+                if author_description_bn:
+                    author_object.description_bn = author_description_bn
+
+                author_object.show_bn = show_bn
 
                 if author_image:
                     image_full_path = os.path.join(settings.MEDIA_AUTHOR_PATH, author_image)

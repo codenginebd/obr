@@ -23,7 +23,13 @@ class PublisherUploader(object):
                 index += 1
                 publisher_name = row[index] if row[index] else None
                 index += 1
+                publisher_name_bn = row[index] if row[index] else None
+                index += 1
                 publisher_description = row[index] if row[index] else None
+                index += 1
+                publisher_description_bn = row[index] if row[index] else None
+                index += 1
+                show_bn = row[index] if row[index] else None
                 index += 1
                 publisher_image = row[index] if row[index] else None
                 index += 1
@@ -44,6 +50,24 @@ class PublisherUploader(object):
                     error_log.stacktrace = 'Publisher description must be given'
                     error_log.save()
                     continue
+
+                try:
+                    if not show_bn:
+                        show_bn = 0
+                    show_bn = int(show_bn)
+                    if show_bn == 1:
+                        if not publisher_name_bn or not publisher_description_bn:
+                            error_log = ErrorLog()
+                            error_log.url = ''
+                            error_log.stacktrace = 'Publisher name bn and Publisher description bn missing. Data: %s skipping...' % row
+                            error_log.save()
+                            continue
+                except Exception as exp:
+                    error_log = ErrorLog()
+                    error_log.url = ''
+                    error_log.stacktrace = 'Show BN must be number. Given %s. skipping...' % show_bn
+                    error_log.save()
+                    continue
                 
                 if code:
                     publisher_objects = BookPublisher.objects.filter(code=code)
@@ -60,6 +84,14 @@ class PublisherUploader(object):
                 
                 publisher_object.name = str(publisher_name)
                 publisher_object.description  = str(publisher_description)
+
+                if publisher_name_bn:
+                    publisher_object.name_bn = publisher_name_bn
+
+                if publisher_description_bn:
+                    publisher_object.description_bn = publisher_description_bn
+
+                publisher_object.show_bn = show_bn
 
                 if publisher_image:
                     image_full_path = os.path.join(settings.MEDIA_PUBLISHER_PATH, publisher_image)
