@@ -28,15 +28,24 @@ class BookUploader(object):
 
                     index += 1
                     book_title = str(row[index]) if row[index] else None
+                    
+                    index += 1
+                    book_title_2 = str(row[index]) if row[index] else None
 
                     index += 1
                     sub_title = str(row[index]) if row[index] else None
+                    
+                    index += 1
+                    sub_title_2 = str(row[index]) if row[index] else None
 
                     index += 1
                     isbn = str(row[index]).replace("'", "") if row[index] else None
 
                     index += 1
                     description = str(row[index]) if row[index] else None
+                    
+                    index += 1
+                    description_2 = str(row[index]) if row[index] else None
 
                     index += 1
                     category_codes = str(row[index]) if row[index] else None
