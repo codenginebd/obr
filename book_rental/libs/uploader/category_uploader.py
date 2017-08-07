@@ -17,6 +17,10 @@ class CategoryUploader(object):
                 index += 1
                 category_name = row[index] if row[index] else None
                 index += 1
+                category_name_2 = row[index] if row[index] else None
+                index += 1
+                show_2 = row[index] if row[index] else None
+                index += 1
                 parent_name = row[index] if row[index] else None
                 
                 if not category_name:
