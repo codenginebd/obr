@@ -5,6 +5,8 @@ from generics.models.base_entity import BaseEntity
 
 class ProductCategory(BaseEntity):
     name = models.CharField(max_length=500)
+    name_2 = models.CharField(max_length=500)
+    show_name_2 = models.BooleanField(default=False)
     parent = models.ForeignKey('self', null=True)
     slug = models.SlugField()
 
