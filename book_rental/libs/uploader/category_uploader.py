@@ -19,7 +19,7 @@ class CategoryUploader(object):
                 index += 1
                 category_name_2 = row[index] if row[index] else None
                 index += 1
-                show_2 = row[index] if row[index] else None
+                show_name_2 = row[index] if row[index] else None
                 index += 1
                 parent_name = row[index] if row[index] else None
                 
@@ -27,6 +27,24 @@ class CategoryUploader(object):
                     error_log = ErrorLog()
                     error_log.url = ''
                     error_log.stacktrace = 'Category name is missing. Data %s' % str(row)
+                    error_log.save()
+                    continue
+                    
+                try:
+                    if not show_name_2:
+                        show_name_2 = 0
+                    show_name_2 = int(show_name_2)
+                    if show_name_2 == 1:
+                        if not category_name_2:
+                            error_log = ErrorLog()
+                            error_log.url = ''
+                            error_log.stacktrace = 'Category name 2 missing. Data: %s skipping...' % row
+                            error_log.save()
+                            continue
+                except Exception as exp:
+                    error_log = ErrorLog()
+                    error_log.url = ''
+                    error_log.stacktrace = 'Show name 2 must be number. Given %s. skipping...' % show_bn
                     error_log.save()
                     continue
 
@@ -40,26 +58,33 @@ class CategoryUploader(object):
                             if parent_categories.exists():
                                 parent_category = parent_categories.first()
                             else:
-                                parent_category = ProductCategory()
-                                parent_category.name = parent_name
-                                parent_category.save()
+                                error_log = ErrorLog()
+                                error_log.url = ''
+                                error_log.stacktrace = "Parent category doesn't exist. Skipping... Data: %s" % str(row)
+                                error_log.save()
+                                continue
 
                             category_object.name = category_name
+                            if show_name_2 == 1:
+                                category_object.name_2 = category_name_2
+                            category_object.show_name_2 = show_name_2
                             category_object.parent_id = parent_category.pk
                             category_object.save()
 
                         else:
                             category_object.name = category_name
+                            if show_name_2 == 1:
+                                category_object.name_2 = category_name_2
+                            category_object.show_name_2 = show_name_2
                             category_object.parent_id = None
                             category_object.save()
 
                     else:
+                        error_log = ErrorLog()
+                        error_log.url = ''
+                        error_log.stacktrace = "Invalid Category Code. Skipping... Data: %s" % str(row)
+                        error_log.save()
                         continue
-                        # error_log = ErrorLog()
-                        # error_log.url = ''
-                        # error_log.stacktrace = 'Invalid code given. Data %s' % str(row)
-                        # error_log.save()
-                        # continue
                 else:
 
                     book_category_objects = ProductCategory.objects.filter(name=category_name)
@@ -73,10 +98,14 @@ class CategoryUploader(object):
                             if parent_categories.exists():
                                 parent_category = parent_categories.first()
                             else:
-                                parent_category = ProductCategory()
-                                parent_category.name = parent_name
-                                parent_category.save()
-
+                                 error_log = ErrorLog()
+                                 error_log.url = ''
+                                 error_log.stacktrace = "Parent category doesn't exist. Skipping... Data: %s" % str(row)
+                                 error_log.save()
+                                 continue
+                            if show_name_2 == 1:
+                                category_object.name_2 = category_name_2
+                            category_object.show_name_2 = show_name_2
                             category_object.parent_id = parent_category.pk
                             category_object.save()
                     else:
@@ -86,15 +115,23 @@ class CategoryUploader(object):
                             if parent_categories.exists():
                                 parent_category = parent_categories.first()
                             else:
-                                parent_category = ProductCategory()
-                                parent_category.name = parent_name
-                                parent_category.save()
+                                error_log = ErrorLog()
+                                error_log.url = ''
+                                error_log.stacktrace = "Parent category doesn't exist. Skipping... Data: %s" % str(row)
+                                error_log.save()
+                                continue
 
                             category_object.name = category_name
+                            if show_name_2 == 1:
+                                category_object.name_2 = category_name_2
+                            category_object.show_name_2 = show_name_2
                             category_object.parent_id = parent_category.pk
                             category_object.save()
 
                         else:
                             category_object.name = category_name
+                            if show_name_2 == 1:
+                                category_object.name_2 = category_name_2
+                            category_object.show_name_2 = show_name_2
                             category_object.save()
                 
