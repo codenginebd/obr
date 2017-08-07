@@ -10,5 +10,5 @@ class Inventory(BaseEntity):
     stock = models.BigIntegerField(default=0)
     available_for_rent = models.BooleanField(default=False)
     is_new = models.IntegerField(default=0)
-    print_type = models.CharField(max_length=50) #COL, ORI, ECO
+    print_type = models.CharField(max_length=50) #COL, ORI, ECO #Color, Original and Economy
     comment = models.TextField(null=True)

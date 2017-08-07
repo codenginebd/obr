@@ -1,8 +1,7 @@
 from django.db import transaction
-
 from book_rental.models.sales.book import Book
-from generics.models.sales.supplier import Supplier
 from generics.models.sales.warehouse import Warehouse
+from generics.models.supplier import ProductSupplier
 from inventory.models.inventory import Inventory
 from inventory.models.inventory_transaction import InventoryTransaction
 from logger.models.error_log import ErrorLog
@@ -146,11 +145,11 @@ class InventoryUploader(object):
                 inventory_object.comment = 'Inventory upload via xls file'
                 inventory_object.save()
 
-                supplier_objects = Supplier.objects.filter(name=str(supplier_name))
+                supplier_objects = ProductSupplier.objects.filter(name=str(supplier_name))
                 if supplier_objects.exists():
                     supplier_object = supplier_objects.first()
                 else:
-                    supplier_object = Supplier()
+                    supplier_object = ProductSupplier()
                     supplier_object.name = str(supplier_name)
                     supplier_object.address_line1 = str(address1)
                     supplier_object.address_line2 = str(address2)

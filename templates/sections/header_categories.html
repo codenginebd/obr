@@ -44,7 +44,11 @@
                                 <thead>
                                 <tr>
                                     <th style="border-bottom: 1px dotted lightslategray; text-transform: uppercase; ">
-                                        <a data-toggle="tooltip"  title="View all books for {{ cat_dict.name }}" href="{% url "book_browse_view" cat_dict.slug %}">{{ cat_dict.name }}</a>
+                                        {% if cat_dict.show_name_2 %}
+                                            <a data-toggle="tooltip"  title="View all books for {{ cat_dict.name_2 }}" href="{% url "book_browse_view" cat_dict.slug %}">{{ cat_dict.name_2 }}</a>
+                                        {% else %}
+                                            <a data-toggle="tooltip"  title="View all books for {{ cat_dict.name }}" href="{% url "book_browse_view" cat_dict.slug %}">{{ cat_dict.name }}</a>
+                                        {% endif %}
                                     </th>
                                 </tr>
                                 </thead>
@@ -52,7 +56,11 @@
                                 {% for child in cat_dict.children %}
                                     <tr>
                                         <td style="text-transform: uppercase; ">
-                                            <a data-toggle="tooltip"  title="View all books for {{ child.name }}" style="font-size: 12px !important; " href="{% url "book_browse_view" child.slug %}">{{ child.name }}</a>
+                                            {% if child.show_name_2 %}
+                                            <a data-toggle="tooltip"  title="View all books for {{ child.name_2 }}" style="font-size: 12px !important; " href="{% url "book_browse_view" child.slug %}">{{ child.name_2 }}</a>
+                                            {% else %}
+                                                <a data-toggle="tooltip"  title="View all books for {{ child.name }}" style="font-size: 12px !important; " href="{% url "book_browse_view" child.slug %}">{{ child.name }}</a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}

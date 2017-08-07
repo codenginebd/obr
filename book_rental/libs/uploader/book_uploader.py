@@ -24,7 +24,7 @@ class BookUploader(object):
             with transaction.atomic():
                 try:
                     index = 0
-                    code = str(row[index]) if row[index] else None
+                    code = row[index]
 
                     index += 1
                     book_title = str(row[index]) if row[index] else None
@@ -46,6 +46,9 @@ class BookUploader(object):
                     
                     index += 1
                     description_2 = str(row[index]) if row[index] else None
+
+                    index += 1
+                    show_2 = str(row[index]) if row[index] else None
 
                     index += 1
                     category_codes = str(row[index]) if row[index] else None
@@ -91,7 +94,7 @@ class BookUploader(object):
                     # Validate data
                     if any([not item for item in [book_title, sub_title, description, isbn,
                                                   edition, total_page, publisher_code, published_date,
-                                                  cover_photo, language, keywords, authors
+                                                  language, keywords, authors
                                                   ]]):
                         error_log = ErrorLog()
                         error_log.url = ''
@@ -103,6 +106,24 @@ class BookUploader(object):
                         error_log = ErrorLog()
                         error_log.url = ''
                         error_log.stacktrace = 'ISBN number must be 10 or 13 digit long. Skipping... Data %s' % str(row)
+                        error_log.save()
+                        continue
+
+                    try:
+                        if not show_2:
+                            show_2 = 0
+                            show_2 = int(show_2)
+                        if show_2 == 1:
+                            if not book_title_2 or not description_2:
+                                error_log = ErrorLog()
+                                error_log.url = ''
+                                error_log.stacktrace = 'Book Title, Description is mandatory. Data: %s skipping...' % row
+                                error_log.save()
+                                continue
+                    except Exception as exp:
+                        error_log = ErrorLog()
+                        error_log.url = ''
+                        error_log.stacktrace = 'show_2 must be number. Given %s. skipping...' % show_2
                         error_log.save()
                         continue
 
@@ -182,23 +203,24 @@ class BookUploader(object):
                     if authors:
                         athr_not_found = False
                         for author_code in authors:
-                            athr_objects = Author.objects.filter(code=str(author_code))
+                            print(str(author_code.strip()))
+                            athr_objects = Author.objects.filter(code=str(author_code.strip()))
                             if not athr_objects.exists():
                                 error_log = ErrorLog()
                                 error_log.url = ''
-                                error_log.stacktrace = 'Invalid publisher code given. Data: %s' % str(row)
+                                error_log.stacktrace = 'Invalid author code given. Data: %s' % str(row)
                                 error_log.save()
                                 athr_not_found = True
                                 break
 
                             author_object_ids += [athr_objects.first().pk]
 
-                            if athr_not_found:
-                                error_log = ErrorLog()
-                                error_log.url = ''
-                                error_log.stacktrace = 'Invalid author code given. Data: %s' % str(row)
-                                error_log.save()
-                                continue
+                        if athr_not_found:
+                            error_log = ErrorLog()
+                            error_log.url = ''
+                            error_log.stacktrace = 'Invalid author code given. Data: %s' % str(row)
+                            error_log.save()
+                            continue
                     else:
                         error_log = ErrorLog()
                         error_log.url = ''
@@ -244,7 +266,7 @@ class BookUploader(object):
                         else:
                             error_log = ErrorLog()
                             error_log.url = ''
-                            error_log.stacktrace = 'Invalid code given for book. Skipping.... Data %s' % str(row)
+                            error_log.stacktrace = 'Invalid code given for book. Skipping.... Data %s' % str(code)
                             error_log.save()
                             continue
                     else:
@@ -257,6 +279,11 @@ class BookUploader(object):
                     book_object.title = str(book_title)
                     book_object.subtitle = str(sub_title)
                     book_object.description = str(description)
+                    if show_2:
+                        book_object.title_2 = book_title_2
+                        book_object.subtitle_2 = sub_title_2
+                        book_object.description_2 = description_2
+                    book_object.show_2 = True if show_2 else False
                     book_object.sale_available = sale_available
                     book_object.rent_available = rent_available
                     book_object.publish_date = published_date

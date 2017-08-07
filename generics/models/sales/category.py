@@ -36,6 +36,8 @@ class ProductCategory(BaseEntity):
                     {
                         "id": parent_cat.pk,
                         "name": parent_cat.name,
+                        "name_2": parent_cat.name_2,
+                        "show_name_2": parent_cat.show_name_2,
                         "slug": parent_cat.slug,
                         "instance": parent_cat,
                         "children": direct_childs
@@ -47,6 +49,8 @@ class ProductCategory(BaseEntity):
             all_categories = {
                     "id": parent_cat.pk,
                     "name": parent_cat.name,
+                    "name_2": parent_cat.name_2,
+                    "show_name_2": parent_cat.show_name_2,
                     "slug": parent_cat.slug,
                     "instance": parent_cat,
                     "children": direct_childs

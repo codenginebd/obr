@@ -18,152 +18,157 @@ class AuthorUploader(object):
     def handle_upload(self):
         self.data = self.data[1:]
         for row in self.data:
-            with transaction.atomic():
-                index = 0
-                code = row[index].strip() if row[index] else None
-                index += 1
-                author_name = row[index] if row[index] else None
-                index += 1
-                author_name_bn = row[index] if row[index] else None
-                index += 1
-                author_description = row[index] if row[index] else None
-                index += 1
-                author_description_bn = row[index] if row[index] else None
-                index += 1
-                show_bn = row[index] if row[index] else None
-                index += 1
-                author_image = row[index] if row[index] else None
-                index += 1
-                date_of_birth = row[index] if row[index] else None
-                index += 1
-                emails = str(row[index]) if row[index] else None
+            try:
+                with transaction.atomic():
+                    index = 0
+                    code = row[index].strip() if row[index] else None
+                    index += 1
+                    author_name = row[index] if row[index] else None
+                    index += 1
+                    author_name_2 = row[index] if row[index] else None
+                    index += 1
+                    author_description = row[index] if row[index] else None
+                    index += 1
+                    author_description_2 = row[index] if row[index] else None
+                    index += 1
+                    show_2 = row[index] if row[index] else None
+                    index += 1
+                    author_image = row[index] if row[index] else None
+                    index += 1
+                    date_of_birth = row[index] if row[index] else None
+                    index += 1
+                    emails = str(row[index]) if row[index] else None
 
-                if not author_name:
-                    error_log = ErrorLog()
-                    error_log.url = ''
-                    error_log.stacktrace = 'Author name must be given'
-                    error_log.save()
-                    continue
+                    if not author_name:
+                        error_log = ErrorLog()
+                        error_log.url = ''
+                        error_log.stacktrace = 'Author name must be given'
+                        error_log.save()
+                        continue
 
-                if not author_description:
-                    error_log = ErrorLog()
-                    error_log.url = ''
-                    error_log.stacktrace = 'Author description must be given'
-                    error_log.save()
-                    continue
+                    if not author_description:
+                        error_log = ErrorLog()
+                        error_log.url = ''
+                        error_log.stacktrace = 'Author description must be given'
+                        error_log.save()
+                        continue
 
-                try:
-                    if not show_bn:
-                        show_bn = 0
-                    show_bn = int(show_bn)
-                    if show_bn == 1:
-                        if not author_name_bn or not author_description_bn:
+                    try:
+                        if not show_2:
+                            show_2 = 0
+                        show_2 = int(show_2)
+                        if show_2 == 1:
+                            if not author_name_2 or not author_description_2:
+                                error_log = ErrorLog()
+                                error_log.url = ''
+                                error_log.stacktrace = 'Author name bn and author description bn missing. Data: %s skipping...' % row
+                                error_log.save()
+                                continue
+                    except Exception as exp:
+                        error_log = ErrorLog()
+                        error_log.url = ''
+                        error_log.stacktrace = 'Show BN must be number. Given %s. skipping...' % show_2
+                        error_log.save()
+                        continue
+
+                    if emails:
+                        emails = emails.split(',')
+                    else:
+                        emails = []
+
+                    index += 1
+                    phones = str(row[index]) if row[index] else None
+                    if phones:
+                        phones = phones.split(',')
+                    else:
+                        phones = []
+                    index += 1
+
+                    author_object = None
+
+                    if code:
+                        author_objects = Author.objects.filter(code=code)
+                        if author_objects.exists():
+                            author_object = author_objects.first()
+                        else:
                             error_log = ErrorLog()
                             error_log.url = ''
-                            error_log.stacktrace = 'Author name bn and author description bn missing. Data: %s skipping...' % row
+                            error_log.stacktrace = 'Author with code %s not found. skipping...' % code
                             error_log.save()
                             continue
-                except Exception as exp:
-                    error_log = ErrorLog()
-                    error_log.url = ''
-                    error_log.stacktrace = 'Show BN must be number. Given %s. skipping...' % show_bn
-                    error_log.save()
-                    continue
 
-                if emails:
-                    emails = emails.split(',')
-                else:
-                    emails = []
+                    if not author_object:
+                        author_object = Author()
 
-                index += 1
-                phones = str(row[index]) if row[index] else None
-                if phones:
-                    phones = phones.split(',')
-                else:
-                    phones = []
-                index += 1
+                    if author_name_2:
+                        author_object.name_bn = author_name_2
 
-                author_object = None
+                    if author_description_2:
+                        author_object.description_bn = author_description_2
 
-                if code:
-                    author_objects = Author.objects.filter(code=code)
-                    if author_objects.exists():
-                        author_object = author_objects.first()
-                    else:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Author with code %s not found. skipping...' % code
-                        error_log.save()
-                        continue
+                    author_object.show_bn = show_2
 
-                if not author_object:
-                    author_object = Author()
-
-                if author_name_bn:
-                    author_object.name_bn = author_name_bn
-
-                if author_description_bn:
-                    author_object.description_bn = author_description_bn
-
-                author_object.show_bn = show_bn
-
-                if author_image:
-                    image_full_path = os.path.join(settings.MEDIA_AUTHOR_PATH, author_image)
-                    if os.path.exists(image_full_path):
-                        image_name_relative_media = get_relative_path_to_media(image_full_path)
-                        author_object.image.name = image_name_relative_media
-                    else:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Author image %s not found. skipping...' % author_image
-                        error_log.save()
-                        continue
-
-                if date_of_birth:
-                    try:
-                        date_of_birth = datetime.strptime(date_of_birth, "%d/%m/%Y")
-                    except Exception as exp:
-                        date_of_birth = None
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Author date of birth format incorrect. Correct format: dd/mm/yyyy. skipping...'
-                        error_log.save()
-                        continue
+                    if author_image:
+                        image_full_path = os.path.join(settings.MEDIA_AUTHOR_PATH, author_image)
+                        if os.path.exists(image_full_path):
+                            image_name_relative_media = get_relative_path_to_media(image_full_path)
+                            author_object.image.name = image_name_relative_media
+                        else:
+                            error_log = ErrorLog()
+                            error_log.url = ''
+                            error_log.stacktrace = 'Author image %s not found. skipping...' % author_image
+                            error_log.save()
+                            continue
 
                     if date_of_birth:
-                        author_object.date_of_birth = date_of_birth
+                        try:
+                            date_of_birth = datetime.strptime(date_of_birth, "%d/%m/%Y")
+                        except Exception as exp:
+                            date_of_birth = None
+                            error_log = ErrorLog()
+                            error_log.url = ''
+                            error_log.stacktrace = 'Author date of birth format incorrect. Correct format: dd/mm/yyyy. skipping...'
+                            error_log.save()
+                            continue
 
-                author_object.name = str(author_name)
-                author_object.description = str(author_description)
-                author_object.save()
+                        if date_of_birth:
+                            author_object.date_of_birth = date_of_birth
 
-                author_object.emails.clear()
+                    author_object.name = str(author_name)
+                    author_object.description = str(author_description)
+                    author_object.save()
 
-                if emails:
-                    for email in emails:
-                        email_objects = Email.objects.filter(email=email)
-                        if email_objects.exists():
-                            email_object = email_objects.first()
-                        else:
-                            email_object = Email(email=email)
-                            email_object.save()
+                    author_object.emails.clear()
 
-                        if not author_object.emails.filter(pk=email_object.pk).exists():
-                            author_object.emails.add(email_object)
+                    if emails:
+                        for email in emails:
+                            email_objects = Email.objects.filter(email=email)
+                            if email_objects.exists():
+                                email_object = email_objects.first()
+                            else:
+                                email_object = Email(email=email)
+                                email_object.save()
 
-                author_object.phones.clear()
+                            if not author_object.emails.filter(pk=email_object.pk).exists():
+                                author_object.emails.add(email_object)
 
-                if phones:
-                    for phone in phones:
-                        phone_objects = Phone.objects.filter(number=phone)
-                        if phone_objects.exists():
-                            phone_object = phone_objects.first()
-                        else:
-                            phone_object = Phone(number=phone)
-                            phone_object.save()
+                    author_object.phones.clear()
 
-                        if not author_object.phones.filter(pk=phone_object.pk).exists():
-                            author_object.phones.add(phone_object)
+                    if phones:
+                        for phone in phones:
+                            phone_objects = Phone.objects.filter(number=phone)
+                            if phone_objects.exists():
+                                phone_object = phone_objects.first()
+                            else:
+                                phone_object = Phone(number=phone)
+                                phone_object.save()
+
+                            if not author_object.phones.filter(pk=phone_object.pk).exists():
+                                author_object.phones.add(phone_object)
+
+            except Exception as exp:
+                print("Exception occured")
+                print(str(exp))
 
 
 

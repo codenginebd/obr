@@ -11,10 +11,10 @@ from bauth.models.country import Country
 
 
 __all__ = ['Country']
-__all__ += ['Phone']
-__all__ += ['District']
-__all__ += ['State']
-__all__ += ['Email']
-__all__ += ['BUser']
-__all__ += ['Upazila']
 __all__ += ['Address']
+__all__ += ['Upazila']
+__all__ += ['Email']
+__all__ += ['State']
+__all__ += ['Phone']
+__all__ += ['BUser']
+__all__ += ['District']

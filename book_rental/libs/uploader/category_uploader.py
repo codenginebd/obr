@@ -1,6 +1,7 @@
 from django.db import transaction
 # from brlogger.models.error_log import ErrorLog
 from generics.models.sales.category import ProductCategory
+from logger.models.error_log import ErrorLog
 
 
 class CategoryUploader(object):
@@ -44,7 +45,7 @@ class CategoryUploader(object):
                 except Exception as exp:
                     error_log = ErrorLog()
                     error_log.url = ''
-                    error_log.stacktrace = 'Show name 2 must be number. Given %s. skipping...' % show_bn
+                    error_log.stacktrace = 'Show name 2 must be number. Given %s. skipping...' % show_name_2
                     error_log.save()
                     continue
 

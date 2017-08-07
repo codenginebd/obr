@@ -12,6 +12,7 @@ class WarehouseUploader(object):
         self.kwargs = kwargs
 
     def handle_upload(self):
+        self.data = self.data[1:]
         for row in self.data:
             try:
                 with transaction.atomic():
@@ -51,7 +52,11 @@ class WarehouseUploader(object):
                             error_log.save()
                             continue
                     else:
-                        wh_object = Warehouse()
+                        wh_objects = Warehouse.objects.filter(name=str(name))
+                        if wh_objects.exists():
+                            wh_object = wh_objects.first()
+                        else:
+                            wh_object = Warehouse()
                     wh_object.name = str(name)
                     wh_object.description = str(description)
 
@@ -69,8 +74,9 @@ class WarehouseUploader(object):
                         wh_object.warehouse_manager = str(contact_name)
 
                     wh_object.save()
-            except:
-                pass
+            except Exception as exp:
+                print("Exception occured")
+                print(str(exp))
                     
                 
 

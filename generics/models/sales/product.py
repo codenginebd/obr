@@ -14,6 +14,7 @@ class Product(BaseEntity):
     subtitle_2 = models.CharField(max_length=500)
     description = models.TextField(blank=True)
     description_2 = models.TextField(blank=True)
+    show_2 = models.BooleanField(default=False)
     categories = models.ManyToManyField(ProductCategory)
     sale_available = models.BooleanField(default=True)
     rent_available = models.BooleanField(default=False)
