@@ -90,10 +90,7 @@ class CategoryUploader(object):
                     book_category_objects = ProductCategory.objects.filter(name=category_name)
                     if book_category_objects.exists():
                         category_object = book_category_objects.first()
-                        if not parent_name:
-                            category_object.parent_id = None
-                            category_object.save()
-                        else:
+                        if parent_name:
                             parent_categories = ProductCategory.objects.filter(name=parent_name)
                             if parent_categories.exists():
                                 parent_category = parent_categories.first()
@@ -103,10 +100,17 @@ class CategoryUploader(object):
                                  error_log.stacktrace = "Parent category doesn't exist. Skipping... Data: %s" % str(row)
                                  error_log.save()
                                  continue
+                            category_object.name = category_name
                             if show_name_2 == 1:
                                 category_object.name_2 = category_name_2
                             category_object.show_name_2 = show_name_2
                             category_object.parent_id = parent_category.pk
+                            category_object.save()
+                        else:
+                            category_object.name = category_name
+                            if show_name_2 == 1:
+                                category_object.name_2 = category_name_2
+                            category_object.show_name_2 = show_name_2
                             category_object.save()
                     else:
                         category_object = ProductCategory()
