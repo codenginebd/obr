@@ -9,8 +9,11 @@ from generics.models.sales.product_images import ProductImage
 
 class Product(BaseEntity):
     title = models.CharField(max_length=500)
+    title_2 = models.CharField(max_length=500)
     subtitle = models.CharField(max_length=500)
+    subtitle_2 = models.CharField(max_length=500)
     description = models.TextField(blank=True)
+    description_2 = models.TextField(blank=True)
     categories = models.ManyToManyField(ProductCategory)
     sale_available = models.BooleanField(default=True)
     rent_available = models.BooleanField(default=False)
