@@ -199,11 +199,10 @@ class BookUploader(object):
                         continue
                     publisher_id = publisher_objects.first().pk
 
-                    author_object_ids = []
+                    author_object_list = []
                     if authors:
                         athr_not_found = False
                         for author_code in authors:
-                            print(str(author_code.strip()))
                             athr_objects = Author.objects.filter(code=str(author_code.strip()))
                             if not athr_objects.exists():
                                 error_log = ErrorLog()
@@ -213,7 +212,7 @@ class BookUploader(object):
                                 athr_not_found = True
                                 break
 
-                            author_object_ids += [athr_objects.first().pk]
+                            author_object_list += [athr_objects.first()]
 
                         if athr_not_found:
                             error_log = ErrorLog()
@@ -323,6 +322,10 @@ class BookUploader(object):
                         cat_object_list += [ cat_obj ]
 
                     book_object.categories.add(*cat_object_list)
+
+                    book_object.authors.clear()
+
+                    book_object.authors.add(*author_object_list)
 
                     print("Done!")
                 except Exception as exp:
