@@ -19,12 +19,13 @@ class Clock(object):
         return datetime.fromtimestamp(ts)
 
     @classmethod
-    def convert_datetime_to_timestamp(cls,dt):
-        return int(dt.strftime("%Y%m%d"))
+    def convert_datetime_to_timestamp(cls,dt, fmt = "%s"):
+        return int(dt.strftime(fmt))
 
     @classmethod
     def convert_datetime_to_utc_timestamp(cls,dt):
-        return int(dt.strftime("%s"))
+        ts = int(dt.strftime("%s"))
+        return ts
 
     @classmethod
     def timestampbefore(cls,hour):
