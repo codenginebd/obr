@@ -10,17 +10,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print("Upload Initialized")
         print("Now")
-        Author.objects.all().delete()
         PROJECT_ROOT = os.path.abspath(os.path.dirname(__name__))
         fname = PROJECT_ROOT + '/book_rental/management/commands/uploads/author_upload.xlsx'
         excel_reader = ExcelFileReader(file_name=fname, sheet_name='Sheet1')
         data = excel_reader.get_data()
         category_uploader = AuthorUploader(data=data)
         category_uploader.handle_upload()
-
-        a_object = Author.objects.first()
-        print(a_object.thumbnail.name)
-
         print("Upload done!")
 
 

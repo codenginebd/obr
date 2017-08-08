@@ -1,6 +1,7 @@
 from django.db import models
+
+from ecommerce.models.sales.warehouse import Warehouse
 from generics.models.base_entity import BaseEntity
-from generics.models.sales.warehouse import Warehouse
 
 
 class Inventory(BaseEntity):
@@ -10,5 +11,5 @@ class Inventory(BaseEntity):
     stock = models.BigIntegerField(default=0)
     available_for_rent = models.BooleanField(default=False)
     is_new = models.IntegerField(default=0)
-    print_type = models.CharField(max_length=50) #COL, ORI, ECO #Color, Original and Economy
+    print_type = models.CharField(max_length=50) # COL, ORI, ECO #Color, Original and Economy
     comment = models.TextField(null=True)

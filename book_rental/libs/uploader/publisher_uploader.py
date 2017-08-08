@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.db import transaction
 import os
-
 from bauth.models.email import Email
 from bauth.models.phone import Phone
 from book_rental.models.book_publisher import BookPublisher
@@ -23,13 +22,13 @@ class PublisherUploader(object):
                 index += 1
                 publisher_name = row[index] if row[index] else None
                 index += 1
-                publisher_name_bn = row[index] if row[index] else None
+                publisher_name_2 = row[index] if row[index] else None
                 index += 1
                 publisher_description = row[index] if row[index] else None
                 index += 1
-                publisher_description_bn = row[index] if row[index] else None
+                publisher_description_2 = row[index] if row[index] else None
                 index += 1
-                show_bn = row[index] if row[index] else None
+                show_2 = row[index] if row[index] else None
                 index += 1
                 publisher_image = row[index] if row[index] else None
                 index += 1
@@ -52,11 +51,11 @@ class PublisherUploader(object):
                     continue
 
                 try:
-                    if not show_bn:
-                        show_bn = 0
-                    show_bn = int(show_bn)
-                    if show_bn == 1:
-                        if not publisher_name_bn or not publisher_description_bn:
+                    if not show_2:
+                        show_2 = 0
+                    show_2 = int(show_2)
+                    if show_2 == 1:
+                        if not publisher_name_2 or not publisher_description_2:
                             error_log = ErrorLog()
                             error_log.url = ''
                             error_log.stacktrace = 'Publisher name bn and Publisher description bn missing. Data: %s skipping...' % row
@@ -65,7 +64,7 @@ class PublisherUploader(object):
                 except Exception as exp:
                     error_log = ErrorLog()
                     error_log.url = ''
-                    error_log.stacktrace = 'Show BN must be number. Given %s. skipping...' % show_bn
+                    error_log.stacktrace = 'Show BN must be number. Given %s. skipping...' % show_2
                     error_log.save()
                     continue
                 
@@ -85,13 +84,13 @@ class PublisherUploader(object):
                 publisher_object.name = str(publisher_name)
                 publisher_object.description  = str(publisher_description)
 
-                if publisher_name_bn:
-                    publisher_object.name_bn = publisher_name_bn
+                if publisher_name_2:
+                    publisher_object.name_2 = publisher_name_2
 
-                if publisher_description_bn:
-                    publisher_object.description_bn = publisher_description_bn
+                if publisher_description_2:
+                    publisher_object.description_2 = publisher_description_2
 
-                publisher_object.show_bn = show_bn
+                publisher_object.show_2 = show_2
 
                 if publisher_image:
                     image_full_path = os.path.join(settings.MEDIA_PUBLISHER_PATH, publisher_image)

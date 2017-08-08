@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from generics.models.sales.category import ProductCategory
+
+from ecommerce.models.sales.category import ProductCategory
 
 
 class BookCategorySerializer(serializers.ModelSerializer):

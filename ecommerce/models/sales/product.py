@@ -1,10 +1,9 @@
 from django.db import models
 from django.template.defaultfilters import slugify
-
+from ecommerce.models.sales.category import ProductCategory
+from ecommerce.models.sales.keyword import TagKeyword
+from ecommerce.models.sales.product_images import ProductImage
 from generics.models.base_entity import BaseEntity
-from generics.models.sales.category import ProductCategory
-from generics.models.sales.keyword import TagKeyword
-from generics.models.sales.product_images import ProductImage
 
 
 class Product(BaseEntity):

@@ -12,10 +12,10 @@ from generics.models.language import Language
 
 class Author(BaseEntity, ThumbnailModelMixin):
     name = models.CharField(max_length=255, blank = True)
-    name_bn = models.CharField(max_length=500, blank=True)
+    name_2 = models.CharField(max_length=500, blank=True)
     description = models.TextField(blank=True)
-    description_bn = models.TextField(blank=True)
-    show_bn = models.BooleanField(default=False)
+    description_2 = models.TextField(blank=True)
+    show_2 = models.BooleanField(default=False)
     date_of_birth = models.DateField(null=True)
     address = models.ForeignKey(Address, null=True)
     phones = models.ManyToManyField(Phone)

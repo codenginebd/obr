@@ -5,6 +5,6 @@ from book_rental.views.browse_view import BookBrowseView
 from book_rental.views.book_details import BookDetailsView
 
 
-__all__ = ['BookDetailsView']
-__all__ += ['BookSearchView']
+__all__ = ['BookSearchView']
+__all__ += ['BookDetailsView']
 __all__ += ['BookBrowseView']

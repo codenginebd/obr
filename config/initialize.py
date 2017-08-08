@@ -26,7 +26,7 @@ def init_book_languages():
 #init_book_languages()
 
 # Initialize Book Rental Plans
-from generics.models.sales.rent_plan import RentPlan
+from ecommerce.models.rent_plan import RentPlan
 
 def init_rent_plans():
 

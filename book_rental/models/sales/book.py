@@ -3,7 +3,7 @@ from django.db import models
 from book_rental.models.author import Author
 from book_rental.models.book_publisher import BookPublisher
 from book_rental.models.language import BookLanguage
-from generics.models.sales.product import Product
+from ecommerce.models.sales.product import Product
 
 
 class Book(Product):

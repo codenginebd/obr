@@ -1,5 +1,4 @@
 from django.db import models
-
 from bauth.models.phone import Phone
 from generics.models.base_entity import BaseEntity
 

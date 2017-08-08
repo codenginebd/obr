@@ -1,13 +1,13 @@
 from decimal import Decimal
 from django.conf import settings
 from django.db import transaction
+from book_rental.models.sales.book import Book
+from ecommerce.models.rent_plan import RentPlan
+from ecommerce.models.sales.price_matrix import PriceMatrix
+from ecommerce.models.sales.rent_plan_relation import RentPlanRelation
 from engine.clock.Clock import Clock
-from generics.models.sales.currency import Currency
-from generics.models.sales.price_matrix import PriceMatrix
-from generics.models.sales.product import Product
-from generics.models.sales.rent_plan import RentPlan
-from generics.models.sales.rent_plan_relation import RentPlanRelation
 from logger.models.error_log import ErrorLog
+from payment.models.currency import Currency
 
 
 class PriceMatrixUploader(object):
@@ -47,13 +47,12 @@ class PriceMatrixUploader(object):
                     error_log.save()
                     continue
                     
-                product_objects = Product.objects.filter(code=product_code)
+                product_objects = Book.objects.filter(code=product_code)
                 if product_objects.exists():
                     product_object = product_objects.first()
                 else:
                     ErrorLog.log(url='', stacktrace='Invalid product code supplied. Skipping... Data %s' % product_code)
                     continue
-                    
                 try:
                     is_new = int(is_new)
                     if is_new != 1 and is_new != 0:
@@ -70,7 +69,7 @@ class PriceMatrixUploader(object):
                 if not print_type in settings.SUPPORTED_PRINTING_TYPES:
                     ErrorLog.log(url='', stacktrace='printing type must be in %s. Skipping...' % settings.SUPPORTED_PRINTING_TYPES)
                     continue
-                    
+
                 try:
                     market_price = Decimal(market_price)
                 except:
@@ -103,13 +102,13 @@ class PriceMatrixUploader(object):
                     continue
                     
                 try:
-                    offer_start_date = offer_start_date.date()
+                    offer_start_date = offer_start_date
                 except:
                     ErrorLog.log(url='', stacktrace='Invalid offer_start_date value. Skipping... Expected format: dd/mm/yyyy. Given' % row)
                     continue
                     
                 try:
-                    offer_end_date = offer_end_date.date()
+                    offer_end_date = offer_end_date
                 except:
                     ErrorLog.log(url='', stacktrace='Invalid offer_end_date value. Skipping... Expected format: dd/mm/yyyy. Given' % row)
                     continue
@@ -120,14 +119,14 @@ class PriceMatrixUploader(object):
                 else:
                     ErrorLog.log(url='', stacktrace='Invalid currency code value. Skipping...Data: ' % row)
                     continue
-                    
+
                 price_objects = PriceMatrix.objects.filter(product_model='Book', product_code=product_code, is_new=is_new, print_type=print_type)
-                
+
                 if price_objects.exists():
                     price_object = price_objects.first()
                 else:
                     price_object = PriceMatrix(product_model='Book', product_code=product_code, is_new=is_new, print_type=print_type)
-                    
+
                 price_object.is_rent = False
                 price_object.market_price = market_price
                 price_object.base_price = base_price
@@ -136,14 +135,13 @@ class PriceMatrixUploader(object):
                 price_object.offer_date_end = Clock.convert_datetime_to_timestamp(offer_end_date)
                 price_object.special_price = is_special_sale
                 if is_special_sale:
-                    price_object.offer_price_p = special_sale_rate / 100
-                    price_object.offer_price_v = base_price * price_object.offer_price_p
+                    price_object.offer_price_p = float(special_sale_rate) / 100
+                    price_object.offer_price_v = base_price * (float(special_sale_rate) / 100)
                 else:
                     price_object.offer_price_p = 1.0
                     price_object.offer_price_v = base_price
-                    
+
                 price_object.save()
-                
                 #Price Saved.
 
     def handle_rent_price_upload(self):
@@ -177,7 +175,7 @@ class PriceMatrixUploader(object):
                     error_log.save()
                     continue
                     
-                product_objects = Product.objects.filter(code=product_code)
+                product_objects = Book.objects.filter(code=product_code)
                 if product_objects.exists():
                     product_object = product_objects.first()
                 else:
@@ -227,13 +225,13 @@ class PriceMatrixUploader(object):
                     continue
                     
                 try:
-                    offer_start_date = offer_start_date.date()
+                    offer_start_date = offer_start_date
                 except:
                     ErrorLog.log(url='', stacktrace='Invalid offer_start_date value. Skipping... Expected format: dd/mm/yyyy. Given' % row)
                     continue
                     
                 try:
-                    offer_end_date = offer_end_date.date()
+                    offer_end_date = offer_end_date
                 except:
                     ErrorLog.log(url='', stacktrace='Invalid offer_end_date value. Skipping... Expected format: dd/mm/yyyy. Given' % row)
                     continue
@@ -266,8 +264,8 @@ class PriceMatrixUploader(object):
                 else:
                     rent_rel_object = RentPlanRelation(plan_id=rent_plan_object.pk, price_matrix_id=price_object.pk)
                     
-                rent_rel_object.start_time = Clock.toUTCTimeStamp(offer_start_date)
-                rent_rel_object.end_time = Clock.toUTCTimeStamp(offer_end_date)
+                rent_rel_object.start_time = Clock.convert_datetime_to_timestamp(offer_start_date)
+                rent_rel_object.end_time = Clock.convert_datetime_to_timestamp(offer_end_date)
                 
                 rent_rel_object.is_special_offer  = is_special_rent
                 rent_rel_object.special_rate  = float(special_rent_rate)/100
@@ -276,15 +274,20 @@ class PriceMatrixUploader(object):
                 
                 # Done. Continue to next.
                     
-
     def handle_upload(self):
         self.data = self.data[1:]
-        if self.kwargs.get('price_type', 'sale') == 'rent': #'sale' or 'rent'
-            self.handle_rent_price_upload()
+        if self.kwargs.get('price_type', 'sale') == 'rent': # 'sale' or 'rent'
+            try:
+                self.handle_rent_price_upload()
+            except Exception as exp:
+                print("Exception Occurred")
+                print(str(exp))
         else:
-            self.handle_sale_price_upload()
-        # product_code	is new	print type	market price	base price	is special sale offer	special offer rate	offer start date	offer end date	currency
-        # rent_code	product_code	is new	print type	price in percentage	special rent offer  special rent rate	offer start date	offer end date currency
+            try:
+                self.handle_sale_price_upload()
+            except Exception as exp:
+                print("Exception Occurred")
+                print(str(exp))
                 
                 
                 

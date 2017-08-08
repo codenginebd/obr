@@ -1,7 +1,7 @@
 from django.db import transaction
 # from brlogger.models.error_log import ErrorLog
 from bauth.models.phone import Phone
-from generics.models.sales.warehouse import Warehouse
+from ecommerce.models.sales.warehouse import Warehouse
 from logger.models.error_log import ErrorLog
 
 

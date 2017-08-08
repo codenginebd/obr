@@ -1,6 +1,6 @@
 from django.db import transaction
 # from brlogger.models.error_log import ErrorLog
-from generics.models.sales.category import ProductCategory
+from ecommerce.models.sales.category import ProductCategory
 from logger.models.error_log import ErrorLog
 
 

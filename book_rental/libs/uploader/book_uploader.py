@@ -1,14 +1,14 @@
-from django.db import transaction
 import os
 from django.conf import settings
+from django.db import transaction
 from book_rental.models.author import Author
 from book_rental.models.book_publisher import BookPublisher
 from book_rental.models.language import BookLanguage
 from book_rental.models.sales.book import Book
+from ecommerce.models.sales.category import ProductCategory
+from ecommerce.models.sales.keyword import TagKeyword
+from ecommerce.models.sales.product_images import ProductImage
 from generics.libs.utils import get_relative_path_to_media
-from generics.models.sales.category import ProductCategory
-from generics.models.sales.keyword import TagKeyword
-from generics.models.sales.product_images import ProductImage
 from logger.models.error_log import ErrorLog
 
 

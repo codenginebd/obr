@@ -1,5 +1,5 @@
 from book_rental.mixin.common_data_mixin import CommonDataMixin
-from generics.models.sales.category import ProductCategory
+from ecommerce.models.sales.category import ProductCategory
 from generics.views.base_template_view import BaseTemplateView
 
 

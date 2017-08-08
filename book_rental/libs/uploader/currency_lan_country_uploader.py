@@ -1,9 +1,9 @@
 from bauth.models.country import Country
 from book_rental.libs.uploader.uploader import Uploader
-from generics.models.language import Language
-from generics.models.sales.currency import Currency
-from logger.models.error_log import ErrorLog
+from ecommerce.models.sales import Currency
 from engine.exceptions.br_exception import BRException
+from generics.models.language import Language
+from logger.models.error_log import ErrorLog
 
 
 class CountryLanCountryUploader(Uploader):

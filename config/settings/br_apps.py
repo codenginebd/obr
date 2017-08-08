@@ -1,4 +1,5 @@
 BR_APPS = [
+    'ecommerce',
     'generics',
     'logger',
     'clients',

@@ -1,7 +1,8 @@
 from rest_framework.response import Response
+
 from book_rental.api.serializers.category_serializer import BookCategorySerializer
+from ecommerce.models.sales.category import ProductCategory
 from generics.api.views.generic_api_view import GenericAPIView
-from generics.models.sales.category import ProductCategory
 
 
 class BookCategoryAPIView(GenericAPIView):

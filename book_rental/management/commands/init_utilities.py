@@ -7,7 +7,7 @@ class Command(BaseCommand):
         print("Upload Initialized")
         print("Now")
         init_book_languages()
-        #init_rent_plans()
+        init_rent_plans()
         print("Upload done!")
 
 

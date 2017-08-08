@@ -101,12 +101,12 @@ class AuthorUploader(object):
                         author_object = Author()
 
                     if author_name_2:
-                        author_object.name_bn = author_name_2
+                        author_object.name_2 = author_name_2
 
                     if author_description_2:
-                        author_object.description_bn = author_description_2
+                        author_object.description_2 = author_description_2
 
-                    author_object.show_bn = show_2
+                    author_object.show_2 = show_2
 
                     if author_image:
                         image_full_path = os.path.join(settings.MEDIA_AUTHOR_PATH, author_image)
