@@ -24,4 +24,10 @@ $(document).ready(function () {
         $(this).removeClass("browse_item_hover");
     });
     $('[data-toggle="tooltip"]').tooltip();
+
+    $(document).on("click", ".btn-browse-filter", function (e) {
+        e.preventDefault();
+        $("#id_browse_more_filter_content").slideToggle(500);
+    });
+
 })

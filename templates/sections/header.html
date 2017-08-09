@@ -99,12 +99,18 @@
                       </div>
                     </div>
                       <div class="dropdown" href="#" style="color: #38525a !important; display: inline-table; ">
-                      <button class="dropdown-toggle btn btn-danger" style="padding: 9px;" data-toggle="dropdown" ><span class="glyphicon glyphicon-shopping-cart"></span> My Cart(2) <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></button>
+                      <button class="dropdown-toggle btn btn-danger" style="padding: 9px;" data-toggle="dropdown" >
+                          <span class="glyphicon glyphicon-shopping-cart"></span> My Cart(2)
+                          <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></button>
                       <ul class="dropdown-menu">
-                          <div style="padding: 20px;">
+                          <div style="padding: 20px; min-width: 400px; right: 0px;">
                               <div class="row">
-                                  <div class="col-md-12">
-                                      <img class="img-rounded" style="margin-left: auto;margin-right: auto; margin-top: 13px; width: 130px; height: 140px; " src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRi7lIOzjyCNhoVpyaJGRuYklrorcjra8xXCroxeXXZgrhxX-dPZg" class="img-responsive book-img-grid">
+                                  <div class="col-md-4">
+                                      <img class="img-thumbnail" style="width: 40px; height: 40px; margin-left: auto;margin-right: auto; margin-top: 13px; width: 130px; height: 140px; " src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRi7lIOzjyCNhoVpyaJGRuYklrorcjra8xXCroxeXXZgrhxX-dPZg" class="img-responsive book-img-grid">
+                                  </div>
+                                  <div class="col-md-8">
+                                      <div>Engineering Mathematics -By Humayun Ahmed</div>
+                                      <div></div>
                                   </div>
                               </div>
                               <a class="pull-right" href="{% url "my_cart_view" %}">View Cart</a>
@@ -190,4 +196,4 @@ ul.breadcrumb li a:hover {
     </div>
 </div>
 
-{#{% include "sections/top_banner.html" %}#}
+{% include "sections/top_banner.html" %}

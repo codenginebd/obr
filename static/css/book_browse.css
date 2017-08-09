@@ -39,3 +39,12 @@
   .browse-tabs li a {
      text-transform: uppercase;
   }
+
+  .pagination {
+      margin: 0px !important;
+  }
+
+  .pagination>li>a, .pagination>li>span {
+      border: none !important;
+  }
+

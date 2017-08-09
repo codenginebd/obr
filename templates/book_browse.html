@@ -26,7 +26,6 @@
                   </script>
                   <div id="id_category_container" class="col-md-2 right-border" style="border-right: 1px solid #eeeeee !important;">
                      {% include "sections/book_categories.html" %}
-                      {% include "sections/browse_filter.html" %}
                   </div>
                   <div class="col-md-10">
                       <div class="row">
@@ -38,10 +37,132 @@
                                 </ul>
                               <div class="tab-content" style="font-weight: normal !important;">
                                   <div id="browse_page_tab1" class="tab-pane fade in active">
+                                    <div class="browse-filter-pane" style="background-color: #f7f8fb !important; padding: 10px; border: 1px solid #dadae6; margin-top: 10px !important; border-radius: 4px !important;">
+                                          <div class="row">
+                                              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <a href="#" class="pull-left" style="">
+                                                    <label style="cursor: pointer; "><input type="checkbox" name="out_of_stock_checkbox" style="margin-bottom: -2px; "> Out of stock</label></a>
+                                                    <a href="#" class="btn-browse-filter btn pull-right" style="color: white !important;background-color: #31b0d5 !important;">
+                                                    <span class="glyphicon glyphicon-th-list"></span> More Filters</a>
+                                              </div>
+                                          </div>
+                                        <div id="id_browse_more_filter_content" class="row" style="padding-top: 20px; display: none;">
+                                          <div class="col-xs-3 col-sm-12 col-md-3 col-lg-3">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">Browse By Category</div>
+                                                  <div class="panel-body">
+                                                      <div class="checkbox">
+                                                      <label><input type="checkbox" value=""><a href="#">Dibya Prokashoni</a></label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                      <label><input type="checkbox" value=""><a href="#">Onno ProkaSoni</a></label>
+                                                    </div>
+                                                    <div class="checkbox disabled">
+                                                      <label><input type="checkbox" value=""><a href="#">Amar Boi</a></label>
+                                                    </div>
+                                                  </div>
+
+                                              </div>
+                                          </div>
+                                            <div class="col-xs-3 col-sm-12 col-md-3 col-lg-3">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">Browse By Category</div>
+                                                  <div class="panel-body">
+                                                      <div class="checkbox">
+                                                      <label><input type="checkbox" value=""><a href="#">Dibya Prokashoni</a></label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                      <label><input type="checkbox" value=""><a href="#">Onno ProkaSoni</a></label>
+                                                    </div>
+                                                    <div class="checkbox disabled">
+                                                      <label><input type="checkbox" value=""><a href="#">Amar Boi</a></label>
+                                                    </div>
+                                                  </div>
+
+                                              </div>
+                                          </div>
+                                            <div class="col-xs-3 col-sm-12 col-md-3 col-lg-3">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">Browse By Category</div>
+                                                  <div class="panel-body">
+                                                      <div class="checkbox">
+                                                      <label><input type="checkbox" value=""><a href="#">Dibya Prokashoni</a></label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                      <label><input type="checkbox" value=""><a href="#">Onno ProkaSoni</a></label>
+                                                    </div>
+                                                    <div class="checkbox disabled">
+                                                      <label><input type="checkbox" value=""><a href="#">Amar Boi</a></label>
+                                                    </div>
+                                                  </div>
+
+                                              </div>
+                                          </div>
+                                            <div class="col-xs-3 col-sm-12 col-md-3 col-lg-3">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">Browse By Category</div>
+                                                  <div class="panel-body">
+                                                      <div class="checkbox">
+                                                      <label><input type="checkbox" value=""><a href="#">Dibya Prokashoni</a></label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                      <label><input type="checkbox" value=""><a href="#">Onno ProkaSoni</a></label>
+                                                    </div>
+                                                    <div class="checkbox disabled">
+                                                      <label><input type="checkbox" value=""><a href="#">Amar Boi</a></label>
+                                                    </div>
+                                                  </div>
+
+                                              </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                      <div class="row">
+                                          <div class="col-lg-12">
+                                              <div style="padding: 20px 0px 0px 0px;">
+                                              <label class="pull-left" style="font-size: 20px; font-weight: bold;">Best Seller</label>
+                                              <label class="pull-right"><a href="#">View all</a></label>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="row">
+                                          <div class="col-lg-12">
+                                            <div id="fav_books" class="carousel slide" data-ride="carousel">
+                                              <div class="carousel-inner">
+                                                <div class="item active">
+                                                  {% include "sections/book_browse_row.html" %}
+                                                </div>
+                                                <div class="item">
+                                                  {% include "sections/book_browse_row.html" %}
+                                                </div>
+                                                <div class="item">
+                                                  {% include "sections/book_browse_row.html" %}
+                                                </div>
+                                              </div>
+                                                <div style="text-align: center;">
+                                                    <a class="left text-center" style="left: 0px;" href="#fav_books" data-slide="prev">
+                                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                                      </a>
+                                                      <a class="right text-center" style="right: 0px;" href="#fav_books" data-slide="next">
+                                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                                      </a>
+                                                </div>
+
+                                            </div>
+                                          </div>
+                                      </div>
                                     <div style="padding-top: 20px;">
+                                        <div class="panel-heading" style="color: #38525a !important">
+                                            {% include "sections/pagination.html" %}
+                                        </div>
+                                        <div>
                                         {% include "sections/book_browse_row.html" %}
                                         {% include "sections/book_browse_row.html" %}
                                         {% include "sections/book_browse_row.html" %}
+                                        </div>
+                                        <div class="panel-heading" style="color: #38525a !important">
+                                            {% include "sections/pagination.html" %}
+                                        </div>
                                     </div>
                                   </div>
                                   <div id="browse_page_tab2" class="tab-pane fade">
@@ -67,12 +188,6 @@
                       </div>
                       <div class="row">
                           <div class="col-lg-12">
-                              <style type="text/css">
-                                .carousel-inner{
-                                    //height: 200px;
-                                }
-
-                            </style>
                             <div id="fav_books" class="carousel slide" data-ride="carousel">
                               <div class="carousel-inner">
                                 <div class="item active">
