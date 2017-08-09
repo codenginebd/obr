@@ -20,3 +20,6 @@ class PriceMatrix(BaseEntity):
     base_price = models.DecimalField(max_digits=20, decimal_places=2)
     market_price = models.DecimalField(max_digits=20, decimal_places=2)
     currency = models.ForeignKey(Currency)
+    
+    class Meta:
+        index_together = [ product_code, product_model, is_new, print_type ]
