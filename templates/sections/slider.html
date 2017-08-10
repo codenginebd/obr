@@ -1,0 +1,65 @@
+{% load staticfiles %}
+<style type="text/css">
+    .carousel-control {
+position: absolute;
+z-index: 5;
+display: inline-block;
+}
+</style>
+<script>
+    $(document).ready(function () {
+       $(".slideshow-container").hover(function (e) {
+            $(this).find(".carousel-control").fadeIn('fast');
+            $(this).find(".view_all_btn").fadeIn('fast');
+
+       }, function (e) {
+            $(this).find(".carousel-control").fadeOut('fast');
+            $(this).find(".view_all_btn").fadeOut('fast');
+       });
+    });
+</script>
+<div class="row slideshow-container" style="padding: 8px;">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12" style="padding: 8px; border: 1px solid #e2e3e6; border-radius: 10px;">
+        <div class="row">
+          <div class="col-lg-12">
+              <div style="padding: 4px 3px 0px 4px; ">
+              <label class="pull-left" style="font-size: 20px; font-weight: bold;">Best Seller</label>
+              <label class="pull-right"><a style="display: none;" class="view_all_btn" href="#">View all</a></label>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-lg-12">
+            <div id="fav_books" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="item active">
+                  {% include "sections/book_browse_row.html" %}
+                </div>
+                <div class="item">
+                  {% include "sections/book_browse_row.html" %}
+                </div>
+                <div class="item">
+                  {% include "sections/book_browse_row.html" %}
+                </div>
+              </div>
+{#                <a class="left carousel-control" href="#banner_slideshow" data-slide="prev">#}
+{#                    <img style="position: relative; top: 20%; left: -100px;" class="img-responsive center-block" src="{% static "images/left_arrow.png" %}"/>#}
+{#                  </a>#}
+{#                <a class="right carousel-control" href="#banner_slideshow" data-slide="next">#}
+{#                    <img style="position: relative; top: 20%; right: -100px;" class="img-responsive center-block" src="{% static "images/right_arrow.png" %}"/>#}
+{#                  </a>#}
+
+                <a class="left carousel-control" href="#fav_books" style="display: none; background-image: none; left: -100px;" data-slide="prev">
+                <span style="color: #31b0d5" class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" style="display: none; background-image: none; right: -100px;" href="#fav_books" data-slide="next">
+                <span style="color: #31b0d5" class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+              </a>
+
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>

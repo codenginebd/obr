@@ -4,11 +4,15 @@ $(document).ready(function () {
         $(this).parent(".book_entry").addClass("browse_item_hover_color");
         $(this).find(".book_entry_action").removeClass("displaynone");
         $(this).find(".action-bar").slideDown("fast");
+        $(this).find(".item-pin").show();
+        $(this).find(".item-send").show();
     }, function (e) {
         $(this).removeClass("browse_item_hover");
         $(this).parent(".book_entry").removeClass("browse_item_hover_color");
         $(this).find(".book_entry_action").addClass("displaynone");
         $(this).find(".action-bar").slideUp("fast");
+        $(this).find(".item-pin").hide();
+        $(this).find(".item-send").hide();
     });
 
     $(".product-quick-view").click(function (e) {

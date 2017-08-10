@@ -19,6 +19,7 @@ body, a {
     font-weight: normal;
     //font-family: 'Qualtrics Grotesque', "Helvetica Neue", Helvetica, Arial, sans-serif;
     //background-color: #f2f3f5 !important;
+    overflow-x: hidden !important;
     }
 
 .container {
