@@ -20,7 +20,7 @@ $(document).ready(function () {
     
    function search_list(element_object, input_text) {
         $(element_object).find(".br-left-menu-item").each(function (i) {
-            var label_text = $(this).find(".label-text").text();
+            var label_text = $(this).find(".label-text").data("value-en");
             var indx = label_text.toUpperCase().indexOf(input_text.toUpperCase().trim());
             console.log(indx);
             if(indx > -1) {
@@ -54,7 +54,7 @@ $(document).ready(function () {
             {% for cat_item in filter_categories %}
             <label class="br-left-menu-item radio-inline clear-left-margin category-left-menu-item" data-category-slug="{{ cat_item.slug }}">
                 <input type="radio" name="left-menu-category">
-                <a href="{% url "book_browse_view" cat_item.slug %}"><span class="label-text">{{ cat_item.name }}</span></a>
+                <a href="{% url "book_browse_view" cat_item.slug %}"><span data-value-en="{{ cat_item.name }}" class="label-text">{{ cat_item.name }}</span></a>
             </label>
             {% endfor %}
         </div>
@@ -71,7 +71,7 @@ $(document).ready(function () {
         <div style="max-height: 400px; overflow-x: hidden; overflow-y: auto;">
             {% for cat_item in filter_categories %}
             <div class="checkbox br-left-menu-item">
-              <label><input type="checkbox" value=""><span class="label-text">{{ cat_item.name }}</span></label>
+              <label><input type="checkbox" value=""><span data-value-en="{{ cat_item.name }}" class="label-text">{{ cat_item.name }}</span></label>
             </div>
             {% endfor %}
         </div>
@@ -88,7 +88,7 @@ $(document).ready(function () {
         <div style="max-height: 400px; overflow-x: hidden; overflow-y: auto;">
             {% for cat_item in filter_categories %}
             <div class="checkbox br-left-menu-item">
-              <label><input type="checkbox" value=""><span class="label-text">{{ cat_item.name }}</span></label>
+              <label><input type="checkbox" value=""><span data-value-en="{{ cat_item.name }}" class="label-text">{{ cat_item.name }}</span></label>
             </div>
             {% endfor %}
         </div>
