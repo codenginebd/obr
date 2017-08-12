@@ -1,6 +1,24 @@
 {% load category_tags %}
 {% if filter_category_show %}
 {# filename: book_categories.html #}
+<style>
+.clear-left-margin {
+    margin-left: 0px !important;
+}
+.clear-left-padding {
+    padding-left: 0px !important;
+}
+input[type=checkbox].margin-top-fix {
+    margin-top: 2px !important;
+}
+</style>
+<script>
+$(document).ready(function () {
+   $(document).on("click", ".category-left-menu-item", function (e) {
+
+   });
+});
+</script>
 <div class="panel panel-default">
     <div class="panel-heading" style="background-color: transparent;">
         {% if linkable %}
@@ -16,13 +34,50 @@
         </div>
         {% endif %}
         <div style="max-height: 400px; overflow-x: hidden; overflow-y: auto;">
-            <ul class="category-list-group list-group" style="list-style: none !important;">
             {% for cat_item in filter_categories %}
-            <li class="category-item" style="padding: 3px; ">
-            <a href="{% url "book_browse_view" cat_item.slug %}">{{ cat_item.name }}</a>
-            </li>
+            <label class="radio-inline clear-left-margin category-left-menu-item" data-category-slug="{{ cat_item.slug }}">
+                <input type="radio" name="left-menu-category">
+                <a href="{% url "book_browse_view" cat_item.slug %}">{{ cat_item.name }}</a>
+            </label>
             {% endfor %}
-            </ul>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading" style="background-color: transparent;">
+        Authors
+    </div>
+    <div class="panel-body">
+        {% if show_search %}
+        <div style="padding: 6px; text-align: right;">
+            <input type="text" class="form-control" placeholder="Search ..."/>
+        </div>
+        {% endif %}
+        <div style="max-height: 400px; overflow-x: hidden; overflow-y: auto;">
+            {% for cat_item in filter_categories %}
+            <div class="checkbox">
+              <label><input type="checkbox" value="">{{ cat_item.name }}</label>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading" style="background-color: transparent;">
+        Publishers
+    </div>
+    <div class="panel-body">
+        {% if show_search %}
+        <div style="padding: 6px; text-align: right;">
+            <input type="text" class="form-control" placeholder="Search ..."/>
+        </div>
+        {% endif %}
+        <div style="max-height: 400px; overflow-x: hidden; overflow-y: auto;">
+            {% for cat_item in filter_categories %}
+            <div class="checkbox">
+              <label><input type="checkbox" value="">{{ cat_item.name }}</label>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>

@@ -27,9 +27,14 @@
         font-size: 12px;
     }
 
+    .left-fix {
+        position: fixed;
+    }
+
 </style>
 <script>
     $(document).ready(function () {
+        var left_menu_width = $("#id_browse_left_menu_options").width();
         $(function(){
          var shrinkHeader = $("#id_fixed_top_nav").height() + 30;
           $(window).scroll(function() {
@@ -45,6 +50,9 @@
                    $("#id_nav_search_container").find("img.logo").addClass("small-logo");
                    $("#id_nav_search_container").find("h5.slogan").removeClass("pull-right");
                    $("#id_nav_search_container").find("h5.slogan").addClass("small-slogan");
+                   $("#id_browse_left_menu_options").addClass("left-fix")
+                   var search_height = $("#id_nav_search_container").height() + 10;
+                   $("#id_browse_left_menu_options").css({ 'top': search_height + 'px', 'width': left_menu_width + 'px' });
                 }
                 else {
                   $("#id_fixed_top_nav").fadeIn('800');
@@ -56,6 +64,8 @@
                   $("#id_nav_search_container").find("img.logo").removeClass("small-logo");
                   $("#id_nav_search_container").find("h5.slogan").addClass("pull-right");
                   $("#id_nav_search_container").find("h5.slogan").removeClass("small-slogan");
+                  $("#id_browse_left_menu_options").removeClass("left-fix");
+                  $("#id_browse_left_menu_options").css({ 'top': '' });
                 }
           });
         function getCurrentScroll() {
