@@ -17,6 +17,25 @@ $(document).ready(function () {
    $(document).on("click", ".category-left-menu-item", function (e) {
 
    });
+    
+   function search_list(element_object, input_text) {
+        $(element_object).find(".br-left-menu-item").each(function (i) {
+            var label_text = $(this).find(".label-text").text();
+            var indx = label_text.toUpperCase().indexOf(input_text.toUpperCase().trim());
+            console.log(indx);
+            if(indx > -1) {
+                $(this).show();
+            }
+            else {
+                $(this).hide();
+            }
+        });
+    }
+
+    $(document).on("keyup", ".br-search-list", function (e) {
+        search_list($(this).parent().parent(), $(this).val());
+    });
+    
 });
 </script>
 <div class="panel panel-default">
@@ -28,16 +47,14 @@ $(document).ready(function () {
         {% endif %}
     </div>
     <div class="panel-body">
-        {% if show_search %}
-        <div style="padding: 6px; text-align: right;">
-            <input type="text" class="form-control" placeholder="Search ..."/>
+        <div style="padding: 0px; text-align: right;">
+            <input type="text" class="br-search-list form-control" style="height: 24px; margin-bottom: 8px; " placeholder="Search ..."/>
         </div>
-        {% endif %}
         <div style="max-height: 400px; overflow-x: hidden; overflow-y: auto;">
             {% for cat_item in filter_categories %}
-            <label class="radio-inline clear-left-margin category-left-menu-item" data-category-slug="{{ cat_item.slug }}">
+            <label class="br-left-menu-item radio-inline clear-left-margin category-left-menu-item" data-category-slug="{{ cat_item.slug }}">
                 <input type="radio" name="left-menu-category">
-                <a href="{% url "book_browse_view" cat_item.slug %}">{{ cat_item.name }}</a>
+                <a href="{% url "book_browse_view" cat_item.slug %}"><span class="label-text">{{ cat_item.name }}</span></a>
             </label>
             {% endfor %}
         </div>
@@ -48,15 +65,13 @@ $(document).ready(function () {
         Authors
     </div>
     <div class="panel-body">
-        {% if show_search %}
-        <div style="padding: 6px; text-align: right;">
-            <input type="text" class="form-control" placeholder="Search ..."/>
+        <div style="padding: 0px; text-align: right;">
+            <input type="text" class="br-search-list form-control" style="height: 24px; margin-bottom: 8px; " placeholder="Search ..."/>
         </div>
-        {% endif %}
         <div style="max-height: 400px; overflow-x: hidden; overflow-y: auto;">
             {% for cat_item in filter_categories %}
-            <div class="checkbox">
-              <label><input type="checkbox" value="">{{ cat_item.name }}</label>
+            <div class="checkbox br-left-menu-item">
+              <label><input type="checkbox" value=""><span class="label-text">{{ cat_item.name }}</span></label>
             </div>
             {% endfor %}
         </div>
@@ -67,15 +82,13 @@ $(document).ready(function () {
         Publishers
     </div>
     <div class="panel-body">
-        {% if show_search %}
-        <div style="padding: 6px; text-align: right;">
-            <input type="text" class="form-control" placeholder="Search ..."/>
+        <div style="padding: 0px; text-align: right;">
+            <input type="text" class="br-search-list form-control" style="height: 24px; margin-bottom: 8px; " placeholder="Search ..."/>
         </div>
-        {% endif %}
         <div style="max-height: 400px; overflow-x: hidden; overflow-y: auto;">
             {% for cat_item in filter_categories %}
-            <div class="checkbox">
-              <label><input type="checkbox" value="">{{ cat_item.name }}</label>
+            <div class="checkbox br-left-menu-item">
+              <label><input type="checkbox" value=""><span class="label-text">{{ cat_item.name }}</span></label>
             </div>
             {% endfor %}
         </div>
