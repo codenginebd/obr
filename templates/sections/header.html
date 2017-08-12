@@ -1,6 +1,71 @@
 {% load staticfiles %}
 {% load settings_tags %}
-<div class="navbar-wrapper navbar navbar-default navbar-fixed-top" style="background: #31b0d5; color: white !important; height: 35px;">
+<style>
+
+    header-search-bar.shrink {
+
+    }
+
+    .margin_top_zero {
+        margin-top: 0px !important;
+        background-color: white !important;
+        border-bottom: 2px solid;
+        border-color: whitesmoke;
+    }
+
+    .margin_top_zero > img.logo {
+        width: 100px !important;
+        height: 30px !important;
+    }
+
+    .small-logo {
+        width: 140px !important;
+        height: 40px !important;
+    }
+
+    .small-slogan {
+        font-size: 12px;
+    }
+
+</style>
+<script>
+    $(document).ready(function () {
+        $(function(){
+         var shrinkHeader = $("#id_fixed_top_nav").height() + 30;
+          $(window).scroll(function() {
+            var scroll = getCurrentScroll();
+              if ( scroll >= shrinkHeader ) {
+                   $("#id_fixed_top_nav").fadeOut('800');
+                   $("#id_fixed_top_nav").removeClass('navbar-fixed-top');
+                   $("#id_nav_search_container").addClass("navbar-fixed-top");
+                   $("#id_nav_search_container").addClass("margin_top_zero");
+                   //$("#id_nav_search_container").removeClass("container");
+                   //$("#id_nav_search_container").addClass("container-fluid");
+                   $("#id_nav_search_container").animate({ scrollTop: 0 }, 1000);
+                   $("#id_nav_search_container").find("img.logo").addClass("small-logo");
+                   $("#id_nav_search_container").find("h5.slogan").removeClass("pull-right");
+                   $("#id_nav_search_container").find("h5.slogan").addClass("small-slogan");
+                }
+                else {
+                  $("#id_fixed_top_nav").fadeIn('800');
+                  $("#id_fixed_top_nav").addClass('navbar-fixed-top');
+                  $("#id_nav_search_container").removeClass("navbar-fixed-top");
+                  $("#id_nav_search_container").removeClass("margin_top_zero");
+                  //$("#id_nav_search_container").addClass("container");
+                  //$("#id_nav_search_container").addClass("container-fluid");
+                  $("#id_nav_search_container").find("img.logo").removeClass("small-logo");
+                  $("#id_nav_search_container").find("h5.slogan").addClass("pull-right");
+                  $("#id_nav_search_container").find("h5.slogan").removeClass("small-slogan");
+                }
+          });
+        function getCurrentScroll() {
+            return window.pageYOffset || document.documentElement.scrollTop;
+            }
+        });
+    });
+</script>
+<header>
+<div id="id_fixed_top_nav" class="navbar-wrapper navbar navbar-default navbar-fixed-top" style="background: #31b0d5; color: white !important; height: 35px;">
     <div class="container-fluid">
         <nav class="">
             <div class="container">
@@ -19,104 +84,58 @@
                         <span class="glyphicon glyphicon-envelope" style="top:2px;"></span> support@bdreads.com
                     </a>
                 </div>
-                <div id="navbar" class="navbar-collapse collapse">
+                <div id="id_top_navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav pull-right" style="color: white !important; ">
                         <li class=""><a href="#" style="color: white !important; ">How It Works?</a></li>
                         <li class=""><a href="#" style="color: white !important; ">Sale Books</a></li>
                         <li class=""><a href="#" style="color: white !important; ">Promotions</a></li>
                         <li class=""><a href="#" style="color: white !important; ">Discounts</a></li>
-                        {% if request.user.is_authenticated and not request.user.is_staff %}
-                        <li class="" class="dropdown" href="#">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: white !important; ">
-                          <span class="glyphicon glyphicon-user"></span> Md Shariful Islam <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></a>
-                          <ul class="dropdown-menu">
-                              <div style="padding: 20px;">
-                                  <ul class="list" style="list-style-type:none; padding-left: 0px; font-size: 14px;">
-                                      <li class="list-item" style="padding-bottom: 10px;">
-                                         <a href="#">My Orders</a>
-                                      </li>
-                                      <li class="list-item" style="padding-bottom: 10px;">
-                                         <a href="#">My Profile</a>
-                                      </li>
-                                      <li class="list-item" style="padding-bottom: 10px;">
-                                         <a href="#">Return Books</a>
-                                      </li>
-                                      <li class="list-item" style="padding-bottom: 10px;">
-                                         <a href="#">My Payments</a>
-                                      </li>
-                                      <li class="list-item" style="padding-bottom: 10px;">
-                                          <a href="#">Settings</a>
-                                      </li>
-                                      <li class="list-item" style="padding-bottom: 10px;">
-                                          <a href="#">Change Password</a>
-                                      </li>
-                                      <li class="list-item" style="padding-bottom: 10px;">
-                                         <a href="#">Logout</a>
-                                      </li>
-                                  </ul>
-                              </div>
-                          </ul>
-                        </li>
-                        {% elif not request.user.is_authenticated %}
-                        <li class="" class="dropdown" href="#">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: white !important; ">
-                          <span class="glyphicon glyphicon-user"></span> Login <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></a>
-                          <ul class="dropdown-menu" style="color: black !important;">
-                              <div style="padding: 10px; ">
-                                  <ul class="list" style="list-style-type:none; padding-left: 0px; font-size: 14px;">
-                                      <li class="list-item" style="padding-bottom: 10px;">
-                                         <a href="{% url "bauth_signup_view" %}">Register for Free!</a>
-                                      </li>
-                                      <li class="list-item" style="padding-bottom: 10px;">
-                                         <a href="{% url "bauth_login_view" %}">Login</a>
-                                      </li>
-                                    </ul>
-                                </div>
-                            </ul>
-                        </li>
-{#                        <li class=""><a style="color: white !important;" href="{% url "bauth_signup_view" %}">Register</a></li>#}
-{#                        <li class=""><a style="color: white !important;" href="{% url "bauth_login_view" %}">Login</a></li>#}
-                        {% endif %}
+                        {% include "sections/navbar_profile_menu_item.html" %}
                     </ul>
                 </div>
             </div>
         </nav>
     </div>
 </div>
-<div class="container" style="margin-top: 50px;">
+<div id="id_nav_search_container" class="container header-search-bar" style="margin-top: 50px;">
   <div class="row">
       <div class="col-md-3">
-            <img src="{% static "images/logo.png" %}" style="width: 200px; height: 60px;"/>
-            <h5 class="pull-right"> - Read Anywhere, Anytime</h5>
+            <img class="logo" src="{% static "images/logo.png" %}" style="width: 200px; height: 60px;"/>
+            <h5 class="slogan pull-right"> - Read Anywhere, Anytime</h5>
       </div>
       <div class="col-md-9">
                 <form action="{% url "book_search_view" %}" class="navbar-form navbar-right search-form" role="search" style="margin-bottom: 0px !important; margin-top: 14px !important; ">
                     <div>
-                    <div class="input-group add-on">
-                      <input class="form-control" style="width: 400px; padding: 20px !important; "  placeholder="Search by title, ISBN, Author, Keywords..." name="keyword" id="id_book_search_term" type="text">
-                      <div class="input-group-btn">
-                        <button class="btn btn-default" style="padding: 10px;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                      </div>
-                    </div>
-                      <div class="dropdown" href="#" style="color: #38525a !important; display: inline-table; ">
-                      <button class="dropdown-toggle btn btn-danger" style="padding: 9px;" data-toggle="dropdown" >
-                          <span class="glyphicon glyphicon-shopping-cart"></span> My Cart(2)
-                          <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></button>
-                      <ul class="dropdown-menu">
-                          <div style="padding: 20px; min-width: 400px; right: 0px;">
-                              <div class="row">
-                                  <div class="col-md-4">
-                                      <img class="img-thumbnail" style="width: 40px; height: 40px; margin-left: auto;margin-right: auto; margin-top: 13px; width: 130px; height: 140px; " src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRi7lIOzjyCNhoVpyaJGRuYklrorcjra8xXCroxeXXZgrhxX-dPZg" class="img-responsive book-img-grid">
-                                  </div>
-                                  <div class="col-md-8">
-                                      <div>Engineering Mathematics -By Humayun Ahmed</div>
-                                      <div></div>
-                                  </div>
+                    <ul class="nav navbar-nav pull-right" style="color: white !important; ">
+                        <li class="">
+                            <div class="input-group add-on">
+                              <input class="form-control" style="width: 400px; padding: 20px !important; "  placeholder="Search by title, ISBN, Author, Keywords..." name="keyword" id="id_book_search_term" type="text">
+                              <div class="input-group-btn">
+                                <button class="btn btn-default" style="padding: 10px;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                               </div>
-                              <a class="pull-right" href="{% url "my_cart_view" %}">View Cart</a>
-                          </div>
-                      </ul>
-                    </div>
+                            </div>
+                        </li>
+                        <li>
+                          <div class="dropdown" href="#" style="color: #38525a !important; display: inline-table; ">
+                          <button class="dropdown-toggle btn btn-danger" style="padding: 9px;" data-toggle="dropdown" >
+                              <span class="glyphicon glyphicon-shopping-cart"></span> My Cart(2)
+                              <span style="top: 3px;" class="glyphicon glyphicon-chevron-down"></span></button>
+                              <ul class="dropdown-menu">
+                                  <div style="padding: 20px; min-width: 400px; right: 0px;">
+                                      <div class="row">
+                                          <div class="col-md-4">
+                                              <img class="img-thumbnail" style="width: 40px; height: 40px; margin-left: auto;margin-right: auto; margin-top: 13px; width: 130px; height: 140px; " src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRi7lIOzjyCNhoVpyaJGRuYklrorcjra8xXCroxeXXZgrhxX-dPZg" class="img-responsive book-img-grid">
+                                          </div>
+                                          <div class="col-md-8">
+                                              <div>Engineering Mathematics -By Humayun Ahmed</div>
+                                              <div></div>
+                                          </div>
+                                      </div>
+                                      <a class="pull-right" href="{% url "my_cart_view" %}">View Cart</a>
+                                  </div>
+                              </ul>
+                        </div>
+                        </li>
                     </div>
                 </form>
       </div>
@@ -195,5 +214,5 @@ ul.breadcrumb li a:hover {
         </div>
     </div>
 </div>
-
+</header>
 {% include "sections/top_banner.html" %}
