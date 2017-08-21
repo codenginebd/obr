@@ -164,7 +164,7 @@ if (typeof jQuery === 'undefined') {
   }
 
 
-  // ALERT DATA-API
+  // ALERT DATA-api
   // ==============
 
   $(document).on('click.bs.alert.data-api', dismiss, Alert.prototype.close)
@@ -276,7 +276,7 @@ if (typeof jQuery === 'undefined') {
   }
 
 
-  // BUTTON DATA-API
+  // BUTTON DATA-api
   // ===============
 
   $(document)
@@ -501,7 +501,7 @@ if (typeof jQuery === 'undefined') {
   }
 
 
-  // CAROUSEL DATA-API
+  // CAROUSEL DATA-api
   // =================
 
   var clickHandler = function (e) {
@@ -731,7 +731,7 @@ if (typeof jQuery === 'undefined') {
   }
 
 
-  // COLLAPSE DATA-API
+  // COLLAPSE DATA-api
   // =================
 
   $(document).on('click.bs.collapse.data-api', '[data-toggle="collapse"]', function (e) {
@@ -1232,7 +1232,7 @@ if (typeof jQuery === 'undefined') {
   }
 
 
-  // MODAL DATA-API
+  // MODAL DATA-api
   // ==============
 
   $(document).on('click.bs.modal.data-api', '[data-toggle="modal"]', function (e) {
@@ -2045,7 +2045,7 @@ if (typeof jQuery === 'undefined') {
   }
 
 
-  // SCROLLSPY DATA-API
+  // SCROLLSPY DATA-api
   // ==================
 
   $(window).on('load.bs.scrollspy.data-api', function () {
@@ -2199,7 +2199,7 @@ if (typeof jQuery === 'undefined') {
   }
 
 
-  // TAB DATA-API
+  // TAB DATA-api
   // ============
 
   var clickHandler = function (e) {
@@ -2357,7 +2357,7 @@ if (typeof jQuery === 'undefined') {
   }
 
 
-  // AFFIX DATA-API
+  // AFFIX DATA-api
   // ==============
 
   $(window).on('load', function () {

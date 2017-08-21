@@ -17,12 +17,12 @@ from django.conf.urls import url, include
 from django.conf import settings
 from django.conf.urls.static import static
 from bauth.api.views.api_login_view import APILoginView
-from book_rental.api.router import book_router
 from book_rental.api.viewsets.BookListAPIView import BookListAPIView
-from book_rental.api.viewsets.category_api_view import BookCategoryAPIView
+from book_rental.api.viewsets.author_api_view import AuthorAPIView
 from book_rental.views.browse_view import BookBrowseView
 from book_rental.views.profile_view import ProfileView
 from cart_view import BasketView
+from ecommerce.api.viewsets.category_api_view import CategoryAPIView
 
 urlpatterns = [
     url(r'^$', BookBrowseView.as_view(), name='home_view'),
@@ -33,17 +33,16 @@ urlpatterns = [
     url(r'^profile/(?P<username>.+)', ProfileView.as_view(), name='profile_view'),
 ]
 
-# Include API's
+# Include api's
 urlpatterns += [
     # url(r'^api/v1/$', book_router.get_api_root_view(), name=book_router.root_view_name),
 ]
 
 urlpatterns += [
-    url('^api/v1/category-list/$', BookCategoryAPIView.as_view()),
+    url('^api/v1/categories/$', CategoryAPIView.as_view()),
+    url('^api/v1/authors/$', AuthorAPIView.as_view()),
     url('^api/v1/book_rental-list/$', BookListAPIView.as_view()),
     url('^api/v1/login/$', APILoginView.as_view())
 ]
-
-urlpatterns += book_router.urls
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
