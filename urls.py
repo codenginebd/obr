@@ -21,9 +21,8 @@ from book_rental.api.router import book_router
 from book_rental.api.viewsets.BookListAPIView import BookListAPIView
 from book_rental.api.viewsets.category_api_view import BookCategoryAPIView
 from book_rental.views.browse_view import BookBrowseView
+from book_rental.views.profile_view import ProfileView
 from cart_view import BasketView
-
-from home_view import HomeView
 
 urlpatterns = [
     url(r'^$', BookBrowseView.as_view(), name='home_view'),
@@ -31,6 +30,7 @@ urlpatterns = [
     url(r'^auth/', include('bauth.urls')),
     url(r'^books/', include('book_rental.urls')),
     url(r'^my-cart/', BasketView.as_view(), name='my_cart_view'),
+    url(r'^profile/(?P<username>.+)', ProfileView.as_view(), name='profile_view'),
 ]
 
 # Include API's

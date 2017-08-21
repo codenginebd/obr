@@ -1,0 +1,48 @@
+{% extends "master.html" %}
+{% load staticfiles %}
+{% block top_header_menu %}
+<div class="container">
+   <div class="row">
+       <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+           <div style="padding: 8px;">
+               <a class="pull-left" style="font-size: 20px; letter-spacing: 0.06em; font-weight: bold;" href="#">My Profile</a>
+               <a class="pull-right" href="#">Logout</a>
+           </div>
+           <hr/>
+       </div>
+   </div>
+</div>
+{% endblock top_header_menu %}
+{% block content %}
+<div class="container">
+    <div class="row">
+    <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2">
+        <ul class="list"
+            style="letter-spacing: 0.07em; list-style-type:none; padding: 8px; padding-left: 0px; font-size: 14px;">
+              <li class="list-item" style="padding-bottom: 10px;">
+                 <a href="#">My Orders</a>
+              </li>
+              <li class="list-item" style="padding-bottom: 10px;">
+                 <a href="#">My Profile</a>
+              </li>
+              <li class="list-item" style="padding-bottom: 10px;">
+                 <a href="#">Return Books</a>
+              </li>
+              <li class="list-item" style="padding-bottom: 10px;">
+                 <a href="#">My Payments</a>
+              </li>
+              <li class="list-item" style="padding-bottom: 10px;">
+                  <a href="#">Settings</a>
+              </li>
+              <li class="list-item" style="padding-bottom: 10px;">
+                  <a href="#">Change Password</a>
+              </li>
+          </ul>
+    </div>
+    <div id="id_profile_menu_item_content" class="col-sm-10 col-md-10 col-lg-10 col-xs-10"
+         style="padding: 8px; border-left: 1px dotted gray; min-height: 400px;">
+        sdsdf
+    </div>
+    </div>
+</div>
+{% endblock content %}

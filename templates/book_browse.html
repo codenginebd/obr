@@ -1,5 +1,14 @@
 {% extends "master.html" %}
 {% load staticfiles %}
+{% block top_header_menu %}
+{% include "sections/header_top_menu.html" %}
+{% endblock top_header_menu %}
+{% block top_breadcumb %}
+{% include "sections/breadcumb.html" %}
+{% endblock top_breadcumb %}
+{% block top_banner %}
+{% include "sections/top_banner.html" %}
+{% endblock top_banner %}
 {% block content %}
     <link href="{% static "css/book_browse.css" %}" rel="stylesheet" />
     <script src="{% static "js/browse_books.js" %}"></script>

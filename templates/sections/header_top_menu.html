@@ -1,0 +1,22 @@
+<nav class="navbar navbar-default menu-navbar" role="navigation" style="font-size: 10px; text-transform: uppercase; margin-top: 8px;">
+  <div class="container">
+    <ul class="nav navbar-nav">
+      <li><a href="{% url "home_view" %}">Home</a></li>
+        <li class="dropdown" style="position: static !important;">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse Books <span style="top: 2px;" class="glyphicon glyphicon-chevron-down"></span></a>
+
+          <ul class="dropdown-menu" style="left: 15px !important; right: 15px !important; ">
+            {% include "sections/header_categories.html" %}
+          </ul>
+
+        </li>
+        <li><a href="#">Authors</a></li>
+        <li><a href="#">Publishers</a></li>
+      <li><a href="#">New Books</a></li>
+      <li><a href="#">Most Popular Books</a></li>
+      <li><a href="#">College Books</a></li>
+      <li><a href="#">University Books</a></li>
+      <li><a href="#">Entertainment</a></li>
+    </ul>
+  </div>
+</nav>
