@@ -18,11 +18,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from bauth.api.views.api_login_view import APILoginView
 from book_rental.api.viewsets.BookListAPIView import BookListAPIView
-from book_rental.api.viewsets.author_api_view import AuthorAPIView
+from book_rental.api.viewsets.author_api_view import AuthorAPIView, AuthorAPIViewNoPagination
+from book_rental.api.viewsets.publisher_api_view import PublisherAPIView, PublisherAPIViewNoPagination
 from book_rental.views.browse_view import BookBrowseView
 from book_rental.views.profile_view import ProfileView
 from cart_view import BasketView
-from ecommerce.api.viewsets.category_api_view import CategoryAPIView
+from ecommerce.api.viewsets.category_api_view import CategoryAPIView, CategoryAPIViewNoPagination
 
 urlpatterns = [
     url(r'^$', BookBrowseView.as_view(), name='home_view'),
@@ -39,9 +40,13 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    url('^api/v1/categories/$', CategoryAPIView.as_view()),
-    url('^api/v1/authors/$', AuthorAPIView.as_view()),
-    url('^api/v1/book_rental-list/$', BookListAPIView.as_view()),
+    url('^api/v1/category-browse/$', CategoryAPIView.as_view()),
+    url('^api/v1/author-browse/$', AuthorAPIView.as_view()),
+    url('^api/v1/publisher-browse/$', PublisherAPIView.as_view()),
+    url('^api/v1/categories/$', CategoryAPIViewNoPagination.as_view()),
+    url('^api/v1/authors/$', AuthorAPIViewNoPagination.as_view()),
+    url('^api/v1/publishers/$', PublisherAPIViewNoPagination.as_view()),
+    url('^api/v1/books/$', BookListAPIView.as_view()),
     url('^api/v1/login/$', APILoginView.as_view())
 ]
 
