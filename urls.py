@@ -24,6 +24,7 @@ from book_rental.views.browse_view import BookBrowseView
 from book_rental.views.profile_view import ProfileView
 from cart_view import BasketView
 from ecommerce.api.viewsets.category_api_view import CategoryAPIView, CategoryAPIViewNoPagination
+from ecommerce.api.viewsets.rent_plan_api_view import RentPlanAPIView
 
 urlpatterns = [
     url(r'^$', BookBrowseView.as_view(), name='home_view'),
@@ -47,6 +48,7 @@ urlpatterns += [
     url('^api/v1/authors/$', AuthorAPIViewNoPagination.as_view()),
     url('^api/v1/publishers/$', PublisherAPIViewNoPagination.as_view()),
     url('^api/v1/books/$', BookListAPIView.as_view()),
+    url('^api/v1/rent-plans/$', RentPlanAPIView.as_view()),
     url('^api/v1/login/$', APILoginView.as_view())
 ]
 
