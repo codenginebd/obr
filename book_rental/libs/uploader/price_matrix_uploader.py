@@ -264,6 +264,8 @@ class PriceMatrixUploader(object):
                 else:
                     rent_rel_object = RentPlanRelation(plan_id=rent_plan_object.pk, price_matrix_id=price_object.pk)
 
+                rent_plan_object.rent_rate = price_in_percentage
+
                 if is_special_rent:
                     rent_rel_object.start_time = Clock.convert_datetime_to_timestamp(offer_start_date)
                     rent_rel_object.end_time = Clock.convert_datetime_to_timestamp(offer_end_date)
