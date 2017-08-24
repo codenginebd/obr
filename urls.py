@@ -26,9 +26,10 @@ from cart_view import BasketView
 from ecommerce.api.viewsets.category_api_view import CategoryAPIView, CategoryAPIViewNoPagination
 from ecommerce.api.viewsets.price_matrix_api_view import PriceMatrixAPIView
 from ecommerce.api.viewsets.rent_plan_api_view import RentPlanAPIView
+from home_view import HomeView
 
 urlpatterns = [
-    url(r'^$', BookBrowseView.as_view(), name='home_view'),
+    url(r'^$', HomeView.as_view(), name='home_view'),
     url(r'^admin/', include('bradmin.urls')),
     url(r'^auth/', include('bauth.urls')),
     url(r'^books/', include('book_rental.urls')),

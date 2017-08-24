@@ -104,3 +104,11 @@ footer, footer a {
 .browse-tabs, .nav-pills {
     text-align:center;
 }
+
+.nav-tabs>li>a, .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    font-size: 12px !important;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    font-weight: bold !important;
+}

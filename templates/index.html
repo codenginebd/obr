@@ -1,0 +1,65 @@
+{% extends "master.html" %}
+{% load staticfiles %}
+{% block top_header_menu %}
+{% include "sections/header_top_menu.html" %}
+{% endblock top_header_menu %}
+{% block top_breadcumb %}
+{% include "sections/breadcumb.html" %}
+{% endblock top_breadcumb %}
+{% block top_banner %}
+{% include "sections/top_banner.html" %}
+{% endblock top_banner %}
+{% block content %}
+    <link href="{% static "css/book_browse.css" %}" rel="stylesheet" />
+    <script src="{% static "js/browse_books.js" %}"></script>
+    <div class=" " id="contact1">
+
+        <div class="container">
+          <div class="row " style="border-bottom: 1px solid #e7e7e7; margin-bottom: 10px; ">
+              <div class="col-md-2">
+
+              </div>
+              <div class="col-md-10" style="padding-right: 20px; ">
+
+              </div>
+          </div>
+        </div>
+          <div class="container">
+              <div class="row">
+                  <script>
+                      $(document).ready(function () {
+                            $(".category-list-item").click(function (e) {
+                                e.stopPropagation();
+                            }); 
+                      });
+                  </script>
+{#                  <div id="id_category_container" class="col-md-2 right-border" style="background: white; border-right: 1px solid #eeeeee !important;">#}
+{#                      <div id="id_browse_left_menu_options" style="overflow-y: auto;">#}
+{#                        {% include "sections/book_categories.html" %}#}
+{#                      </div>#}
+{#                  </div>#}
+                  <div class="col-md-12">
+                      <div class="row">
+                          <div class="col-md-12">
+                                {% include "sections/slider.html" %}
+                                {% include "sections/slider.html" %}
+                                {% include "sections/slider.html" %}
+                                {% include "sections/slider.html" %}
+                                {% include "sections/slider.html" %}
+                                {% include "sections/slider.html" %}
+                          </div>
+                  </div>
+                  <div id="id_category_container" class="col-md-2 right-border" style="border-right: 1px solid #eeeeee !important;">
+{#                     {% include "sections/book_categories.html" %}#}
+                  </div>
+              </div>
+          </div>
+
+
+    <div class="container">
+    {% include "dialog/popup_product_summary.html" %}
+    </div>
+
+
+      </div>
+{% endblock content %}

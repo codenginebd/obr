@@ -1,89 +1,106 @@
 {% extends "master.html" %}
 {% load staticfiles %}
+{% block top_header_menu %}
+{% include "sections/header_top_menu.html" %}
+{% endblock top_header_menu %}
 {% block more_stylesheet %}
 <link href="{% static "css/search_page.css" %}" rel="stylesheet" />
 {% endblock more_stylesheet %}
 {% block content %}
-    <div class=" " id="contact1">
-        <div class="container" >
-          <div class="row">
-              <div class="col-md-2">
-
-              </div>
-              <div class="col-md-10" style="">
-                  <button style="margin-top: 20px; padding: 17px; background: #bc3526; color: white; opacity: 1.0; " class="btn btn-primary pull-right">Search</button>
-                  <input type="text" style="margin-top: 20px; max-width: 450px; " class="form-control pull-right" name="book_search" placeholder="Search By ISBN, Book Title, Author Name, Keywords..."/>
-              </div>
-          </div>
-        </div>
-        <div class="container" style="width: 100%;">
-          <div class="row " style="border-bottom: 1px solid #e7e7e7; margin-bottom: 10px; ">
-              <div class="col-md-2">
-
-              </div>
-              <div class="col-md-10" style="padding-right: 20px; ">
-
-              </div>
-          </div>
-        </div>
+    <br/>
+    <div class="container" id="contact1">
           <div class="container">
               <div class="row">
-                  <div class="col-md-10">
-                      <div class="row book_entry search_entry">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-
-                                        <img style="width: 200px; height: 200px; " src="https://s3-ap-southeast-1.amazonaws.com/ireads/images/books/9780425151877.jpg" class="img-responsive book-img-grid">
-                                                                                </div>
-                                    <div class="col-md-8 col-sm-8 col-xs-8 text-left pad-10 margin-left--8">
-                                         <div class="cart_title"> Games of State: Op...
-                                        </div>
-                                        <div class="cart_content"> Author:
-
-                                          Jeff Rovin Ste...</div>
-                                        <hr class="book-box-hr">
-                                        <div class="cart_content">MRP: <strike> Rs. 659 </strike><br>
-
-                                        <div class="badge light_badge"> Stock Available</div><br>
-                                        </div>
-                                        <div class="cart_content">Rating: 4.5/5.0</div>
-                                        <div>
-                                            <br/>
-                                            <ul class="list-inline search_action">
-                                              <li><a class="btn btn-danger" href="">Rent</a></li>
-                                              <li><a class="btn btn-danger" href="">Buy</a></li>
-                                              <li><a class="btn btn-danger" href="">Get Item Link</a></li>
-                                              <li><a class="btn btn-danger" href="">Send To A Friend</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                  </div>
-                  <div class="col-md-2 cart_block">
-                      <div class="col-md-12">
-                          <div class="cart_title">
-                              Your Cart
-                              <hr/>
+                  <div class="col-md-9" style="padding: 20px;">
+                      <div class="row">
+                          <div class="col-md-3">
+                              <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRi7lIOzjyCNhoVpyaJGRuYklrorcjra8xXCroxeXXZgrhxX-dPZg" style="width: 180px; height: 280px;"/>
                           </div>
-                          <div class="cart_content">
-                              No items found
+                          <div class="col-md-9">
+                              <h3 class="title" style="margin-top: 0px;">
+                                  Basic Algebra  Part I
+                              </h3>
+                              <div>
+                                  Author: <a href="#">James Kameroon</a>
+                              </div>
+                              <hr/>
+                              <div class="description small" style="letter-spacing: 0.08em;">
+
+Webmaster EDU
+Video Search
+Overview
+Introduction to Video Markup
+Schema.org for Videos
+Video Sitemaps
+Alternate Markups for Videos
+Testing your video markup
+Notifying Google of Video Updates
+Video Platform Restrictions
+Video Country Restrictions
+Common Video Indexing Pitfalls
+Mobile Friendly Websites
+Make your site mobile-friendly
+Hacked Website Recovery
+Overview
+Build a Support Team
+Quarantine Your Site
+Use Search Console
+Assess spam damage
+Assess malware damage
+Identify the vulnerability
+Clean and maintain your site
+Request a Review
+Glossary for Hacked Sites
+FAQs for Hacked Sites
+Contents
+What the user sees, what the crawler sees
+Current practice
+An agreement between crawler and server
+Making AJAX applications crawlable
+
+If you're running an AJAX application with content that you'd like to appear in search results, we have a new process that, when implemented, can help Google (and potentially other search engines) crawl and index your content. Historically, AJAX applications have been difficult for search engines to process because AJAX content is produced dynamically by the browser and thus not visible to crawlers. While there are existing methods for dealing with this problem, they involve regular manual maintenance to keep the content up-to-date.
+                              </div>
+                              <div class="review">
+                                  <br/>
+                                  <div>
+                                  <h4 style="font-weight: bold;">Reviews(4)
+                                  <a class="pull-right" href="#">Write a Review</a>
+                                  </h4>
+
+                                  </div>
+                                  <hr/>
+                                  <p style="border: 1px solid #cdeaf3; padding: 20px; border-radius: 10px;">
+                                      In recent years, more and more of the web has become populated with AJAX-based applications, replacing static HTML pages.
+                                      This is a great development for users because it makes applications much faster and richer
+                                  </p>
+                                  <p style="border: 1px solid #cdeaf3; padding: 20px; border-radius: 10px;">
+                                      In recent years, more and more of the web has become populated with AJAX-based applications, replacing static HTML pages.
+                                      This is a great development for users because it makes applications much faster and richer
+                                  </p>
+                                  <p style="border: 1px solid #cdeaf3; padding: 20px; border-radius: 10px;">
+                                      In recent years, more and more of the web has become populated with AJAX-based applications, replacing static HTML pages.
+                                      This is a great development for users because it makes applications much faster and richer
+                                  </p>
+                              </div>
                           </div>
                       </div>
-                      <div class="col-md-12">
-                          <br/>
-                          <div class="cart_title">
-                              Top rated Books
-                              <hr/>
-                          </div>
-                          <div class="cart_content">
-                              {% include "sections/top_rated_entry.html" %}
-                              {% include "sections/top_rated_entry.html" %}
-                              {% include "sections/top_rated_entry.html" %}
-                              {% include "sections/top_rated_entry.html" %}
-                          </div>
+
+                  </div>
+                  <div class="col-md-3" style="padding: 20px;">
+                      <div>
+                          <p class="small">We are currently buying this book. If you have one please contact me from
+                          <a href="#">here</a></p>
+                          <button class="btn btn-md btn-danger">Sale your Copy!</button>
+                      </div>
+                      <div>
+                          <p class="small">We are currently buying this book. If you have one please contact me from
+                          <a href="#">here</a></p>
+                          <button class="btn btn-md btn-danger">Sale your Copy!</button>
+                      </div>
+                      <div>
+                          <p class="small">We are currently buying this book. If you have one please contact me from
+                          <a href="#">here</a></p>
+                          <button class="btn btn-md btn-danger">Sale your Copy!</button>
                       </div>
                   </div>
               </div>
