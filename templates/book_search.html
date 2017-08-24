@@ -23,6 +23,12 @@
 .list-group-item {
     padding: 10px 15px 10px 0px !important;
 }
+.panel-default>.panel-heading {
+    background-color: #fdfdff !important;
+}
+.panel-heading {
+    font-weight: bold !important;
+}
 </style>
 <script type="text/javascript">
 $(document).ready(function () {
@@ -85,7 +91,7 @@ $(document).ready(function () {
                               </ul>
                           </div>
                       </div>
-                      <div class="col-md-9">
+                      <div class="col-md-9" style="border-left: 1px dotted #e4eff3;">
                           <div class="browse-filter-pane" style="background-color: #f7f8fb !important; padding: 10px; border: 1px solid #dadae6; margin-top: 10px !important; border-radius: 4px !important;">
                               <div class="row">
                                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -167,7 +173,7 @@ $(document).ready(function () {
                             {% include "sections/pagination.html" %}
                       </div>
                   </div>
-                  <div class="col-md-2 cart_block">
+                  <div class="col-md-2 cart_block" style="margin-top: 8px;">
                       <div class="col-md-12">
                           <div class="cart_title">
                               Your Cart
