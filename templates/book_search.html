@@ -10,6 +10,8 @@
 <link href="{% static "css/vendor/raty/jquery.raty2.7.1.css" %}" rel="stylesheet" />
 <link href="{% static "css/search_page.css" %}" rel="stylesheet" />
 <script src="{% static "js/vendor/raty/jquery.raty2.7.1.js" %}"></script>
+<script src="{% static "js/vendor/mustache.js" %}"></script>
+<script src="{% static "js/template_renderer.js" %}"></script>
 <script src="{% static "js/book_search.js" %}"></script>
 <style type="text/css">
 .search-page-body .pagination>li>a, .pagination>li>span {
@@ -61,6 +63,9 @@ $(document).ready(function () {
                       <div class="col-md-3">
                           <h4>Search Filter</h4>
                           <hr/>
+                          <p class="hint small" style="letter-spacing: 0.08em;">
+                              Type Book ISBN or Keywords below and then press ENTER to filter the search result
+                          </p>
                           <p><input type="text" class="form-control" placeholder="Enter ISBN"></p>
                           <p><input type="text" class="form-control" placeholder="Enter keyword e.g Algebra"></p>
                           <br/>
@@ -96,7 +101,8 @@ $(document).ready(function () {
                               <div class="row">
                                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <a href="#" class="pull-left" style="">
-                                        <label style="cursor: pointer; "><input type="checkbox" name="out_of_stock_checkbox" style="margin-bottom: -2px; "> Out of stock</label></a>
+                                        <label style="cursor: pointer; ">
+                                            <input type="checkbox" name="out_of_stock_checkbox" style="position: relative; bottom: -1px; "> Exclude Out of stock</label></a>
                                         <a href="#" class="btn-browse-filter btn pull-right" style="color: white !important;background-color: #31b0d5 !important;">
                                         <span class="glyphicon glyphicon-th-list"></span> More Filters</a>
                                   </div>
@@ -105,16 +111,18 @@ $(document).ready(function () {
                                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">Browse By Category</div>
-                                                  <div class="panel-body">
+                                                  <div class="panel-body" id="id_search_filter_category_panel">
+                                                      {% for cat_object in filter_categories %}
                                                       <div class="checkbox">
-                                                      <label><input type="checkbox" value=""><a href="#">Dibya Prokashoni</a></label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                      <label><input type="checkbox" value=""><a href="#">Onno ProkaSoni</a></label>
-                                                    </div>
-                                                    <div class="checkbox disabled">
-                                                      <label><input type="checkbox" value=""><a href="#">Amar Boi</a></label>
-                                                    </div>
+                                                       <label><input type="checkbox" class="search-filter-by-category" value="{{ cat_object.pk }}">
+                                                           {% if cat_object.show_2 %}
+                                                           <a href="{% url "book_browse_view" cat_object.slug %}">{{ cat_object.name_2 }}</a>
+                                                           {% else %}
+                                                           <a href="{% url "book_browse_view" cat_object.slug %}">{{ cat_object.name }}</a>
+                                                           {% endif %}
+                                                       </label>
+                                                      </div>
+                                                      {% endfor %}
                                                   </div>
 
                                               </div>
@@ -173,18 +181,55 @@ $(document).ready(function () {
                             {% include "sections/pagination.html" %}
                       </div>
                   </div>
-                  <div class="col-md-2 cart_block" style="margin-top: 8px;">
-                      <div class="col-md-12">
-                          <div class="cart_title">
-                              Your Cart
-                              <hr/>
+                  <div class="col-md-2">
+                      <div class="row">
+                          <div class="col-md-12 cart_block" style="margin-top: 8px; border-radius: 9px;">
+                              <div class="cart_title">
+                                  Your Cart
+                                  <hr/>
+                              </div>
+                              <div class="cart_content">
+                                  No items found
+                              </div>
                           </div>
-                          <div class="cart_content">
-                              No items found
+                      </div>
+                      <div class="row">
+                          <div class="col-md-12 cart_block" style="margin-top: 8px; border-radius: 9px;">
+                              <div class="cart_title">
+                                  Recommended Books
+                                  <hr/>
+                              </div>
+                              <div class="cart_content">
+                                  <a href="#">
+                                  <img style="margin: 9px; width: 130px; height: 186px; " src="https://s3-ap-southeast-1.amazonaws.com/rokomari110/productNew/130X186/880410348_90657.jpg" class="img-responsive book-img-grid">
+                                  </a>
+                              </div>
+                              <div class="cart_content">
+                                  <a href="#">
+                                  <img style="margin: 9px; width: 130px; height: 186px; " src="https://s3-ap-southeast-1.amazonaws.com/rokomari110/productNew/130X186/880410348_90657.jpg" class="img-responsive book-img-grid">
+                                  </a>
+                              </div>
+                              <div class="cart_content">
+                                  <a href="#">
+                                  <img style="margin: 9px; width: 130px; height: 186px; " src="https://s3-ap-southeast-1.amazonaws.com/rokomari110/productNew/130X186/880410348_90657.jpg" class="img-responsive book-img-grid">
+                                  </a>
+                              </div>
+                              <div class="cart_content">
+                                  <a href="#">
+                                  <img style="margin: 9px; width: 130px; height: 186px; " src="https://s3-ap-southeast-1.amazonaws.com/rokomari110/productNew/130X186/880410348_90657.jpg" class="img-responsive book-img-grid">
+                                  </a>
+                              </div>
+                              <div>
+                                  <hr style="margin: 9px 0px 9px 0px;"/>
+                                  <a class="pull-right" href="#">View All</a>
+                              </div>
                           </div>
                       </div>
                   </div>
               </div>
           </div>
       </div>
+<div id="id_mustache_area" style="display: none;">
+{% include "mustache/search_filter_category.html" %}
+</div>
 {% endblock content %}

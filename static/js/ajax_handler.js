@@ -4,7 +4,7 @@ window.call_ajax = function (type, url, data, success_callback, error_callback, 
         url: url,
         data: data,
         success: function (data) {
-            var data = jQuery.parseJSON(data);
+            //var data = jQuery.parseJSON(data);
             if (typeof success_callback == "function") {
                 success_callback(data);
             }

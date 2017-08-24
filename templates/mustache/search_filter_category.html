@@ -1,0 +1,8 @@
+<div id="id_search_category_mustache_template">
+    {% verbatim %}{{#results}}{% endverbatim %}
+   <div class="checkbox">
+    <label><input type="checkbox" class="search-filter-by-category" value="{% verbatim %}{{ id }}{% endverbatim %}"> {% verbatim %}{{ name }}{% endverbatim %}
+    </label>
+    </div>
+    {% verbatim %}{{/results}}{% endverbatim %}
+</div>
