@@ -13,3 +13,12 @@ class Inventory(BaseEntity):
     is_new = models.IntegerField(default=0)
     print_type = models.CharField(max_length=50) # COL, ORI, ECO #Color, Original and Economy
     comment = models.TextField(null=True)
+
+    @property
+    def print_type_full_name(self):
+        if self.print_type == 'ORI':
+            return "Original"
+        elif self.print_type == 'COL':
+            return "Color"
+        elif self.print_type == 'ECO':
+            return "Economy"

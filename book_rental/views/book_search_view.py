@@ -19,6 +19,7 @@ class BookSearchView(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(BookSearchView, self).get_context_data(**kwargs)
+        context['page_title'] = 'Search Books'
         parent_cat, childrens = self.get_filter_categories()
         context['filter_categories'] = childrens
         context['parent_cat'] = parent_cat
