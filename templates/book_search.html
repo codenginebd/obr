@@ -93,6 +93,9 @@ $(document).ready(function () {
                                   <li class="list-group-item">
                                       <input style="position: relative; bottom: -3px;" type="checkbox" name="filter-rating-checkbox"/> <div style="display: inline;" data-rating="5" class="product-rating"></div>
                                   </li>
+                                  <li class="list-group-item">
+                                      <input style="position: relative; bottom: -1px;" type="checkbox" name="filter-rating-checkbox"/> <div style="display: inline;">Any Rating</div>
+                                  </li>
                               </ul>
                           </div>
                       </div>
@@ -111,10 +114,25 @@ $(document).ready(function () {
                                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">Browse By Category</div>
-                                                  <div class="panel-body" id="id_search_filter_category_panel">
+                                                  <div class="panel-body">
+                                                      <div class="small">
+                                                          {% if parent_cat %}
+                                                          {% if parent_cat.show_2 %}
+                                                          <a class="filter_search_prev_cat" data-name="{{ parent_cat.name_2 }}" href="#">
+                                                          <span class="glyphicon glyphicon-menu-left"></span> <span>{{ parent_cat.name_2 }}</span></a>
+                                                          {% else %}
+                                                          <a class="filter_search_prev_cat" data-name="{{ parent_cat.name }}" href="#">
+                                                          <span class="glyphicon glyphicon-menu-left"></span> <span>{{ parent_cat.name }}</span></a>
+                                                          {% endif %}
+                                                          {% else %}
+                                                          <a style="display: none;" class="filter_search_prev_cat" data-name="" href="#">
+                                                          <span class="glyphicon glyphicon-menu-left"></span> <span></span></a>
+                                                          {% endif %}
+                                                      </div>
+                                                      <div id="id_search_filter_category_panel" style="overflow-y: auto; max-height: 200px !important;">
                                                       {% for cat_object in filter_categories %}
                                                       <div class="checkbox">
-                                                       <label><input type="checkbox" class="search-filter-by-category" value="{{ cat_object.pk }}">
+                                                       <label><input type="checkbox" data-name="{{ cat_object.name }}" class="search-filter-by-category" value="{{ cat_object.pk }}">
                                                            {% if cat_object.show_2 %}
                                                            <a href="{% url "book_browse_view" cat_object.slug %}">{{ cat_object.name_2 }}</a>
                                                            {% else %}
@@ -123,6 +141,7 @@ $(document).ready(function () {
                                                        </label>
                                                       </div>
                                                       {% endfor %}
+                                                      </div>
                                                   </div>
 
                                               </div>
@@ -231,5 +250,7 @@ $(document).ready(function () {
       </div>
 <div id="id_mustache_area" style="display: none;">
 {% include "mustache/search_filter_category.html" %}
+{% include "mustache/search_filter_author.html" %}
+{% include "mustache/search_filter_publisher.html" %}
 </div>
 {% endblock content %}
