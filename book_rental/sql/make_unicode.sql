@@ -37,3 +37,12 @@ CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 //Product Category table
 ALTER TABLE book_rental_dev.ecommerce_productcategory MODIFY COLUMN name_2 varchar(500)
 CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+//For mixed search
+SET collation_connection = 'utf8_general_ci';
+ALTER DATABASE book_rental_dev CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE book_rental_dev.book_rental_author CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE book_rental_dev.book_rental_bookpublisher CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE book_rental_dev.book_rental_book CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE book_rental_dev.logger_errorlog CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE book_rental_dev.ecommerce_productcategory CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;

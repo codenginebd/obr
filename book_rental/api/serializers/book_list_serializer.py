@@ -4,11 +4,11 @@ from book_rental.api.serializers.publisher_serializer import PublisherSerializer
 from book_rental.models.sales.book import Book
 from ecommerce.api.serializers.category_serializer import CategorySerializer
 from ecommerce.api.serializers.product_image_serializer import ProductImageSerializer
+from ecommerce.api.serializers.rent_plan_serializer import RentPlanSerializer
 from ecommerce.api.serializers.tag_serializer import TagSerializer
 from ecommerce.models.sales.price_matrix import PriceMatrix
 from generics.api.serializers.base_model_serializer import BaseModelSerializer
 from rest_framework import serializers
-
 from inventory.models.inventory import Inventory
 
 
@@ -26,7 +26,13 @@ class BookSerializer(BaseModelSerializer):
     economy_available = serializers.SerializerMethodField()
     used_copy_available = serializers.SerializerMethodField()
     buy_options = serializers.SerializerMethodField()
-    rent_options = serializers.SerializerMethodField()
+    rent_options_eco_new = serializers.SerializerMethodField()
+    rent_price_available = serializers.SerializerMethodField()
+
+    def get_rent_price_available(self, obj):
+        price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
+                                                          product_code=obj.code)
+        return price_matrix_objects.exists()
 
     def get_buy_options(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
@@ -41,33 +47,37 @@ class BookSerializer(BaseModelSerializer):
             ]
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
                                                      product_id=obj.pk, stock__gt=0, is_new=0)
-        if inventory_objects.exists():
+        for inventory_object in inventory_objects:
             options += [
                 {
-                    "short_name": "USED",
-                    "full_name": "Used Copy"
+                    "short_name": "used_"+inventory_object.print_type,
+                    "full_name": "Used "+inventory_object.print_type_full_name
                 }
             ]
         return options
 
-    def get_rent_options(self, obj):
+    def get_rent_options_eco_new(self, obj):
+        price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
+                                                          product_code=obj.code, is_new=1, print_type='ECO',is_rent=True)
+        if price_matrix_objects.exists():
+            return RentPlanSerializer(queryset=price_matrix_objects.first().rent_plans.all())
         return []
 
     def get_original_available(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
-                                                          product_id=obj.pk, print_type='ORI', stock__gt=0)
+                                                          product_id=obj.pk, is_new=1,print_type='ORI', stock__gt=0)
 
         return inventory_objects.exists()
 
     def get_color_available(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
-                                                     product_id=obj.pk, print_type='COL', stock__gt=0)
+                                                     product_id=obj.pk, is_new=1,print_type='COL', stock__gt=0)
 
         return inventory_objects.exists()
 
     def get_economy_available(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
-                                                     product_id=obj.pk, print_type='ECO', stock__gt=0)
+                                                     product_id=obj.pk, is_new=1,print_type='ECO', stock__gt=0)
 
         return inventory_objects.exists()
 
@@ -92,7 +102,7 @@ class BookSerializer(BaseModelSerializer):
 
     class Meta:
         model = Book
-        fields = ('id', 'code', 'title', 'title_2', 'subtitle', 'subtitle_2', 'description', 'description_2', 'show_2',
-                  'sale_available', 'market_price', 'buy_options', 'rent_options', 'base_price', 'page_count', 'categories', 'publisher', 'authors', 'tags', 'images',
+        fields = ('id', 'code', 'title', 'title_2', 'isbn', 'edition', 'publish_date', 'subtitle', 'subtitle_2', 'description', 'description_2', 'show_2',
+                  'sale_available', 'rent_price_available', 'market_price', 'buy_options', 'rent_options_eco_new', 'base_price', 'page_count', 'categories', 'publisher', 'authors', 'tags', 'images',
                   'language', 'rent_available', 'slug', 'original_available', 'color_available', 'date_created',
                   'economy_available', 'used_copy_available', 'last_updated')
