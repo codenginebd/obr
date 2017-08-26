@@ -22,6 +22,7 @@ class Product(BaseEntity):
     expire_date = models.IntegerField(default=0)
     slug = models.SlugField()
     images = models.ManyToManyField(ProductImage)
+    rating = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
 
     @classmethod
     def apply_search(cls, queryset, request=None, **kwargs):
