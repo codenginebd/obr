@@ -41,7 +41,30 @@ class BookListAPIView(GenericAPIView):
 
         category_ids = request.GET.get('category')
         if category_ids:
-            pass
+            try:
+                category_ids = category_ids.split(',')
+                category_ids = [ int(cat_id) for cat_id in category_ids if cat_id ]
+                queryset = queryset.filter(categories__id__in=category_ids)
+            except Exception as exp:
+                pass
+                
+        author_ids = request.GET.get('author')
+        if author_ids:
+            try:
+                author_ids = author_ids.split(',')
+                author_ids = [ int(author_id) for author_id in author_ids if author_id ]
+                queryset = queryset.filter(authors__id__in=author_ids)
+            except Exception as exp:
+                pass
+                
+        publisher_ids = request.GET.get('publisher')
+        if publisher_ids:
+            try:
+                publisher_ids = publisher_ids.split(',')
+                publisher_ids = [ int(publisher_id) for publisher_id in publisher_ids if publisher_id ]
+                queryset = queryset.filter(publisher__id__in=publisher_ids)
+            except Exception as exp:
+                pass
 
         queryset = queryset.values('pk')
 
