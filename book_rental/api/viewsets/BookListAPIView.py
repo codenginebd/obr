@@ -92,7 +92,7 @@ class BookListAPIView(GenericAPIView):
                 
         printing_type = request.GET.get('print') # COL, ORI, ECO
         if printing_type:
-            printing_type = upper(printing_type)
+            printing_type = printing_type.upper()
             inventory_objects = inventory_objects.filter(print_type=printing_type)
             inventory_filter = True
             
