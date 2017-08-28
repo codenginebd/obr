@@ -66,7 +66,7 @@ class BookListAPIView(GenericAPIView):
             except Exception as exp:
                 pass
 
-        queryset = queryset.values('pk')
+        queryset = queryset.values_list('pk', flat=True).distinct()
 
         queryset = queryset.model.objects.filter(pk__in=queryset)
 
