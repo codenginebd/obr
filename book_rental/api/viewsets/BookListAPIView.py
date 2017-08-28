@@ -65,6 +65,40 @@ class BookListAPIView(GenericAPIView):
                 queryset = queryset.filter(publisher__id__in=publisher_ids)
             except Exception as exp:
                 pass
+                
+        inventory_filter = False
+                
+        inventory_objects = Inventory.objects.filter(product_model=Book.__name__)
+                
+        is_rent_available = request.GET.get('rent-available')
+        if is_rent_available:
+            try:
+                is_rent_available = int(is_rent_available)
+                is_rent_available = True if is_rent_available else False
+                inventory_objects = inventory_objects.filter(available_for_rent=is_rent_available)
+                inventory_filter = True
+            except Exception as exp:
+                pass
+                
+        used_type = request.GET.get('used')
+        if used_type:
+            try:
+                used_type = int(used_type)
+                is_new = 0 if used_type else 1
+                inventory_objects = inventory_objects.filter(is_new=is_new)
+                inventory_filter = True
+            except Exception as exp:
+                pass
+                
+        printing_type = request.GET.get('print') # COL, ORI, ECO
+        if printing_type:
+            printing_type = upper(printing_type)
+            inventory_objects = inventory_objects.filter(print_type=printing_type)
+            inventory_filter = True
+            
+        if inventory_filter:
+            inventory_book_ids = inventory_objects.values_list('product_id', flat=True).distinct()
+            queryset = queryset.filter(pk__in=inventory_book_ids)
 
         queryset = queryset.values_list('pk', flat=True).distinct()
 
