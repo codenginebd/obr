@@ -28,6 +28,12 @@ class BookSerializer(BaseModelSerializer):
     buy_options = serializers.SerializerMethodField()
     rent_options_eco_new = serializers.SerializerMethodField()
     rent_price_available = serializers.SerializerMethodField()
+    is_rent_available = serializers.SerializerMethodField()
+    
+    def get_is_rent_available(self, obj):
+        inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
+                                                     product_id=obj.pk, stock__gt=0, available_for_rent=True)
+        return inventory_objects.exists()
 
     def get_rent_price_available(self, obj):
         price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
@@ -103,6 +109,6 @@ class BookSerializer(BaseModelSerializer):
     class Meta:
         model = Book
         fields = ('id', 'code', 'title', 'title_2', 'isbn', 'edition', 'publish_date', 'subtitle', 'subtitle_2', 'description', 'description_2', 'show_2',
-                  'sale_available', 'rent_price_available', 'market_price', 'buy_options', 'rent_options_eco_new', 'base_price', 'page_count', 'categories', 'publisher', 'authors', 'tags', 'images',
+                  'sale_available', 'rent_price_available', 'market_price', 'is_rent_available', 'buy_options', 'rent_options_eco_new', 'base_price', 'page_count', 'categories', 'publisher', 'authors', 'tags', 'images',
                   'language', 'rent_available', 'slug', 'original_available', 'color_available', 'date_created',
                   'economy_available', 'used_copy_available', 'last_updated')
