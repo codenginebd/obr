@@ -3,6 +3,7 @@ from django.db.models.query_utils import Q
 from book_rental.api.serializers.book_list_serializer import BookSerializer
 from book_rental.models.sales.book import Book
 from generics.api.views.generic_api_view import GenericAPIView
+from inventory.models.inventory import Inventory
 
 
 class BookListAPIView(GenericAPIView):

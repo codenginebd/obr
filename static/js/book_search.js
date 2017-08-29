@@ -3,6 +3,30 @@ $(document).ready(function () {
         e.preventDefault();
         $("#id_browse_more_filter_content").slideToggle(500);
     });
+    
+    function update_browser_address() {
+        
+    }
+    
+    function collect_search_params() {
+        
+    }
+
+    function perform_search() {
+        var search_params = collect_search_params();
+        update_browser_address();
+        call_ajax("GET", "/api/v1/books/", search_params, function (data) {
+            console.log(data);
+        },
+        function (jqxhr, status, error) {
+            
+        },
+        function (msg) {
+            
+        });
+    };
+
+    setTimeout(perform_search, 1000);
 
     $(document).on("click", ".search-filter-by-category", function (e) {
         if($(this).is(":checked")) {

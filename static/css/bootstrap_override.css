@@ -112,3 +112,9 @@ footer, footer a {
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
     font-weight: bold !important;
 }
+
+label {
+    font-weight: normal !important;
+    letter-spacing: 0.02em !important;
+    text-transform: capitalize !important;
+}

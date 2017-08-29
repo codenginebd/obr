@@ -5,10 +5,10 @@
 (function(window,undefined) {
 "use strict"
 
-window.render_template = function(template, data, partial, options) {
+window.render_template = function(template_html, data) {
     try {
-        Mustache.parse(template);
-        return Mustache.render(template, data, partial);
+        var template = Handlebars.compile(template_html);
+        return template(data);
     } catch(err) {
         //Mustache is required may be
     }

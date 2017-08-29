@@ -84,14 +84,14 @@
    * Breaks up the given `template` string into a tree of tokens. If the `tags`
    * argument is given here it must be an array with two string values: the
    * opening and closing tags used in the template (e.g. [ "<%", "%>" ]). Of
-   * course, the default is to use mustaches (i.e. mustache.tags).
+   * course, the default is to use mustaches (i.e. handlebars.tags).
    *
    * A token is an array with at least 4 elements. The first element is the
-   * mustache symbol that was used inside the tag, e.g. "#" or "&". If the tag
+   * handlebars symbol that was used inside the tag, e.g. "#" or "&". If the tag
    * did not contain a symbol (i.e. {{myValue}}) this element is "name". For
    * all text that appears outside a symbol this element is "text".
    *
-   * The second element of a token is its "value". For mustache tags this is
+   * The second element of a token is its "value". For handlebars tags this is
    * whatever else was inside the tag besides the opening symbol. For text tokens
    * this is the text itself.
    *
@@ -570,7 +570,7 @@
   mustache.version = '2.3.0';
   mustache.tags = [ '{{', '}}' ];
 
-  // All high-level mustache.* functions use this writer.
+  // All high-level handlebars.* functions use this writer.
   var defaultWriter = new Writer();
 
   /**
@@ -597,7 +597,7 @@
     if (typeof template !== 'string') {
       throw new TypeError('Invalid template! Template should be a "string" ' +
                           'but "' + typeStr(template) + '" was given as the first ' +
-                          'argument for mustache#render(template, view, partials)');
+                          'argument for handlebars#render(template, view, partials)');
     }
 
     return defaultWriter.render(template, view, partials);

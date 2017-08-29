@@ -10,7 +10,7 @@
 <link href="{% static "css/vendor/raty/jquery.raty2.7.1.css" %}" rel="stylesheet" />
 <link href="{% static "css/search_page.css" %}" rel="stylesheet" />
 <script src="{% static "js/vendor/raty/jquery.raty2.7.1.js" %}"></script>
-<script src="{% static "js/vendor/mustache.js" %}"></script>
+<script src="{% static "js/vendor/handlebars.min.js" %}"></script>
 <script src="{% static "js/template_renderer.js" %}"></script>
 <script src="{% static "js/book_search.js" %}"></script>
 <style type="text/css">
@@ -70,13 +70,15 @@ $(document).ready(function () {
                           <p><input type="text" class="form-control" placeholder="Enter keyword e.g Algebra"></p>
                           <br/>
                           <div>
-                              Book Language <hr style="margin: 2px 0px 9px 0px;"/>
+                              <p>Book Language</p>
+                              <hr style="margin: 2px 0px 9px 0px;"/>
                               <label style="cursor: pointer;"><input type="radio" value="en" name="filter_by_bl"/> English</label>
                               <label style="cursor: pointer;"><input type="radio" value="bn" name="filter_by_bl"/> Bangla</label>
                           </div>
                           <br/>
                           <div>
-                              By Product Rating <hr style="margin: 2px 0px 9px 0px;"/>
+                              <p>By Product Rating</p>
+                              <hr style="margin: 2px 0px 9px 0px;"/>
                               <ul class="list-group">
                                   <li class="list-group-item">
                                       <input style="position: relative; bottom: -3px;" type="checkbox" name="filter-rating-checkbox"/> <div style="display: inline;" data-rating="1" class="product-rating"></div>
@@ -95,6 +97,43 @@ $(document).ready(function () {
                                   </li>
                                   <li class="list-group-item">
                                       <input style="position: relative; bottom: -1px;" type="checkbox" name="filter-rating-checkbox"/> <div style="display: inline;">Any Rating</div>
+                                  </li>
+                              </ul>
+                          </div>
+                          <div>
+                              <p class="hint" style="letter-spacing: 0.08em;">
+                              Filter Books by New or used
+                              </p>
+                              <hr style="margin: 2px 0px 9px 0px;"/>
+                              <ul class="list-group">
+                                  <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
+                                      <label style="cursor: pointer;"><input type="radio" value="new" name="filter_by_used"/> New Books</label>
+                                  </li>
+                                  <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
+                                      <label style="cursor: pointer;"><input type="radio" value="used" name="filter_by_used"/> Used Books</label>
+                                  </li>
+                                  <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
+                                      <label style="cursor: pointer;"><input checked="checked" type="radio" value="any" name="filter_by_used"/> Any</label>
+                                  </li>
+                              </ul>
+                          </div>
+                          <div>
+                              <p class="hint" style="letter-spacing: 0.08em;">
+                              Printing Type
+                              </p>
+                              <hr style="margin: 2px 0px 9px 0px;"/>
+                              <ul class="list-group">
+                                  <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
+                                      <label style="cursor: pointer;"><input type="radio" value="ORI" name="filter_by_print"/> Original Print</label>
+                                  </li>
+                                  <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
+                                      <label style="cursor: pointer;"><input type="radio" value="COL" name="filter_by_print"/> Color Print</label>
+                                  </li>
+                                  <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
+                                      <label style="cursor: pointer;"><input type="radio" value="ECO" name="filter_by_print"/> Economy Print</label>
+                                  </li>
+                                  <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
+                                      <label style="cursor: pointer;"><input checked="checked" type="radio" value="any" name="filter_by_print"/> Any</label>
                                   </li>
                               </ul>
                           </div>
@@ -249,8 +288,9 @@ $(document).ready(function () {
           </div>
       </div>
 <div id="id_mustache_area" style="display: none;">
-{% include "mustache/search_filter_category.html" %}
-{% include "mustache/search_filter_author.html" %}
-{% include "mustache/search_filter_publisher.html" %}
+{% include "handlebars/search_filter_category.html" %}
+{% include "handlebars/search_filter_author.html" %}
+{% include "handlebars/search_filter_publisher.html" %}
+{% include "handlebars/search_results.html" %}
 </div>
 {% endblock content %}
