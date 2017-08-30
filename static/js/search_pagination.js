@@ -3,6 +3,9 @@ var Pager = {
 		if(typeof display_page_count == "undefined") {
 			display_page_count = 10;
 		}
+		else {
+			display_page_count = parseInt(display_page_count);
+		}
 		var first_page_start = (current_page - 1) * page_size + 1;
 		if(first_page_start > total_objects) {
 			return [];
@@ -15,9 +18,14 @@ var Pager = {
 		if(last_page_start > total_objects) {
 			last_page_start = last_page_start - page_size;
 		}
+		var pcount = 0;
 		for(var i = first_page_start ; i <= last_page_start ; i += page_size) {
 			var page = Math.floor(i / page_size) + 1;
 			pages.push(page);
+			pcount += 1
+			if(pcount >= display_page_count) {
+				break;
+			}
 		}
 		return pages;
 	 },
