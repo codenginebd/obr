@@ -222,10 +222,12 @@ $(document).ready(function () {
                                       </div>
                           </div>
 
-
+                          <div id="id_search_results_container">
+                          <div id="id_search_results_pagination1">
                           {% include "sections/pagination.html" %}
+                          </div>
                           <div class="row">
-                              <div class="col-md-12">
+                              <div class="col-md-12" id="id_search_results">
                                     {% include "sections/search_result_row.html" %}
                                     {% include "sections/search_result_row.html" %}
                                     {% include "sections/search_result_row.html" %}
@@ -236,7 +238,10 @@ $(document).ready(function () {
                                     {% include "sections/search_result_row.html" %}
                               </div>
                             </div>
+                            <div id="id_search_results_pagination2">
                             {% include "sections/pagination.html" %}
+                            </div>
+                            </div>
                       </div>
                   </div>
                   <div class="col-md-2">
