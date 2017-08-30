@@ -1,3 +1,10 @@
+1,2,3,4,5,6,7,8,9,10,11,12
+
+1,2,3,4,5...   prev next
+2,3,4,5,6...   prev next
+5,6,7,8,9...   prev next
+11,12...     prev next
+
 var Pager = {
 	create_pages: function(current_page, total_objects, page_size, display_page_count) {
 		if(typeof display_page_count == "undefined") {
@@ -15,7 +22,7 @@ var Pager = {
 		if(last_page_start > total_objects) {
 			last_page_start = last_page_start - page_size;
 		}
-		for(var i = first_page_start ; i <= last_page_start ; i ++) {
+		for(var i = first_page_start ; i <= last_page_start ; i += page_size) {
 			var page = Math.floor(i / page_size) + 1;
 			pages.push(page);
 		}
