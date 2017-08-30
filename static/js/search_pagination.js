@@ -40,7 +40,7 @@ var Pager = {
 	prev_page_available: function(page_size, total_objects, current_page) {
 		var page_start = (current_page - 1) * page_size + 1;
 		var prev_page_start = page_start - page_size;
-		if(prev_page_start < 1) {
+		if(prev_page_start >= 1) {
 			return true;
 		}
 		return false;
