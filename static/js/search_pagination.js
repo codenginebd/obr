@@ -18,7 +18,7 @@
 			}
 			for(var i = first_page ; i <= last_page ; i ++) {
 				var page = Math.floor(i / page_size) + 1;
-				Array.prototype.push.apply(pages, page);
+				pages.push(pages, page);
 			}
 			return pages;
 		 },
@@ -47,6 +47,7 @@
 				prev_page_available: is_prev_page_available,
 				next_page_available: is_next_page_available
 			}
+			return pagination_object;
 		}
 		};
 })();
