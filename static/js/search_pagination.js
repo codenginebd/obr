@@ -10,7 +10,7 @@ var Pager = {
 		var last_page_start = first_page_start;
 		var pages = [];
 		while(last_page_start < total_objects) {
-			last_page += page_size;
+			last_page_start += page_size;
 		}
 		if(last_page_start > total_objects) {
 			last_page_start = last_page_start - page_size;
