@@ -1,8 +1,119 @@
 <script id="id_search_results_hb_template" type="text/x-handlebars-template">
-    {% verbatim %}{{#data}}{% endverbatim %}
-   <div class="checkbox">
-    <label><input type="checkbox" data-name="{% verbatim %}{{ name }}{% endverbatim %}" class="search-filter-by-category" value="{% verbatim %}{{ id }}{% endverbatim %}"> {% verbatim %}{{ name }}{% endverbatim %}
-    </label>
+    {{ #if results }}
+{{ each results }}
+<div class="row book_entry search_entry" style="border: 1px solid #f7f7f7; margin-left: 1px;">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-3">
+
+                <img style="margin: 20px; width: 130px; height: 186px; " src="https://s3-ap-southeast-1.amazonaws.com/rokomari110/productNew/130X186/880410348_90657.jpg" class="img-responsive book-img-grid">
+                <div data-rating="4.5" class="product-rating text-center"></div>
+            </div>
+            <div class="col-md-9 col-sm-9 col-xs-9 text-left pad-10 margin-left--9" style="padding: 14px; ">
+                 <div class="cart_title"> <a class="cart_title" href="#">Introduction to computer Science</a>
+                </div>
+                <div class="cart_content"> Author: <a href="#">Jeff Rovin Ste</a></div>
+                <div class="cart_content"> Publisher: <a href="#">Ononna Prokashoni</a></div>
+                <p class="small" style="letter-spacing: 0.02em;">
+                    Thanks to @Gerben's post came to know there are two events show.bs.tab (before the tab is shown) and shown.bs.tab (after the tab is shown) as explained in the docs -
+                </p>
+                <hr class="book-box-hr" style="margin: 6px 0px 6px 0px"/>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xs-6">
+                        <div class="small">Market Price: BDT. <strike> 659 </strike>
+                        </div>
+                        <div class="small">Our Price: BDT 500</div>
+                        <div><small>Rent Available from BDT 100</small></div>
+                        <div class="small">Initial Payable BDT 500</div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xs-6">
+                        <div><span class="glyphicon glyphicon-ok" style="color: green;"></span> <small>Original Print Available</small></div>
+                        <div><span class="glyphicon glyphicon-ok" style="color: green;"></span> <small>Used copy available with less price</small></div>
+                        <div><span class="glyphicon glyphicon-ok" style="color: green;"></span> <small>Color Print Available</small></div>
+                        <div><span class="glyphicon glyphicon-ok" style="color: green;"></span> <small>Economy Print Available</small></div>
+                    </div>
+                </div>
+
+                <hr style="margin: 6px 0px 6px 0px"/>
+                <div>
+                    <div class="panel-group" id="accordion">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                            I want to Buy This</a>
+                          </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                          <div class="panel-body">
+                              <label>
+                                  <input type="radio" name="sr-rent-option"/> Original Copy
+                              </label>
+                              <label>
+                                  <input type="radio" name="sr-rent-option"/> Color Copy
+                              </label>
+                              <label>
+                                  <input type="radio" name="sr-rent-option"/> Economy Copy
+                              </label>
+                              <label>
+                                  <input type="radio" name="sr-rent-option"/> Used Copy
+                              </label>
+                              <p>Calculated Price = BDT 230</p>
+                              <button style="width: 160px;" class="btn btn-sm btn-danger pull-right">Add To Cart</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                            I want to Rent this</a>
+                          </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                          <div class="panel-body">
+                              <label>
+                                  <input type="radio" name="sr-rent-option"/> 7 days
+                              </label>
+                              <label>
+                                  <input type="radio" name="sr-rent-option"/> 15 days
+                              </label>
+                              <label>
+                                  <input type="radio" name="sr-rent-option"/> 30 days
+                              </label>
+                              <label>
+                                  <input type="radio" name="sr-rent-option"/> 45 days
+                              </label>
+                              <label>
+                                  <input type="radio" name="sr-rent-option"/> 60 days
+                              </label>
+                              <label>
+                                  <input type="radio" name="sr-rent-option"/> 90 days
+                              </label>
+                              <label>
+                                  <input type="radio" name="sr-rent-option"/> 120 days
+                              </label>
+                              <p class="small">
+                                  Rent price calculated = BDT 350
+                              </p>
+                              <p><button style="width: 160px;" class="btn btn-sm btn-danger pull-right">Add To Cart</button></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    {% verbatim %}{{/data}}{% endverbatim %}
+</div>
+{{ /each }}
+{{ #else }}
+<div class="row book_entry search_entry" style="border: 1px solid #f7f7f7; margin-left: 1px;">
+    <div class="row">
+		<div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+			<p>No results found</p>
+		</div>
+	</div>
+</div>
+{{ /if }}
 </script>
