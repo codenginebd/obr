@@ -1,0 +1,25 @@
+<script id="id_search_pagination_hb_template" type="text/x-handlebars-template">
+<div class="row">
+  <div class="col-md-9">
+      <ul class="pagination">
+		  {{ #each pages }}
+          <li class="pagination-li-item" data-page="{{ this }}"><a href="#">{{ this }}</a></li>
+		  {{ /pages }}
+        </ul>
+  </div>
+  <div class="col-md-3">
+        <ul class="pagination pull-right">
+		  {{ #if prev_page_available }}
+          <li><a href="#"><span class="glyphicon glyphicon-menu-left"></span></a></li>
+		  {{ #else }}
+		  <li class="disabled" style="disabled: disabled;"><a href="#"><span class="glyphicon glyphicon-menu-left"></span></a></li>
+		  {{ /if }}
+		  {{ #if next_page_available }}
+          <li><a href="#"><span class="glyphicon glyphicon-menu-right"></span></a></li>
+		  {{ #else }}
+		  <li class="disabled" style="disabled: disabled;"><a href="#"><span class="glyphicon glyphicon-menu-right"></span></a></li>
+		  {{ /if }}
+        </ul>
+  </div>
+</div>
+</script>
