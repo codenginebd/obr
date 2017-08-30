@@ -46,7 +46,6 @@
 				pages: pages,
 				prev_page_available: is_prev_page_available,
 				next_page_available: is_next_page_available
-			};
+			}
 		};
-	 }
 })();
