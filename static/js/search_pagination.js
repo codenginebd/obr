@@ -42,7 +42,7 @@
 			var pages = this.create_pages(current_page, total_objects, page_size, display_page_count);
 			var is_next_page_available = this.next_page_available(page_size, total_objects, current_page);
 			var is_prev_page_available = this.prev_page_available(page_size, total_objects, current_page);
-			var pagination_object {
+			var pagination_object = {
 				pages: pages,
 				prev_page_available: is_prev_page_available,
 				next_page_available: is_next_page_available
