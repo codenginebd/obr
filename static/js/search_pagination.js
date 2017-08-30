@@ -45,14 +45,24 @@ var Pager = {
 		}
 		return false;
 	 },
+	next_page: function (current_page) {
+		return current_page + 1;
+	},
+	prev_page: function (current_page) {
+		return current_page - 1;
+	},
 	create_pagination_object: function(total_objects, page_size, current_page, display_page_count) {
 		var pages = this.create_pages(current_page, total_objects, page_size, display_page_count);
 		var is_next_page_available = this.next_page_available(page_size, total_objects, current_page);
 		var is_prev_page_available = this.prev_page_available(page_size, total_objects, current_page);
+		var next_page = this.next_page(current_page);
+		var prev_page = this.prev_page(current_page);
 		var pagination_object = {
 			pages: pages,
 			prev_page_available: is_prev_page_available,
-			next_page_available: is_next_page_available
+			next_page_available: is_next_page_available,
+			prev_page: prev_page,
+			next_page: next_page
 		}
 		return pagination_object;
 	}

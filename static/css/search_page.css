@@ -1,6 +1,6 @@
 .cart_title {
     font-weight: bold;
-    font-size: 15px;
+    font-size: 15px !important;
 }
 .cart_content {
     font-weight: normal;
@@ -36,4 +36,10 @@
     font-size: 14px;
     cursor: pointer;
     margin-bottom: 3px;
+}
+
+.loading {
+    margin: 20px 0px 20px 20px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em;
 }

@@ -11,6 +11,7 @@ window.render_template = function(template_html, data) {
         return template(data);
     } catch(err) {
         //Mustache is required may be
+        console.log(err);
     }
 }
 

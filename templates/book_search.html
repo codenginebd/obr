@@ -12,6 +12,7 @@
 <script src="{% static "js/vendor/raty/jquery.raty2.7.1.js" %}"></script>
 <script src="{% static "js/vendor/handlebars.min.js" %}"></script>
 <script src="{% static "js/template_renderer.js" %}"></script>
+<script src="{% static "js/search_pagination.js" %}"></script>
 <script src="{% static "js/book_search.js" %}"></script>
 <style type="text/css">
 .search-page-body .pagination>li>a, .pagination>li>span {
@@ -224,22 +225,15 @@ $(document).ready(function () {
 
                           <div id="id_search_results_container">
                           <div id="id_search_results_pagination1">
-                          {% include "sections/pagination.html" %}
+                          <p class='loading'>Loading...</p>
                           </div>
                           <div class="row">
                               <div class="col-md-12" id="id_search_results">
-                                    {% include "sections/search_result_row.html" %}
-                                    {% include "sections/search_result_row.html" %}
-                                    {% include "sections/search_result_row.html" %}
-                                    {% include "sections/search_result_row.html" %}
-                                    {% include "sections/search_result_row.html" %}
-                                    {% include "sections/search_result_row.html" %}
-                                    {% include "sections/search_result_row.html" %}
-                                    {% include "sections/search_result_row.html" %}
+                                    <p class='loading'>Loading...</p>
                               </div>
                             </div>
                             <div id="id_search_results_pagination2">
-                            {% include "sections/pagination.html" %}
+                            <p class='loading'>Loading...</p>
                             </div>
                             </div>
                       </div>

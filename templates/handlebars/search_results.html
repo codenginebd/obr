@@ -1,6 +1,6 @@
 <script id="id_search_results_hb_template" type="text/x-handlebars-template">
-{{ #if results }}
-{{ each results }}
+{% verbatim %}{{#if results}}{% endverbatim %}
+{% verbatim %}{{#each results}}{% endverbatim %}
 <div class="row book_entry search_entry" style="border: 1px solid #f7f7f7; margin-left: 1px;">
     <div class="col-md-12">
         <div class="row">
@@ -10,7 +10,11 @@
                 <div data-rating="4.5" class="product-rating text-center"></div>
             </div>
             <div class="col-md-9 col-sm-9 col-xs-9 text-left pad-10 margin-left--9" style="padding: 14px; ">
-                 <div class="cart_title"> <a class="cart_title" href="#">Introduction to computer Science</a>
+                {% verbatim %}{{#if show_2}}{% endverbatim %}
+                 <div class="cart_title"> <a class="cart_title" href="#">{% verbatim %}{{title_2}}{% endverbatim %}</a>
+                 {% verbatim %}{{else}}{% endverbatim %}
+                 <div class="cart_title"> <a class="cart_title" href="#">{% verbatim %}{{title}}{% endverbatim %}</a>
+                 {% verbatim %}{{/if}}{% endverbatim %}
                 </div>
                 <div class="cart_content"> Author: <a href="#">Jeff Rovin Ste</a></div>
                 <div class="cart_content"> Publisher: <a href="#">Ononna Prokashoni</a></div>
@@ -106,12 +110,12 @@
         </div>
     </div>
 </div>
-{{ /each }}
-{{ #else }}
+{% verbatim %}{{/each}}{% endverbatim %}
+{% verbatim %}{{else}}{% endverbatim %}
 <div class="row book_entry search_entry" style="border: 1px solid #f7f7f7; margin-left: 1px;">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
 		<p>No results found</p>
 	</div>
 </div>
-{{ /if }}
+{% verbatim %}{{/if}}{% endverbatim %}
 </script>

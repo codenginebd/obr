@@ -2,23 +2,29 @@
 <div class="row">
   <div class="col-md-9">
       <ul class="pagination">
-		  {{ #each pages }}
-          <li class="pagination-li-item" data-page="{{ this }}"><a href="#">{{ this }}</a></li>
-		  {{ /pages }}
+          {% verbatim %}{{#each pages}}{% endverbatim %}
+          <li class="pagination-li-item" data-page="{% verbatim %}{{ this }}{% endverbatim %}">
+              <a href="#">{% verbatim %}{{ this }}{% endverbatim %}</a></li>
+		  {% verbatim %}{{/each}}{% endverbatim %}
         </ul>
   </div>
   <div class="col-md-3">
         <ul class="pagination pull-right">
-		  {{ #if prev_page_available }}
-          <li><a href="#"><span class="glyphicon glyphicon-menu-left"></span></a></li>
-		  {{ #else }}
+		  {% verbatim %}{{#if prev_page_available}}{% endverbatim %}
+          <li class="pagination-li-item" data-page="{% verbatim %}{{ prev_page }}{% endverbatim %}">
+              <a href="#"><span class="glyphicon glyphicon-menu-left"></span></a>
+          </li>
+		  {% verbatim %}{{else}}{% endverbatim %}
 		  <li class="disabled" style="disabled: disabled;"><a href="#"><span class="glyphicon glyphicon-menu-left"></span></a></li>
-		  {{ /if }}
-		  {{ #if next_page_available }}
-          <li><a href="#"><span class="glyphicon glyphicon-menu-right"></span></a></li>
-		  {{ #else }}
-		  <li class="disabled" style="disabled: disabled;"><a href="#"><span class="glyphicon glyphicon-menu-right"></span></a></li>
-		  {{ /if }}
+		  {% verbatim %}{{/if}}{% endverbatim %}
+		  {% verbatim %}{{#if next_page_available}}{% endverbatim %}
+          <li class="pagination-li-item" data-page="{% verbatim %}{{ next_page }}{% endverbatim %}">
+              <a href="#"><span class="glyphicon glyphicon-menu-right"></span></a>
+          </li>
+		  {% verbatim %}{{else}}{% endverbatim %}
+		  <li class="disabled" style="disabled: disabled;">
+              <a href="#"><span class="glyphicon glyphicon-menu-right"></span></a></li>
+		  {% verbatim %}{{/if}}{% endverbatim %}
         </ul>
   </div>
 </div>
