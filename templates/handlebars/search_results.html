@@ -62,6 +62,7 @@
                 <hr style="margin: 6px 0px 6px 0px"/>
                 <div>
                     <div class="panel-group" id="accordion">
+					  {% verbatim %}{{#if sale_available}}{% endverbatim %}
                       <div class="panel panel-default">
                         <div class="panel-heading">
                           <h4 class="panel-title">
@@ -88,6 +89,17 @@
                           </div>
                         </div>
                       </div>
+					  {% verbatim %}{{else}}{% endverbatim %}
+					  <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h4 class="panel-title">
+                            <a href="#" style="disabled: disabled;">
+                            This Item is not available to buy</a>
+                          </h4>
+                        </div>
+					  </div>
+					  {% verbatim %}{{/if}}{% endverbatim %}
+					  {% verbatim %}{{#if is_rent_available}}{% endverbatim %}
                       <div class="panel panel-default">
                         <div class="panel-heading">
                           <h4 class="panel-title">
@@ -125,6 +137,16 @@
                           </div>
                         </div>
                       </div>
+					  {% verbatim %}{{else}}{% endverbatim %}
+					  <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h4 class="panel-title">
+                            <a href="#" style="disabled: disabled;">
+                            This Item is not available for rent</a>
+                          </h4>
+                        </div>
+					  </div>
+					  {% verbatim %}{{/if}}{% endverbatim %}
                     </div>
                 </div>
             </div>
