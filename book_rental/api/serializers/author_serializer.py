@@ -12,4 +12,4 @@ class AuthorSerializer(BaseModelSerializer):
 
     class Meta:
         model = Author
-        fields = ('id', 'code', 'name', 'date_created', 'last_updated')
+        fields = ('id', 'code', 'name', 'link', 'date_created', 'last_updated')
