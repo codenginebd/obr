@@ -16,25 +16,46 @@
                  <div class="cart_title"> <a class="cart_title" href="#">{% verbatim %}{{title}}{% endverbatim %}</a>
                  {% verbatim %}{{/if}}{% endverbatim %}
                 </div>
-                <div class="cart_content"> Author: <a href="#">Jeff Rovin Ste</a></div>
-                <div class="cart_content"> Publisher: <a href="#">Ononna Prokashoni</a></div>
+                <div class="cart_content"> Authors: 
+				{% verbatim %}{{#each authors}}{% endverbatim %}
+				<a href="{% verbatim %}{{link}}{% endverbatim %}">{% verbatim %}{{name}}{% endverbatim %}</a> 
+				{% verbatim %}{{/each}}{% endverbatim %}</div>
+                <div class="cart_content"> Publisher: 
+				{% verbatim %}{{#with publisher}}{% endverbatim %}
+				<a href="{% verbatim %}{{link}}{% endverbatim %}">{% verbatim %}{{name}}{% endverbatim %}</a>
+				{% verbatim %}{{/with}}{% endverbatim %}
+				</div>
+				{% verbatim %}{{#if show_2}}{% endverbatim %}
                 <p class="small" style="letter-spacing: 0.02em;">
-                    Thanks to @Gerben's post came to know there are two events show.bs.tab (before the tab is shown) and shown.bs.tab (after the tab is shown) as explained in the docs -
+                    {% verbatim %}{{description_2}}{% endverbatim %}
                 </p>
+				{% verbatim %}{{else}}{% endverbatim %}
+				<p class="small" style="letter-spacing: 0.02em;">
+                    {% verbatim %}{{description}}{% endverbatim %}
+                </p>
+				{% verbatim %}{{/if}}{% endverbatim %}
                 <hr class="book-box-hr" style="margin: 6px 0px 6px 0px"/>
                 <div class="row">
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xs-6">
-                        <div class="small">Market Price: BDT. <strike> 659 </strike>
+                        <div class="small">Market Price: {% verbatim %}{{currency}}{% endverbatim %}. <strike> {% verbatim %}{{market_price}}{% endverbatim %} </strike>
                         </div>
-                        <div class="small">Our Price: BDT 500</div>
-                        <div><small>Rent Available from BDT 100</small></div>
-                        <div class="small">Initial Payable BDT 500</div>
+                        <div class="small">Our Price: {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{base_price}}{% endverbatim %}</div>
+                        <div><small>Rent Available from {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{rent_available_from}}{% endverbatim %}</small></div>
+                        <div class="small">Initial Payable {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{base_price}}{% endverbatim %}</div>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xs-6">
+						{% verbatim %}{{#if original_available}}{% endverbatim %}
                         <div><span class="glyphicon glyphicon-ok" style="color: green;"></span> <small>Original Print Available</small></div>
+						{% verbatim %}{{/if}}{% endverbatim %}
+						{% verbatim %}{{#if used_copy_available}}{% endverbatim %}
                         <div><span class="glyphicon glyphicon-ok" style="color: green;"></span> <small>Used copy available with less price</small></div>
+						{% verbatim %}{{/if}}{% endverbatim %}
+						{% verbatim %}{{#if color_available}}{% endverbatim %}
                         <div><span class="glyphicon glyphicon-ok" style="color: green;"></span> <small>Color Print Available</small></div>
+						{% verbatim %}{{/if}}{% endverbatim %}
+						{% verbatim %}{{#if economy_available}}{% endverbatim %}
                         <div><span class="glyphicon glyphicon-ok" style="color: green;"></span> <small>Economy Print Available</small></div>
+						{% verbatim %}{{/if}}{% endverbatim %}
                     </div>
                 </div>
 
