@@ -16,13 +16,10 @@ class PriceMatrix(BaseEntity):
     product_code = models.CharField(max_length=20)
     product_model = models.CharField(max_length=100)
     is_new = models.IntegerField(default=0)
-    base_price = models.DecimalField(max_digits=20, decimal_places=2) # Default price is eco price
+    print_type = models.CharField(max_length=50)  # COL, ORI, ECO
+    base_price = models.DecimalField(max_digits=20, decimal_places=2)
     market_price = models.DecimalField(max_digits=20, decimal_places=2)
-    color_price = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    color_market_price = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    original_price = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    original_market_price = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
     currency = models.ForeignKey(Currency)
     
     class Meta:
-        index_together = [ 'product_code', 'product_model', 'is_new' ]
+        index_together = [ product_code, product_model, is_new, print_type ]
