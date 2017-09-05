@@ -12,8 +12,9 @@ class SalePriceAPIView(BRAPIView):
         product_type = request.GET.get('ptype')
         product_code = request.GET.get('pcode')
         print_type  = request.GET.get('pr-type', 'ECO')
-        is_used = request.GET.get('used', False)
-        queryset = queryset.filter(product_model=product_type,product_code=product_code,print_type=print_type,is_new=not is_used)
+        is_used = request.GET.get('used', 0)
+        is_new = True if not is_used else False
+        queryset = queryset.filter(product_model=product_type,product_code=product_code,print_type=print_type,is_new=is_new)
         return queryset
         
     def create_response(self, request, queryset):
