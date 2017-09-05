@@ -26,6 +26,7 @@ from cart_view import BasketView
 from ecommerce.api.viewsets.category_api_view import CategoryAPIView, CategoryAPIViewNoPagination
 from ecommerce.api.viewsets.price_matrix_api_view import PriceMatrixAPIView
 from ecommerce.api.viewsets.rent_plan_api_view import RentPlanAPIView
+from ecommerce.api.viewsets.sale_price_api_view import SalePriceAPIView
 from home_view import HomeView
 
 urlpatterns = [
@@ -51,6 +52,7 @@ urlpatterns += [
     url('^api/v1/publishers/$', PublisherAPIViewNoPagination.as_view()),
     url('^api/v1/books/$', BookListAPIView.as_view()),
     url('^api/v1/rent-plans/$', RentPlanAPIView.as_view()),
+    url('^api/v1/sale-price/$', SalePriceAPIView.as_view()),
     url('^api/v1/product-prices/$', PriceMatrixAPIView.as_view()),
     url('^api/v1/login/$', APILoginView.as_view())
 ]
