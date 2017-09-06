@@ -20,13 +20,13 @@ from bauth.api.views.api_login_view import APILoginView
 from book_rental.api.viewsets.BookListAPIView import BookListAPIView
 from book_rental.api.viewsets.author_api_view import AuthorAPIView, AuthorAPIViewNoPagination
 from book_rental.api.viewsets.publisher_api_view import PublisherAPIView, PublisherAPIViewNoPagination
-from book_rental.views.browse_view import BookBrowseView
 from book_rental.views.profile_view import ProfileView
 from cart_view import BasketView
 from ecommerce.api.viewsets.category_api_view import CategoryAPIView, CategoryAPIViewNoPagination
 from ecommerce.api.viewsets.price_matrix_api_view import PriceMatrixAPIView
 from ecommerce.api.viewsets.rent_plan_api_view import RentPlanAPIView
 from ecommerce.api.viewsets.rent_plan_options import RentPlanOptionsAPIView
+from ecommerce.api.viewsets.sale_options import SaleOptionsAPIView
 from home_view import HomeView
 from ecommerce.api.viewsets.add_to_cart_api_view import AddToCartAPIView
 
@@ -53,6 +53,7 @@ urlpatterns += [
     url('^api/v1/authors/$', AuthorAPIViewNoPagination.as_view()),
     url('^api/v1/publishers/$', PublisherAPIViewNoPagination.as_view()),
     url('^api/v1/books/$', BookListAPIView.as_view()),
+    url('^api/v1/sale-options/$', SaleOptionsAPIView.as_view()),
     url('^api/v1/rent-plans/$', RentPlanAPIView.as_view()),
     url('^api/v1/rent-plan-options/$', RentPlanOptionsAPIView.as_view()),
     url('^api/v1/shopping/add-to-cart/$', AddToCartAPIView.as_view()),
