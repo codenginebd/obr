@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.conf import settings
 
 """
 Cart Structure
@@ -51,8 +52,9 @@ class Cart(object):
     last_updated = datetime.utcnow()
     items = {}
     
-    def __init__(self, *args, **kwargs):
-        pass
+    def __init__(self, request, *args, **kwargs):
+        if not settings.CART_SESSION_ID in request.session:
+            request.session[settings.CART_SESSION_ID] = {}
         
     def add_to_cart(self, buy_type, product_code, qty, unit_price, promo_applied):
         pass
