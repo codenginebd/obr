@@ -38,7 +38,7 @@ class BRAPIView(APIView):
             many = self.get_many()
             serializer_class = self.get_serializer_class()
             if serializer_class:
-                rendered_response = serializer_class(queryset=queryset, many=many)
+                rendered_response = serializer_class(instance=queryset, many=many)
                 return Response(rendered_response.data)
             return Response({})
             
