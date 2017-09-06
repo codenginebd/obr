@@ -16,6 +16,12 @@ class BRAPIView(APIView):
         
     def create_response(self, request, queryset):
         return {}
+        
+    def create_post_response(self, request, data, *args, **kwargs):
+        return {}
+        
+    def handle_post(self, request):
+        return None
 
     def get(self, request, format=None):
         queryset = self.get_queryset(**kwargs)
@@ -28,3 +34,11 @@ class BRAPIView(APIView):
             serializer_class = self.get_serializer_class()
             rendered_response = serializer_class(queryset=queryset, many=many)
             return Response(rendered_response)
+            
+    def post(self, request):
+        post_processed = self.handle_post(request)
+        if post_processed:
+            post_response = self.create_post_response(request, post_processed, *args, **kwargs)
+            return Response(post_response)
+        return Response({})
+            
