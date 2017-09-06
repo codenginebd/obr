@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^admin/', include('bradmin.urls')),
     url(r'^auth/', include('bauth.urls')),
     url(r'^books/', include('book_rental.urls')),
+    url(r'^shopping/', include('ecommerce.urls')),
     url(r'^my-cart/', BasketView.as_view(), name='my_cart_view'),
     url(r'^profile/(?P<username>.+)', ProfileView.as_view(), name='profile_view'),
 ]
