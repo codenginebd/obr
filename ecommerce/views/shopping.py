@@ -1,6 +1,6 @@
-from generics.views.base_template_view import BaseTemplateView
+from generics.views.base_view import BaseView
 
-class AddToCartView(BaseTemplateView):
+class AddToCartView(BaseView):
 
     def get(self, request, *args, **kwargs):
         pass
