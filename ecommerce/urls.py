@@ -1,5 +1,6 @@
 from django.conf.urls import url
+from ecommerce.views.shopping import AddToCartView
 
 urlpatterns = [
-    # url(r'^add-to-cart/$', BookBrowseView.as_view(), name="book_browse_view"),
+    url(r'^add-to-cart/$', AddToCartView.as_view(), name="shopping_add_to_cart_view"),
 ]
