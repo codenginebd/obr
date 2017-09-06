@@ -17,6 +17,9 @@ class BRAPIView(APIView):
     def create_response(self, request, queryset):
         return {}
         
+    def is_valid(self, request):
+        return True
+        
     def create_post_response(self, request, data, *args, **kwargs):
         return {}
         
@@ -36,9 +39,13 @@ class BRAPIView(APIView):
             return Response(rendered_response)
             
     def post(self, request):
-        post_processed = self.handle_post(request)
-        if post_processed:
-            post_response = self.create_post_response(request, post_processed, *args, **kwargs)
-            return Response(post_response)
-        return Response({})
+        valid = self.is_valid(request)
+        if valid:
+            post_processed = self.handle_post(request)
+            if post_processed:
+                post_response = self.create_post_response(request, post_processed, *args, **kwargs)
+                return Response(post_response)
+            else:
+                return Response({})
+        return Response({ 'status': 'Failure', 'message': 'Validation Failed' })
             
