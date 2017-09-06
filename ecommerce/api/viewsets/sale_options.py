@@ -1,5 +1,7 @@
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
+
+from ecommerce.models.sales.price_matrix import PriceMatrix
 from generics.api.views.br_api_view import BRAPIView
 
 
@@ -16,9 +18,6 @@ class SaleOptionsAPIView(BRAPIView):
         
     def get_many(self):
         return False
-        
-    def get_serializer_class(self, request, queryset, **kwargs):
-        return None
         
     def create_response(self, request, queryset):
         response = {}

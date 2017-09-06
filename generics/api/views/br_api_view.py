@@ -1,4 +1,6 @@
+from rest_framework.response import Response
 from rest_framework.views import APIView
+
 
 class BRAPIView(APIView):
     
@@ -11,7 +13,7 @@ class BRAPIView(APIView):
     def get_many(self):
         return False
         
-    def get_serializer_class(self, request, queryset, **kwargs):
+    def get_serializer_class(self, **kwargs):
         return None
         
     def create_response(self, request, queryset):
@@ -27,7 +29,7 @@ class BRAPIView(APIView):
         return None
 
     def get(self, request, format=None):
-        queryset = self.get_queryset(**kwargs)
+        queryset = self.get_queryset()
         queryset = self.filter_criteria(request, queryset)
         created_response = self.create_response(request, queryset)
         if created_response:
@@ -35,15 +37,17 @@ class BRAPIView(APIView):
         else:
             many = self.get_many()
             serializer_class = self.get_serializer_class()
-            rendered_response = serializer_class(queryset=queryset, many=many)
-            return Response(rendered_response)
+            if serializer_class:
+                rendered_response = serializer_class(queryset=queryset, many=many)
+                return Response(rendered_response.data)
+            return Response({})
             
     def post(self, request):
         valid = self.is_valid(request)
         if valid:
             post_processed = self.handle_post(request)
             if post_processed:
-                post_response = self.create_post_response(request, post_processed, *args, **kwargs)
+                post_response = self.create_post_response(request, post_processed)
                 return Response(post_response)
             else:
                 return Response({})
