@@ -1,5 +1,51 @@
 from generics.api.views.br_api_view import BRAPIView
 
+"""
+Cart Structure
+
+{
+    'last_modified': datetime,
+    'items': 
+    {
+        1213: 
+        {
+            'buy_items': 
+            [
+                {
+                    'qty': 10,
+                    'unit_price': 100,
+                    'subtotal': 1000,
+                    'promo_code': 'ZacdaSds',
+                    'promo_amount': 200,
+                    'discount_applied': True,
+                    'discount_offer_type': 'amount',
+                    'discount_amount': 300,
+                    'total': 500,
+                    'currency_code': 'BDT'
+                }
+            ],
+            'rent_items': 
+            [
+                {
+                    'qty': 10,
+                    'unit_price': 100,
+                    'subtotal': 1000,
+                    'rent_days': 30,
+                    'promo_code': 'ZacdaSds',
+                    'promo_amount': 200,
+                    'discount_applied': True,
+                    'discount_offer_type': 'amount',
+                    'discount_amount': 300,
+                    'total': 500,
+                    'currency_code': 'BDT'
+                }
+            ]
+        } 
+    }
+}
+
+"""
+
 class AddToCartAPIView(BRAPIView):
 
     def handle_buy_to_cart(self, product_type, product_code, is_new, print_type, **kwargs):
