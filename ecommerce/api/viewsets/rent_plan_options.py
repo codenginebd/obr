@@ -1,5 +1,7 @@
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
+
+from ecommerce.models.sales.price_matrix import PriceMatrix
 from generics.api.views.br_api_view import BRAPIView
 from ecommerce.models.sales.rent_plan_relation import RentPlanRelation
 from ecommerce.api.serializers.rent_plan_serializers import RentPlanRelationSerializer
@@ -13,7 +15,7 @@ class RentPlanOptionsAPIView(BRAPIView):
     def get_many(self):
         return True
         
-    def get_serializer_class(self, request, queryset, **kwargs):
+    def get_serializer_class(self,**kwargs):
         return RentPlanRelationSerializer
         
     def filter_criteria(self, request, queryset):
