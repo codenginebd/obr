@@ -194,6 +194,8 @@ GOOGLE_RECAPTCHA_SECRET_KEY = GOOGLE_RECAPTCHA_SECRET_KEY
 # social login configurations
 FACEBOOK_APP_ID = FACEBOOK_APP_ID
 
+CART_SESSION_ID = 'cart'
+
 # after 7 days password reset link will disable automatically
 PASSWORD_RESET_TIMEOUT_DAYS = 7
 
