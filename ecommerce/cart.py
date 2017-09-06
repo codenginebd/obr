@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.conf import settings
+from book_rental.models.sales.book import Book
 
 """
 Cart Structure
@@ -55,6 +56,17 @@ class Cart(object):
     def __init__(self, request, *args, **kwargs):
         if not settings.CART_SESSION_ID in request.session:
             request.session[settings.CART_SESSION_ID] = {}
+        self.request = request
         
     def add_to_cart(self, buy_type, product_code, qty, unit_price, promo_applied):
-        pass
+        product_objects = Book.objects.filter(code=product_code)
+        if product_objects.exists():
+            product_object = product_objects.first()
+            
+        
+        
+        
+        
+        
+        
+        
