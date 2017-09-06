@@ -27,6 +27,7 @@ from ecommerce.api.viewsets.price_matrix_api_view import PriceMatrixAPIView
 from ecommerce.api.viewsets.rent_plan_api_view import RentPlanAPIView
 from ecommerce.api.viewsets.rent_plan_options import RentPlanOptionsAPIView
 from ecommerce.api.viewsets.sale_options import SaleOptionsAPIView
+from ecommerce.api.viewsets.sale_price_api_view import SalePriceAPIView
 from home_view import HomeView
 from ecommerce.api.viewsets.add_to_cart_api_view import AddToCartAPIView
 
@@ -57,6 +58,7 @@ urlpatterns += [
     url('^api/v1/rent-plans/$', RentPlanAPIView.as_view()),
     url('^api/v1/rent-plan-options/$', RentPlanOptionsAPIView.as_view()),
     url('^api/v1/shopping/add-to-cart/$', AddToCartAPIView.as_view()),
+    url('^api/v1/sale-price/$', SalePriceAPIView.as_view()),
     url('^api/v1/product-prices/$', PriceMatrixAPIView.as_view()),
     url('^api/v1/login/$', APILoginView.as_view())
 ]
