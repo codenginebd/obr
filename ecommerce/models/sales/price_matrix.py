@@ -22,4 +22,4 @@ class PriceMatrix(BaseEntity):
     currency = models.ForeignKey(Currency)
     
     class Meta:
-        index_together = [ product_code, product_model, is_new, print_type ]
+        index_together = [ 'product_code', 'product_model', 'is_new', 'print_type' ]
