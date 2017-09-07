@@ -19,7 +19,7 @@ class PriceMatrix(BaseEntity):
     print_type = models.CharField(max_length=50)  # COL, ORI, ECO
     base_price = models.DecimalField(max_digits=20, decimal_places=2)
     market_price = models.DecimalField(max_digits=20, decimal_places=2)
-    sale_price = models.DecimalField(max_digits=20, decimal_places=2)
+    sale_price = models.DecimalField(max_digits=20, decimal_places=2, null=True)
     currency = models.ForeignKey(Currency)
     
     class Meta:
