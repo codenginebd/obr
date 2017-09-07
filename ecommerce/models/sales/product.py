@@ -44,6 +44,7 @@ class Product(BaseEntity):
                     {
                         'market_price': 120,
                         'base_price': 100,
+                        'sale_price': 40,
                         'special': True,
                         'special_price': 0.7,
                         'special_date_start': datetime,
@@ -64,6 +65,7 @@ class Product(BaseEntity):
                     {
                         'market_price': 120,
                         'base_price': 100,
+                        'sale_price': 40,
                         'special': True,
                         'special_price': 0.7,
                         'special_date_start': datetime,
@@ -84,6 +86,7 @@ class Product(BaseEntity):
                     {
                         'market_price': 120,
                         'base_price': 100,
+                        'sale_price': 40,
                         'special': True,
                         'special_price': 0.7,
                         'special_date_start': datetime,
@@ -107,6 +110,7 @@ class Product(BaseEntity):
                     {
                         'market_price': 120,
                         'base_price': 100,
+                        'sale_price': 40,
                         'special': True,
                         'special_price': 0.7,
                         'special_date_start': datetime,
@@ -127,6 +131,7 @@ class Product(BaseEntity):
                     {
                         'market_price': 120,
                         'base_price': 100,
+                        'sale_price': 40,
                         'special': True,
                         'special_price': 0.7,
                         'special_date_start': datetime,
@@ -147,6 +152,7 @@ class Product(BaseEntity):
                     {
                         'market_price': 120,
                         'base_price': 100,
+                        'sale_price': 40,
                         'special': True,
                         'special_price': 70,
                         'special_date_start': datetime,
@@ -185,6 +191,7 @@ class Product(BaseEntity):
                 unit_prices['New'][instance.print_type] = {
                     'base_price': instance.base_price,
                     'market_price': instance.market_price,
+                    'sale_price': instance.sale_price,
                     'currency_code': instance.currency.short_name
                 }
                 unit_prices[usage_type][instance.print_type]['special'] = True if instance.special_price else False
@@ -245,6 +252,12 @@ class Product(BaseEntity):
         price_dict = self.get_price(is_new=is_new, print_type=print_type)
         if price_dict:
             return price_dict.get('market_price')
+        return None
+        
+    def get_sale_price(self, is_new, print_type):
+        price_dict = self.get_price(is_new=is_new, print_type=print_type)
+        if price_dict:
+            return price_dict.get('sale_price')
         return None
         
     def check_rent_price_available(self,is_new, print_type):
