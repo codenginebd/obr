@@ -9,6 +9,6 @@ class PromotionRule(BaseEntity):
     min_amount = models.DecimalField(max_digits=20, decimal_places=2)
     by_qty = models.BooleanField(null=False)
     by_amount = models.BooleanField(null=False)
-    by_books = models.BooleanField(null=False)
+    by_products = models.BooleanField(null=False)
     start_date = models.BigIntegerField(default=0)
     end_date = models.BigIntegerField(default=0)
