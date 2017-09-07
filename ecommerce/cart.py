@@ -63,7 +63,7 @@ class Cart(object):
         self.cart = request.session[settings.CART_SESSION_ID]
         self.request = request
         
-    def add_to_cart(self, buy_type, product_code, used, print_type, qty, unit_price, promo_applied, promo_code, discount_applied, discount_code, currency_code):
+    def add_to_cart(self, buy_type, product_code, is_new, print_type, qty, unit_price, promo_applied, promo_code, discount_applied, discount_code, currency_code):
         product_objects = Book.objects.filter(code=product_code)
         if product_objects.exists():
             product_object = product_objects.first()
@@ -78,7 +78,13 @@ class Cart(object):
                 
                 product_buy_cart['qty'] = qty
                 
+                base_price = product_object.get_effective_base_price(is_new=is_new, print_type=print_type)
                 
+                product_buy_cart['unit_price'] = base_price
+                
+                subtotal = qty * base_price
+                
+                product_buy_cart['subtotal'] = subtotal
                 
                 self.cart['items'][product_object.pk]['buy'] = product_buy_cart
             elif buy_type == 'rent':
