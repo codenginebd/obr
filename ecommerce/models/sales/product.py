@@ -42,6 +42,7 @@ class Product(BaseEntity):
                 {
                     'ECO': 
                     {
+                        'market_price': 120,
                         'base_price': 100,
                         'special': True,
                         'special_price': 0.7,
@@ -61,6 +62,7 @@ class Product(BaseEntity):
                     },
                     'ORI': 
                     {
+                        'market_price': 120,
                         'base_price': 100,
                         'special': True,
                         'special_price': 0.7,
@@ -80,6 +82,7 @@ class Product(BaseEntity):
                     },
                     'COL': 
                     {
+                        'market_price': 120,
                         'base_price': 100,
                         'special': True,
                         'special_price': 0.7,
@@ -102,6 +105,7 @@ class Product(BaseEntity):
                 {
                     'ECO': 
                     {
+                        'market_price': 120,
                         'base_price': 100,
                         'special': True,
                         'special_price': 0.7,
@@ -121,6 +125,7 @@ class Product(BaseEntity):
                     },
                     'ORI': 
                     {
+                        'market_price': 120,
                         'base_price': 100,
                         'special': True,
                         'special_price': 0.7,
@@ -140,6 +145,7 @@ class Product(BaseEntity):
                     },
                     'COL': 
                     {
+                        'market_price': 120,
                         'base_price': 100,
                         'special': True,
                         'special_price': 0.7,
@@ -215,6 +221,37 @@ class Product(BaseEntity):
                     unit_prices[usage_type][instance.print_type]['rent_prices'] = rent_prices
                     
         self._prices = unit_prices
+        
+    def get_price(self, is_new, print_type=None):
+        prices = getattr(self, '_prices', None)
+        if not prices:
+            self.load_unit_prices()
+            
+        if is_new:
+            new_prices = self._prices.get('New')
+            if new_prices:
+                if print_type:
+                    return new_prices.get(print_type)
+                return new_prices
+        return None
+        
+    def get_base_price(self, is_new, print_type):
+        price_dict = self.get_price(is_new=is_new, print_type=print_type)
+        if price_dict:
+            return price_dict.get('base_price')
+        return None
+        
+    def get_market_price(self, is_new, print_type):
+        price_dict = self.get_price(is_new=is_new, print_type=print_type)
+        if price_dict:
+            return price_dict.get('market_price')
+        return None
+        
+    def check_rent_price_available(self,is_new, print_type):
+        price_dict = self.get_price(is_new=is_new, print_type=print_type)
+        if price_dict:
+            return price_dict.get('rent_price_available')
+        return None
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
