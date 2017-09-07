@@ -284,6 +284,13 @@ class Product(BaseEntity):
             return price_dict.get('special_price')
         return None
         
+    def get_effective_base_price(self,is_new, print_type):
+        special = self.check_special_price_available(is_new=is_new, print_type=print_type)
+        if special:
+            return self.get_special_price(is_new=is_new, print_type=print_type)
+        else:
+            return self.get_base_price(is_new=is_new, print_type=print_type)
+        
     def get_special_offer_start_date(self,is_new, print_type):
         price_dict = self.get_price(is_new=is_new, print_type=print_type)
         if price_dict:
@@ -333,6 +340,13 @@ class Product(BaseEntity):
         if rent_days_price:
             return rent_days_price.get('special_price')
         return None
+        
+    def get_effective_rent_price_for_days(self,is_new, print_type, rent_days):
+        special = self.check_special_rent_price_for_days(is_new=is_new, print_type=print_type, rent_days=rent_days)
+        if special:
+            return self.get_special_rent_price_for_days(is_new=is_new, print_type=print_type, rent_days=rent_days)
+        else:
+            return self.get_base_rent_price_for_days(is_new=is_new, print_type=print_type, rent_days=rent_days)
         
     def get_special_start_date_for_rent_days(self,is_new, print_type, rent_days):
         rent_days_price = self.get_rent_price_for_days(is_new=is_new, print_type=print_type, rent_days=rent_days)
