@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.conf import settings
 from book_rental.models.sales.book import Book
+from promotion.promotion_manager import PromotionManager
 
 """
 Cart Structure
