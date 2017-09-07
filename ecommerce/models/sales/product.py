@@ -4,6 +4,7 @@ from ecommerce.models.sales.category import ProductCategory
 from ecommerce.models.sales.keyword import TagKeyword
 from ecommerce.models.sales.product_images import ProductImage
 from generics.models.base_entity import BaseEntity
+from ecommerce.models.sales.price_matrix import PriceMatrix
 
 
 class Product(BaseEntity):
@@ -30,6 +31,131 @@ class Product(BaseEntity):
             search_criteria = int(request.GET.get('id'))
             queryset = queryset.filter(pk=search_criteria)
         return queryset
+        
+    def load_unit_prices(self):
+        """
+            Structure
+            unit_prices = {
+                'New': 
+                {
+                    'ECO': 
+                    {
+                        'base_price': 100,
+                        'special': True,
+                        'special_price': 0.7,
+                        'rent_price_available': True,
+                        'rent_prices': 
+                        {
+                            30: 
+                            {
+                                'base_price': 40,
+                                'special': True,
+                                'special_price': 0.6
+                            }
+                        }
+                    },
+                    'ORI': 
+                    {
+                        'base_price': 100,
+                        'special': True,
+                        'special_price': 0.7,
+                        'rent_price_available': True,
+                        'rent_prices': 
+                        {
+                            30: 
+                            {
+                                'base_price': 40,
+                                'special': True,
+                                'special_price': 0.6
+                            }
+                        }
+                    },
+                    'COL': 
+                    {
+                        'base_price': 100,
+                        'special': True,
+                        'special_price': 0.7,
+                        'rent_price_available': True,
+                        'rent_prices': 
+                        {
+                            30: 
+                            {
+                                'base_price': 40,
+                                'special': True,
+                                'special_price': 0.6
+                            }
+                        }
+                    }
+                },
+                'Used': 
+                {
+                    'ECO': 
+                    {
+                        'base_price': 100,
+                        'special': True,
+                        'special_price': 0.7,
+                        'rent_price_available': True,
+                        'rent_prices': 
+                        {
+                            30: 
+                            {
+                                'base_price': 40,
+                                'special': True,
+                                'special_price': 0.6
+                            }
+                        }
+                    },
+                    'ORI': 
+                    {
+                        'base_price': 100,
+                        'special': True,
+                        'special_price': 0.7,
+                        'rent_price_available': True,
+                        'rent_prices': 
+                        {
+                            30: 
+                            {
+                                'base_price': 40,
+                                'special': True,
+                                'special_price': 0.6
+                            }
+                        }
+                    },
+                    'COL': 
+                    {
+                        'base_price': 100,
+                        'special': True,
+                        'special_price': 0.7,
+                        'rent_price_available': True,
+                        'rent_prices': 
+                        {
+                            30: 
+                            {
+                                'base_price': 40,
+                                'special': True,
+                                'special_price': 0.6
+                            }
+                        }
+                    }
+                }
+            }
+        """
+        unit_prices = {}
+        price_instances = PriceMatrix.objects.filter(product_model=self.__class__.__name__, product_code=self.code)
+        if price_instances.exists():
+            for instance in price_instances:
+                if instance.is_new == 1:
+                    if not 'New' in unit_prices.items():
+                        unit_prices['New'] = {  }
+                    if instance.print_type == 'ECO':
+                        pass
+                    elif instance.print_type == 'COL':
+                        pass
+                    elif instance.print_type == 'ORI':
+                        pass
+                else:
+                    pass
+        self.prices = unit_prices
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
