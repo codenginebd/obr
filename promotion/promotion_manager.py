@@ -7,5 +7,5 @@ class PromotionManager(object):
         self.kwargs = kwargs
         
     def apply_promotion(self):  # return is_promotion_applied, promotion_code
-        pass
+        return False, None
         
