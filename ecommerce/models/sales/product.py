@@ -148,7 +148,7 @@ class Product(BaseEntity):
                         'market_price': 120,
                         'base_price': 100,
                         'special': True,
-                        'special_price': 0.7,
+                        'special_price': 70,
                         'special_date_start': datetime,
                         'special_date_end': datetime,
                         'rent_price_available': True,
@@ -251,6 +251,86 @@ class Product(BaseEntity):
         price_dict = self.get_price(is_new=is_new, print_type=print_type)
         if price_dict:
             return price_dict.get('rent_price_available')
+        return None
+        
+    def get_currency_code(self,is_new, print_type):
+        price_dict = self.get_price(is_new=is_new, print_type=print_type)
+        if price_dict:
+            return price_dict.get('currency_code')
+        return None
+        
+    def check_special_price_available(self,is_new, print_type):
+        price_dict = self.get_price(is_new=is_new, print_type=print_type)
+        if price_dict:
+            return price_dict.get('special')
+        return None
+        
+    def get_special_price(self,is_new, print_type):
+        price_dict = self.get_price(is_new=is_new, print_type=print_type)
+        if price_dict:
+            return price_dict.get('special_price')
+        return None
+        
+    def get_special_offer_start_date(self,is_new, print_type):
+        price_dict = self.get_price(is_new=is_new, print_type=print_type)
+        if price_dict:
+            return price_dict.get('special_date_start')
+        return None
+        
+    def get_special_offer_end_date(self,is_new, print_type):
+        price_dict = self.get_price(is_new=is_new, print_type=print_type)
+        if price_dict:
+            return price_dict.get('special_date_end')
+        return None
+        
+    def get_rent_prices(self,is_new, print_type):
+        price_dict = self.get_price(is_new=is_new, print_type=print_type)
+        if price_dict:
+            return price_dict.get('rent_prices')
+        return None
+        
+    def get_rent_price_options(self,is_new, print_type):
+        price_dict = self.get_price(is_new=is_new, print_type=print_type)
+        if price_dict:
+            rent_prices = price_dict.get('rent_prices')
+            if rent_prices:
+                return rent_prices.keys()
+        return None
+        
+    def get_rent_price_for_days(self,is_new, print_type, rent_days):
+        rent_prices = self.get_rent_prices(is_new=is_new, print_type=print_type)
+        if rent_prices:
+            return rent_prices.get(rent_days)
+        return None
+        
+    def get_base_rent_price_for_days(self,is_new, print_type, rent_days):
+        rent_days_price = self.get_rent_price_for_days(is_new=is_new, print_type=print_type, rent_days=rent_days)
+        if rent_days_price:
+            return rent_days_price.get('base_price')
+        return None
+        
+    def check_special_rent_price_for_days(self,is_new, print_type, rent_days):
+        rent_days_price = self.get_rent_price_for_days(is_new=is_new, print_type=print_type, rent_days=rent_days)
+        if rent_days_price:
+            return rent_days_price.get('special')
+        return None
+        
+    def get_special_rent_price_for_days(self,is_new, print_type, rent_days):
+        rent_days_price = self.get_rent_price_for_days(is_new=is_new, print_type=print_type, rent_days=rent_days)
+        if rent_days_price:
+            return rent_days_price.get('special_price')
+        return None
+        
+    def get_special_start_date_for_rent_days(self,is_new, print_type, rent_days):
+        rent_days_price = self.get_rent_price_for_days(is_new=is_new, print_type=print_type, rent_days=rent_days)
+        if rent_days_price:
+            return rent_days_price.get('special_date_start')
+        return None
+        
+    def get_special_end_date_for_rent_days(self,is_new, print_type, rent_days):
+        rent_days_price = self.get_rent_price_for_days(is_new=is_new, print_type=print_type, rent_days=rent_days)
+        if rent_days_price:
+            return rent_days_price.get('special_date_end')
         return None
 
     def save(self, force_insert=False, force_update=False, using=None,
