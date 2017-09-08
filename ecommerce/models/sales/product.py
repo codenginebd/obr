@@ -260,6 +260,12 @@ class Product(BaseEntity):
             return price_dict.get('sale_price')
         return None
         
+    def get_sale_price(self, is_new, print_type):
+        price_dict = self.get_price(is_new=is_new, print_type=print_type)
+        if price_dict:
+            return price_dict.get('sale_price')
+        return None
+        
     def check_rent_price_available(self,is_new, print_type):
         price_dict = self.get_price(is_new=is_new, print_type=print_type)
         if price_dict:
