@@ -9,3 +9,7 @@ class PromotionManager(object):
         self.cart = cart
         return False, None
         
+    def applied_discounts(self, cart, discount_code):
+        self.cart = cart
+        return False, None
+        
