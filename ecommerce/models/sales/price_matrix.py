@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from django.db.models.query_utils import Q
 from ecommerce.models.rent_plan import RentPlan
 from ecommerce.models.sales.rent_plan_relation import RentPlanRelation
 from generics.models.base_entity import BaseEntity
