@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.conf import settings
 from book_rental.models.sales.book import Book
+from enums import PROMOTION_REWARD_TYPES, DISCOUNT_REWARD_TYPE
 from promotion.promotion_manager import PromotionManager
 from inventory.models.inventory import Inventory
 
@@ -9,6 +10,12 @@ Cart Structure
 
 {
     'last_modified': datetime,
+    'promo_applied': True,
+    'promo_code': 'HdhshG',
+    'discount_applied': True,
+    'discount_code': 'HGHGHdghsd',
+    'store_credit_applied': True,
+    'store_credit_amount': 100
     'items': 
     {
         1213: 
@@ -56,14 +63,38 @@ Cart Structure
     
 
 class Cart(object):
-    last_updated = datetime.utcnow()
     items = {}
     
     def __init__(self, request, *args, **kwargs):
-        if not settings.CART_SESSION_ID in request.session:
+        if settings.CART_SESSION_ID not in request.session:
             request.session[settings.CART_SESSION_ID] = {}
         self.cart = request.session[settings.CART_SESSION_ID]
         self.request = request
+        self.subtotal = 0
+        self.shipping_total = 0
+        self.promotion_applied = False
+        self.discount_applied = False
+        self.promotion_code = None
+        self.discount_code = None
+        self.total = 0
+        self.promotion_amount = 0
+        self.discount_amount = 0
+        self.promotion_reward_type = PROMOTION_REWARD_TYPES.AMOUNT_IN_MONEY
+        self.discount_reward_type = DISCOUNT_REWARD_TYPE.AMOUNT_IN_MONEY
+        self.promotion_products = []
+        self.discount_products = []
+        self.promotion_store_credit = 0
+        self.discount_store_credit = 0
+        self.store_credit_applied = False
+        self.store_credit_amount = 0
+        self.store_credit_code = None
+        self.buy_items = []
+        self.rent_items = []
+        self.sale_items = []
+        self.buy_total = 0
+        self.rent_total = 0
+        self.sale_total = 0
+        self.last_updated = datetime.utcnow()
         
     def get_buy_items(self):
         return None
@@ -73,6 +104,12 @@ class Cart(object):
         
     def get_sale_items(self):
         return None
+
+    def apply_store_credit(self):
+        return False
+
+    def calculate_shipping_charge(self):
+        return 0
         
     def check_inventory(self, product_id, product_type, is_new, print_type, warehouse_id=None, check_rent_available=False):
         inventory_objects = Inventory.objects.filter(product_id=product_id, product_model=product_type, is_new=is_new, print_type=print_type, stock__gt=0)

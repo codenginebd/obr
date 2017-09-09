@@ -12,4 +12,4 @@ class RefCoupon(BaseEntity):
     used_count = models.IntegerField(default=0)
     gift_type = models.IntegerField(default=0) # 0 amount, 1 book_rental, 2 free shipping
     gift_amount = models.DecimalField(max_digits=20, decimal_places=2)
-    books = models.ManyToManyField(RefCouponProduct)
+    products = models.ManyToManyField(RefCouponProduct)
