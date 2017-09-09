@@ -5,6 +5,6 @@ from clients.models.email import Email
 from clients.models.delivery_agent import DeliveryAgent
 
 
-__all__ = ['Email']
-__all__ += ['PhoneNumber']
+__all__ = ['PhoneNumber']
 __all__ += ['DeliveryAgent']
+__all__ += ['Email']

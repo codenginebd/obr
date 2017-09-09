@@ -8,7 +8,7 @@ from promotion.models.promotion import Promotion
 
 
 __all__ = ['PromotionReward']
-__all__ += ['RefCoupon']
-__all__ += ['Promotion']
 __all__ += ['PromotionRule']
 __all__ += ['RefCouponProduct']
+__all__ += ['RefCoupon']
+__all__ += ['Promotion']
