@@ -7,13 +7,15 @@ from generics.models.base_entity import BaseEntity
 from payment.models.currency import Currency
 from engine.clock.Clock import Clock
 
+
 class PriceMatrixManager(models.Manager):
-    def get_queryset(self):    
+    def get_queryset(self):
         todays_datetime = datetime.now()
         todays_ts = Clock.convert_datetime_to_utc_timestamp(todays_datetime)    
         queryset = super(PriceMatrixManager, self).get_queryset()
         queryset = queryset.filter(Q(is_rent=False) | (Q(is_rent=True) & Q(offer_date_start__isnull=False) & Q(offer_date_start__lte=todays_ts) & Q(offer_date_end__isnull=False) & Q(offer_date_end__gte=todays_ts)))
         return queryset
+
 
 class PriceMatrix(BaseEntity):
     rent_plans = models.ManyToManyField(RentPlan, through=RentPlanRelation)
