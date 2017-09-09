@@ -1,4 +1,4 @@
-from jango.db import models
+from django.db import models
 
 
 class PromotionManagerByQuantity(models.Manager):
