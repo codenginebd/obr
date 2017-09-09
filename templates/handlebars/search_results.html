@@ -37,9 +37,9 @@
                 <hr class="book-box-hr" style="margin: 6px 0px 6px 0px"/>
                 <div class="row">
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xs-6">
-                        <div class="small">Market Price: {% verbatim %}{{currency}}{% endverbatim %}. <strike> {% verbatim %}{{market_price}}{% endverbatim %} </strike>
+                        <div class="small">Market Price: <strike> {% verbatim %}{{market_price}}{% endverbatim %} </strike> {% verbatim %}{{price_currency}}{% endverbatim %}
                         </div>
-                        <div class="small">Our Price: {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{base_price}}{% endverbatim %}</div>
+                        <div class="small">Our Price: {% verbatim %}{{base_price}}{% endverbatim %} {% verbatim %}{{price_currency}}{% endverbatim %}</div>
                         <div><small>Rent Available from {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{rent_available_from}}{% endverbatim %}</small></div>
                         <div class="small">Initial Payable {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{base_price}}{% endverbatim %}</div>
                     </div>

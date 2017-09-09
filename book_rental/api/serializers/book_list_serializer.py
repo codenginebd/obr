@@ -21,6 +21,7 @@ class BookSerializer(BaseModelSerializer):
     images = ProductImageSerializer(many=True, fields=[ 'id', 'code', 'image', 'thumbnail' ])
     market_price = serializers.SerializerMethodField()
     base_price = serializers.SerializerMethodField()
+    price_currency = serializers.SerializerMethodField()
     original_available = serializers.SerializerMethodField()
     color_available = serializers.SerializerMethodField()
     economy_available = serializers.SerializerMethodField()
@@ -39,6 +40,14 @@ class BookSerializer(BaseModelSerializer):
         price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
                                                           product_code=obj.code)
         return price_matrix_objects.exists()
+
+    def get_price_currency(self, obj):
+        price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
+                                                          product_code=obj.code)
+
+        if price_matrix_objects.exists():
+            return price_matrix_objects.first().currency.short_name
+        return None
 
     def get_buy_options(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
@@ -109,6 +118,6 @@ class BookSerializer(BaseModelSerializer):
     class Meta:
         model = Book
         fields = ('id', 'code', 'title', 'title_2', 'isbn', 'edition', 'publish_date', 'subtitle', 'subtitle_2', 'description', 'description_2', 'show_2',
-                  'sale_available', 'rent_price_available', 'market_price', 'is_rent_available', 'buy_options', 'rent_options_eco_new', 'base_price', 'page_count', 'categories', 'publisher', 'authors', 'tags', 'images',
+                  'sale_available', 'rent_price_available', 'market_price', 'price_currency', 'is_rent_available', 'buy_options', 'rent_options_eco_new', 'base_price', 'page_count', 'categories', 'publisher', 'authors', 'tags', 'images',
                   'language', 'rent_available', 'slug', 'original_available', 'color_available', 'date_created',
                   'economy_available', 'used_copy_available', 'last_updated')
