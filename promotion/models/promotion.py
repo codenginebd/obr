@@ -16,6 +16,10 @@ class Promotion(BaseEntity):
     objects_by_quantity = PromotionManagerByQuantity()
     objects_by_amount = PromotionManagerByAmount()
     objects_by_products = PromotionManagerByProducts()
+
+    @classmethod
+    def create_promotion(cls, title, description, **kwargs):
+        pass
     
     
     

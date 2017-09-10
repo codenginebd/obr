@@ -6,53 +6,39 @@ from ecommerce.models.sales.shipping_charge import ShippingCharge
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        print('Cleaning all objects')
+        ShippingCharge.objects.all().delete()
+
         print("Starting...!")
 
-        shipping_charge = ShippingCharge()
-        shipping_charge.shipping_condition = False
-        shipping_charge.shipping_state = 'Dhaka'
-        shipping_charge.shipping_cost = 30
-        shipping_charge.save()
+        charge = ShippingCharge.create_or_update_shipping_charge(shipping_cost=300)
+        print(charge)
 
-        zip_codes = [ ZipCode(zip_code='1230').save() ]
-        shipping_charge.excluded_zip_codes.add(*zip_codes)
+        charge = ShippingCharge.create_or_update_shipping_charge(shipping_cost=30, shipping_state='Dhaka', excluded_zip_codes=['1230'])
+        print(charge)
 
-        shipping_charge = ShippingCharge()
-        shipping_charge.shipping_condition = False
-        shipping_charge.shipping_state = 'Dhaka'
-        shipping_charge.shipping_cost = 10
-        shipping_charge.special = True
-        shipping_charge.save()
+        charge = ShippingCharge.create_or_update_shipping_charge(shipping_cost=10, shipping_state='Dhaka', special=True,
+                                                                 special_zip_codes=['1230'])
+        print(charge)
 
-        zip_codes = [ZipCode(zip_code='1230').save()]
-        shipping_charge.special_zip_codes.add(*zip_codes)
+        charge = ShippingCharge.create_or_update_shipping_charge(shipping_cost=20, shipping_state='Dhaka',
+                                                                 shipping_condition=True, shipping_condition_amount=500)
 
-        shipping_charge = ShippingCharge()
-        shipping_charge.shipping_condition = False
-        shipping_charge.shipping_state = 'Chittagong'
-        shipping_charge.shipping_cost = 60
-        shipping_charge.save()
+        print(charge)
 
-        shipping_charge = ShippingCharge()
-        shipping_charge.shipping_condition = False
-        shipping_charge.shipping_state = 'Chittagong'
-        shipping_charge.shipping_cost = 30
-        shipping_charge.special = True
-        shipping_charge.save()
-        zip_codes = [ZipCode(zip_code='1400').save()]
-        shipping_charge.special_zip_codes.add(*zip_codes)
+        charge = ShippingCharge.create_or_update_shipping_charge(shipping_cost=60, shipping_state='Chittagong')
 
-        shipping_charge = ShippingCharge()
-        shipping_charge.shipping_condition = False
-        shipping_charge.shipping_state = 'Sylhet'
-        shipping_charge.shipping_cost = 50
-        shipping_charge.save()
+        print(charge)
 
-        shipping_charge = ShippingCharge()
-        shipping_charge.shipping_condition = True
-        shipping_charge.shipping_condition_amount = 500
-        shipping_charge.shipping_state = 'Dhaka'
-        shipping_charge.shipping_cost = 20
-        shipping_charge.save()
+        charge = ShippingCharge.create_or_update_shipping_charge(shipping_cost=30, shipping_state='Chittagong',
+                                                                 special=True, special_zip_codes=['1400'])
+
+        print(charge)
+
+        charge = ShippingCharge.create_or_update_shipping_charge(shipping_cost=50, shipping_state='Sylhet')
+
+        print(charge)
 
         print("Ended.")
+
+        print("Total: %s" % ShippingCharge.objects.all().count())
