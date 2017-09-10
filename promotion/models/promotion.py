@@ -44,6 +44,15 @@ class Promotion(BaseEntity):
     objects_by_products = PromotionManagerByProducts()
 
     """
+    cart_total = 500
+    cart_products = [ ( product_id, product_type, qty, unit_price, subtotal ) ]
+    """
+    @classmethod
+    def get_promotions(cls, cart_total, cart_products=[], **kwargs):
+
+        return []
+
+    """
     by_cart_products_dates = "BY_CART", "BY_PRODUCTS", "BY_DATE"
     by_amount_qty = "BY_AMOUNT", "BY_QTY"
     min_qty_amount = "MIN_QTY", "MIN_AMOUNT"
