@@ -50,7 +50,12 @@ class Promotion(BaseEntity):
     """
     @classmethod
     def get_promotions(cls, cart_total, cart_products=[], **kwargs):
-
+        if not all([True for row in cart_products if len(row) == 5]):
+			return False
+		
+		now_date = datetime.utcnow().date()
+		
+		all_promotions = cls.objects.filter(start_date__lte=now_date,end_date__gte=now_date)
         return []
 
     """
