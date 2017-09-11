@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import models, transaction
 from enums import PROMOTION_REWARD_TYPES
 from generics.models.base_entity import BaseEntity
