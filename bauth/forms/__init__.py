@@ -8,9 +8,9 @@ from bauth.forms.forgot_password_form import PasswordResetRequestForm
 from bauth.forms.login_form import LoginForm
 
 
-__all__ = ['SocialSignupForm']
-__all__ += ['SignupForm']
+__all__ = ['SignupForm']
+__all__ += ['AccountActivationRequestForm']
 __all__ += ['SetPasswordForm']
 __all__ += ['PasswordResetRequestForm']
-__all__ += ['AccountActivationRequestForm']
 __all__ += ['LoginForm']
+__all__ += ['SocialSignupForm']

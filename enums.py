@@ -20,3 +20,9 @@ class DISCOUNT_REWARD_TYPE(Enum):
 class PROMOTION_TYPES(Enum):
     BUY = 0
     RENT = 1
+
+class TRANSACTION_TYPES(Enum):
+    CREDIT_STORE = 0
+    BUY = 1
+    RENT = 2
+    SALE = 3

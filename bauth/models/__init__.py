@@ -11,12 +11,12 @@ from bauth.models.district import District
 from bauth.models.country import Country
 
 
-__all__ = ['ZipCode']
+__all__ = ['Upazila']
 __all__ += ['Email']
-__all__ += ['District']
-__all__ += ['Address']
-__all__ += ['State']
 __all__ += ['BUser']
 __all__ += ['Country']
-__all__ += ['Upazila']
+__all__ += ['District']
 __all__ += ['Phone']
+__all__ += ['State']
+__all__ += ['Address']
+__all__ += ['ZipCode']

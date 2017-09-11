@@ -35,7 +35,7 @@ class Promotion(BaseEntity):
     by_quantity = models.BooleanField(default=False)
 
     min_qty = models.IntegerField(default=0)
-    min_amount = models.DecimalField(max_digits=20, decimal_places=2)
+    min_amount = models.DecimalField(max_digits=20, decimal_places=2,default=0.0)
 
     product_rules = models.ManyToManyField(PromotionProductRule)  # If by_products is set then this will have entries
 
