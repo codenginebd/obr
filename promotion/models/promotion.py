@@ -44,19 +44,49 @@ class Promotion(BaseEntity):
     objects_by_amount = PromotionManagerByAmount()
     objects_by_products = PromotionManagerByProducts()
 
+    
     """
     cart_total = 500
-    cart_products = [ ( product_id, product_type, qty, unit_price, subtotal ) ]
+	total_items = 100,
+    cart_products = [ ( product_id, product_type, qty, unit_price, subtotal ),
+					  ( 1, "Book", 2, 120, 240 ),
+					  ( 2, "Book", 1, 300, 300 )]
     """
     @classmethod
-    def get_promotions(cls, cart_total, cart_products=[], **kwargs):
-        if not all([True for row in cart_products if len(row) == 5]):
+    def get_promotions(cls, cart_total, total_items, cart_products=[], **kwargs):
+		if not all([True for row in cart_products if len(row) == 5]):
 			return False
 		
 		now_date = datetime.utcnow().date()
 		
 		all_promotions = cls.objects.filter(start_date__lte=now_date,end_date__gte=now_date)
-        return []
+		
+		all_promotions_by_cart_expressions = ((Q(by_cart=True) & ((Q(by_quantity=True) & Q(min_qty__lte=total_items))
+		| (Q(by_amount=True) & Q(min_amount__lte=cart_total)) )))
+		
+		# Get all promotion product rules
+		promotion_product_query_expression = None
+		for cart_product in cart_products:
+			product_id = cart_product[0]
+			product_type = cart_product[1]
+			product_qty = cart_product[2]
+			product_unit_price = cart_product[3]
+			product_subtotal = cart_product[4]
+			
+			if promotion_product_query_expression:
+				promotion_product_query_expression |= ((Q(product_id=product_id) & Q(product_model=product_type) & Q(min_qty__lt=product_qty) & Q(min_amount=0)) | (Q(product_id=product_id) & Q(product_model=product_type) & Q(min_amount__lt=product_subtotal) & Q(min_qty=0)))
+			else:
+				promotion_product_query_expression = ((Q(product_id=product_id) & Q(product_model=product_type) & Q(min_qty__lt=product_qty) & Q(min_amount=0)) | (Q(product_id=product_id) & Q(product_model=product_type) & Q(min_amount__lt=product_subtotal) & Q(min_qty=0)))
+				
+		promotion_product_pks = PromotionProductRule.objects.filter(promotion_product_query_expression).values_list('pk', flat=True).distinct()
+		
+		all_promotions_by_products_expressions = ((Q(by_products=True) & Q(product_rules__id__in=promotion_product_pks)))
+		
+		all_promotion_ids = all_promotions.filter(all_promotions_by_cart_expressions | all_promotions_by_products_expressions).values_list('pk', flat=True).distinct()
+		
+		all_promotions = cls.objects.filter(pkk__in=all_promotion_ids)
+		
+		return all_promotions
 
     """
     by_cart_products_dates = "BY_CART", "BY_PRODUCTS", "BY_DATE"
