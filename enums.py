@@ -15,3 +15,8 @@ class DISCOUNT_REWARD_TYPE(Enum):
     FREE_PRODUCTS = 2
     ACCESSORIES = 3
     STORE_CREDIT = 4
+
+
+class PROMOTION_TYPES(Enum):
+    BUY = 0
+    RENT = 1
