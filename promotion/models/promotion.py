@@ -43,6 +43,88 @@ class Promotion(BaseEntity):
     objects_by_quantity = PromotionManagerByQuantity()
     objects_by_amount = PromotionManagerByAmount()
     objects_by_products = PromotionManagerByProducts()
+    
+    
+    """
+    cart_total = 500
+	total_items = 100,
+    cart_products = [ ( product_id, product_type, qty, unit_price, subtotal ),
+					  ( 1, "Book", 2, 120, 240 ),
+					  ( 2, "Book", 1, 300, 300 )]
+                      
+    Returns:
+    
+    {
+        "amount": 0,
+        "free_shipping": False,
+        "free_products": 
+        [
+             {
+                "product_id": 1,
+                "product_model": "Book",
+                "quantity": 4
+            }
+        ],
+        "accessories": 
+        [
+             {
+                "product_id": 1,
+                "product_model": "Book",
+                "quantity": 4
+            }
+        ],
+        'store_credit': 0
+    }
+                      
+    """
+    @classmethod
+    def get_promotional_rewards(cls, cart_total, total_items, cart_products=[], **kwargs):
+        promotional_rewards = {
+            "amount": 0,
+            "free_shipping": False,
+            "free_products": [],
+            "accessories": [],
+            'store_credit': 0
+        }
+        all_promotions = cls.get_promotions(cart_total, total_items, cart_products=cart_products, **kwargs)
+        if all_promotions:
+            all_reward_ids = []
+            for promotion_instance in all_promotions:
+                all_reward_ids += promotion_instance.rewards.values_list('pk', flat=True)
+                
+            if all_reward_ids:
+                all_rewards = PromotionReward.objects.filter(pkk__in=all_reward_ids)
+                for reward_instance in all_rewards:
+                    if reward_instance.reward_type == PROMOTION_REWARD_TYPES.AMOUNT_IN_MONEY.value:
+                        promotional_rewards["amount"] += reward_instance.gift_amount
+                    elif reward_instance.reward_type == PROMOTION_REWARD_TYPES.FREE_SHIPPING.value:
+                        promotional_rewards["free_shipping"] = True
+                    elif reward_instance.reward_type == PROMOTION_REWARD_TYPES.FREE_PRODUCTS.value:
+                        for reward_product in reward_instance.products.all():
+                            promotional_rewards["free_products"] += [
+                                {
+                                    "product_id": reward_product.product_id,
+                                    "product_model": reward_product.product_model,
+                                    "quantity": reward_product.quantity
+                                }
+                            ]
+                    elif reward_instance.reward_type == PROMOTION_REWARD_TYPES.ACCESSORIES.value:
+                        for reward_product in reward_instance.products.all():
+                            promotional_rewards["free_products"] += [
+                                {
+                                    "product_id": reward_product.product_id,
+                                    "product_model": reward_product.product_model,
+                                    "quantity": reward_product.quantity
+                                }
+                            ]
+                    elif reward_instance.reward_type == PROMOTION_REWARD_TYPES.STORE_CREDIT.value:
+                        promotional_rewards["store_credit"] += reward_instance.store_credit
+                return promotional_rewards
+            else:
+                return None
+            
+        else:
+            return None
 
     
     """
@@ -54,53 +136,56 @@ class Promotion(BaseEntity):
     """
     @classmethod
     def get_promotions(cls, cart_total, total_items, cart_products=[], **kwargs):
+    
+        try:		
+            if not all([True for row in cart_products if len(row) == 5]):
+			    return False
 		
-        if not all([True for row in cart_products if len(row) == 5]):
-			return False
+		    now_date = datetime.utcnow().date()
 		
-		now_date = datetime.utcnow().date()
+		    all_promotions_by_dates_expressions = (Q(by_dates=True) & Q(start_date__lte=now_date) & Q(end_date__gte=now_date))
 		
-		all_promotions_by_dates_expressions = (Q(by_dates=True) & Q(start_date__lte=now_date) & Q(end_date__gte=now_date))
+		    all_promotions_by_cart_expressions = ((Q(by_cart=True) & ((Q(by_quantity=True) & Q(min_qty__lte=total_items)) |
+											     (Q(by_amount=True) & Q(min_amount__lte=cart_total)) )) & Q(start_date__lte=now_date) & Q(end_date__gte=now_date))
 		
-		all_promotions_by_cart_expressions = ((Q(by_cart=True) & ((Q(by_quantity=True) & Q(min_qty__lte=total_items)) |
-											(Q(by_amount=True) & Q(min_amount__lte=cart_total)) )) & Q(start_date__lte=now_date) & Q(end_date__gte=now_date))
-		
-		# Get all promotion product rules
-		promotion_product_query_expression = None
-		for cart_product in cart_products:
-			product_id = cart_product[0]
-			product_type = cart_product[1]
-			product_qty = cart_product[2]
-			product_unit_price = cart_product[3]
-			product_subtotal = cart_product[4]
+		    # Get all promotion product rules
+		    promotion_product_query_expression = None
+		    for cart_product in cart_products:
+			    product_id = cart_product[0]
+			    product_type = cart_product[1]
+			    product_qty = cart_product[2]
+			    product_unit_price = cart_product[3]
+			    product_subtotal = cart_product[4]
 			
-			qry_expression = ((Q(product_id=product_id) & Q(product_model=product_type) & Q(min_qty__lte=product_qty) & Q(min_amount=0)) | 
-													  (Q(product_id=product_id) & Q(product_model=product_type) & Q(min_amount__lte=product_subtotal) & Q(min_qty=0)))
+			    qry_expression = ((Q(product_id=product_id) & Q(product_model=product_type) & Q(min_qty__lte=product_qty) & Q(min_amount=0)) | 
+													      (Q(product_id=product_id) & Q(product_model=product_type) & Q(min_amount__lte=product_subtotal) & Q(min_qty=0)))
 			
-			if promotion_product_query_expression:
-				promotion_product_query_expression |= qry_expression
-			else:
-				promotion_product_query_expression = qry_expression
+			    if promotion_product_query_expression:
+				    promotion_product_query_expression |= qry_expression
+			    else:
+				    promotion_product_query_expression = qry_expression
 				
-		promotion_product_pks = []
-		if promotion_product_query_expression:
-			promotion_product_pks = PromotionProductRule.objects.filter(promotion_product_query_expression).values_list('pk', flat=True).distinct()
+		    promotion_product_pks = []
+		    if promotion_product_query_expression:
+			    promotion_product_pks = PromotionProductRule.objects.filter(promotion_product_query_expression).values_list('pk', flat=True).distinct()
 		
-		if promotion_product_pks:
-            all_promotions_by_products_expressions = ((Q(by_products=True) & Q(product_rules__id__in=promotion_product_pks)) & Q(start_date__lte=now_date) & Q(end_date__gte=now_date))
-        else:
-            all_promotions_by_products_expressions = None
+		    if promotion_product_pks:
+                all_promotions_by_products_expressions = ((Q(by_products=True) & Q(product_rules__id__in=promotion_product_pks)) & Q(start_date__lte=now_date) & Q(end_date__gte=now_date))
+            else:
+                all_promotions_by_products_expressions = None
 		
-		all_promotions_expresions = all_promotions_by_dates_expressions | all_promotions_by_cart_expressions
+		    all_promotions_expresions = all_promotions_by_dates_expressions | all_promotions_by_cart_expressions
         
-        if all_promotions_by_products_expressions:
-            all_promotions_expresions |= all_promotions_by_products_expressions
+            if all_promotions_by_products_expressions:
+                all_promotions_expresions |= all_promotions_by_products_expressions
         
-        all_promotion_ids = all_promotions.filter(all_promotions_expresions).values_list('pk', flat=True).distinct()
+            all_promotion_ids = all_promotions.filter(all_promotions_expresions).values_list('pk', flat=True).distinct()
 		
-		all_promotions = cls.objects.filter(pk__in=all_promotion_ids)
+		    all_promotions = cls.objects.filter(pk__in=all_promotion_ids)
 		
-		return all_promotions
+		    return all_promotions
+        except Exception as exp:
+            return None
 
     """
     by_cart_products_dates = "BY_CART", "BY_PRODUCTS", "BY_DATE"
