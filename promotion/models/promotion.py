@@ -54,15 +54,16 @@ class Promotion(BaseEntity):
     """
     @classmethod
     def get_promotions(cls, cart_total, total_items, cart_products=[], **kwargs):
-		if not all([True for row in cart_products if len(row) == 5]):
+		
+        if not all([True for row in cart_products if len(row) == 5]):
 			return False
 		
 		now_date = datetime.utcnow().date()
 		
-		all_promotions = cls.objects.filter(start_date__lte=now_date,end_date__gte=now_date)
+		all_promotions_by_dates_expressions = (Q(by_dates=True) & Q(start_date__lte=now_date) & Q(end_date__gte=now_date))
 		
-		all_promotions_by_cart_expressions = ((Q(by_cart=True) & ((Q(by_quantity=True) & Q(min_qty__lte=total_items))
-		| (Q(by_amount=True) & Q(min_amount__lte=cart_total)) )))
+		all_promotions_by_cart_expressions = ((Q(by_cart=True) & ((Q(by_quantity=True) & Q(min_qty__lte=total_items)) |
+											(Q(by_amount=True) & Q(min_amount__lte=cart_total)) )) & Q(start_date__lte=now_date) & Q(end_date__gte=now_date))
 		
 		# Get all promotion product rules
 		promotion_product_query_expression = None
@@ -73,18 +74,31 @@ class Promotion(BaseEntity):
 			product_unit_price = cart_product[3]
 			product_subtotal = cart_product[4]
 			
+			qry_expression = ((Q(product_id=product_id) & Q(product_model=product_type) & Q(min_qty__lte=product_qty) & Q(min_amount=0)) | 
+													  (Q(product_id=product_id) & Q(product_model=product_type) & Q(min_amount__lte=product_subtotal) & Q(min_qty=0)))
+			
 			if promotion_product_query_expression:
-				promotion_product_query_expression |= ((Q(product_id=product_id) & Q(product_model=product_type) & Q(min_qty__lt=product_qty) & Q(min_amount=0)) | (Q(product_id=product_id) & Q(product_model=product_type) & Q(min_amount__lt=product_subtotal) & Q(min_qty=0)))
+				promotion_product_query_expression |= qry_expression
 			else:
-				promotion_product_query_expression = ((Q(product_id=product_id) & Q(product_model=product_type) & Q(min_qty__lt=product_qty) & Q(min_amount=0)) | (Q(product_id=product_id) & Q(product_model=product_type) & Q(min_amount__lt=product_subtotal) & Q(min_qty=0)))
+				promotion_product_query_expression = qry_expression
 				
-		promotion_product_pks = PromotionProductRule.objects.filter(promotion_product_query_expression).values_list('pk', flat=True).distinct()
+		promotion_product_pks = []
+		if promotion_product_query_expression:
+			promotion_product_pks = PromotionProductRule.objects.filter(promotion_product_query_expression).values_list('pk', flat=True).distinct()
 		
-		all_promotions_by_products_expressions = ((Q(by_products=True) & Q(product_rules__id__in=promotion_product_pks)))
+		if promotion_product_pks:
+            all_promotions_by_products_expressions = ((Q(by_products=True) & Q(product_rules__id__in=promotion_product_pks)) & Q(start_date__lte=now_date) & Q(end_date__gte=now_date))
+        else:
+            all_promotions_by_products_expressions = None
 		
-		all_promotion_ids = all_promotions.filter(all_promotions_by_cart_expressions | all_promotions_by_products_expressions).values_list('pk', flat=True).distinct()
+		all_promotions_expresions = all_promotions_by_dates_expressions | all_promotions_by_cart_expressions
+        
+        if all_promotions_by_products_expressions:
+            all_promotions_expresions |= all_promotions_by_products_expressions
+        
+        all_promotion_ids = all_promotions.filter(all_promotions_expresions).values_list('pk', flat=True).distinct()
 		
-		all_promotions = cls.objects.filter(pkk__in=all_promotion_ids)
+		all_promotions = cls.objects.filter(pk__in=all_promotion_ids)
 		
 		return all_promotions
 
