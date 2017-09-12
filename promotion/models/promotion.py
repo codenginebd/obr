@@ -239,6 +239,8 @@ class Promotion(BaseEntity):
                 if not all([True for row in rewards if len(row) == 6]):
                     return False
                 for reward in rewards:
+                    if len(reward) != 6:
+                        return False
                     if reward[0] not in [ PROMOTION_REWARD_TYPES.AMOUNT_IN_MONEY.value,
                                           PROMOTION_REWARD_TYPES.FREE_SHIPPING.value,
                                           PROMOTION_REWARD_TYPES.FREE_PRODUCTS.value,
