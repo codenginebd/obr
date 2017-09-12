@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class PROMOTION_REWARD_TYPES(Enum):
+class PromotionRewardTypes(Enum):
     AMOUNT_IN_MONEY = 0
     FREE_SHIPPING = 1
     FREE_PRODUCTS = 2
@@ -9,7 +9,7 @@ class PROMOTION_REWARD_TYPES(Enum):
     STORE_CREDIT = 4
 
 
-class DISCOUNT_REWARD_TYPE(Enum):
+class DiscountRewardTypes(Enum):
     AMOUNT_IN_MONEY = 0
     FREE_SHIPPING = 1
     FREE_PRODUCTS = 2
@@ -17,11 +17,12 @@ class DISCOUNT_REWARD_TYPE(Enum):
     STORE_CREDIT = 4
 
 
-class PROMOTION_TYPES(Enum):
+class PromotionTypes(Enum):
     BUY = 0
     RENT = 1
 
-class TRANSACTION_TYPES(Enum):
+
+class TransactionTypes(Enum):
     CREDIT_STORE = 0
     BUY = 1
     RENT = 2
@@ -32,7 +33,7 @@ class TRANSACTION_TYPES(Enum):
     CREDIT_USE = 7
     
     
-class PAYMENT_METHODS(Enum):
+class PaymentMethods(Enum):
     STORE_CREDIT = 0
     CASH_ON_DELIVERY = 1
     CARD_PAYMENT =2
@@ -40,9 +41,8 @@ class PAYMENT_METHODS(Enum):
     ONLINE_PAYMENT = 4
     
     
-class PAYMENT_STATUS(Enum):
+class PaymentStatus(Enum):
     PENDING = 0
     PROCESSED = 1
     FAILED = 2
     CANCELLED = 3
-    

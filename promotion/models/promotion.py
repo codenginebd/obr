@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.db import models, transaction
 from django.db.models.query_utils import Q
-from enums import PROMOTION_REWARD_TYPES, PROMOTION_TYPES
+from enums import PromotionRewardTypes, PromotionTypes
 from generics.models.base_entity import BaseEntity
 from promotion.models.promotion_products_rule import PromotionProductRule
 from promotion.models.promotion_reward import PromotionReward
@@ -25,7 +25,7 @@ class Promotion(BaseEntity):
     title = models.CharField(max_length=200)
     description = models.TextField(default='')
 
-    promotion_type = models.IntegerField(default=PROMOTION_TYPES.BUY.value)
+    promotion_type = models.IntegerField(default=PromotionTypes.BUY.value)
 
     by_cart = models.BooleanField(default=False)  # Either by_cart or by_products or by_dates will be True not all
     by_products = models.BooleanField(default=False)
@@ -104,14 +104,14 @@ class Promotion(BaseEntity):
             if all_reward_ids:
                 all_rewards = PromotionReward.objects.filter(pk__in=all_reward_ids)
                 for reward_instance in all_rewards:
-                    if reward_instance.reward_type == PROMOTION_REWARD_TYPES.AMOUNT_IN_MONEY.value:
+                    if reward_instance.reward_type == PromotionRewardTypes.AMOUNT_IN_MONEY.value:
                         if reward_instance.gift_amount_in_percentage:
                             promotional_rewards["amount"] += reward_instance.gift_amount * cart_total
                         else:
                             promotional_rewards["amount"] += reward_instance.gift_amount
-                    elif reward_instance.reward_type == PROMOTION_REWARD_TYPES.FREE_SHIPPING.value:
+                    elif reward_instance.reward_type == PromotionRewardTypes.FREE_SHIPPING.value:
                         promotional_rewards["free_shipping"] = True
-                    elif reward_instance.reward_type == PROMOTION_REWARD_TYPES.FREE_PRODUCTS.value:
+                    elif reward_instance.reward_type == PromotionRewardTypes.FREE_PRODUCTS.value:
                         for reward_product in reward_instance.products.all():
                             promotional_rewards["free_products"] += [
                                 {
@@ -120,7 +120,7 @@ class Promotion(BaseEntity):
                                     "quantity": reward_product.quantity
                                 }
                             ]
-                    elif reward_instance.reward_type == PROMOTION_REWARD_TYPES.ACCESSORIES.value:
+                    elif reward_instance.reward_type == PromotionRewardTypes.ACCESSORIES.value:
                         for reward_product in reward_instance.products.all():
                             promotional_rewards["free_products"] += [
                                 {
@@ -129,7 +129,7 @@ class Promotion(BaseEntity):
                                     "quantity": reward_product.quantity
                                 }
                             ]
-                    elif reward_instance.reward_type == PROMOTION_REWARD_TYPES.STORE_CREDIT.value:
+                    elif reward_instance.reward_type == PromotionRewardTypes.STORE_CREDIT.value:
                         promotional_rewards["store_credit"] += reward_instance.store_credit
                 return promotional_rewards
             else:
@@ -241,11 +241,11 @@ class Promotion(BaseEntity):
                 for reward in rewards:
                     if len(reward) != 6:
                         return False
-                    if reward[0] not in [ PROMOTION_REWARD_TYPES.AMOUNT_IN_MONEY.value,
-                                          PROMOTION_REWARD_TYPES.FREE_SHIPPING.value,
-                                          PROMOTION_REWARD_TYPES.FREE_PRODUCTS.value,
-                                          PROMOTION_REWARD_TYPES.ACCESSORIES.value,
-                                          PROMOTION_REWARD_TYPES.STORE_CREDIT.value]:
+                    if reward[0] not in [PromotionRewardTypes.AMOUNT_IN_MONEY.value,
+                                         PromotionRewardTypes.FREE_SHIPPING.value,
+                                         PromotionRewardTypes.FREE_PRODUCTS.value,
+                                         PromotionRewardTypes.ACCESSORIES.value,
+                                         PromotionRewardTypes.STORE_CREDIT.value]:
                         return False
                     if not all([True for r in reward[5] if len(r) == 3]):
                         return False
@@ -265,9 +265,9 @@ class Promotion(BaseEntity):
                 promotion_object.end_date = end_date
 
                 if promotion_type == "BUY":
-                    promotion_object.promotion_type = PROMOTION_TYPES.BUY.value
+                    promotion_object.promotion_type = PromotionTypes.BUY.value
                 elif promotion_type == "RENT":
-                    promotion_object.promotion_type = PROMOTION_TYPES.RENT.value
+                    promotion_object.promotion_type = PromotionTypes.RENT.value
 
                 if by_cart_products_dates == "BY_CART":
                     promotion_object.by_cart = True
@@ -331,15 +331,15 @@ class Promotion(BaseEntity):
 
                     reward_object = PromotionReward()
                     reward_object.reward_type = reward_type
-                    if reward_type == PROMOTION_REWARD_TYPES.AMOUNT_IN_MONEY.value:
+                    if reward_type == PromotionRewardTypes.AMOUNT_IN_MONEY.value:
                         reward_object.gift_amount = gift_amount
                         if gift_amount_in_percentage:
                             reward_object.gift_amount_in_percentage = True
                         else:
                             reward_object.gift_amount_in_percentage = False
-                    elif reward_type == PROMOTION_REWARD_TYPES.FREE_SHIPPING.value:
+                    elif reward_type == PromotionRewardTypes.FREE_SHIPPING.value:
                         pass
-                    elif reward_type == PROMOTION_REWARD_TYPES.FREE_PRODUCTS.value or reward_type == PROMOTION_REWARD_TYPES.ACCESSORIES.value:
+                    elif reward_type == PromotionRewardTypes.FREE_PRODUCTS.value or reward_type == PromotionRewardTypes.ACCESSORIES.value:
                         reward_object.save()
 
                         promo_reward_product_instances = reward_object.products.all()
@@ -362,7 +362,7 @@ class Promotion(BaseEntity):
 
                         reward_object.products.add(*promo_reward_products)
 
-                    elif reward_type == PROMOTION_REWARD_TYPES.STORE_CREDIT.value:
+                    elif reward_type == PromotionRewardTypes.STORE_CREDIT.value:
                         reward_object.store_credit = store_credit
                         reward_object.credit_expiry_time = credit_expiry_datetime
 

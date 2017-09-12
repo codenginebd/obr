@@ -1,9 +1,12 @@
 from django.contrib.auth.models import User
-from django.db import models
+from django.db import models, transaction
+from django.db.models.aggregates import Sum
+from engine.clock.Clock import Clock
+from enums import TransactionTypes, PaymentStatus
 from generics.models.base_entity import BaseEntity
 from payment.models.credit_breakdown import WalletCreditBreakdown
-from payment.models.credit_payment_history import CreditPayHistory
 from payment.models.currency import Currency
+from payment.models.wallet_transaction import WalletTransaction
 
 
 class PaymentWallet(BaseEntity):
@@ -30,7 +33,7 @@ class PaymentWallet(BaseEntity):
     
     def add_credit(self, credit_amount, credit_type, expiry_time=None, **kwargs):
         
-        if credit_type == TRANSACTION_TYPES.CREDIT_STORE.value:
+        if credit_type == TransactionTypes.CREDIT_STORE.value:
             if not expiry_time:
                 return None
         try:
@@ -39,7 +42,7 @@ class PaymentWallet(BaseEntity):
                 self.save()
                 credit_breakdown_instance = WalletCreditBreakdown()
                 credit_breakdown_instance.credit_amount = credit_amount
-                if credit_type == TRANSACTION_TYPES.CREDIT_STORE.value:
+                if credit_type == TransactionTypes.CREDIT_STORE.value:
                     credit_breakdown_instance.credit_amount = expiry_time
                     credit_breakdown_instance.store_credit = True
                 else:
@@ -47,7 +50,7 @@ class PaymentWallet(BaseEntity):
                 credit_breakdown_instance.save()
                 self.credits.add(credit_breakdown_instance)
                 
-                WalletTransaction.create_wallet_transaction(self.pk, TRANSACTION_TYPES.CREDIT_STORE.value, credit_amount, PAYMENT_STATUS.PROCESSED.value)
+                WalletTransaction.create_wallet_transaction(self.pk, TransactionTypes.CREDIT_STORE.value, credit_amount, PaymentStatus.PROCESSED.value)
                 
                 return self
         except Exception as exp:

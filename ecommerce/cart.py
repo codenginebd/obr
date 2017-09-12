@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.conf import settings
 from book_rental.models.sales.book import Book
-from enums import PROMOTION_REWARD_TYPES, DISCOUNT_REWARD_TYPE
+from enums import PromotionRewardTypes, DiscountRewardTypes
 from promotion.promotion_manager import PromotionManager
 from inventory.models.inventory import Inventory
 
@@ -79,8 +79,8 @@ class Cart(object):
         self.total = 0
         self.promotion_amount = 0
         self.discount_amount = 0
-        self.promotion_reward_type = PROMOTION_REWARD_TYPES.AMOUNT_IN_MONEY
-        self.discount_reward_type = DISCOUNT_REWARD_TYPE.AMOUNT_IN_MONEY
+        self.promotion_reward_type = PromotionRewardTypes.AMOUNT_IN_MONEY
+        self.discount_reward_type = DiscountRewardTypes.AMOUNT_IN_MONEY
         self.promotion_products = []
         self.discount_products = []
         self.promotion_store_credit = 0
