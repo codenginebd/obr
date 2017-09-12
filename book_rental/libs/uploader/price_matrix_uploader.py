@@ -271,7 +271,7 @@ class PriceMatrixUploader(object):
                     rent_rel_object.end_time = Clock.convert_datetime_to_timestamp(offer_end_date)
                     rent_rel_object.special_rate = float(special_rent_rate) / 100
                 
-                rent_rel_object.is_special_offer  = is_special_rent
+                rent_rel_object.is_special_offer = is_special_rent
                 
                 rent_rel_object.save()
                 print("Done! Proceed to the next...")
@@ -279,7 +279,7 @@ class PriceMatrixUploader(object):
                     
     def handle_upload(self):
         self.data = self.data[1:]
-        if self.kwargs.get('price_type', 'sale') == 'rent': # 'sale' or 'rent'
+        if self.kwargs.get('price_type', 'sale') == 'rent':  # 'sale' or 'rent'
             try:
                 self.handle_rent_price_upload()
             except Exception as exp:

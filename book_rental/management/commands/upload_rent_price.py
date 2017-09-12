@@ -1,6 +1,5 @@
 from django.core.management.base import BaseCommand
 from book_rental.libs.uploader.price_matrix_uploader import PriceMatrixUploader
-from book_rental.models.author import Author
 from generics.libs.reader.excel_file_reader import ExcelFileReader
 import os
 

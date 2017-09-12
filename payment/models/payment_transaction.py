@@ -1,7 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
+from enums import PaymentStatus
 from generics.models.base_entity import BaseEntity
-from payment.models.payment_method import PaymentMethod
+
+from payment.models.currency import Currency
 
 
 class PaymentTransaction(BaseEntity):
@@ -11,6 +13,6 @@ class PaymentTransaction(BaseEntity):
     currency = models.ForeignKey(Currency)
     user = models.ForeignKey(User, null=True, related_name='payment_received_for')
     total = models.DecimalField(max_digits=20, decimal_places=2)
-    status = models.IntegerField(default=PAYMENT_STATUS.PENDING.value)
+    status = models.IntegerField(default=PaymentStatus.PENDING.value)
     payment_received_by = models.ForeignKey(User, null=True, related_name='payment_received_by')
     description = models.TextField(null=True)

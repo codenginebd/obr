@@ -14,10 +14,13 @@ class PaymentWallet(BaseEntity):
     total_credit = models.DecimalField(max_digits=20, decimal_places=2, default=0.0)
     credits = models.ManyToManyField(WalletCreditBreakdown)
     currency = models.ForeignKey(Currency)
-    
-    
+
     def post_wallet_transaction(self, total, currency_code, transaction_type):
         pass
+
+    def add_store_credit(self, credit_amount, expiry_time):
+        return self.add_credit(credit_amount=credit_amount,
+                               credit_type=TransactionTypes.CREDIT_STORE.value, expiry_time=expiry_time)
     
     def get_current_available_credit(self, store_credit=True):
         utc_now = Clock.utc_now()
@@ -29,8 +32,7 @@ class PaymentWallet(BaseEntity):
     credit_type = TRANSACTION_TYPES.CREDIT_STORE.value,
     
     """
-    
-    
+
     def add_credit(self, credit_amount, credit_type, expiry_time=None, **kwargs):
         
         if credit_type == TransactionTypes.CREDIT_STORE.value:
@@ -55,20 +57,17 @@ class PaymentWallet(BaseEntity):
                 return self
         except Exception as exp:
             return None
-        
-        
+
     def get_currency_code(self):
         return self.currency.short_name
-        
-    
+
     @classmethod
     def get_payment_wallet(cls, user_id, currency_code):
         payment_wallet_objects = cls.objects.filter(user_id=user_id, currency__short_name=currency_code)
         if payment_wallet_objects.exists():
             return payment_wallet_objects.first()
         return None
-    
-    
+
     @classmethod
     def create_or_update_payment_wallet(cls, user_id, currency_code, **kwargs):
         try:

@@ -1,11 +1,10 @@
 from django.db import models
 from enums import TransactionTypes, PaymentStatus
 from generics.models.base_entity import BaseEntity
-from payment.models.payment_wallet import PaymentWallet
 
 
 class WalletTransaction(BaseEntity):
-    wallet = models.ForeignKey(PaymentWallet)
+    wallet = models.ForeignKey("PaymentWallet")
     transaction_type = models.IntegerField(default=TransactionTypes.CREDIT_STORE.value)
     total = models.DecimalField(decimal_places=2, max_digits=20)
     transaction_status = models.IntegerField(default=PaymentStatus.PENDING.value)

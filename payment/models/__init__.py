@@ -2,15 +2,15 @@ __author__ = "auto generated"
 
 from payment.models.credit_breakdown import WalletCreditBreakdown
 from payment.models.payment_wallet import PaymentWallet
-from payment.models.credit_payment_history import CreditPayHistory
 from payment.models.currency import Currency
-from payment.models.payment_method import PaymentMethod
+from payment.models.wallet_transaction import WalletTransaction
+from payment.models.cash_on_delivery import CashOnDelivery
 from payment.models.payment_transaction import PaymentTransaction
 
 
-__all__ = ['Currency']
-__all__ += ['WalletCreditBreakdown']
-__all__ += ['PaymentMethod']
+__all__ = ['WalletTransaction']
+__all__ += ['CashOnDelivery']
 __all__ += ['PaymentWallet']
 __all__ += ['PaymentTransaction']
-__all__ += ['CreditPayHistory']
+__all__ += ['WalletCreditBreakdown']
+__all__ += ['Currency']

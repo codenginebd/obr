@@ -1,8 +1,12 @@
 from django.db import models
 from datetime import datetime
+
+from django.db.models.query_utils import Q
+
 from ecommerce.models.rent_plan import RentPlan
 from generics.models.base_entity import BaseEntity
 from engine.clock.Clock import Clock
+
 
 class RentPlanRelationManager(models.Manager):
     def get_queryset(self):
@@ -11,6 +15,7 @@ class RentPlanRelationManager(models.Manager):
         now_ts = Clock.convert_datetime_to_utc_timestamp(now_datetime)
         queryset = queryset.filter(Q(is_special_offer=False) | ( Q(is_special_offer=True) & Q(start_time__lte=now_ts) & Q(end_time__lte=now_ts)))
         return queryset
+
 
 class RentPlanRelation(BaseEntity):
     plan = models.ForeignKey(RentPlan)
