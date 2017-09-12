@@ -47,7 +47,6 @@ class Promotion(BaseEntity):
     objects_by_amount = PromotionManagerByAmount()
     objects_by_products = PromotionManagerByProducts()
 
-
     def get_code_prefix(self):
         return "PROMO"
 
@@ -376,6 +375,3 @@ class Promotion(BaseEntity):
                 
             except Exception as exp:
                 return False
-    
-    
-    
