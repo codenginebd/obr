@@ -12,3 +12,15 @@ class PaymentWallet(BaseEntity):
     credits = models.ManyToManyField(WalletCreditBreakdown)
     payment_history = models.ManyToManyField(CreditPayHistory)
     currency = models.ForeignKey(Currency)
+    
+    
+    @classmethod
+    def create_or_update_payment_wallet(cls, user_id, currency_code, **kwargs):
+        try:
+            pk = kwargs.get("pk")
+            if pk:
+                pass
+            else:
+                pass
+        except Exception as exp:
+            pass
