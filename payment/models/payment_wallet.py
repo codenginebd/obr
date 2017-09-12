@@ -12,6 +12,15 @@ class PaymentWallet(BaseEntity):
     credits = models.ManyToManyField(WalletCreditBreakdown)
     currency = models.ForeignKey(Currency)
     
+    
+    def post_wallet_transaction(self, total, currency_code, transaction_type):
+        pass
+    
+    def get_current_available_credit(self, store_credit=True):
+        utc_now = Clock.utc_now()
+        all_current_credit_instances = self.credits.filter(expiry_time__gte=utc_now, store_credit = store_credit).aggregate(total_credit_sum=Sum('total_credit'))
+        return all_current_credit_instances["total_credit_sum"]
+    
     """
     credit_amount = 100.00
     credit_type = TRANSACTION_TYPES.CREDIT_STORE.value,
