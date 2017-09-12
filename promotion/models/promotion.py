@@ -203,6 +203,11 @@ class Promotion(BaseEntity):
             return None
 
     """
+    title,
+    description,
+    start_date,
+    end_date,
+    promotion_type = "BUY",
     by_cart_products_dates = "BY_CART", "BY_PRODUCTS", "BY_DATE"
     by_amount_qty = "BY_AMOUNT", "BY_QTY"
     min_qty_amount = 100
