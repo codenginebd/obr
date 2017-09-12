@@ -1,0 +1,4 @@
+
+
+class WalletTransaction(BaseEntity):
+    pass
