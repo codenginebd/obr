@@ -26,3 +26,19 @@ class TRANSACTION_TYPES(Enum):
     BUY = 1
     RENT = 2
     SALE = 3
+    
+    
+class PAYMENT_METHODS(Enum):
+    STORE_CREDIT = 0
+    CASH_ON_DELIVERY = 1
+    CARD_PAYMENT =2
+    MOBILE_PAYMENT = 3
+    ONLINE_PAYMENT = 4
+    
+    
+class PAYMENT_STATUS(Enum):
+    PENDING = 0
+    PROCESSED = 1
+    FAILED = 2
+    CANCELLED = 3
+    
