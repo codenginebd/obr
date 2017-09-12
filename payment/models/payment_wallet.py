@@ -37,6 +37,9 @@ class PaymentWallet(BaseEntity):
                     credit_breakdown_instance.store_credit = False
                 credit_breakdown_instance.save()
                 self.credits.add(credit_breakdown_instance)
+                
+                WalletTransaction.create_wallet_transaction(self.pk, TRANSACTION_TYPES.CREDIT_STORE.value, credit_amount, PAYMENT_STATUS.PROCESSED.value)
+                
                 return self
         except Exception as exp:
             return None
