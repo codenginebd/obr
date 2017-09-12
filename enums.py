@@ -29,6 +29,7 @@ class TRANSACTION_TYPES(Enum):
     REFUND = 4
     RENT_RETURN = 5
     FAILED_RETURN = 6
+    CREDIT_USE = 7
     
     
 class PAYMENT_METHODS(Enum):
