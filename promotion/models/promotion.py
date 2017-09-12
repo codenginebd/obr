@@ -364,6 +364,9 @@ class Promotion(BaseEntity):
                     promo_rewards += [reward_object]
 
                 promotion_object.rewards.add(*promo_rewards)
+                
+                return promotion_object
+                
             except Exception as exp:
                 return False
     
