@@ -10,7 +10,7 @@ class PaymentWallet(BaseEntity):
     user = models.ForeignKey(User)
     total_credit = models.DecimalField(max_digits=20, decimal_places=2, default=0.0)
     credits = models.ManyToManyField(WalletCreditBreakdown)
-    payment_history = models.ManyToManyField(CreditPayHistory)
+    transactions = models.ManyToManyField(PaymentTransaction)
     currency = models.ForeignKey(Currency)
     
     """
