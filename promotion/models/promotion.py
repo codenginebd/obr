@@ -374,4 +374,5 @@ class Promotion(BaseEntity):
                 return promotion_object
                 
             except Exception as exp:
+                print(str(exp))
                 return False
