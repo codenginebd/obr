@@ -18,6 +18,40 @@ class Coupon(BaseEntity):
     rewards = models.ManyToManyField(PromotionReward)
     
     
+    """
+    coupon_code = "DHJGJHS"
+    coupon_type = "BUY"
+    referrer_id = 200
+    cart_total = 500
+                      
+    Returns:
+    
+    {
+        "coupon_code": "DHJGJHS",
+        "amount": 0,
+        "free_shipping": False,
+        "free_products": 
+        [
+             {
+                "product_id": 1,
+                "product_model": "Book",
+                "quantity": 4
+            }
+        ],
+        "accessories": 
+        [
+             {
+                "product_id": 1,
+                "product_model": "Book",
+                "quantity": 4
+            }
+        ],
+        'store_credit': 0
+    }
+                      
+    """
+    
+    
     @classmethod
     def get_coupon_rewards(cls, coupon_code, coupon_type, referrer_id=None, cart_total, **kwargs):
         
