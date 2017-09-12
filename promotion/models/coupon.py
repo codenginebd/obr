@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import models
 from enums import PROMOTION_TYPES
@@ -15,6 +16,84 @@ class Coupon(BaseEntity):
     referrer = models.ForeignKey(User, null=True)
     used_count = models.IntegerField(default=0)
     rewards = models.ManyToManyField(PromotionReward)
+    
+    
+    @classmethod
+    def get_coupon_rewards(cls, coupon_code, coupon_type, referrer_id=None, cart_total, **kwargs):
+        
+        coupon_rewards = {
+            "coupon_code": None,
+            "coupon_type": coupon_type,
+            "amount": 0,
+            "free_shipping": False,
+            "free_products": [],
+            "accessories": [],
+            'store_credit': 0
+        }        
+        
+        all_coupons = cls.get_coupons(coupon_code=coupon_code, coupon_type=coupon_type, referrer_id=referrer_id, **kwargs)
+        
+        if all_coupons is not None:
+            all_reward_ids = []
+            for coupon_instance in all_coupons:
+                coupon_rewards["coupon_code"] = coupon_instance.coupon_code
+                all_reward_ids += coupon_instance.rewards.values_list('pk', flat=True)
+                
+            if all_reward_ids:
+                all_rewards = PromotionReward.objects.filter(pk__in=all_reward_ids)
+                for reward_instance in all_rewards:
+                    if reward_instance.reward_type == PROMOTION_REWARD_TYPES.AMOUNT_IN_MONEY.value:
+                        if reward_instance.gift_amount_in_percentage:
+                            coupon_rewards["amount"] += reward_instance.gift_amount * cart_total
+                        else:
+                            coupon_rewards["amount"] += reward_instance.gift_amount
+                    elif reward_instance.reward_type == PROMOTION_REWARD_TYPES.FREE_SHIPPING.value:
+                        coupon_rewards["free_shipping"] = True
+                    elif reward_instance.reward_type == PROMOTION_REWARD_TYPES.FREE_PRODUCTS.value:
+                        for reward_product in reward_instance.products.all():
+                            coupon_rewards["free_products"] += [
+                                {
+                                    "product_id": reward_product.product_id,
+                                    "product_model": reward_product.product_model,
+                                    "quantity": reward_product.quantity
+                                }
+                            ]
+                    elif reward_instance.reward_type == PROMOTION_REWARD_TYPES.ACCESSORIES.value:
+                        for reward_product in reward_instance.products.all():
+                            coupon_rewards["free_products"] += [
+                                {
+                                    "product_id": reward_product.product_id,
+                                    "product_model": reward_product.product_model,
+                                    "quantity": reward_product.quantity
+                                }
+                            ]
+                    elif reward_instance.reward_type == PROMOTION_REWARD_TYPES.STORE_CREDIT.value:
+                        coupon_rewards["store_credit"] += reward_instance.store_credit
+                return coupon_rewards
+            else:
+                return None
+            
+        else:
+            return None
+    
+    """
+    coupon_code,
+    coupon_type = "BUY"
+    referrer_id
+    """
+    
+    
+    @classmethod
+    def get_coupons(cls, coupon_code, coupon_type, referrer_id=None, **kwargs):
+        todays_date = datetime.utcnow().date()
+        if coupon_type == "BUY":
+            coupon_type = PROMOTION_TYPES.BUY.value
+        elif coupon_type == "RENT":
+            coupon_type = PROMOTION_TYPES.RENT.value
+        all_coupons = cls.objects.filter(start_date__isnull=False,start_date__lte=todays_date,expiry_date__isnull=False,expiry_date__gte=todays_date, coupon_code=coupon_code, coupon_type=coupon_type)
+        if referrer_id:
+            all_coupons = all_coupons.filter(referrer_id=referrer_id)
+        return all_coupons
     
     """
     title,
