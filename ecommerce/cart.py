@@ -12,7 +12,12 @@ Cart Structure
     'last_modified': datetime,
     'store_credit_applied': True,
     'store_credit_amount': 100,
+    'store_credit_code': 'SC-000001',
 	'currency_code': 'BDT',
+    'promo_applied': True,
+    'promo_code': "ZPDhgdsS",
+    'discount_applied': True,
+	'discount_code': 'HGHGHdghsd',
 	'buy':
 	{
 		'promo_applied': True,
@@ -63,40 +68,40 @@ Cart Structure
 }
 
 """
+
+class PromotionRewards(object):
+    promotion_code = None
+    discount_code = None
+    promotion_amount = 0
+    discount_amount = 0
+    promotion_reward_type = PromotionRewardTypes.AMOUNT_IN_MONEY
+    discount_reward_type = DiscountRewardTypes.AMOUNT_IN_MONEY
+    promotion_products = []
+    discount_products = []
+    promotion_store_credit = 0
+    discount_store_credit = 0
     
 
 class Cart(object):
-    items = {}
     
     def __init__(self, request, *args, **kwargs):
         if settings.CART_SESSION_ID not in request.session:
             request.session[settings.CART_SESSION_ID] = {}
         self.cart = request.session[settings.CART_SESSION_ID]
         self.request = request
-        self.subtotal = 0
-        self.shipping_total = 0
-        self.promotion_applied = False
-        self.discount_applied = False
-        self.promotion_code = None
-        self.discount_code = None
-        self.total = 0
-        self.promotion_amount = 0
-        self.discount_amount = 0
-        self.promotion_reward_type = PromotionRewardTypes.AMOUNT_IN_MONEY
-        self.discount_reward_type = DiscountRewardTypes.AMOUNT_IN_MONEY
-        self.promotion_products = []
-        self.discount_products = []
-        self.promotion_store_credit = 0
-        self.discount_store_credit = 0
+        self.promotion_rewards = PromotionRewards()
+        self.discount_rewards = PromotionRewards()
         self.store_credit_applied = False
         self.store_credit_amount = 0
-        self.store_credit_code = None
         self.buy_items = []
         self.rent_items = []
         self.sale_items = []
         self.buy_total = 0
         self.rent_total = 0
         self.sale_total = 0
+        self.subtotal = 0
+        self.shipping_total = 0
+        self.cart_total = 0
         self.last_updated = datetime.utcnow()
         
     def get_buy_items(self):
