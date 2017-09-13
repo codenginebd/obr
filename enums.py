@@ -20,6 +20,7 @@ class DiscountRewardTypes(Enum):
 class PromotionTypes(Enum):
     BUY = 0
     RENT = 1
+    ANY = 2
 
 
 class TransactionTypes(Enum):
