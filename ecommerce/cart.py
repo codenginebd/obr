@@ -27,12 +27,18 @@ Cart Structure
 		1213:
 		{
 			'qty': 10,
-			'unit_price': 100
+			'unit_price': 100,
+            'product_type': 'Book',
+            'is_new': True,
+            'print_type': 'ECO'
 		},
 		1214:
 		{
 			'qty': 4,
-			'unit_price': 350
+			'unit_price': 350,
+            'product_type': 'Book',
+            'is_new': True,
+            'print_type': 'ECO'
 		}
 	},
 	"rent":
@@ -46,14 +52,22 @@ Cart Structure
 			'qty': 10,
 			'unit_price': 100,
 			'rent_days': 30,
-			'rent_price': 40
+			'rent_price': 40,
+            'initial_payable': 80,
+            'product_type': 'Book',
+            'is_new': True,
+            'print_type': 'ECO'
 		},
 		1214:
 		{
 			'qty': 1,
 			'unit_price': 350,
 			'rent_days': 30,
-			'rent_price': 40
+			'rent_price': 40,
+            'initial_payable': 80,
+            'product_type': 'Book',
+            'is_new': True,
+            'print_type': 'ECO'
 		}
 	},
 	"sale":
@@ -62,7 +76,10 @@ Cart Structure
 		{
 			'qty': 1,
 			'good_condition': True,
-			'unit_price': 40
+			'unit_price': 40,
+            'product_type': 'Book',
+            'is_new': True,
+            'print_type': 'ECO'
 		}
 	}
 }
