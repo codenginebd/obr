@@ -86,6 +86,14 @@ Cart Structure
 
 """
 
+class PromotionRewardProduct(object):
+    product_id = None
+    product_type = None
+    qty = None
+    is_new = None
+    print_type = None
+    
+
 class PromotionRewards(object):
     promotion_code = None
     discount_code = None
@@ -93,8 +101,8 @@ class PromotionRewards(object):
     discount_amount = 0
     promotion_reward_type = PromotionRewardTypes.AMOUNT_IN_MONEY
     discount_reward_type = DiscountRewardTypes.AMOUNT_IN_MONEY
-    promotion_products = []
-    discount_products = []
+    promotion_products = []  # list of PromotionRewardProduct instance
+    discount_products = []  # list of PromotionRewardProduct instance
     promotion_store_credit = 0
     discount_store_credit = 0
     
