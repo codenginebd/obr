@@ -220,7 +220,7 @@ class Promotion(BaseEntity):
                                    products=[], rewards=[], **kwargs):
         by_cart_products_dates_options = ["BY_CART", "BY_PRODUCTS", "BY_DATE"]
         by_amount_qty_options = ["BY_AMOUNT", "BY_QTY"]
-        promotion_type_options = ["BUY", "RENT"]
+        promotion_type_options = ["BUY", "RENT", "ANY"]
         with transaction.atomic():
             try:
                 if len(title) > 200:
@@ -267,6 +267,8 @@ class Promotion(BaseEntity):
                     promotion_object.promotion_type = PromotionTypes.BUY.value
                 elif promotion_type == "RENT":
                     promotion_object.promotion_type = PromotionTypes.RENT.value
+                elif if promotion_type == "BUY":
+                    promotion_object.promotion_type = PromotionTypes.ANY.value
 
                 if by_cart_products_dates == "BY_CART":
                     promotion_object.by_cart = True
