@@ -10,53 +10,56 @@ Cart Structure
 
 {
     'last_modified': datetime,
-    'promo_applied': True,
-    'promo_code': 'HdhshG',
-    'discount_applied': True,
-    'discount_code': 'HGHGHdghsd',
     'store_credit_applied': True,
-    'store_credit_amount': 100
-    'items': 
-    {
-        1213: 
-        {
-            'buy': 
-            {
-                    'qty': 10,
-                    'unit_price': 100,
-                    'subtotal': 1000,
-                    'promo_applied': True,
-                    'promo_code': 'ZacdaSds',
-                    'discount_applied': True,
-                    'discount_code': 'DSdsDcD',
-                    'total': 500,
-                    'currency_code': 'BDT'
-            },
-            'rent': 
-            [
-                {
-                    'qty': 10,
-                    'unit_price': 100,
-                    'subtotal': 1000,
-                    'rent_days': 30,
-                    'promo_applied': True,
-                    'promo_code': 'ZacdaSds',
-                    'discount_applied': True,
-                    'discount_code': 'DSdsDcD',
-                    'total': 500,
-                    'currency_code': 'BDT'
-                }
-            ],
-            'sale': 
-            {
-                    'qty': 10,
-                    'unit_price': 100,
-                    'subtotal': 1000,
-                    'total': 500,
-                    'currency_code': 'BDT'
-            }
-        } 
-    }
+    'store_credit_amount': 100,
+	'currency_code': 'BDT',
+	'buy':
+	{
+		'promo_applied': True,
+		'promo_code': 'HdhshG',
+		'discount_applied': True,
+		'discount_code': 'HGHGHdghsd',
+		1213:
+		{
+			'qty': 10,
+			'unit_price': 100
+		},
+		1214:
+		{
+			'qty': 4,
+			'unit_price': 350
+		}
+	},
+	"rent":
+	{
+		'promo_applied': True,
+		'promo_code': 'HdhshG',
+		'discount_applied': True,
+		'discount_code': 'HGHGHdghsd',
+		1213:
+		{
+			'qty': 10,
+			'unit_price': 100,
+			'rent_days': 30,
+			'rent_price': 40
+		},
+		1214:
+		{
+			'qty': 1,
+			'unit_price': 350,
+			'rent_days': 30,
+			'rent_price': 40
+		}
+	},
+	"sale":
+	{
+		1110:
+		{
+			'qty': 1,
+			'good_condition': True,
+			'unit_price': 40
+		}
+	}
 }
 
 """
