@@ -32,6 +32,7 @@ class PriceMatrix(BaseEntity):
     base_price = models.DecimalField(max_digits=20, decimal_places=2)
     market_price = models.DecimalField(max_digits=20, decimal_places=2)
     sale_price = models.DecimalField(max_digits=20, decimal_places=2, null=True)
+    initial_payable_rent_price = models.DecimalField(max_digits=20, decimal_places=2, null=True)
     currency = models.ForeignKey(Currency)
     
     objects = PriceMatrixManager()
