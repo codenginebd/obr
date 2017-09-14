@@ -36,6 +36,8 @@ class Coupon(BaseEntity):
              {
                 "product_id": 1,
                 "product_model": "Book",
+                "is_new": True,
+                "print_type": "ECO",
                 "quantity": 4
             }
         ],
@@ -44,6 +46,8 @@ class Coupon(BaseEntity):
              {
                 "product_id": 1,
                 "product_model": "Book",
+                "is_new": True,
+                "print_type": "ECO",
                 "quantity": 4
             }
         ],
@@ -90,6 +94,8 @@ class Coupon(BaseEntity):
                                 {
                                     "product_id": reward_product.product_id,
                                     "product_model": reward_product.product_model,
+                                    "is_new": reward_product.is_new,
+                                    "print_type": reward_product.print_type,
                                     "quantity": reward_product.quantity
                                 }
                             ]
@@ -99,6 +105,8 @@ class Coupon(BaseEntity):
                                 {
                                     "product_id": reward_product.product_id,
                                     "product_model": reward_product.product_model,
+                                    "is_new": reward_product.is_new,
+                                    "print_type": reward_product.print_type,
                                     "quantity": reward_product.quantity
                                 }
                             ]
@@ -139,7 +147,7 @@ class Coupon(BaseEntity):
     expiry_date,
     referrer_id,
     rewards = [ ( REWARD_TYPE, gift_amount_in_percentage, GIFT_AMOUNT, store_credit, credit_expiry_time,
-        products=[ ( ID, TYPE, quantity ) ] ) ]
+        products=[ ( ID, TYPE, is_new, print_type, quantity ) ] ) ]
     kwargs = { "pk": 1 }
     """
     
@@ -159,7 +167,7 @@ class Coupon(BaseEntity):
                                      PromotionRewardTypes.ACCESSORIES.value,
                                      PromotionRewardTypes.STORE_CREDIT.value]:
                     return False
-                if not all([True for r in reward[5] if len(r) == 3]):
+                if not all([True for r in reward[5] if len(r) == 5]):
                     return False
             pk = kwargs.get("pk")
             if pk:
@@ -220,11 +228,15 @@ class Coupon(BaseEntity):
                         for reward_product_row in products:
                             pid = reward_product_row[0]
                             ptype = reward_product_row[1]
-                            pquantity = reward_product_row[2]
+                            is_new = reward_product_row[2]
+                            print_type = reward_product_row[3]
+                            pquantity = reward_product_row[4]
 
                             promo_reward_product = PromotionRewardProduct()
                             promo_reward_product.product_id = pid
                             promo_reward_product.product_model = ptype
+                            promo_reward_product.is_new = is_new
+                            promo_reward_product.print_type = print_type
                             promo_reward_product.quantity = pquantity
                             promo_reward_product.save()
 
