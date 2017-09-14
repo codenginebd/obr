@@ -24,22 +24,17 @@ Cart Structure
 		'promo_code': 'HdhshG',
 		'discount_applied': True,
 		'discount_code': 'HGHGHdghsd',
-		1213:
-		{
-			'qty': 10,
-			'unit_price': 100,
-            'product_type': 'Book',
-            'is_new': True,
-            'print_type': 'ECO'
-		},
-		1214:
-		{
-			'qty': 4,
-			'unit_price': 350,
-            'product_type': 'Book',
-            'is_new': True,
-            'print_type': 'ECO'
-		}
+		items:
+		[
+            {
+                'product_id': 1213,
+                'product_type': 'Book'
+                'is_new': True,
+                'print_type': 'ECO'
+			    'qty': 10,
+			    'unit_price': 100
+		    }
+        ]
 	},
 	"rent":
 	{
@@ -47,40 +42,35 @@ Cart Structure
 		'promo_code': 'HdhshG',
 		'discount_applied': True,
 		'discount_code': 'HGHGHdghsd',
-		1213:
-		{
-			'qty': 10,
-			'unit_price': 100,
-			'rent_days': 30,
-			'rent_price': 40,
-            'initial_payable': 80,
-            'product_type': 'Book',
-            'is_new': True,
-            'print_type': 'ECO'
-		},
-		1214:
-		{
-			'qty': 1,
-			'unit_price': 350,
-			'rent_days': 30,
-			'rent_price': 40,
-            'initial_payable': 80,
-            'product_type': 'Book',
-            'is_new': True,
-            'print_type': 'ECO'
-		}
+		items:
+		[
+            {
+                'product_id': 1110,
+                'product_type': 'Book'
+                'is_new': True,
+                'print_type': 'ECO'
+			    'qty': 10,
+			    'unit_price': 100,
+			    'rent_days': 30,
+			    'rent_price': 40,
+                'initial_payable': 80,
+		    }
+        ]
 	},
 	"sale":
 	{
-		1110:
-		{
-			'qty': 1,
-			'good_condition': True,
-			'unit_price': 40,
-            'product_type': 'Book',
-            'is_new': True,
-            'print_type': 'ECO'
-		}
+		items:
+		[
+            {
+                'product_id': 1114,
+                'product_type': 'Book',
+                'is_new': True,
+                'print_type': 'ECO'
+			    'qty': 1,
+			    'good_condition': True,
+			    'unit_price': 40
+		    }
+        ]
 	}
 }
 
@@ -127,16 +117,23 @@ class Cart(object):
         self.subtotal = 0
         self.shipping_total = 0
         self.cart_total = 0
+        self.return_total = 0
         self.last_updated = datetime.utcnow()
         
+    def calculate_total(self):
+        pass
+        
+    def get_cart_total(self):
+        return self.cart_total
+        
     def get_buy_items(self):
-        return None
+        return self.buy_items
         
     def get_rent_items(self):
-        return None
+        return self.rent_items
         
     def get_sale_items(self):
-        return None
+        return self.sale_items
 
     def apply_store_credit(self):
         return False
@@ -152,7 +149,85 @@ class Cart(object):
             inventory_objects = inventory_objects.filter(available_for_rent=True)
         return inventory_objects.exists()
         
-    def add_to_cart(self, buy_type, product_code, product_type, is_new, print_type, qty, currency_code, warehouse_id=None, rent_days=None):
+    def add_to_buy(self, product_id, product_type, is_new, print_type, qty, unit_price):
+        buy_cart = self.cart.get('buy', {})
+        buy_items = buy_cart.get('items', [])
+        buy_item = {
+                'product_id': product_id,
+                'product_type': product_type
+                'is_new': is_new,
+                'print_type': print_type
+			    'qty': 0,
+			    'unit_price': unit_price
+		    }
+            
+        for item in buy_items:
+            if item['product_id'] == product_id and item['product_type'] == product_type and item['is_new'] == is_new and item['print_type'] == print_type:
+                buy_item = item
+                break
+                
+        buy_item['qty'] += qty
+        
+        buy_items += [buy_item]
+        
+        buy_cart['items'] = buy_items
+        
+        self.cart['buy'] = buy_cart
+        
+    def add_to_rent(self, product_id, product_type, is_new, print_type, qty, unit_price, rent_days, rent_price, initial_payable_rent):
+        rent_cart = self.cart.get('rent', {})
+        rent_items = rent_cart.get('items', [])
+        rent_item = {
+                'product_id': product_id,
+                'product_type': product_type
+                'is_new': is_new,
+                'print_type': print_type,
+			    'qty': 0,
+			    'unit_price': unit_price,
+			    'rent_days': rent_days,
+			    'rent_price': rent_price,
+                'initial_payable': initial_payable_rent,
+		    }
+        for item in rent_items:
+            if item['product_id'] == product_id and item['product_type'] == product_type and item['is_new'] == is_new and item['print_type'] == print_type and item['rent_days'] == rent_days:
+                rent_item = item
+                break
+                
+        rent_item['qty'] += qty
+        
+        rent_items += [rent_item]
+        
+        rent_cart['items'] = rent_items
+        
+        self.cart['rent'] = rent_cart
+        
+    def add_to_sale(self, product_id, product_type, is_new, print_type, qty, unit_price, good_condition):
+        sale_cart = self.cart.get('sale', {})
+        sale_items = sale_cart.get('items', [])
+        sale_item = {
+                'product_id': product_id,
+                'product_type': product_type,
+                'is_new': is_new,
+                'print_type': print_type,
+			    'qty': 0,
+			    'good_condition': good_condition,
+			    'unit_price': unit_price
+		    }
+            
+        for item in sale_items:
+            if item['product_id'] == product_id and item['product_type'] == product_type and item['is_new'] == is_new and item['print_type'] == print_type:
+                sale_item = item
+                break
+                
+        sale_item['qty'] += qty
+        
+        sale_items += [sale_item]
+        
+        sale_cart['items'] = sale_items
+        
+        self.cart['sale'] = sale_cart
+        
+    def add_to_cart(self, buy_type, product_code, product_type, is_new, print_type, qty, currency_code, warehouse_id=None, rent_days=None, initial_payable_rent=None):
         product_objects = Book.objects.filter(code=product_code)
         if product_objects.exists():
             product_object = product_objects.first()
@@ -229,6 +304,7 @@ class Cart(object):
     def save(self):
         self.cart['last_modified'] = datetime.utcnow()
         self.request.session[settings.CART_SESSION_ID] = self.cart
+        return self.cart
             
             
         
