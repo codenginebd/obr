@@ -244,6 +244,7 @@ class Cart(object):
             buy_effective_price = None
             rent_unit_price = None
             rent_effective_price = None
+            initial_payable_rent = None
             sale_effective_price = None
             if buy_type == 'buy':
                 buy_effective_price = product_object.get_effective_base_price(is_new=is_new, print_type=print_type)
@@ -254,6 +255,9 @@ class Cart(object):
                     return False
                 rent_unit_price = product_object.get_effective_base_price(is_new=is_new, print_type=print_type)
                 if not rent_unit_price:
+                    return False
+                initial_payable_rent = product_object.get_initial_payable_rent_price(is_new=is_new, print_type=print_type)
+                if not initial_payable_rent:
                     return False
                 rent_effective_price = product_object.get_effective_rent_price_for_days(is_new=is_new, print_type=print_type, rent_days=rent_days)
                 if not rent_effective_price:
@@ -266,7 +270,7 @@ class Cart(object):
             if buy_type == 'buy':
                 self.add_to_buy(product_object.pk, product_type, is_new, print_type, qty, buy_effective_price)
             elif buy_type == 'rent':
-                initial_payable_rent = 0  # Need to calculate
+                initial_payable_rent = product_object.get_initial_payable_rent_price(is_new=is_new, print_type=print_type)
                 self.add_to_rent(product_object.pk, product_type, is_new, print_type, qty, rent_unit_price, rent_days, rent_effective_price, initial_payable_rent)
             elif buy_type == 'sale':
                 self.add_to_sale(product_object.pk, product_type, is_new, print_type, qty, sale_effective_price, good_condition)
