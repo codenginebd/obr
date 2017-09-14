@@ -50,6 +50,7 @@ class Product(BaseEntity):
                         'special_date_start': datetime,
                         'special_date_end': datetime,
                         'rent_price_available': True,
+                        'initial_payable_rent_price': 90
                         'currency_code': 'BDT',
                         'rent_prices': 
                         {
@@ -71,6 +72,7 @@ class Product(BaseEntity):
                         'special_date_start': datetime,
                         'special_date_end': datetime,
                         'rent_price_available': True,
+                        'initial_payable_rent_price': 90
                         'currency_code': 'BDT',
                         'rent_prices': 
                         {
@@ -92,6 +94,7 @@ class Product(BaseEntity):
                         'special_date_start': datetime,
                         'special_date_end': datetime,
                         'rent_price_available': True,
+                        'initial_payable_rent_price': 90
                         'currency_code': 'BDT',
                         'rent_prices': 
                         {
@@ -116,6 +119,7 @@ class Product(BaseEntity):
                         'special_date_start': datetime,
                         'special_date_end': datetime,
                         'rent_price_available': True,
+                        'initial_payable_rent_price': 90
                         'currency_code': 'BDT',
                         'rent_prices': 
                         {
@@ -137,6 +141,7 @@ class Product(BaseEntity):
                         'special_date_start': datetime,
                         'special_date_end': datetime,
                         'rent_price_available': True,
+                        'initial_payable_rent_price': 90
                         'currency_code': 'BDT',
                         'rent_prices': 
                         {
@@ -158,6 +163,7 @@ class Product(BaseEntity):
                         'special_date_start': datetime,
                         'special_date_end': datetime,
                         'rent_price_available': True,
+                        'initial_payable_rent_price': 90
                         'currency_code': 'BDT',
                         'rent_prices': 
                         {
@@ -188,11 +194,12 @@ class Product(BaseEntity):
                         
                 unit_prices[usage_type] = {  }
                         
-                unit_prices['New'][instance.print_type] = {
+                unit_prices[usage_type][instance.print_type] = {
                     'base_price': instance.base_price,
                     'market_price': instance.market_price,
                     'sale_price': instance.sale_price,
-                    'currency_code': instance.currency.short_name
+                    'currency_code': instance.currency.short_name,
+                    'initial_payable_rent_price': instance.initial_payable_rent_price
                 }
                 unit_prices[usage_type][instance.print_type]['special'] = True if instance.special_price else False
                         
@@ -264,6 +271,12 @@ class Product(BaseEntity):
         price_dict = self.get_price(is_new=is_new, print_type=print_type)
         if price_dict:
             return price_dict.get('sale_price')
+        return None
+        
+    def get_initial_payable_rent_price(self, is_new, print_type):
+        price_dict = self.get_price(is_new=is_new, print_type=print_type)
+        if price_dict:
+            return price_dict.get('initial_payable_rent_price')
         return None
         
     def check_rent_price_available(self,is_new, print_type):
