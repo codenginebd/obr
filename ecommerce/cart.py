@@ -227,7 +227,7 @@ class Cart(object):
         
         self.cart['sale'] = sale_cart
         
-    def add_to_cart(self, buy_type, product_code, product_type, is_new, print_type, qty, currency_code, warehouse_id=None, rent_days=None, initial_payable_rent=None):
+    def add_to_cart(self, buy_type, product_code, product_type, is_new, print_type, qty, currency_code, warehouse_id=None, rent_days=None, initial_payable_rent=None, good_condition=True):
         product_objects = Book.objects.filter(code=product_code)
         if product_objects.exists():
             product_object = product_objects.first()
@@ -242,6 +242,7 @@ class Cart(object):
                 return False
                
             buy_effective_price = None
+            rent_unit_price = None
             rent_effective_price = None
             sale_effective_price = None
             if buy_type == 'buy':
@@ -251,6 +252,9 @@ class Cart(object):
             elif buy_type == 'rent':
                 if not rent_days:
                     return False
+                rent_unit_price = product_object.get_effective_base_price(is_new=is_new, print_type=print_type)
+                if not rent_unit_price:
+                    return False
                 rent_effective_price = product_object.get_effective_rent_price_for_days(is_new=is_new, print_type=print_type, rent_days=rent_days)
                 if not rent_effective_price:
                     return False                    
@@ -259,47 +263,13 @@ class Cart(object):
                 if not sale_effective_price:
                     return False        
             
-            if not 'items' in self.cart.items():
-                self.cart['items'] = {}
-                
-            if not product_object.pk in self.cart['items'].items():
-                self.cart['items'][product_object.pk] = { 'buy': {  }, 'rent': [ ], 'sale': { } }
-                
             if buy_type == 'buy':
-                product_buy_cart = self.cart['items'][product_object.pk]['buy']
-                
-                if not 'qty' in product_buy_cart.items():
-                    product_buy_cart['qty'] = qty
-                else:
-                    product_buy_cart['qty'] += qty
-                
-                product_buy_cart['unit_price'] = buy_effective_price
-                
-                subtotal = qty * buy_effective_price
-                
-                product_buy_cart['subtotal'] = subtotal
-                
-                promotion_manager_instance = PromotionManager()
-                promo_applied, promo_code = promotion_manager_instance.apply_promotion(self)
-                
-                if promo_applied:
-                    product_buy_cart['promo_applied'] = True
-                    product_buy_cart['promo_code'] = promo_code
-                else:
-                    product_buy_cart['promo_applied'] = False
-                    product_buy_cart['promo_code'] = None
-                    
-                product_buy_cart['currency_code'] = currency_code
-                
-                self.cart['items'][product_object.pk]['buy'] = product_buy_cart
+                self.add_to_buy(product_object.pk, product_type, is_new, print_type, qty, buy_effective_price)
             elif buy_type == 'rent':
-                product_rent_cart = self.cart['items'][product_object.pk]['rent']
-                
-                self.cart['items'][product_object.pk]['rent'] = product_rent_cart
+                initial_payable_rent = 0  # Need to calculate
+                self.add_to_rent(product_object.pk, product_type, is_new, print_type, qty, rent_unit_price, rent_days, rent_effective_price, initial_payable_rent)
             elif buy_type == 'sale':
-                product_sale_cart = self.cart['items'][product_object.pk]['sale']
-                
-                self.cart['items'][product_object.pk]['sale'] = product_sale_cart
+                self.add_to_sale(product_object.pk, product_type, is_new, print_type, qty, sale_effective_price, good_condition)
             
     def save(self):
         self.cart['last_modified'] = datetime.utcnow()
