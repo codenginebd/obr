@@ -53,9 +53,9 @@ class Promotion(BaseEntity):
     """
     cart_total = 500
     total_items = 100,
-    cart_products = [ ( product_id, product_type, qty, unit_price, subtotal ),
-                      ( 1, "Book", 2, 120, 240 ),
-                      ( 2, "Book", 1, 300, 300 )]
+    cart_products = [ ( product_id, product_type, is_new, print_type, qty, unit_price, subtotal ),
+                      ( 1, "Book", True, "ECO", 2, 120, 240 ),
+                      ( 2, "Book", True, "ECO", 1, 300, 300 )]
                       
     Returns:
     
@@ -68,6 +68,8 @@ class Promotion(BaseEntity):
              {
                 "product_id": 1,
                 "product_model": "Book",
+                "is_new": True,
+                "print_type": "ECO",
                 "quantity": 4
             }
         ],
@@ -76,6 +78,8 @@ class Promotion(BaseEntity):
              {
                 "product_id": 1,
                 "product_model": "Book",
+                "is_new": True,
+                "print_type": "ECO",
                 "quantity": 4
             }
         ],
@@ -116,6 +120,8 @@ class Promotion(BaseEntity):
                                 {
                                     "product_id": reward_product.product_id,
                                     "product_model": reward_product.product_model,
+                                    "is_new": reward_product.is_new,
+                                    "print_type": reward_product.print_type,
                                     "quantity": reward_product.quantity
                                 }
                             ]
@@ -141,14 +147,14 @@ class Promotion(BaseEntity):
     promotion_type = PROMOTION_TYPES.BUY.value
     cart_total = 500
     total_items = 100,
-    cart_products = [ ( product_id, product_type, qty, unit_price, subtotal ),
-                      ( 1, "Book", 2, 120, 240 ),
-                      ( 2, "Book", 1, 300, 300 )]
+    cart_products = [ ( product_id, product_type, is_new, print_type, qty, unit_price, subtotal ),
+                      ( 1, "Book", True, "ECO", 2, 120, 240 ),
+                      ( 2, "Book", True, "ORI", 1, 300, 300 )]
     """
     @classmethod
     def get_promotions(cls, promotion_type, cart_total, total_items, cart_products=[], **kwargs):
         try:
-            if not all([True for row in cart_products if len(row) == 5]):
+            if not all([True for row in cart_products if len(row) == 7]):
                 return False
 
             now_date = datetime.utcnow().date()
@@ -165,13 +171,15 @@ class Promotion(BaseEntity):
             for cart_product in cart_products:
                 product_id = cart_product[0]
                 product_type = cart_product[1]
-                product_qty = cart_product[2]
-                product_unit_price = cart_product[3]
-                product_subtotal = cart_product[4]
+                is_new = cart_product[2]
+                print_type = cart_product[3]
+                product_qty = cart_product[4]
+                product_unit_price = cart_product[5]
+                product_subtotal = cart_product[6]
 
-                qry_expression = ((Q(product_id=product_id) & Q(product_model=product_type) &
+                qry_expression = ((Q(product_id=product_id) & Q(product_model=product_type) & Q(is_new=is_new) & Q(print_type=print_type) & 
                                    Q(min_qty__lte=product_qty) & Q(min_amount=0)) |
-                                  (Q(product_id=product_id) & Q(product_model=product_type) &
+                                  (Q(product_id=product_id) & Q(product_model=product_type) & Q(is_new=is_new) & Q(print_type=print_type) & 
                                    Q(min_amount__lte=product_subtotal) & Q(min_qty=0)))
 
                 if promotion_product_query_expression:
@@ -210,9 +218,9 @@ class Promotion(BaseEntity):
     by_cart_products_dates = "BY_CART", "BY_PRODUCTS", "BY_DATE"
     by_amount_qty = "BY_AMOUNT", "BY_QTY"
     min_qty_amount = 100
-    products = [ ( ID, TYPE, min_qty_amount ) ]
+    products = [ ( ID, TYPE, is_new, print_type, min_qty_amount ) ]
     rewards = [ ( REWARD_TYPE, gift_amount_in_percentage, GIFT_AMOUNT, store_credit, credit_expiry_time,
-        products=[ ( ID, TYPE, quantity ) ] ) ]
+        products=[ ( ID, TYPE, quantity, is_new, print_type ) ] ) ]
     """
     @classmethod
     def create_or_update_promotion(cls, title, description, start_date, end_date,
@@ -233,7 +241,7 @@ class Promotion(BaseEntity):
                     return False
                 if by_amount_qty not in by_amount_qty_options:
                     return False
-                if not all([True for row in products if len(row) == 3]):
+                if not all([True for row in products if len(row) == 5]):
                     return False
                 if not all([True for row in rewards if len(row) == 6]):
                     return False
@@ -246,7 +254,7 @@ class Promotion(BaseEntity):
                                          PromotionRewardTypes.ACCESSORIES.value,
                                          PromotionRewardTypes.STORE_CREDIT.value]:
                         return False
-                    if not all([True for r in reward[5] if len(r) == 3]):
+                    if not all([True for r in reward[5] if len(r) == 5]):
                         return False
 
                 # validation done. Now proceed to create promotion
@@ -297,11 +305,15 @@ class Promotion(BaseEntity):
                     for product_rule in products:
                         product_id = product_rule[0]
                         product_type = product_rule[1]
-                        min_qty_amount = product_rule[2]
+                        is_new = product_rule[2]
+                        print_type = product_rule[3]
+                        min_qty_amount = product_rule[4]
 
                         product_rule_object = PromotionProductRule()
                         product_rule_object.product_id = product_id
                         product_rule_object.product_model = product_type
+                        product_rule_object.is_new = is_new
+                        product_rule_object.print_type = print_type
                         if by_amount_qty == "BY_AMOUNT":
                             product_rule_object.min_amount = min_qty_amount
                         elif by_amount_qty == "BY_QTY":
@@ -351,11 +363,15 @@ class Promotion(BaseEntity):
                         for reward_product_row in products:
                             pid = reward_product_row[0]
                             ptype = reward_product_row[1]
-                            pquantity = reward_product_row[2]
+                            is_new = product_rule[2]
+                            print_type = product_rule[3]
+                            pquantity = reward_product_row[4]
 
                             promo_reward_product = PromotionRewardProduct()
                             promo_reward_product.product_id = pid
                             promo_reward_product.product_model = ptype
+                            promo_reward_product.is_new = is_new
+                            promo_reward_product.print_type = print_type
                             promo_reward_product.quantity = pquantity
                             promo_reward_product.save()
 
