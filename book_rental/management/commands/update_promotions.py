@@ -22,7 +22,7 @@ class Command(BaseCommand):
 		        min_qty_amount=1,
 		        products=[(1,"Book", 1)],
 		        rewards=[(PromotionRewardTypes.FREE_PRODUCTS.value,
-				         None, None, None, None, [(1,"Book", 1)])])
+				         None, None, None, None, [(1,"Book", True, "ECO", 1)])])
 				 
         if instance:
 	        print("Created.")
@@ -59,7 +59,7 @@ class Command(BaseCommand):
 		         min_qty_amount=1,
 		         products=[(2,"Book", 3)],
 		         rewards=[(PromotionRewardTypes.FREE_PRODUCTS.value,
-                    None, None, None, None, [(2,"Book", 1)])])
+                    None, None, None, None, [(2,"Book", True, "ECO", 1)])])
 				 
         if instance:
 	        print("Created.")
