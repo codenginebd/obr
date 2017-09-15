@@ -111,6 +111,9 @@ class Cart(object):
         self.buy_items = []
         self.rent_items = []
         self.sale_items = []
+        self.total_buy_products = 0
+        self.total_rent_products = 0
+        self.total_sale_products = 0
         self.buy_subtotal = 0
         self.buy_total = 0
         self.rent_subtotal = 0
@@ -124,45 +127,79 @@ class Cart(object):
         self.return_total = 0
         self.last_updated = datetime.utcnow()
         
+    def calculate_subtotal(self, buy_type, key_name):
+        key_cart = self.cart.get('%s' % buy_type, {})
+        key_items = key_name_cart.get('items', [])
+        subtotal = 0
+        for item in key_items:
+            subtotal += item['%s' % key_name]
+        return subtotal
+        
     def calculate_buy_subtotal(self):
-        buy_cart = self.cart.get('buy', {})
-        buy_items = buy_cart.get('items', [])
-        buy_subtotal = 0
-        for item in buy_items:
-            buy_subtotal += item['unit_price']
-        self.buy_subtotal = buy_subtotal
+        self.buy_subtotal = self.calculate_subtotal('buy', 'unit_price')
         
     def calculate_rent_subtotal(self):
-        rent_cart = self.cart.get('rent', {})
-        rent_items = rent_cart.get('items', [])
-        rent_subtotal = 0
-        for item in rent_items:
-            rent_subtotal += item['rent_price']
-        self.rent_subtotal = rent_subtotal
+        self.rent_subtotal = self.calculate_subtotal('rent', 'rent_price')
         
     def calculate_rent_initial_payable_subtotal(self):
-        rent_cart = self.cart.get('rent', {})
-        rent_items = rent_cart.get('items', [])
-        initial_payable_subtotal = 0
-        for item in rent_items:
-            initial_payable_subtotal += item['initial_payable']
-        self.initial_payable_subtotal = initial_payable_subtotal
+        self.initial_payable_subtotal = self.calculate_subtotal('rent', 'initial_payable')
         
     def calculate_sale_subtotal(self):
-        sale_cart = self.cart.get('sale', {})
-        sale_items = rent_cart.get('items', [])
-        sale_subtotal = 0
-        for item in rent_items:
-            sale_subtotal += item['unit_price']
-        self.sale_subtotal = sale_subtotal
+        self.sale_subtotal = self.calculate_subtotal('sale', 'unit_price')
+        
+    def calculate_product_count(self, buy_type):
+        key_cart = self.cart.get('%s' % buy_type, {})
+        key_items = key_name_cart.get('items', [])
+        item_count = 0
+        for item in key_items:
+            item_count += item['qty']
+        return item_count
+        
+    def calculate_buy_product_count(self):
+        self.total_buy_products = self.calculate_product_count('buy')
+        
+    def calculate_rent_product_count(self):
+        self.total_rent_products = self.calculate_product_count('rent')
+        
+    def calculate_sale_product_count(self):
+        self.total_sale_products = self.calculate_product_count('sale')
+        
+    def prepare_promotional_product_param(self, buy_type):
+        key_cart = self.cart.get('%s' % buy_type, {})
+        key_items = key_name_cart.get('items', [])
+        
+    def apply_best_promotion(self):
+        promotion_type = PROMOTION_TYPES.BUY.value
+        buy_subtotal = self.buy_subtotal
+        total_buy_products = self.total_buy_products
+        
+        
+        
+    def apply_best_discount(self):
+        pass
+        
+    def apply_store_credit(self):
+        pass
+        
+    def calculate_shipping_charge(self):
+        pass
+        
+    def calculate_total(self):
+        pass
         
     def perform_calculation(self):
-        # Calculate Subtotals 
+        self.calculate_buy_product_count()
+        self.calculate_rent_product_count()
+        self.calculate_sale_product_count()
         self.calculate_buy_subtotal()
         self.calculate_rent_subtotal()
         self.calculate_rent_initial_payable_subtotal()
         self.calculate_sale_subtotal()
-        
+        self.apply_best_promotion()
+        self.apply_best_discount()
+        self.apply_store_credit()
+        self.calculate_shipping_charge()
+        self.calculate_total()
         
     def get_cart_total(self):
         return self.cart_total
@@ -179,9 +216,6 @@ class Cart(object):
     def apply_store_credit(self):
         return False
 
-    def calculate_shipping_charge(self):
-        return 0
-        
     def check_inventory(self, product_id, product_type, is_new, print_type, warehouse_id=None, check_rent_available=False):
         inventory_objects = Inventory.objects.filter(product_id=product_id, product_model=product_type, is_new=is_new, print_type=print_type, stock__gt=0)
         if warehouse_id:
