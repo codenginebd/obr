@@ -111,8 +111,12 @@ class Cart(object):
         self.buy_items = []
         self.rent_items = []
         self.sale_items = []
+        self.buy_subtotal = 0
         self.buy_total = 0
+        self.rent_subtotal = 0
         self.rent_total = 0
+        self.sale_subtotal = 0
+        self.initial_payable_subtotal = 0
         self.sale_total = 0
         self.subtotal = 0
         self.shipping_total = 0
@@ -120,8 +124,45 @@ class Cart(object):
         self.return_total = 0
         self.last_updated = datetime.utcnow()
         
-    def calculate_total(self):
-        pass
+    def calculate_buy_subtotal(self):
+        buy_cart = self.cart.get('buy', {})
+        buy_items = buy_cart.get('items', [])
+        buy_subtotal = 0
+        for item in buy_items:
+            buy_subtotal += item['unit_price']
+        self.buy_subtotal = buy_subtotal
+        
+    def calculate_rent_subtotal(self):
+        rent_cart = self.cart.get('rent', {})
+        rent_items = rent_cart.get('items', [])
+        rent_subtotal = 0
+        for item in rent_items:
+            rent_subtotal += item['rent_price']
+        self.rent_subtotal = rent_subtotal
+        
+    def calculate_rent_initial_payable_subtotal(self):
+        rent_cart = self.cart.get('rent', {})
+        rent_items = rent_cart.get('items', [])
+        initial_payable_subtotal = 0
+        for item in rent_items:
+            initial_payable_subtotal += item['initial_payable']
+        self.initial_payable_subtotal = initial_payable_subtotal
+        
+    def calculate_sale_subtotal(self):
+        sale_cart = self.cart.get('sale', {})
+        sale_items = rent_cart.get('items', [])
+        sale_subtotal = 0
+        for item in rent_items:
+            sale_subtotal += item['unit_price']
+        self.sale_subtotal = sale_subtotal
+        
+    def perform_calculation(self):
+        # Calculate Subtotals 
+        self.calculate_buy_subtotal()
+        self.calculate_rent_subtotal()
+        self.calculate_rent_initial_payable_subtotal()
+        self.calculate_sale_subtotal()
+        
         
     def get_cart_total(self):
         return self.cart_total
