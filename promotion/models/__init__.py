@@ -10,9 +10,9 @@ from promotion.models.promotion import Promotion
 
 
 __all__ = ['PromotionProductRule']
-__all__ += ['PromotionReward']
 __all__ += ['Promotion']
-__all__ += ['Referral']
-__all__ += ['PromotionRewardProduct']
 __all__ += ['Coupon']
 __all__ += ['PromotionRule']
+__all__ += ['PromotionReward']
+__all__ += ['Referral']
+__all__ += ['PromotionRewardProduct']

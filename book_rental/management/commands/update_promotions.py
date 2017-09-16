@@ -23,15 +23,15 @@ class Command(BaseCommand):
 		        products=[(1,"Book", 1)],
 		        rewards=[(PromotionRewardTypes.FREE_PRODUCTS.value,
 				         None, None, None, None, [(1,"Book", True, "ECO", 1)])])
-				 
-        if instance:
-	        print("Created.")
-	        print(instance.pk)
-				 
-        # Buy min 500 BDT and get free shipping				 
+
+		if instance:
+			print("Created.")
+			print(instance.pk)
+
+		# Buy min 500 BDT and get free shipping
         start_date = datetime.utcnow().date()
-        end_date = start_date + timedelta(days=30)
-        instance = Promotion.create_or_update_promotion(title="Buy min 500 BDT and get free shipping	",
+		end_date = start_date + timedelta(days=30)
+		instance = Promotion.create_or_update_promotion(title="Buy min 500 BDT and get free shipping	",
 		        description="Buy min 500 BDT and get free shipping	",
 		        start_date=start_date, end_date=end_date,
 		        promotion_type="BUY",
@@ -48,8 +48,8 @@ class Command(BaseCommand):
 				 
 				 
          # Buy product 2 min 3 items and get 1 item free
-         start_date = datetime.utcnow().date() + timedelta(days=1)
-         end_date = start_date + timedelta(days=10)
+        start_date = datetime.utcnow().date() + timedelta(days=1)
+		end_date = start_date + timedelta(days=10)
          instance = Promotion.create_or_update_promotion(title="Buy product 2 min 3 items and get 1 item free",
 		         description="Buy product 2 min 3 items and get 1 item free",
 		         start_date=start_date, end_date=end_date,

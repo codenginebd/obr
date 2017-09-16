@@ -50,6 +50,10 @@ class Promotion(BaseEntity):
     def get_code_prefix(self):
         return "PROMO"
 
+    @classmethod
+    def find_the_best_promotion(cls, promotions):
+        return promotions
+
     """
     cart_total = 500
     total_items = 100,
@@ -88,7 +92,7 @@ class Promotion(BaseEntity):
                       
     """
     @classmethod
-    def get_promotional_rewards(cls, promotion_type, cart_total, total_items, cart_products=[], **kwargs):
+    def get_promotional_rewards(cls, promotion_type, cart_total, total_items, cart_products=[], best=True, **kwargs):
         promotional_rewards = {
             "promo_codes": [],
             "amount": 0,
@@ -98,6 +102,9 @@ class Promotion(BaseEntity):
             'store_credit': 0
         }
         all_promotions = cls.get_promotions(promotion_type, cart_total, total_items, cart_products=cart_products, **kwargs)
+        if best:
+            # Find the best promotion and then get rewards
+            all_promotions = cls.find_the_best_promotion(promotions=all_promotions)
         if all_promotions:
             all_reward_ids = []
             for promotion_instance in all_promotions:
@@ -275,7 +282,7 @@ class Promotion(BaseEntity):
                     promotion_object.promotion_type = PromotionTypes.BUY.value
                 elif promotion_type == "RENT":
                     promotion_object.promotion_type = PromotionTypes.RENT.value
-                elif if promotion_type == "BUY":
+                elif promotion_type == "BUY":
                     promotion_object.promotion_type = PromotionTypes.ANY.value
 
                 if by_cart_products_dates == "BY_CART":
