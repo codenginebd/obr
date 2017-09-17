@@ -362,7 +362,7 @@ class Promotion(BaseEntity):
 
                         product_rule_object.save()
 
-                        product_rule_objects += [ product_rule_object ]
+                        product_rule_objects += [product_rule_object]
 
                     promotion_object.product_rules.add(*product_rule_objects)
 
