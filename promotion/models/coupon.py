@@ -17,18 +17,39 @@ class Coupon(BaseEntity):
     referrer = models.ForeignKey(User, null=True)
     used_count = models.IntegerField(default=0)
     rewards = models.ManyToManyField(PromotionReward)
-    
+
+    @classmethod
+    def find_the_best_coupon(cls, coupons, cart_total=None):
+        best_coupon = None
+        first_coupon = coupons.first()
+        best_coupon_weight = 0
+        for coupon in coupons:
+            coupon_reward_weight = 0
+            rewards = coupon.rewards.all()
+            for reward in rewards:
+                reward_weight = reward.get_reward_weight(cart_total=cart_total)
+                if reward_weight:
+                    coupon_reward_weight += reward_weight
+            if coupon_reward_weight > best_coupon_weight:
+                best_coupon_weight = coupon_reward_weight
+                best_coupon = coupon
+        if best_coupon:
+            return coupons.filter(pk=best_coupon.pk)
+        else:
+            return coupons.filter(pk=first_coupon.pk)
     
     """
     coupon_code = "DHJGJHS"
     coupon_type = "BUY"
     cart_total = 500
     referrer_id = 200
+    best = True
 
     Returns:
     
     {
         "coupon_code": "DHJGJHS",
+        "coupon_instance": None,
         "amount": 0,
         "free_shipping": False,
         "free_products": 
@@ -51,31 +72,36 @@ class Coupon(BaseEntity):
                 "quantity": 4
             }
         ],
-        'store_credit': 0
+        'store_credit': 0,
+        'credit_expiry': None,
     }
                       
     """
-    
-    
+
     @classmethod
-    def get_coupon_rewards(cls, coupon_code, coupon_type, cart_total, referrer_id=None, **kwargs):
+    def get_coupon_rewards(cls, coupon_code, coupon_type, cart_total, referrer_id=None, best=True, **kwargs):
         
         coupon_rewards = {
+            "coupon_instance": None,
             "coupon_code": None,
             "coupon_type": coupon_type,
             "amount": 0,
             "free_shipping": False,
             "free_products": [],
             "accessories": [],
-            'store_credit': 0
+            "store_credit": 0,
+            "credit_expiry": None,
+            "currency_code": None,
         }        
         
         all_coupons = cls.get_coupons(coupon_code=coupon_code, coupon_type=coupon_type, referrer_id=referrer_id, **kwargs)
-        
+        if best:
+            all_coupons = cls.find_the_best_coupon(coupons=all_coupons, cart_total=cart_total)
         if all_coupons is not None:
             all_reward_ids = []
             for coupon_instance in all_coupons:
                 coupon_rewards["coupon_code"] = coupon_instance.coupon_code
+                coupon_rewards["coupon_instance"] = coupon_instance
                 all_reward_ids += coupon_instance.rewards.values_list('pk', flat=True)
                 
             if all_reward_ids:
@@ -112,6 +138,7 @@ class Coupon(BaseEntity):
                             ]
                     elif reward_instance.reward_type == PromotionRewardTypes.STORE_CREDIT.value:
                         coupon_rewards["store_credit"] += reward_instance.store_credit
+                        coupon_rewards["credit_expiry"] = reward_instance.credit_expiry_time
                 return coupon_rewards
             else:
                 return None
@@ -129,10 +156,8 @@ class Coupon(BaseEntity):
     @classmethod
     def get_coupons(cls, coupon_code, coupon_type, referrer_id=None, **kwargs):
         todays_date = datetime.utcnow().date()
-        if coupon_type == "BUY":
-            coupon_type = PromotionTypes.BUY.value
-        elif coupon_type == "RENT":
-            coupon_type = PromotionTypes.RENT.value
+        if coupon_type not in [PromotionTypes.BUY.value, PromotionTypes.RENT.value, PromotionTypes.ANY.value]:
+            return None
         all_coupons = cls.objects.filter(start_date__isnull=False,start_date__lte=todays_date,expiry_date__isnull=False,expiry_date__gte=todays_date, coupon_code=coupon_code, coupon_type=coupon_type)
         if referrer_id:
             all_coupons = all_coupons.filter(referrer_id=referrer_id)
@@ -142,7 +167,7 @@ class Coupon(BaseEntity):
     title,
     description,
     coupon_code,
-    coupon_type = "BUY",
+    coupon_type = PromotionTypes.BUY.value,
     start_date,
     expiry_date,
     referrer_id,
@@ -155,8 +180,7 @@ class Coupon(BaseEntity):
     @classmethod
     def create_or_update_coupon(cls, title, description, coupon_code, coupon_type, start_date, expiry_date, referrer_id=None, rewards=[], **kwargs):
         try:
-            coupon_type_options = ["BUY", "RENT"]
-            if coupon_type not in coupon_type_options:
+            if coupon_type not in [PromotionTypes.BUY.value, PromotionTypes.RENT.value, PromotionTypes.ANY.value]:
                 return False
             for reward in rewards:
                 if len(reward) != 6:
@@ -182,10 +206,7 @@ class Coupon(BaseEntity):
                 coupon_object.title = title
                 coupon_object.description = description
                 coupon_object.coupon_code = coupon_code
-                if coupon_type == "BUY":
-                    coupon_object.coupon_type = PromotionTypes.BUY.value
-                elif coupon_type == "RENT":
-                    coupon_object.coupon_type = PromotionTypes.RENT.value
+                coupon_object.coupon_type = coupon_type
                 coupon_object.start_date = start_date
                 coupon_object.expiry_date = expiry_date
                 if referrer_id:

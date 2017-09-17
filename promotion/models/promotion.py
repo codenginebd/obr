@@ -3,6 +3,7 @@ from django.db import models, transaction
 from django.db.models.query_utils import Q
 from enums import PromotionRewardTypes, PromotionTypes
 from generics.models.base_entity import BaseEntity
+from payment.models.currency import Currency
 from promotion.models.promotion_products_rule import PromotionProductRule
 from promotion.models.promotion_reward import PromotionReward
 from promotion.model_managers import PromotionManagerByQuantity, PromotionManagerByAmount, PromotionManagerByProducts
@@ -42,6 +43,8 @@ class Promotion(BaseEntity):
     rewards = models.ManyToManyField(PromotionReward)
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
+
+    currency = models.ForeignKey(Currency)
     
     objects_by_quantity = PromotionManagerByQuantity()
     objects_by_amount = PromotionManagerByAmount()
@@ -51,21 +54,40 @@ class Promotion(BaseEntity):
         return "PROMO"
 
     @classmethod
-    def find_the_best_promotion(cls, promotions):
-        return promotions
+    def find_the_best_promotion(cls, promotions, cart_total):
+        best_promotion = None
+        first_promotion = promotions.first()
+        best_promo_weight = 0
+        for promotion in promotions:
+            promo_reward_weight = 0
+            rewards = promotion.rewards.all()
+            for reward in rewards:
+                reward_weight = reward.get_reward_weight(cart_total=cart_total)
+                if reward_weight:
+                    promo_reward_weight += reward_weight
+            if promo_reward_weight > best_promo_weight:
+                best_promo_weight = promo_reward_weight
+                best_promotion = promotion
+        if best_promotion:
+            return promotions.filter(pk=best_promotion.pk)
+        else:
+            return promotions.filter(pk=first_promotion.pk)
 
     """
     cart_total = 500
     total_items = 100,
     cart_products = [ ( product_id, product_type, is_new, print_type, qty, unit_price, subtotal ),
                       ( 1, "Book", True, "ECO", 2, 120, 240 ),
-                      ( 2, "Book", True, "ECO", 1, 300, 300 )]
+                      ( 2, "Book", True, "ECO", 1, 300, 300 )],
+    best = True
                       
     Returns:
     
     {
+        "promotion_instances": [],
         "promo_codes": [],
         "amount": 0,
+        "currency_code": "BDT",
         "free_shipping": False,
         "free_products": 
         [
@@ -87,28 +109,34 @@ class Promotion(BaseEntity):
                 "quantity": 4
             }
         ],
-        'store_credit': 0
+        'store_credit': 0,
+        'credit_expiry': None
     }
                       
     """
     @classmethod
     def get_promotional_rewards(cls, promotion_type, cart_total, total_items, cart_products=[], best=True, **kwargs):
         promotional_rewards = {
+            "promotion_instances": [],
             "promo_codes": [],
             "amount": 0,
+            "currency_code": None,
             "free_shipping": False,
             "free_products": [],
             "accessories": [],
-            'store_credit': 0
+            "store_credit": 0,
+            "credit_expiry": None
         }
         all_promotions = cls.get_promotions(promotion_type, cart_total, total_items, cart_products=cart_products, **kwargs)
         if best:
             # Find the best promotion and then get rewards
-            all_promotions = cls.find_the_best_promotion(promotions=all_promotions)
+            all_promotions = cls.find_the_best_promotion(promotions=all_promotions, cart_total=cart_total)
         if all_promotions:
             all_reward_ids = []
             for promotion_instance in all_promotions:
+                promotional_rewards["promotion_instances"] += [promotion_instance]
                 promotional_rewards["promo_codes"] += [promotion_instance.code]
+                promotional_rewards["currency_code"] = promotion_instance.currency.short_name
                 all_reward_ids += promotion_instance.rewards.values_list('pk', flat=True)
                 
             if all_reward_ids:
@@ -143,6 +171,7 @@ class Promotion(BaseEntity):
                             ]
                     elif reward_instance.reward_type == PromotionRewardTypes.STORE_CREDIT.value:
                         promotional_rewards["store_credit"] += reward_instance.store_credit
+                        promotional_rewards["credit_expiry"] = reward_instance.credit_expiry_time
                 return promotional_rewards
             else:
                 return None
@@ -231,11 +260,15 @@ class Promotion(BaseEntity):
     """
     @classmethod
     def create_or_update_promotion(cls, title, description, start_date, end_date,
-                                   promotion_type, by_cart_products_dates,by_amount_qty, min_qty_amount,
+                                   promotion_type, by_cart_products_dates,by_amount_qty, min_qty_amount, currency_code,
                                    products=[], rewards=[], **kwargs):
         by_cart_products_dates_options = ["BY_CART", "BY_PRODUCTS", "BY_DATE"]
         by_amount_qty_options = ["BY_AMOUNT", "BY_QTY"]
         promotion_type_options = ["BUY", "RENT", "ANY"]
+        currency_objects = Currency.objects.filter(short_name=currency_code)
+        if not currency_objects.exists():
+            return False
+        currency_object = currency_objects.first()
         with transaction.atomic():
             try:
                 if len(title) > 200:
@@ -277,6 +310,7 @@ class Promotion(BaseEntity):
                 promotion_object.description = description
                 promotion_object.start_date = start_date
                 promotion_object.end_date = end_date
+                promotion_object.currency_id = currency_object.pk
 
                 if promotion_type == "BUY":
                     promotion_object.promotion_type = PromotionTypes.BUY.value

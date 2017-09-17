@@ -1,7 +1,9 @@
 from datetime import datetime
 from django.conf import settings
 from book_rental.models.sales.book import Book
+from ecommerce.models.sales.shipping_charge import ShippingCharge
 from enums import PromotionRewardTypes, DiscountRewardTypes, PromotionTypes
+from promotion.models.coupon import Coupon
 from promotion.models.promotion import Promotion
 from promotion.promotion_manager import PromotionManager
 from inventory.models.inventory import Inventory
@@ -87,12 +89,15 @@ class PromotionRewardProduct(object):
     
 
 class PromotionRewards(object):
+    instance = None
     code = None
     amount = 0
     reward_type = PromotionRewardTypes.AMOUNT_IN_MONEY
     products = []  # list of PromotionRewardProduct instance
     accessories = []  # list of PromotionRewardProduct instance
     store_credit = 0
+    credit_expiry = None
+    currency_code = None
     
 
 class Cart(object):
@@ -101,9 +106,15 @@ class Cart(object):
         if settings.CART_SESSION_ID not in request.session:
             request.session[settings.CART_SESSION_ID] = {}
         self.cart = request.session[settings.CART_SESSION_ID]
+        self.session_coupon_code = request.session.get(settings.SESSION_COUPON_ID, None)
+        self.session_own_coupon = request.session.get(settings.SESSION_COUPON_REF, False)
+        self.shipping_state = kwargs.get("shipping_state", None)
+        self.shipping_zip = kwargs.get("shipping_zip", None)
+        self.should_apply_store_credit = kwargs.get("apply_store_credit", False)
+        self.user = request.user
         self.request = request
-        self.promotion_reward = PromotionRewards()
-        self.discount_reward = PromotionRewards()
+        self.promotion_reward = None
+        self.coupon_reward = None
         self.store_credit_applied = False
         self.store_credit_amount = 0
         self.buy_items = []
@@ -123,6 +134,8 @@ class Cart(object):
         self.shipping_total = 0
         self.cart_total = 0
         self.return_total = 0
+        self.currency_code = None
+        self.free_shipping_applied = False
         self.last_updated = datetime.utcnow()
         
     def calculate_subtotal(self, buy_type, key_name):
@@ -279,13 +292,21 @@ class Cart(object):
         if not reward['promo_codes']:
             return False
 
+        if not reward["promotion_instances"]:
+            return False
+
+        promo_instance = reward["promotion_instances"][0]
         promo_code = reward['promo_codes'][0]
         amount = reward['amount']
         free_shipping = reward['free_shipping']
         free_products = reward['free_products']
         accessories = reward['accessories']
         store_credit = reward['store_credit']
+        credit_expiry = reward['credit_expiry']
+        currency_code = reward["currency_code"]
 
+        self.promotion_reward = PromotionRewards()
+        self.promotion_reward.instance = promo_instance
         self.promotion_reward.code = promo_code
         if amount > 0:
             self.promotion_reward.reward_type = PromotionRewardTypes.AMOUNT_IN_MONEY.value
@@ -316,35 +337,304 @@ class Cart(object):
 
         if store_credit:
             self.promotion_reward.store_credit = store_credit
+            self.promotion_reward.credit_expiry = credit_expiry
 
-        
+        if promotion_type == PromotionTypes.ANY.value:
+            if not self.currency_code:
+                self.currency_code = currency_code
+        else:
+            if not self.promotion_reward.currency_code:
+                self.promotion_reward.currency_code = currency_code
+
     def apply_best_promotion(self):
         # Buy Promotions
         promotional_rewards = self.get_promotions_by_type(promotion_type=PromotionTypes.BUY.value,
                                                           price_key='unit_price', best=True)
 
         if promotional_rewards:
-            pass
+            promotional_reward = promotional_rewards[0]
+            self.apply_promotional_reward(promotional_reward, promotion_type=PromotionTypes.BUY.value)
 
         # Rent Promotions
         promotional_rewards = self.get_promotions_by_type(promotion_type=PromotionTypes.RENT.value,
                                                           price_key='rent_price', best=True)
+        if promotional_rewards:
+            promotional_reward = promotional_rewards[0]
+            self.apply_promotional_reward(promotional_reward, promotion_type=PromotionTypes.RENT.value)
 
         # Any Promotions
         promotional_rewards = self.get_promotions_by_type(promotion_type=PromotionTypes.ANY.value,
                                                           price_key=None, best=True)
+        if promotional_rewards:
+            promotional_reward = promotional_rewards[0]
+            self.apply_promotional_reward(promotional_reward, promotion_type=PromotionTypes.ANY.value)
 
-    def apply_best_discount(self):
-        pass
-        
+    def get_coupons_by_type(self, coupon_type):
+        if not self.session_coupon_code:
+            return False
+        referrer_id = None
+        if self.session_own_coupon:
+            if not self.user.is_authenticate():
+                return False
+            else:
+                referrer_id = self.user.pk
+        else:
+            referrer_id = None
+
+        cart_total = None
+        if coupon_type == PromotionTypes.BUY.value:
+            cart_total = self.buy_subtotal
+        elif coupon_type == PromotionTypes.RENT.value:
+            cart_total = self.rent_subtotal
+        elif coupon_type == PromotionTypes.ANY.value:
+            cart_total = self.buy_subtotal + self.rent_subtotal
+
+        if cart_total:
+            coupon_rewards = Coupon.get_coupon_rewards(coupon_code=self.session_coupon_code,
+                                      coupon_type=coupon_type,
+                                      cart_total=cart_total,referrer_id=referrer_id, best=True)
+            return coupon_rewards
+
+    def apply_coupon_reward(self, reward, coupon_type):
+        if coupon_type not in [PromotionTypes.BUY.value, PromotionTypes.RENT.value, PromotionTypes.ANY.value]:
+            return None
+        if not reward['coupon_code']:
+            return False
+
+        if not reward['coupon_instance']:
+            return False
+
+        coupon_instance = reward['coupon_instance']
+        coupon_code = reward['coupon_code']
+        amount = reward['amount']
+        free_shipping = reward['free_shipping']
+        free_products = reward['free_products']
+        accessories = reward['accessories']
+        store_credit = reward['store_credit']
+        credit_expiry = reward['credit_expiry']
+        currency_code = reward["currency_code"]
+
+        self.coupon_reward = PromotionRewards()
+        self.coupon_reward.instance = coupon_instance
+        self.coupon_reward.code = coupon_code
+        if amount > 0:
+            self.coupon_reward.reward_type = PromotionRewardTypes.AMOUNT_IN_MONEY.value
+            self.coupon_reward.amount = amount
+
+        if free_shipping:
+            self.coupon_reward.reward_type = PromotionRewardTypes.FREE_SHIPPING.value
+
+        if free_products:
+            for free_product in free_products:
+                reward_product = PromotionRewardProduct()
+                reward_product.product_id = free_product['product_id']
+                reward_product.product_type = free_product['product_model']
+                reward_product.is_new = free_product['is_new']
+                reward_product.print_type = free_product['print_type']
+                reward_product.qty = free_product['quantity']
+                self.coupon_reward.products += [reward_product]
+
+        if accessories:
+            for accessory in accessories:
+                reward_product = PromotionRewardProduct()
+                reward_product.product_id = accessory['product_id']
+                reward_product.product_type = accessory['product_model']
+                reward_product.is_new = accessory['is_new']
+                reward_product.print_type = accessory['print_type']
+                reward_product.qty = accessory['quantity']
+                self.coupon_reward.accessories += [reward_product]
+
+        if store_credit:
+            self.coupon_reward.store_credit = store_credit
+            self.coupon_reward.credit_expiry = credit_expiry
+
+        if coupon_type == PromotionTypes.ANY.value:
+            if not self.currency_code:
+                self.currency_code = currency_code
+        else:
+            if not self.promotion_reward.currency_code:
+                self.coupon_reward.currency_code = currency_code
+
+    def apply_best_coupon(self):
+        coupon_rewards = self.get_coupons_by_type(coupon_type=PromotionTypes.BUY.value)
+        if coupon_rewards:
+            coupon_reward = coupon_rewards[0]
+            self.apply_coupon_reward(reward=coupon_reward, coupon_type=PromotionTypes.BUY.value)
+
+        coupon_rewards = self.get_coupons_by_type(coupon_type=PromotionTypes.RENT.value)
+        if coupon_rewards:
+            coupon_reward = coupon_rewards[0]
+            self.apply_coupon_reward(reward=coupon_reward, coupon_type=PromotionTypes.RENT.value)
+
+        coupon_rewards = self.get_coupons_by_type(coupon_type=PromotionTypes.ANY.value)
+        if coupon_rewards:
+            coupon_reward = coupon_rewards[0]
+            self.apply_coupon_reward(reward=coupon_reward, coupon_type=PromotionTypes.ANY.value)
+
+    def get_best_reward_score(self, total, rewards, best_score=0):
+        new_best = False
+        total_reward_score = 0
+        rewards = self.promotion_reward.instance.rewards.all()
+        for reward in rewards:
+            total_reward_score += reward.get_reward_weight(cart_total=total)
+        if total_reward_score > best_score:
+            best_score = total_reward_score
+        return best_score
+
+    def apply_best_among_promotion_coupon(self):
+        best_score1 = 0
+        best_score2 = 0
+        if self.promotion_reward:
+            if self.promotion_reward.instance:
+                if self.promotion_reward.instance.promotion_type == PromotionTypes.BUY.value:
+                    best_score1 = self.get_best_reward_score(total=self.buy_subtotal,
+                                                            rewards=self.promotion_reward.instance.rewards.all(),
+                                                            best_score=best_score1)
+                elif self.promotion_reward.instance.promotion_type == PromotionTypes.RENT.value:
+                    best_score1 = self.get_best_reward_score(total=self.rent_subtotal,
+                                                            rewards=self.promotion_reward.instance.rewards.all(),
+                                                            best_score=best_score1)
+                elif self.promotion_reward.instance.promotion_type == PromotionTypes.ANY.value:
+                    best_score1 = self.get_best_reward_score(total=self.subtotal,
+                                                            rewards=self.promotion_reward.instance.rewards.all(),
+                                                            best_score=best_score1)
+
+        if self.coupon_reward:
+            if self.coupon_reward.instance:
+                if self.coupon_reward.instance.coupon_type == PromotionTypes.BUY.value:
+                    best_score2 = self.get_best_reward_score(total=self.buy_subtotal,
+                                                                       rewards=self.promotion_reward.instance.rewards.all(),
+                                                                       best_score=best_score2)
+                elif self.promotion_reward.instance.promotion_type == PromotionTypes.RENT.value:
+                    best_score2 = self.get_best_reward_score(total=self.rent_subtotal,
+                                                                       rewards=self.promotion_reward.instance.rewards.all(),
+                                                                       best_score=best_score2)
+                elif self.promotion_reward.instance.promotion_type == PromotionTypes.ANY.value:
+                    best_score2 = self.get_best_reward_score(total=self.subtotal,
+                                                                       rewards=self.promotion_reward.instance.rewards.all(),
+                                                                       best_score=best_score2)
+
+        if best_score1 >= best_score2:
+            self.coupon_reward = None
+        elif best_score1 < best_score2:
+            self.promotion_reward = None
+
+    def apply_coupon_promotions_to_cart_type_total(self):
+        if self.promotion_reward:
+            if self.promotion_reward.reward_type == PromotionRewardTypes.AMOUNT_IN_MONEY.value:
+                if self.promotion_reward.instance.promotion_type == PromotionTypes.BUY.value:
+                    if self.promotion_reward.instance.amount >= 0:
+                        buy_total = self.buy_subtotal - self.promotion_reward.instance.amount
+                        if buy_total < 0:
+                            buy_total = 0
+                        self.buy_total = buy_total
+                elif self.promotion_reward.instance.promotion_type == PromotionTypes.RENT.value:
+                    if self.promotion_reward.instance.amount >= 0:
+                        rent_total = self.rent_subtotal - self.promotion_reward.instance.amount
+                        if rent_total < 0:
+                            rent_total = 0
+                        self.rent_total = rent_total
+
+        if self.coupon_reward:
+            if self.coupon_reward.reward_type == PromotionRewardTypes.AMOUNT_IN_MONEY.value:
+                if self.coupon_reward.instance.promotion_type == PromotionTypes.BUY.value:
+                    if self.coupon_reward.instance.amount >= 0:
+                        buy_total = self.buy_total - self.promotion_reward.instance.amount
+                        if buy_total < 0:
+                            buy_total = 0
+                        self.buy_total = buy_total
+                elif self.coupon_reward.instance.promotion_type == PromotionTypes.RENT.value:
+                    if self.coupon_reward.instance.amount >= 0:
+                        rent_total = self.rent_total - self.promotion_reward.instance.amount
+                        if rent_total < 0:
+                            rent_total = 0
+                        self.rent_total = rent_total
+
+    def get_store_credits(self):
+        store_credits = {}
+        if self.promotion_reward:
+            if self.promotion_reward.reward_type == PromotionRewardTypes.STORE_CREDIT.value:
+                store_credits[self.promotion_reward.credit_expiry] = self.promotion_reward.store_credit
+
+        if self.coupon_reward:
+            if self.coupon_reward.reward_type == PromotionRewardTypes.STORE_CREDIT.value:
+                if self.promotion_reward.credit_expiry in store_credits.keys():
+                    store_credits[self.promotion_reward.credit_expiry] += self.promotion_reward.store_credit
+                else:
+                    store_credits[self.promotion_reward.credit_expiry] = self.promotion_reward.store_credit
+        return store_credits
+
     def apply_store_credit(self):
         pass
-        
+
     def calculate_shipping_charge(self):
-        pass
+        if self.promotion_reward:
+            if self.promotion_reward.reward_type == PromotionRewardTypes.FREE_SHIPPING.value:
+                self.free_shipping_applied = True
+        if self.coupon_reward:
+            if self.coupon_reward.reward_type == PromotionRewardTypes.FREE_SHIPPING.value:
+                self.free_shipping_applied = True
+
+        if not self.free_shipping_applied:
+            if self.shipping_state:
+                shipping_charge = None
+                if self.shipping_zip:
+                    shipping_charge = ShippingCharge.get_shipping_charge(shipping_state=self.shipping_state,
+                                                       total_amount=self.subtotal, zip_code=self.shipping_zip)
+                else:
+                    shipping_charge = ShippingCharge.get_shipping_charge(shipping_state=self.shipping_state,
+                                                       total_amount=self.subtotal, zip_code=self.shipping_zip)
+                if shipping_charge:
+                    self.shipping_total = shipping_charge
         
     def calculate_total(self):
-        pass
+        total = self.buy_total
+        if total < 0:
+            total = 0
+
+        if self.rent_total > 0:
+            total += self.rent_total
+
+        self.subtotal = total
+
+    def apply_coupon_promotions_in_cart_total(self):
+        if self.promotion_reward:
+            if self.promotion_reward.reward_type == PromotionRewardTypes.AMOUNT_IN_MONEY.value:
+                if self.promotion_reward.instance.promotion_type == PromotionTypes.ANY.value:
+                    if self.promotion_reward.instance.amount >= 0:
+                        subtotal = self.subtotal - self.promotion_reward.instance.amount
+                        if subtotal < 0:
+                            subtotal = 0
+                        self.subtotal = subtotal
+
+        if self.coupon_reward:
+            if self.coupon_reward.reward_type == PromotionRewardTypes.AMOUNT_IN_MONEY.value:
+                if self.coupon_reward.instance.promotion_type == PromotionTypes.ANY.value:
+                    if self.coupon_reward.instance.amount >= 0:
+                        subtotal = self.subtotal - self.coupon_reward.instance.amount
+                        if subtotal < 0:
+                            subtotal = 0
+                        self.subtotal = subtotal
+
+    def calculate_grand_total(self):
+        if self.promotion_reward.reward_type == PromotionRewardTypes.FREE_SHIPPING.value \
+                or self.coupon_reward.reward_type == PromotionRewardTypes.FREE_SHIPPING.value:
+            self.cart_total = self.subtotal
+        else:
+            if self.shipping_total > 0:
+                cart_total = self.subtotal + self.shipping_total
+                if cart_total > 0:
+                    self.cart_total = cart_total
+                else:
+                    self.cart_total = 0
+            else:
+                self.cart_total = self.subtotal
+
+    def calculate_total_rent_return(self):
+        if self.initial_payable_subtotal:
+            total_return = self.initial_payable_subtotal - self.rent_total
+            if total_return > 0:
+                self.return_total =  total_return
         
     def perform_calculation(self):
         self.calculate_buy_product_count()
@@ -355,10 +645,17 @@ class Cart(object):
         self.calculate_rent_initial_payable_subtotal()
         self.calculate_sale_subtotal()
         self.apply_best_promotion()
-        self.apply_best_discount()
-        self.apply_store_credit()
-        self.calculate_shipping_charge()
+        self.apply_best_coupon()
+        if settings.APPLY_BEST_COUPON_PROMO:
+            self.apply_best_among_promotion_coupon()
+        self.apply_coupon_promotions_to_cart_type_total()
         self.calculate_total()
+        self.calculate_total_rent_return()
+        self.apply_coupon_promotions_in_cart_total()
+        if self.should_apply_store_credit:
+            self.apply_store_credit()
+        self.calculate_shipping_charge()
+        self.calculate_grand_total()
         
     def get_cart_total(self):
         return self.cart_total
