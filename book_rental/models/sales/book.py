@@ -7,7 +7,8 @@ from ecommerce.models.sales.product import Product
 
 
 class Book(Product):
-    isbn = models.CharField(max_length=500, blank=True)
+    isbn = models.CharField(max_length=500, blank=True)  # The 10 digit ISBN code
+    isbn13 = models.CharField(max_length=500, blank=True)
     edition = models.CharField(max_length=100)
     publisher = models.ForeignKey(BookPublisher, null=True)
     authors = models.ManyToManyField(Author)
