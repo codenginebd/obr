@@ -40,6 +40,9 @@ class BookUploader(object):
 
                     index += 1
                     isbn = str(row[index]).replace("'", "") if row[index] else None
+                    
+                    index += 1
+                    isbn13 = str(row[index]).replace("'", "") if row[index] else None
 
                     index += 1
                     description = str(row[index]) if row[index] else None
@@ -101,11 +104,25 @@ class BookUploader(object):
                         error_log.stacktrace = 'Book Upload missing data: %s. Skipping...' % str(row)
                         error_log.save()
                         continue
-
-                    if len(isbn) != 10 and len(isbn) != 13:
+                        
+                    if not isbn and not isbn13:
                         error_log = ErrorLog()
                         error_log.url = ''
-                        error_log.stacktrace = 'ISBN number must be 10 or 13 digit long. Skipping... Data %s' % str(row)
+                        error_log.stacktrace = 'ISBN or ISBN13 must be there. Missing both. Skipping... Data %s' % str(row)
+                        error_log.save()
+                        continue
+
+                    if len(isbn) != 10:
+                        error_log = ErrorLog()
+                        error_log.url = ''
+                        error_log.stacktrace = 'ISBN number must be 10 digit long. Skipping... Data %s' % str(row)
+                        error_log.save()
+                        continue
+                        
+                    if len(isbn13) != 13:
+                        error_log = ErrorLog()
+                        error_log.url = ''
+                        error_log.stacktrace = 'ISBN13 number must be 13 digit long. Skipping... Data %s' % str(row)
                         error_log.save()
                         continue
 
@@ -286,7 +303,10 @@ class BookUploader(object):
                     book_object.sale_available = sale_available
                     book_object.rent_available = rent_available
                     book_object.publish_date = published_date
-                    book_object.isbn = str(isbn)
+                    if isbn:
+                        book_object.isbn = str(isbn)
+                    if isbn13:
+                        book_object.isbn13 = str(isbn13)
                     book_object.edition = edition
                     book_object.publisher_id = publisher_id
                     book_object.language_id = language
