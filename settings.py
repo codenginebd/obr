@@ -198,6 +198,8 @@ CART_SESSION_ID = 'cart'
 SESSION_COUPON_ID = 'coupon_code'
 SESSION_COUPON_REF = 'self_coupon'
 APPLY_BEST_COUPON_PROMO = False
+USER_LOGIN_URL = "/auth/login/"
+ADMIN_LOGIN_URL = "/admin/login/"
 
 # after 7 days password reset link will disable automatically
 PASSWORD_RESET_TIMEOUT_DAYS = 7

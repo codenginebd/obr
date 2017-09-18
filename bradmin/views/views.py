@@ -5,6 +5,8 @@ from django.urls.base import reverse
 from django.views.generic.base import TemplateView, View
 from django.contrib import messages
 
+from bauth.decorators.authentication import AdminLoginRequired
+
 
 class AdminLoginView(TemplateView):
     template_name = "admin/login.html"
@@ -32,7 +34,7 @@ class AdminLoginView(TemplateView):
                 return HttpResponseRedirect(reverse("admin_login_view"))
 
 
-class AdminHomeView(TemplateView):
+class AdminHomeView(AdminLoginRequired, TemplateView):
     template_name = "admin/home.html"
     page_title = "Admin Home"
 
@@ -42,9 +44,6 @@ class AdminHomeView(TemplateView):
         return context
 
     def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated() or not request.user.is_staff:
-            return HttpResponseRedirect(reverse("admin_login_view"))
-        # logout(request)
         return render(request, self.template_name,context={})
 
 class AdminLogoutView(View):

@@ -1,0 +1,4 @@
+
+
+class AdminTemplateMixin(object):
+    pass

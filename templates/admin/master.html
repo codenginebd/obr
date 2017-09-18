@@ -18,37 +18,84 @@
     {% endblock more_js %}
 </head>
 <body>
-{% include "sections/admin/header.html" %}
+{#{% include "sections/admin/header.html" %}#}
 {% block header %}
-
+<nav class="navbar navbar-default admin-header" style="background-color: #31b0d5;">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li>
+          <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img class="logo" src="/static/images/logo.png" style="width: 100px; height: 40px; position: relative; top: -10px;">
+                </a>
+            </div>
+      </li>
+      <li {% if ttab == "category" %}class="active" {% endif %}>
+          <a href="{% url "admin_category_view" %}">Category</a>
+      </li>
+      <li><a href="#">Publishers</a></li>
+      <li {% if ttab == "books" %}class="active" {% endif %}><a href="{% url "admin_books_view" %}">Books</a></li>
+      <li {% if ttab == "inventory" %}class="active" {% endif %}><a href="#">Inventory</a></li>
+      <li {% if ttab == "orders" %}class="active" {% endif %}><a href="#">Orders</a></li>
+      <li {% if ttab == "promotions" %}class="active" {% endif %}><a href="#">Promotions</a></li>
+      <li {% if ttab == "coupons" %}class="active" {% endif %}><a href="#">Coupons</a></li>
+      <li {% if ttab == "customers" %}class="active" {% endif %}><a href="#">Customers</a></li>
+      <li style="position: absolute; right: 0px;">
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav pull-right">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{% url "admin_logout_view" %}">Logout</a></li>
+                  </ul>
+                </li>
+              </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
 {% endblock header %}
-<div class="section wrapper">
-    <div class="section section-we-are-1" style="min-height: 200px;">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-12">
+    Category >
+<hr/>
+</div>
+</div>
 {% block content %}
 <div class="row" style="min-height: 400px">
- <div class="side-menu">
-{% block category_sidemenu %}
-
-{% endblock category_sidemenu %}
-    </div>
-    <!-- Main Content -->
+<div class="col-md-2">
+    <ul class="nav">
+        {% block leftmenu %}
+            <li><a href="#">Create</a></li>
+            <li><a href="#">Upload</a></li>
+            <li><a href="#">Upload Logs</a></li>
+        {% endblock leftmenu %}
+    </ul>
+</div>
+<div class="col-md-10">
     <div class="container-fluid">
-        <div class="side-body">
+        <div class="row">
+            <div class="col-md-12">
+            {% if messages %}
+                {% for message in messages %}
+                <p class="alert-danger">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        </div>
             <div class="row">
-                {% if messages %}
-                    {% for message in messages %}
-                    <p class="alert-danger">{{ message }}</p>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            {% block category_content %}
-
-             {% endblock category_content %}
+                <div class="col-md-12" style="border-left: 1px dotted grey;">
+                {% block content_detail %}
+                    
+                 {% endblock content_detail %}
+                </div>
         </div>
     </div>
-</div>s
+</div>
+</div>
 {% endblock content %}
-    </div>
 </div>
 {% block footer %}
     {% include "sections/admin/footer.html" %}

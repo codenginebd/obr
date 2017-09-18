@@ -1,5 +1,5 @@
 {% load settings_tags %}
-<div class="navbar-wrapper navbar navbar-default navbar-fixed-top">
+<div class="navbar-wrapper navbar navbar-default" style="background: #31b0d5; color: white !important;">
     <div class="container-fluid">
         <nav class="">
             <div class="container">
@@ -28,26 +28,3 @@
         </nav>
     </div>
 </div>
-<div class="container" style="margin-top: 50px;">
-  <div class="row">
-      <div class="col-md-2">
-
-      </div>
-      <div class="col-md-10">
-
-      </div>
-  </div>
-</div>
-<nav class="navbar navbar-default" style="margin-top: 8px;">
-  <div class="container-fluid">
-    <ul class="nav navbar-nav">
-      <li {% if ttab == "category" %}class="active" {% endif %}><a href="{% url "admin_category_view" %}">Category</a></li>
-      <li {% if ttab == "books" %}class="active" {% endif %}><a href="{% url "admin_books_view" %}">Books</a></li>
-      <li {% if ttab == "inventory" %}class="active" {% endif %}><a href="#">Inventory</a></li>
-      <li {% if ttab == "orders" %}class="active" {% endif %}><a href="#">Orders</a></li>
-      <li {% if ttab == "promotions" %}class="active" {% endif %}><a href="#">Promotions</a></li>
-      <li {% if ttab == "coupons" %}class="active" {% endif %}><a href="#">Coupons</a></li>
-      <li {% if ttab == "customers" %}class="active" {% endif %}><a href="#">Customers</a></li>
-    </ul>
-  </div>
-</nav>

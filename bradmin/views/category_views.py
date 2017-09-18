@@ -5,8 +5,8 @@ from django.views.generic.base import TemplateView
 from django.contrib import messages
 import os
 import uuid
-
 from book_rental.libs.uploader.category_uploader import CategoryUploader
+from bradmin.views.admin_base_template_view import AdminBaseTemplateView
 from generics.libs.reader.excel_file_reader import ExcelFileReader
 
 
@@ -14,14 +14,20 @@ class AdminCategoryView(TemplateView):
     template_name = "admin/category_master.html"
 
 
-class AdminCategoryUploadView(TemplateView):
+class AdminCategoryUploadView(AdminBaseTemplateView):
     template_name = "admin/category_upload.html"
 
-    def get_context_data(self, **kwargs):
-        context = super(AdminCategoryUploadView, self).get_context_data(**kwargs)
-        context["ttab"] = "category"
-        context["ltab"] = "upload"
-        return context
+    def get_left_menu_items(self):
+        return {
+            "Create": "/",
+            "Upload": "/",
+            "Upload Logs": ""
+        }
+
+    def get_content_data(self):
+        return {
+
+        }
 
     def post(self, request, *args, **kwargs):
         attachment = request.FILES.get('uploaded_file')

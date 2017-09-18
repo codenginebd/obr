@@ -1,22 +1,12 @@
 {% extends "admin/master.html" %}
 {% load staticfiles %}
-{% block category_sidemenu %}
-<!-- uncomment code for absolute positioning tweek see top comment in css -->
-    <!-- <div class="absolute-wrapper"> </div> -->
-    <!-- Menu -->
+{% block leftmenu %}
+    {{ left_menu_items }}
+    {% for title, url in left_menu_items.items %}
+        <li><a href="{{ url }}">{{ title }}</a></li>
+    {% endfor %}
+{% endblock leftmenu %}
 
-
-    <nav class="navbar navbar-default" role="navigation">
-    <!-- Brand and toggle get grouped for better mobile display -->
-
-    <!-- Main Menu -->
-    <div class="side-menu-container">
-        <ul class="nav navbar-nav">
-
-            <li {% if ltab == "upload" %}class="active" {% endif %}><a href="{% url "admin_category_upload_view" %}"><span></span> Upload/Update Categories</a></li>
-            <li  {% if ltab == "all" %}class="active" {% endif %}><a href="#"><span></span> All Categories</a></li>
-
-        </ul>
-    </div><!-- /.navbar-collapse -->
-</nav>
-{% endblock category_sidemenu %}
+{% block content_detail %}
+            dadadds hkhh hkjhkj hkjhkj
+{% endblock content_detail %}
