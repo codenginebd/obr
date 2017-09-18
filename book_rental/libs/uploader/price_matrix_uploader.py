@@ -30,6 +30,10 @@ class PriceMatrixUploader(object):
                 index += 1
                 base_price = row[index]
                 index += 1
+                sale_price = row[index]
+                index += 1
+                initial_rent_payable_price = row[index]
+                index += 1
                 is_special_sale = row[index]
                 index += 1
                 special_sale_rate = row[index]
@@ -80,6 +84,20 @@ class PriceMatrixUploader(object):
                     base_price = Decimal(base_price)
                 except:
                     ErrorLog.log(url='', stacktrace='Invalid base_price value. Decimal expected. Given: %s' % row)
+                    continue
+                    
+                try:
+                    if sale_price:
+                        sale_price = Decimal(sale_price)
+                except:
+                    ErrorLog.log(url='', stacktrace='Invalid sale_price value. Decimal expected. Given: %s' % row)
+                    continue
+                    
+                try:
+                    if initial_rent_payable_price:
+                        initial_rent_payable_price = Decimal(initial_rent_payable_price)
+                except:
+                    ErrorLog.log(url='', stacktrace='Invalid initial_rent_payable_price value. Decimal expected. Given: %s' % row)
                     continue
                     
                 try:
@@ -146,6 +164,12 @@ class PriceMatrixUploader(object):
                 else:
                     price_object.offer_price_p = 1.0
                     price_object.offer_price_v = base_price
+                
+                if sale_price:
+                    price_object.sale_price = sale_price
+                    
+                if initial_payable_rent_price:
+                    price_object.initial_payable_rent_price = initial_payable_rent_price
 
                 price_object.save()
                 #Price Saved.
