@@ -9,8 +9,10 @@ class ErrorLog(BaseEntity):
     stacktrace = models.TextField(blank=True, null=True)
     
     @classmethod
-    def log(cls, url, stacktrace=None):
+    def log(cls, url, stacktrace=None, context=None):
         instance = cls()
+        if context:
+            instance.context = context
         instance.url = url
         if stacktrace:
             instance.stacktrace = stacktrace
