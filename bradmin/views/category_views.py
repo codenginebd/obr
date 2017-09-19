@@ -7,11 +7,52 @@ import os
 import uuid
 from book_rental.libs.uploader.category_uploader import CategoryUploader
 from bradmin.views.admin_base_template_view import AdminBaseTemplateView
+from bradmin.views.base_list_view import BaseListView
+from ecommerce.models.sales.category import ProductCategory
 from generics.libs.reader.excel_file_reader import ExcelFileReader
 
 
 class AdminCategoryView(TemplateView):
     template_name = "admin/category_master.html"
+
+
+class AdminCategoryListView(BaseListView):
+    model = ProductCategory
+    template_name = "admin/category_list.html"
+
+    def get_breadcumb(self):
+        return [
+
+        ]
+
+    def apply_filter(self, queryset):
+        return queryset
+
+    def get_left_menu_items(self):
+        return {
+            "All": "admin_category_view",
+            "Upload/Download": "admin_category_upload_view"
+        }
+
+    def get_headers(self):
+        return [
+            "ID", "Code", "Name(English)", "Name(Bangla)", "Active?", "Show Bangla", "Parent", "Details"
+        ]
+
+    def get_table_data(self):
+        queryset = self.get_queryset()
+        queryset = self.apply_filter(queryset=queryset)
+        data = []
+        for q_object in queryset:
+            data += [
+                [
+                    q_object.pk, q_object.code, q_object.name, q_object.name_2, q_object.is_active,
+                    True if q_object.show_name_2 else False,
+                    q_object.parent.name if q_object.parent else "-",
+                    '<a href="%s">Details</a>' % q_object.get_detail_link()
+                ]
+            ]
+        return data
 
 
 class AdminCategoryUploadView(AdminBaseTemplateView):

@@ -20,7 +20,7 @@
 <body>
 {#{% include "sections/admin/header.html" %}#}
 {% block header %}
-<nav class="navbar navbar-default admin-header" style="background-color: #31b0d5;">
+<nav class="navbar navbar-default admin-header">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
       <li>
@@ -30,16 +30,6 @@
                 </a>
             </div>
       </li>
-      <li {% if ttab == "category" %}class="active" {% endif %}>
-          <a href="{% url "admin_category_view" %}">Category</a>
-      </li>
-      <li><a href="#">Publishers</a></li>
-      <li {% if ttab == "books" %}class="active" {% endif %}><a href="{% url "admin_books_view" %}">Books</a></li>
-      <li {% if ttab == "inventory" %}class="active" {% endif %}><a href="#">Inventory</a></li>
-      <li {% if ttab == "orders" %}class="active" {% endif %}><a href="#">Orders</a></li>
-      <li {% if ttab == "promotions" %}class="active" {% endif %}><a href="#">Promotions</a></li>
-      <li {% if ttab == "coupons" %}class="active" {% endif %}><a href="#">Coupons</a></li>
-      <li {% if ttab == "customers" %}class="active" {% endif %}><a href="#">Customers</a></li>
       <li style="position: absolute; right: 0px;">
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav pull-right">
@@ -55,11 +45,29 @@
     </ul>
   </div>
 </nav>
+<nav class="navbar navbar-default admin-header" style="background-color: #31b0d5;">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li {% if ttab == "category" %}class="active" {% endif %}>
+          <a href="{% url "admin_category_view" %}">Category</a>
+      </li>
+      <li><a href="#">Publishers</a></li>
+      <li {% if ttab == "books" %}class="active" {% endif %}><a href="{% url "admin_books_view" %}">Books</a></li>
+      <li {% if ttab == "inventory" %}class="active" {% endif %}><a href="#">Inventory</a></li>
+      <li {% if ttab == "orders" %}class="active" {% endif %}><a href="#">Orders</a></li>
+      <li {% if ttab == "promotions" %}class="active" {% endif %}><a href="#">Promotions</a></li>
+      <li {% if ttab == "coupons" %}class="active" {% endif %}><a href="#">Coupons</a></li>
+      <li {% if ttab == "customers" %}class="active" {% endif %}><a href="#">Customers</a></li>
+    </ul>
+  </div>
+</nav>
 {% endblock header %}
 <div class="container-fluid">
 <div class="row">
 <div class="col-md-12">
-    Category >
+    {% for breadcumb_item in breadcumb %}
+        {{ breadcumb_item }} /
+    {% endfor %}
 <hr/>
 </div>
 </div>
@@ -68,9 +76,7 @@
 <div class="col-md-2">
     <ul class="nav">
         {% block leftmenu %}
-            <li><a href="#">Create</a></li>
-            <li><a href="#">Upload</a></li>
-            <li><a href="#">Upload Logs</a></li>
+
         {% endblock leftmenu %}
     </ul>
 </div>

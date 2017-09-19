@@ -24,6 +24,12 @@ class BaseEntity(models.Model, PermissionModelMixin, FilterModelMixin, TemplateP
         prefix = ''.join([c for c in self.__class__.__name__ if c.isupper()])
         return prefix if prefix else self.__class__.__name__
 
+    def get_detail_link(self):
+        return ""
+
+    def get_edit_link(self):
+        return ""
+
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
 

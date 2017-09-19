@@ -8,9 +8,9 @@ from payment.models.cash_on_delivery import CashOnDelivery
 from payment.models.payment_transaction import PaymentTransaction
 
 
-__all__ = ['WalletCreditBreakdown']
-__all__ += ['CashOnDelivery']
-__all__ += ['WalletTransaction']
+__all__ = ['PaymentWallet']
 __all__ += ['PaymentTransaction']
-__all__ += ['PaymentWallet']
+__all__ += ['CashOnDelivery']
+__all__ += ['WalletCreditBreakdown']
 __all__ += ['Currency']
+__all__ += ['WalletTransaction']

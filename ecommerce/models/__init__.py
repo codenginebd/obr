@@ -5,6 +5,7 @@ from ecommerce.models.sales.keyword import TagKeyword
 from ecommerce.models.sales.order import Order
 from ecommerce.models.sales.order_breakdown import OrderBreakdown
 from ecommerce.models.sales.category import ProductCategory
+from ecommerce.models.sales.wish_list import WishList
 from ecommerce.models.sales.list_group import ListGroup
 from ecommerce.models.sales.price_matrix import PriceMatrixManager, PriceMatrix
 from ecommerce.models.sales.product_images import ProductImage
@@ -16,19 +17,20 @@ from ecommerce.models.sales.front_list import FrontList
 from ecommerce.models.rent_plan import RentPlan
 
 
-__all__ = ['ProductRating']
-__all__ += ['OrderBreakdown']
+__all__ = ['ProductImage']
 __all__ += ['PriceMatrixManager']
 __all__ += ['PriceMatrix']
-__all__ += ['ProductImage']
+__all__ += ['WishList']
+__all__ += ['ProductRating']
+__all__ += ['Product']
+__all__ += ['Order']
+__all__ += ['ListGroup']
+__all__ += ['TagKeyword']
+__all__ += ['OrderBreakdown']
 __all__ += ['RentPlanRelationManager']
 __all__ += ['RentPlanRelation']
-__all__ += ['TagKeyword']
-__all__ += ['FrontList']
-__all__ += ['Warehouse']
-__all__ += ['ListGroup']
 __all__ += ['RentPlan']
-__all__ += ['Order']
-__all__ += ['Product']
 __all__ += ['ShippingCharge']
+__all__ += ['Warehouse']
+__all__ += ['FrontList']
 __all__ += ['ProductCategory']

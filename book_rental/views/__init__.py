@@ -6,7 +6,7 @@ from book_rental.views.profile_view import ProfileView
 from book_rental.views.book_details import BookDetailsView
 
 
-__all__ = ['BookDetailsView']
-__all__ += ['ProfileView']
+__all__ = ['BookSearchView']
+__all__ += ['BookDetailsView']
 __all__ += ['BookBrowseView']
-__all__ += ['BookSearchView']
+__all__ += ['ProfileView']
