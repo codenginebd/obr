@@ -4,6 +4,7 @@ from generics.models.base_entity import BaseEntity
 
 
 class ErrorLog(BaseEntity):
+    context = models.CharField(max_length=200, blank=True)
     url = models.CharField(max_length=500)
     stacktrace = models.TextField(blank=True, null=True)
     
