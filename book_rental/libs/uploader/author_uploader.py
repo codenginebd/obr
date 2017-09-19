@@ -40,17 +40,11 @@ class AuthorUploader(object):
                     emails = str(row[index]) if row[index] else None
 
                     if not author_name:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Author name must be given'
-                        error_log.save()
+                        ErrorLog.log(url='', stacktrace='Author Name must be given', context='Author')
                         continue
 
                     if not author_description:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Author description must be given'
-                        error_log.save()
+                        ErrorLog.log(url='', stacktrace='Author description must be given', context='Author')
                         continue
 
                     try:
@@ -59,16 +53,10 @@ class AuthorUploader(object):
                         show_2 = int(show_2)
                         if show_2 == 1:
                             if not author_name_2 or not author_description_2:
-                                error_log = ErrorLog()
-                                error_log.url = ''
-                                error_log.stacktrace = 'Author name bn and author description bn missing. Data: %s skipping...' % row
-                                error_log.save()
+                                ErrorLog.log(url='', stacktrace='Author name bn and author description bn missing. Data: %s skipping...' % row, context='Author')
                                 continue
                     except Exception as exp:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Show BN must be number. Given %s. skipping...' % show_2
-                        error_log.save()
+                        ErrorLog.log(url='', stacktrace='Show BN must be number. Given %s. skipping...' % show_2, context='Author')
                         continue
 
                     if emails:
@@ -91,10 +79,7 @@ class AuthorUploader(object):
                         if author_objects.exists():
                             author_object = author_objects.first()
                         else:
-                            error_log = ErrorLog()
-                            error_log.url = ''
-                            error_log.stacktrace = 'Author with code %s not found. skipping...' % code
-                            error_log.save()
+                            ErrorLog.log(url='', stacktrace='Author with code %s not found. skipping...' % code, context='Author')
                             continue
 
                     if not author_object:
@@ -114,10 +99,7 @@ class AuthorUploader(object):
                             image_name_relative_media = get_relative_path_to_media(image_full_path)
                             author_object.image.name = image_name_relative_media
                         else:
-                            error_log = ErrorLog()
-                            error_log.url = ''
-                            error_log.stacktrace = 'Author image %s not found. skipping...' % author_image
-                            error_log.save()
+                            ErrorLog.log(url='', stacktrace='Author image %s not found. skipping...' % author_image, context='Author')
                             continue
 
                     if date_of_birth:
@@ -125,10 +107,7 @@ class AuthorUploader(object):
                             date_of_birth = datetime.strptime(date_of_birth, "%d/%m/%Y")
                         except Exception as exp:
                             date_of_birth = None
-                            error_log = ErrorLog()
-                            error_log.url = ''
-                            error_log.stacktrace = 'Author date of birth format incorrect. Correct format: dd/mm/yyyy. skipping...'
-                            error_log.save()
+                            ErrorLog.log(url='', stacktrace='Author date of birth format incorrect. Correct format: dd/mm/yyyy. skipping...', context='Author')
                             continue
 
                         if date_of_birth:
@@ -167,8 +146,7 @@ class AuthorUploader(object):
                                 author_object.phones.add(phone_object)
 
             except Exception as exp:
-                print("Exception occured")
-                print(str(exp))
+                ErrorLog.log(url='', stacktrace='Exception Occured. Exception message: %s. Skipping...Date: %s' % (str(exp), row), context='Author')
 
 
 
