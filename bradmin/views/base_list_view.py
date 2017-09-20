@@ -4,15 +4,15 @@ from django.views.generic.list import ListView
 class BaseListView(ListView):
     paginate_by = 15
 
-    def apply_filter(self, queryset):
+    def apply_filter(self, request, queryset):
         return queryset
 
     def get_queryset(self):
         queryset = super(BaseListView, self).get_queryset()
-        queryset = self.apply_filter(queryset=queryset)
+        queryset = self.apply_filter(request=self.request, queryset=queryset)
         return queryset
 
-    def get_breadcumb(self):
+    def get_breadcumb(self, request):
         return []
 
     def get_left_menu_items(self):
@@ -39,7 +39,7 @@ class BaseListView(ListView):
             object_list = paginator.page(paginator.num_pages)
         self.object_list = object_list
         context['list_exams'] = file_exams
-        context["breadcumb"] = self.get_breadcumb()
+        context["breadcumb"] = self.get_breadcumb(request=self.request)
         context["left_menu_items"] = self.get_left_menu_items()
         context["headers"] = self.get_headers()
         context["table_data"] = self.prepare_table_data(queryset=object_list)
