@@ -39,9 +39,7 @@ class AdminCategoryListView(BaseListView):
             "ID", "Code", "Name(English)", "Name(Bangla)", "Active?", "Show Bangla", "Parent", "Details"
         ]
 
-    def get_table_data(self):
-        queryset = self.get_queryset()
-        queryset = self.apply_filter(queryset=queryset)
+    def prepare_table_data(self, queryset):
         data = []
         for q_object in queryset:
             data += [
