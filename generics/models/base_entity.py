@@ -15,6 +15,7 @@ class BaseEntity(models.Model, PermissionModelMixin, FilterModelMixin, TemplateP
     date_created = models.BigIntegerField()
     last_updated = models.BigIntegerField()
     is_active = models.BooleanField(default=True)
+    is_deleted = models.BooleanField(default=True)
     created_by = models.ForeignKey(User, related_name='+', null=True)
     last_updated_by = models.ForeignKey(User, related_name='+', null=True)
 
