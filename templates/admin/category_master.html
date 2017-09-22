@@ -2,6 +2,207 @@
 {% load staticfiles %}
 {% block leftmenu %}
     <li><a href="{% url "admin_category_view" %}">All Categories</a></li>
-    <li><a href="{% url "admin_category_upload_view" %}">Upload File</a></li>
     <li><a href="#">Upload Logs</a></li>
 {% endblock leftmenu %}
+{% block action_area %}
+<div class="row">
+<div class="col-md-4">
+<form action="" method="GET">
+<div class="row">
+    <div class="col-md-6" style="padding-right: 0px !important;">
+        <select name="by" class="form-control" style="padding: 20px !important;">
+            {% for option in search_by_options %}
+                <option value="{{ option.1 }}">
+                  {{ option.0 }}
+              </option>
+            {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6" style="padding-left: 0px !important;">
+        <div class="input-group add-on">
+          <input class="form-control" style="width: 200px; padding: 20px !important; " placeholder="Search..." name="keyword" id="id_search_term" type="text">
+          <div class="input-group-btn">
+            <button class="btn btn-default" style="padding: 10px;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+          </div>
+        </div>
+    </div>
+    <div style="padding-left: 20px;">
+        <a href="#" id="id_admin_search_options">Advance Options</a>
+    </div>
+</div>
+<div id="id_admin_search_filters" style="padding: 20px; display: none;">
+    <ul class="list-inline">
+        {% for advance_option in advanced_search_options %}
+            <li>
+                <label>
+                    <input name="{{ advance_option.1 }}" type="checkbox" value="1"/> {{ advance_option.0 }}
+                </label>
+            </li>
+        {% endfor %}
+    </ul>
+    <div>
+        <a href="#" class="hide_admin_search_filters">Hide</a>
+    </div>
+</div>
+</form>
+</div>
+<div class="col-md-8">
+<ul class="list-inline pull-right">
+    <li>
+        <a href="#" class="edit-btn btn btn-primary btn-md disabled">Edit</a>
+    </li>
+    <li>
+        <a href="#" class="delete-btn btn btn-primary btn-md disabled">Delete</a>
+    </li>
+    <li>
+        <a href="#" class="activate-btn btn btn-primary btn-md disabled">Activate</a>
+    </li>
+    <li>
+        <a href="#" class="deactivate-btn btn btn-danger btn-md disabled">Deactivate</a>
+    </li>
+    <li>
+        <form data-action="{{ upload_url }}" id="id_file_upload_form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="upload_redirect" value="{{ upload_redirect }}"/>
+            <input type="file" name="file_upload" id="id_file_upload" style="display: none;"/>
+        </form>
+        <button class="btn-upload btn btn-danger btn-md">Upload</button>
+    </li>
+    <li>
+        <a href="#" class="btn btn-danger btn-md">Download</a>
+    </li>
+</ul>
+</div>
+</div>
+{% endblock action_area %}
+{% block content_detail %}
+<table class="table">
+<thead>
+<tr>
+    <th>
+        <label><input style="position: relative; top: 8px; " id="id_all_check" type="checkbox" name="list-item-checkbox"/></label>
+    </th>
+    {% for header in headers %}
+        <th>
+        {{ header }}
+        </th>
+    {% endfor %}
+</tr>
+</thead>
+<tbody id="id_data_table">
+{% for row in table_data %}
+<tr>
+<td>
+    <label><input class="item-check" name="item-check-{{ forloop.counter0 }}" type="checkbox" name="list-item-checkbox"/></label>
+</td>
+{% for col in row %}
+<td>
+    {{ col|safe }}
+</td>
+{% endfor %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock content_detail %}
+{% block bottom_script %}
+<script type="text/javascript">
+$(document).ready(function () {
+    
+    $(".btn-upload").click(function (e) {
+        $("#id_file_upload").click();
+    });
+    
+    $("#id_file_upload").change(function (e) {
+        $("#id_file_upload_form").submit();
+    });
+
+    $("#id_admin_search_options").click(function (e) {
+        $("#id_admin_search_filters").show();
+        $(this).hide();
+    });
+
+    $(".hide_admin_search_filters").click(function (e) {
+        $("#id_admin_search_filters").hide();
+        $("#id_admin_search_options").show();
+    });
+
+    $("#id_all_check").click(function (e) {
+        if($(this).is(":checked")) {
+            var check_counter = 0;
+            $("#id_data_table").find(".item-check").each(function (e) {
+                $(this).prop("checked", true);
+                if($(this).is(":checked")) {
+                    check_counter += 1;
+                }
+            });
+            if(check_counter == 1) {
+                $(".edit-btn").removeClass("disabled");
+            }
+            else {
+                $(".edit-btn").addClass("disabled");
+            }
+            $(".delete-btn").removeClass("disabled");
+            $(".activate-btn").removeClass("disabled");
+            $(".deactivate-btn").removeClass("disabled");
+        }
+        else {
+            $("#id_data_table").find(".item-check").each(function (e) {
+                $(this).prop("checked", false);
+            });
+            $(".edit-btn").addClass("disabled");
+            $(".delete-btn").addClass("disabled");
+            $(".activate-btn").addClass("disabled");
+            $(".deactivate-btn").addClass("disabled");
+        }
+    });
+    $("#id_data_table").find(".item-check").click(function (e) {
+        if($(this).is(":checked")) {
+            var all_checked = true;
+            var only_this_checked = true;
+            var this_name = $(this).prop("name");
+            $("#id_data_table").find(".item-check").each(function (e) {
+                if(!$(this).is(":checked")){
+                    all_checked = false;
+                }
+                if($(this).prop("name") != this_name) {
+                    if($(this).is(":checked")){
+                        only_this_checked = false;
+                    }
+                }
+            });
+            if(all_checked) {
+                $("#id_all_check").prop("checked", true);
+            }
+            if(only_this_checked) {
+                $(".edit-btn").removeClass("disabled");
+            }
+            else {
+                $(".edit-btn").addClass("disabled");
+            }
+            $(".delete-btn").removeClass("disabled");
+            $(".activate-btn").removeClass("disabled");
+            $(".deactivate-btn").removeClass("disabled");
+        }
+        else {
+            $("#id_all_check").prop("checked", false);
+            var check_counter = 0;
+            $("#id_data_table").find(".item-check").each(function (e) {
+                if($(this).is(":checked")){
+                    check_counter += 1;
+                }
+            });
+            if(check_counter == 1) {
+                $(".edit-btn").removeClass("disabled");
+            }
+            else {
+                $(".edit-btn").addClass("disabled");
+                $(".delete-btn").addClass("disabled");
+                $(".activate-btn").addClass("disabled");
+                $(".deactivate-btn").addClass("disabled");
+            }
+        }
+    });
+});
+</script>
+{% endblock bottom_script %}

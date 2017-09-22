@@ -1,4 +1,7 @@
+from django.core.paginator import PageNotAnInteger, EmptyPage, Paginator
 from django.views.generic.list import ListView
+from django.core.urlresolvers import resolve
+from logger.models.error_log import ErrorLog
 
 
 class BaseListView(ListView):
@@ -27,6 +30,24 @@ class BaseListView(ListView):
     def get_extra_context(self, request, queryset):
         return {}
 
+    def get_upload_link(self):
+        return ""
+
+    def get_upload_redirect_url(self, request):
+        return resolve(request.path_info).url_name
+
+    def get_search_by_options(self):
+        return [
+            ("By ID", "id"),
+            ("By Code", "code"),
+            ("By Name", "name")
+        ]
+
+    def get_advanced_search_options(self):
+        return [
+            ("Is Active", "is_active")
+        ]
+
     def get_context_data(self, **kwargs):
         context = super(BaseListView, self).get_context_data(**kwargs)
         paginator = Paginator(self.get_queryset(), self.paginate_by)
@@ -38,7 +59,10 @@ class BaseListView(ListView):
         except EmptyPage:
             object_list = paginator.page(paginator.num_pages)
         self.object_list = object_list
-        context['list_exams'] = file_exams
+        context["search_by_options"] = self.get_search_by_options()
+        context["advanced_search_options"] = self.get_advanced_search_options()
+        context["upload_link"] = self.get_upload_link()
+        context["upload_redirect"] = self.get_upload_redirect_url(request=self.request)
         context["breadcumb"] = self.get_breadcumb(request=self.request)
         context["left_menu_items"] = self.get_left_menu_items()
         context["headers"] = self.get_headers()

@@ -15,7 +15,7 @@ class BaseEntity(models.Model, PermissionModelMixin, FilterModelMixin, TemplateP
     date_created = models.BigIntegerField()
     last_updated = models.BigIntegerField()
     is_active = models.BooleanField(default=True)
-    is_deleted = models.BooleanField(default=True)
+    is_deleted = models.BooleanField(default=False)
     created_by = models.ForeignKey(User, related_name='+', null=True)
     last_updated_by = models.ForeignKey(User, related_name='+', null=True)
 
@@ -25,10 +25,20 @@ class BaseEntity(models.Model, PermissionModelMixin, FilterModelMixin, TemplateP
         prefix = ''.join([c for c in self.__class__.__name__ if c.isupper()])
         return prefix if prefix else self.__class__.__name__
 
-    def get_detail_link(self):
+    @classmethod
+    def get_detail_link(cls, object_id):
         return ""
 
-    def get_edit_link(self):
+    @classmethod
+    def get_edit_link(cls, object_id):
+        return ""
+
+    @classmethod
+    def get_activate_link(cls, object_id):
+        return ""
+
+    @classmethod
+    def get_deactivate_link(cls, object_id):
         return ""
 
     def save(self, force_insert=False, force_update=False, using=None,
