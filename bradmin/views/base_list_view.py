@@ -8,7 +8,7 @@ class BaseListView(ListView):
     paginate_by = 15
 
     def apply_filter(self, request, queryset):
-        return queryset
+        return queryset.model.apply_search_filters(request=request, queryset=queryset)
 
     def get_queryset(self):
         queryset = super(BaseListView, self).get_queryset()
@@ -22,31 +22,28 @@ class BaseListView(ListView):
         return {}
 
     def get_table_headers(self):
-        return []
+        return self.model.get_table_headers()
 
     def prepare_table_data(self, queryset):
-        return []
+        return self.model.prepare_table_data(queryset=queryset)
         
     def get_extra_context(self, request, queryset):
         return {}
 
     def get_upload_link(self):
-        return ""
+        return self.model.get_upload_link()
 
     def get_upload_redirect_url(self, request):
         return resolve(request.path_info).url_name
 
     def get_search_by_options(self):
-        return [
-            ("By ID", "id"),
-            ("By Code", "code"),
-            ("By Name", "name")
-        ]
+        return self.model.get_search_by_options()
 
     def get_advanced_search_options(self):
-        return [
-            ("Is Active", "is_active")
-        ]
+        return self.model.get_advanced_search_options()
+
+    def get_download_link(self):
+        return self.model.get_download_link()
 
     def get_context_data(self, **kwargs):
         context = super(BaseListView, self).get_context_data(**kwargs)
@@ -62,6 +59,7 @@ class BaseListView(ListView):
         context["search_by_options"] = self.get_search_by_options()
         context["advanced_search_options"] = self.get_advanced_search_options()
         context["upload_link"] = self.get_upload_link()
+        context["download_link"] = self.get_download_link()
         context["upload_redirect"] = self.get_upload_redirect_url(request=self.request)
         context["breadcumb"] = self.get_breadcumb(request=self.request)
         context["left_menu_items"] = self.get_left_menu_items()

@@ -1,5 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.urls.base import reverse
+
 from generics.models.base_entity import BaseEntity
 
 
@@ -21,6 +23,10 @@ class ProductCategory(BaseEntity):
     @classmethod
     def get_all_descendants(cls, cat_id=None, **kwargs):
         pass
+
+    @classmethod
+    def get_download_link(cls):
+        return reverse("admin_category_download_view")
         
     @classmethod
     def get_all_children(cls, cat_id=None, **kwargs):

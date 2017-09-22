@@ -8,6 +8,7 @@ import uuid
 from book_rental.libs.uploader.category_uploader import CategoryUploader
 from bradmin.views.admin_base_template_view import AdminBaseTemplateView
 from bradmin.views.base_list_view import BaseListView
+from bradmin.views.download_base_view import DownloadBaseView
 from ecommerce.models.sales.category import ProductCategory
 from generics.libs.reader.excel_file_reader import ExcelFileReader
 
@@ -89,3 +90,7 @@ class AdminCategoryUploadView(AdminBaseTemplateView):
         os.remove(file_write_path)
         messages.add_message(request, messages.INFO, 'File uploaded successfully')
         return HttpResponseRedirect(reverse("admin_category_upload_view"))
+
+
+class AdminCategoryDownloadView(DownloadBaseView):
+    model = ProductCategory

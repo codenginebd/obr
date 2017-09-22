@@ -1,5 +1,9 @@
+import uuid
+
 from django.contrib.auth.models import User
 from django.db import models
+
+from book_rental.libs.downloader.downloader import Downloader
 from engine.clock.Clock import Clock
 from generics.manager.modelmanager.base_entity_model_manager import BaseEntityModelManager
 from generics.mixin.modelmixin.filter_model_mixin import FilterModelMixin
@@ -26,6 +30,56 @@ class BaseEntity(models.Model, PermissionModelMixin, FilterModelMixin, TemplateP
         return prefix if prefix else self.__class__.__name__
 
     @classmethod
+    def get_table_headers(self):
+        return []
+
+    @classmethod
+    def prepare_table_data(cls, queryset):
+        return []
+
+    @classmethod
+    def get_download_template_headers(cls):
+        return [
+            "Code", "Name"
+        ]
+
+    @classmethod
+    def get_downloader_class(cls):
+        return Downloader
+
+    @classmethod
+    def get_download_file_name(cls):
+        return str(uuid.uuid4())
+
+    @classmethod
+    def get_writter_class(cls):
+        return None
+
+    @classmethod
+    def prepare_download_data(cls, queryset):
+        return []
+
+    @classmethod
+    def get_advanced_search_options(cls):
+        return [
+            ("Is Active", "is_active")
+        ]
+
+    @classmethod
+    def get_search_by_options(cls):
+        return [
+            ("By ID", "id"),
+            ("By Code", "code")
+        ]
+
+    @classmethod
+    def apply_search_filters(cls, request, queryset=None):
+        if not queryset:
+            queryset = cls.objects.all()
+
+        return queryset
+
+    @classmethod
     def get_detail_link(cls, object_id):
         return ""
 
@@ -39,6 +93,14 @@ class BaseEntity(models.Model, PermissionModelMixin, FilterModelMixin, TemplateP
 
     @classmethod
     def get_deactivate_link(cls, object_id):
+        return ""
+
+    @classmethod
+    def get_download_link(cls):
+        return ""
+
+    @classmethod
+    def get_upload_link(cls):
         return ""
 
     def save(self, force_insert=False, force_update=False, using=None,

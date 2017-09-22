@@ -12,10 +12,5 @@ class CategoryDownloader(Downloader):
     def get_default_writer(self):
         return ExcelFileWriter
 
-    def get_header_names(self):
-        return [
-            "Code", "Category Name", "Parent"
-        ]
-
 
 

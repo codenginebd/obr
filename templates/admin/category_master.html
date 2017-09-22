@@ -6,8 +6,8 @@
 {% endblock leftmenu %}
 {% block action_area %}
 <div class="row">
-<div class="col-md-4">
-<form action="" method="GET">
+<div class="col-md-6">
+<form id="id_search_form" action="" method="GET">
 <div class="row">
     <div class="col-md-6" style="padding-right: 0px !important;">
         <select name="by" class="form-control" style="padding: 20px !important;">
@@ -46,21 +46,21 @@
 </div>
 </form>
 </div>
-<div class="col-md-8">
+<div class="col-md-6">
 <ul class="list-inline pull-right">
-    <li>
+    <li style="margin-bottom: 6px;">
         <a href="#" class="edit-btn btn btn-primary btn-md disabled">Edit</a>
     </li>
-    <li>
+    <li style="margin-bottom: 6px;">
         <a href="#" class="delete-btn btn btn-primary btn-md disabled">Delete</a>
     </li>
-    <li>
+    <li style="margin-bottom: 6px;">
         <a href="#" class="activate-btn btn btn-primary btn-md disabled">Activate</a>
     </li>
-    <li>
+    <li style="margin-bottom: 6px;">
         <a href="#" class="deactivate-btn btn btn-danger btn-md disabled">Deactivate</a>
     </li>
-    <li>
+    <li style="margin-bottom: 6px;">
         <form data-action="{{ upload_url }}" id="id_file_upload_form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="hidden" name="upload_redirect" value="{{ upload_redirect }}"/>
@@ -68,8 +68,11 @@
         </form>
         <button class="btn-upload btn btn-danger btn-md">Upload</button>
     </li>
-    <li>
-        <a href="#" class="btn btn-danger btn-md">Download</a>
+    <li style="margin-bottom: 6px;">
+        <a href="#" data-url="{{ download_link }}" class="btn-download btn btn-danger btn-md">Download</a>
+    </li>
+    <li style="margin-bottom: 6px;">
+        <a href="#" data-url="{{ download_template_link }}" class="btn-upload-template btn btn-danger btn-md">Download Template</a>
     </li>
 </ul>
 </div>
@@ -108,6 +111,13 @@
 {% block bottom_script %}
 <script type="text/javascript">
 $(document).ready(function () {
+    
+    $(".btn-download").click(function (e) {
+        e.preventDefault();
+        var form_data = $("#id_search_form").serialize();
+        var target_url = $(this).data("url")+"?"+form_data;
+        window.open(target_url, "_self");
+    });
     
     $(".btn-upload").click(function (e) {
         $("#id_file_upload").click();
