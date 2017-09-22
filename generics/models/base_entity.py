@@ -30,6 +30,21 @@ class BaseEntity(models.Model, PermissionModelMixin, FilterModelMixin, TemplateP
         return prefix if prefix else self.__class__.__name__
 
     @classmethod
+    def activate(cls, id_list=[]):
+        object_list = cls.objects.filter(pk__in=id_list)
+        object_list.update(is_active=True)
+
+    @classmethod
+    def deactivate(cls, id_list=[]):
+        object_list = cls.objects.filter(pk__in=id_list)
+        object_list.update(is_active=False)
+
+    @classmethod
+    def soft_delete(cls, id_list=[]):
+        object_list = cls.objects.filter(pk__in=id_list)
+        object_list.update(is_deleted=True)
+
+    @classmethod
     def get_table_headers(self):
         return []
 

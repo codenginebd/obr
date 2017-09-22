@@ -9,28 +9,30 @@
 <div class="col-md-6">
 <form id="id_search_form" action="" method="GET">
 <div class="row">
-    <div class="col-md-6" style="padding-right: 0px !important;">
-        <select name="by" class="form-control" style="padding: 20px !important;">
-            {% for option in search_by_options %}
-                <option value="{{ option.1 }}">
-                  {{ option.0 }}
-              </option>
-            {% endfor %}
-      </select>
+    <div class="col-md-4" style="padding-right: 0px !important;">
+        <div class="form-group">
+            <select class="form-control" name="by" style="height: 42px !important;">
+                {% for option in search_by_options %}
+                    <option value="{{ option.1 }}">
+                      {{ option.0 }}
+                  </option>
+                {% endfor %}
+            </select>
+        </div>
     </div>
-    <div class="col-md-6" style="padding-left: 0px !important;">
+    <div class="col-md-8" style="padding-left: 0px !important;">
         <div class="input-group add-on">
-          <input class="form-control" style="width: 200px; padding: 20px !important; " placeholder="Search..." name="keyword" id="id_search_term" type="text">
+          <input class="form-control" style="width: 260px; padding: 20px !important; " placeholder="Search..." name="keyword" id="id_search_term" type="text">
           <div class="input-group-btn">
             <button class="btn btn-default" style="padding: 10px;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
           </div>
         </div>
     </div>
-    <div style="padding-left: 20px;">
-        <a href="#" id="id_admin_search_options">Advance Options</a>
-    </div>
 </div>
-<div id="id_admin_search_filters" style="padding: 20px; display: none;">
+<div style="padding-left: 20px;">
+    <a href="#" id="id_admin_search_options">Advance Options</a>
+</div>
+<div id="id_admin_search_filters" style="padding: 5px 0px 0px 15px; display: none;">
     <ul class="list-inline">
         {% for advance_option in advanced_search_options %}
             <li>
