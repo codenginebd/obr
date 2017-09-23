@@ -3,7 +3,7 @@ from generics.libs.writer.writter import Writter
 
 
 class Downloader(object):
-    def __init__(self, file_name, *args, **kwargs):
+    def __init__(self, file_name=None, *args, **kwargs):
         self.file_name = file_name
         self.args = args
         self.kwargs = kwargs
@@ -20,13 +20,15 @@ class Downloader(object):
 
         headers = kwargs.get("headers", [])
 
+        response = kwargs.pop("response", None)
+
         writer_class = writer if writer else self.get_default_writer()
 
         if issubclass(writer_class, Writter):
             writer_instance = writer_class(data=data,header=headers,
-            file_path=self.file_name, *args, **kwargs)
+            file_path=self.file_name, response=response, *args, **kwargs)
             writer_instance.write()
-            return self.file_name
+            return response if response else self.file_name
         else:
             raise BRException("Writer must be an instance of Writter")
 

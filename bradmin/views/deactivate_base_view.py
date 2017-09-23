@@ -6,7 +6,11 @@ class DeactivateBaseView(BaseTemplateView):
     model = None
 
     def get_object_ids(self, request):
-        return []
+        object_ids = []
+        id_str = request.GET.get('id', "")
+        id_list = id_str.split(',')
+        object_ids = [int(_id) for _id in id_list]
+        return object_ids
 
     def get(self, request, *args, **kwargs):
         response = {

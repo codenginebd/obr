@@ -2,6 +2,9 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls.base import reverse
 
+from book_rental.libs.downloader.category_downloader import CategoryDownloader
+from book_rental.libs.uploader.category_uploader import CategoryUploader
+from generics.libs.reader.excel_file_reader import ExcelFileReader
 from generics.models.base_entity import BaseEntity
 
 
@@ -63,6 +66,34 @@ class ProductCategory(BaseEntity):
                 }
             
         return all_categories
+
+    @classmethod
+    def get_download_template_headers(cls):
+        return ["Code", "Name(English)", "Name(Bangla)", "Show Bangla", "Parent"]
+
+    @classmethod
+    def prepare_table_data(cls, queryset):
+        table_data = []
+        for q_object in queryset:
+            table_data += [[q_object.code, q_object.name, q_object.name_2,
+                            "Yes" if q_object.show_name_2 else "No", q_object.parent.name if q_object.parent else "-"]]
+        return table_data
+
+    @classmethod
+    def get_downloader_class(cls):
+        return CategoryDownloader
+
+    @classmethod
+    def get_download_file_name(cls):
+        return "Catgeory List"
+
+    @classmethod
+    def get_reader_class(cls):
+        return ExcelFileReader
+
+    @classmethod
+    def get_uploader_class(cls):
+        return CategoryUploader
         
         
 

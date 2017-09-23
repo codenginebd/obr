@@ -8,6 +8,7 @@ class Writter(FileWriteMixin):
         self.kwargs = kwargs
         self.header = header
         self.data = data
+        self.response = kwargs.get("response", None)
 
     def write(self):
         pass

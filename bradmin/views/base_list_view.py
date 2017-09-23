@@ -1,4 +1,5 @@
 from django.core.paginator import PageNotAnInteger, EmptyPage, Paginator
+from django.urls.base import reverse
 from django.views.generic.list import ListView
 from django.core.urlresolvers import resolve
 from logger.models.error_log import ErrorLog
@@ -34,7 +35,7 @@ class BaseListView(ListView):
         return self.model.get_upload_link()
 
     def get_upload_redirect_url(self, request):
-        return resolve(request.path_info).url_name
+        return reverse(resolve(request.path_info).url_name)
 
     def get_search_by_options(self):
         return self.model.get_search_by_options()

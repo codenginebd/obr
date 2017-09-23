@@ -35,5 +35,9 @@ class ExcelFileWriter(Writter):
                 self.sheet.cell(row=row, column=col, value=col_value)
                 col += 1
             row += 1
-        self.workbook.save(self.file_name)
+        if self.response:
+            self.workbook.save(self.response)
+        else:
+            if self.file_name:
+                self.workbook.save(self.file_name)
 
