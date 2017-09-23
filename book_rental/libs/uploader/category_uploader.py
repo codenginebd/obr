@@ -1,6 +1,5 @@
 from django.db import transaction
-# from brlogger.models.error_log import ErrorLog
-from ecommerce.models.sales.category import ProductCategory
+from generics.libs.loader.loader import load_model
 from logger.models.error_log import ErrorLog
 
 
@@ -11,6 +10,7 @@ class CategoryUploader(object):
         self.kwargs = kwargs
 
     def handle_upload(self):
+        ProductCategory = load_model(app_label="ecommerce", model_name="ProductCategory")
         try:
             for row in self.data:
                 with transaction.atomic():

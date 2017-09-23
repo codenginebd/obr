@@ -30,8 +30,8 @@ class UploadBaseView(ListView):
         reader = reader_class(file_name=file_write_path, sheet_name='Sheet1')
         data = reader.get_data()
         uploader_class = self.model.get_uploader_class()
-        category_uploader = uploader_class(data=data)
-        uploaded = category_uploader.handle_upload()
+        uploader = uploader_class(data=data)
+        uploaded = uploader.handle_upload()
         os.remove(file_write_path)
         if uploaded:
             messages.add_message(request, messages.INFO, 'File uploaded successfully')

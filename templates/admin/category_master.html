@@ -63,10 +63,10 @@
         <a href="#" class="deactivate-btn btn btn-danger btn-md disabled">Deactivate</a>
     </li>
     <li style="margin-bottom: 6px;">
-        <form data-action="{{ upload_url }}" id="id_file_upload_form" method="post" enctype="multipart/form-data">
+        <form data-action="{{ upload_link }}" id="id_file_upload_form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="hidden" name="upload_redirect" value="{{ upload_redirect }}"/>
-            <input type="file" name="file_upload" id="id_file_upload" style="display: none;"/>
+            <input type="file" name="uploaded_file" id="id_file_upload" style="display: none;"/>
         </form>
         <button class="btn-upload btn btn-danger btn-md">Upload</button>
     </li>
@@ -126,6 +126,7 @@ $(document).ready(function () {
     });
     
     $("#id_file_upload").change(function (e) {
+        $("#id_file_upload_form").prop("action", $("#id_file_upload_form").data("action"));
         $("#id_file_upload_form").submit();
     });
 

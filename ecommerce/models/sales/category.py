@@ -1,9 +1,9 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls.base import reverse
-
 from book_rental.libs.downloader.category_downloader import CategoryDownloader
 from book_rental.libs.uploader.category_uploader import CategoryUploader
+from generics.libs.loader.loader import load_model
 from generics.libs.reader.excel_file_reader import ExcelFileReader
 from generics.models.base_entity import BaseEntity
 
@@ -94,6 +94,10 @@ class ProductCategory(BaseEntity):
     @classmethod
     def get_uploader_class(cls):
         return CategoryUploader
+
+    @classmethod
+    def get_upload_link(cls):
+        return reverse("admin_category_upload_view")
         
         
 
