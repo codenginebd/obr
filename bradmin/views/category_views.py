@@ -1,3 +1,4 @@
+from django.urls.base import reverse
 from django.views.generic.base import TemplateView
 from bradmin.views.base_list_view import BaseListView
 from bradmin.views.download_base_view import DownloadBaseView
@@ -23,11 +24,11 @@ class AdminCategoryListView(BaseListView):
 
     def get_left_menu_items(self):
         return {
-            "All": "admin_category_view",
-            "Upload/Download": "admin_category_upload_view"
+            "All": reverse("admin_category_view"),
+            "Error Logs": reverse("admin_logs_view")+"?context=%s" % self.model.__name__
         }
 
-    def get_headers(self):
+    def get_table_headers(self):
         return [
             "ID", "Code", "Name(English)", "Name(Bangla)", "Active?", "Show Bangla", "Parent", "Details"
         ]

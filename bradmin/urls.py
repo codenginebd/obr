@@ -1,5 +1,6 @@
 from django.conf.urls import url, include
 
+from bradmin.views.admin_logs_view import AdminLogView
 from bradmin.views.books_views import AdminBooksView, AdminBooksUploadView
 from bradmin.views.category_views import AdminCategoryView, AdminCategoryUploadView, AdminCategoryListView, \
     AdminCategoryDownloadView
@@ -16,4 +17,6 @@ urlpatterns = [
     #Books
     url(r'^books/', AdminBooksView.as_view(), name="admin_books_view"),
     url(r'^books-upload/', AdminBooksUploadView.as_view(), name="admin_books_upload_view"),
+
+    url(r'^logs/', AdminLogView.as_view(), name="admin_logs_view"),
 ]

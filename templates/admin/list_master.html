@@ -1,8 +1,9 @@
 {% extends "admin/master.html" %}
 {% load staticfiles %}
 {% block leftmenu %}
-    <li><a href="{% url "admin_category_view" %}">All Categories</a></li>
-    <li><a href="#">Upload Logs</a></li>
+    {% for menu_title, menu_url in left_menu_items.items %}
+    <li><a href="{{ menu_url }}">{{ menu_title }}</a></li>
+    {% endfor %}
 {% endblock leftmenu %}
 {% block action_area %}
 <div class="row">

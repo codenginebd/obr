@@ -8,12 +8,12 @@ from logger.models.error_log import ErrorLog
 class BaseListView(ListView):
     paginate_by = 15
 
-    def apply_filter(self, request, queryset):
-        return queryset.model.apply_search_filters(request=request, queryset=queryset)
+    def apply_search_filter(self, request, queryset):
+        return self.model.apply_search_filters(request=request, queryset=queryset)
 
     def get_queryset(self):
         queryset = super(BaseListView, self).get_queryset()
-        queryset = self.apply_filter(request=self.request, queryset=queryset)
+        queryset = self.apply_search_filter(request=self.request, queryset=queryset)
         return queryset
 
     def get_breadcumb(self, request):
@@ -64,7 +64,7 @@ class BaseListView(ListView):
         context["upload_redirect"] = self.get_upload_redirect_url(request=self.request)
         context["breadcumb"] = self.get_breadcumb(request=self.request)
         context["left_menu_items"] = self.get_left_menu_items()
-        context["headers"] = self.get_headers()
+        context["headers"] = self.get_table_headers()
         context["table_data"] = self.prepare_table_data(queryset=object_list)
         extra_context = self.get_extra_context(request=self.request, queryset=object_list)
         for key, item in extra_context.items():
