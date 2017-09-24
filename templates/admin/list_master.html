@@ -14,16 +14,22 @@
         <div class="form-group">
             <select class="form-control" name="by" style="height: 42px !important;">
                 {% for option in search_by_options %}
+                    {% if option.1 == search_by %}
+                    <option selected value="{{ option.1 }}">
+                      {{ option.0 }}
+                    </option>
+                    {% else %}
                     <option value="{{ option.1 }}">
                       {{ option.0 }}
-                  </option>
+                    </option>
+                    {% endif %}
                 {% endfor %}
             </select>
         </div>
     </div>
     <div class="col-md-8" style="padding-left: 0px !important;">
         <div class="input-group add-on">
-          <input class="form-control" style="width: 260px; padding: 20px !important; " placeholder="Search..." name="keyword" id="id_search_term" type="text">
+          <input class="form-control" style="width: 260px; padding: 20px !important; " {% if search_keyword %}value="{{ search_keyword }}" {% endif %} placeholder="Search..." name="keyword" id="id_search_term" type="text">
           <div class="input-group-btn">
             <button class="btn btn-default" style="padding: 10px;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
           </div>
@@ -51,18 +57,27 @@
 </div>
 <div class="col-md-6">
 <ul class="list-inline pull-right">
+    {% if show_edit %}
     <li style="margin-bottom: 6px;">
         <a href="#" class="edit-btn btn btn-primary btn-md disabled">Edit</a>
     </li>
+    {% endif %}
+    {% if show_delete %}
     <li style="margin-bottom: 6px;">
         <a href="#" class="delete-btn btn btn-primary btn-md disabled">Delete</a>
     </li>
+    {% endif %}
+    {% if show_activate %}
     <li style="margin-bottom: 6px;">
-        <a href="#" class="activate-btn btn btn-primary btn-md disabled">Activate</a>
+        <a href="#" data-url="{{ activate_link }}" class="activate-btn btn btn-primary btn-md disabled">Activate</a>
     </li>
+    {% endif %}
+    {% if show_deactivate %}
     <li style="margin-bottom: 6px;">
         <a href="#" class="deactivate-btn btn btn-danger btn-md disabled">Deactivate</a>
     </li>
+    {% endif %}
+    {% if show_upload %}
     <li style="margin-bottom: 6px;">
         <form data-action="{{ upload_link }}" id="id_file_upload_form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -71,12 +86,17 @@
         </form>
         <button class="btn-upload btn btn-danger btn-md">Upload</button>
     </li>
+    {% endif %}
+    {% if show_download %}
     <li style="margin-bottom: 6px;">
         <a href="#" data-url="{{ download_link }}" class="btn-download btn btn-danger btn-md">Download</a>
     </li>
+    {% endif %}
+    {% if show_download_template %}
     <li style="margin-bottom: 6px;">
         <a href="#" data-url="{{ download_template_link }}" class="btn-upload-template btn btn-danger btn-md">Download Template</a>
     </li>
+    {% endif %}
 </ul>
 </div>
 </div>
@@ -99,7 +119,7 @@
 {% for row in table_data %}
 <tr>
 <td>
-    <label><input class="item-check" name="item-check-{{ forloop.counter0 }}" type="checkbox" name="list-item-checkbox"/></label>
+    <label><input data-id="{{ row.0 }}" class="item-check" name="item-check-{{ forloop.counter0 }}" type="checkbox" name="list-item-checkbox"/></label>
 </td>
 {% for col in row %}
 <td>
@@ -114,6 +134,30 @@
 {% block bottom_script %}
 <script type="text/javascript">
 $(document).ready(function () {
+
+    $(".activate-btn").click(function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+        var id = "";
+        $("#id_data_table").find(".item-check").each(function (e) {
+            id += $(this).data("id") + ",";
+        });
+        $.ajax({
+        type: "GET",
+        url: url+"?id="+id,
+        success: function (data) {
+            if(data.status == "SUCCESSFUL") {
+                window.location.reload();
+            }
+        },
+        error: function (jqxhr, status, error) {
+
+        }
+    })
+    .done(function (msg) {
+
+    });
+    });
     
     $(".btn-download").click(function (e) {
         e.preventDefault();

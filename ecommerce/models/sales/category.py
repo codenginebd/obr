@@ -3,7 +3,6 @@ from django.template.defaultfilters import slugify
 from django.urls.base import reverse
 from book_rental.libs.downloader.category_downloader import CategoryDownloader
 from book_rental.libs.uploader.category_uploader import CategoryUploader
-from generics.libs.loader.loader import load_model
 from generics.libs.reader.excel_file_reader import ExcelFileReader
 from generics.models.base_entity import BaseEntity
 
@@ -98,6 +97,29 @@ class ProductCategory(BaseEntity):
     @classmethod
     def get_upload_link(cls):
         return reverse("admin_category_upload_view")
+
+    @classmethod
+    def get_activate_link(cls):
+        return reverse("admin_category_activate_view")
+
+    @classmethod
+    def apply_search_filters(cls, request, queryset=None):
+        if not queryset:
+            queryset = cls.objects.all()
+        by = request.GET.get("by", None)
+        if by:
+            keyword = request.GET.get("keyword", None)
+            if keyword:
+                if by == "id":
+                    try:
+                        id_val = int(keyword)
+                        queryset = queryset.filter(pk=id_val)
+                    except:
+                        queryset = queryset.models.objects.none()
+                elif by == "code":
+                    queryset = queryset.filter(code=keyword)
+        return queryset
+
         
         
 

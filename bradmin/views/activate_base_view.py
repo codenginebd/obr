@@ -9,7 +9,7 @@ class ActivateBaseView(BaseTemplateView):
         object_ids = []
         id_str = request.GET.get('id', "")
         id_list = id_str.split(',')
-        object_ids = [int(_id) for _id in id_list]
+        object_ids = [int(_id) for _id in id_list if _id]
         return object_ids
 
     def get(self, request, *args, **kwargs):
@@ -17,6 +17,6 @@ class ActivateBaseView(BaseTemplateView):
             "status": "FAILED"
         }
         if self.model:
-            self.model.activate(id_list=self.get_object_ids())
+            self.model.activate(id_list=self.get_object_ids(request=self.request))
             response["status"] = "SUCCESSFUL"
         return JsonResponse(response)

@@ -2,8 +2,9 @@ from django.conf.urls import url, include
 
 from bradmin.views.admin_logs_view import AdminLogView
 from bradmin.views.books_views import AdminBooksView, AdminBooksUploadView
+from bradmin.views.category_log_view import AdminCategoryLogView
 from bradmin.views.category_views import AdminCategoryView, AdminCategoryUploadView, AdminCategoryListView, \
-    AdminCategoryDownloadView
+    AdminCategoryDownloadView, AdminCategoryActivateView
 from bradmin.views.views import AdminHomeView, AdminLoginView, AdminLogoutView
 
 urlpatterns = [
@@ -13,10 +14,11 @@ urlpatterns = [
     url(r'^category/', AdminCategoryListView.as_view(), name="admin_category_view"),
     url(r'^category-upload/', AdminCategoryUploadView.as_view(), name="admin_category_upload_view"),
     url(r'^category-download/', AdminCategoryDownloadView.as_view(), name="admin_category_download_view"),
+    url(r'^category-activate/', AdminCategoryActivateView.as_view(), name="admin_category_activate_view"),
 
     #Books
     url(r'^books/', AdminBooksView.as_view(), name="admin_books_view"),
     url(r'^books-upload/', AdminBooksUploadView.as_view(), name="admin_books_upload_view"),
 
-    url(r'^logs/', AdminLogView.as_view(), name="admin_logs_view"),
+    url(r'^category-logs/', AdminCategoryLogView.as_view(), name="admin_category_logs_view"),
 ]
