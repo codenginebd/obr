@@ -74,7 +74,7 @@
     {% endif %}
     {% if show_deactivate %}
     <li style="margin-bottom: 6px;">
-        <a href="#" class="deactivate-btn btn btn-danger btn-md disabled">Deactivate</a>
+        <a href="#" data-url="{{ deactivate_link }}" class="deactivate-btn btn btn-danger btn-md disabled">Deactivate</a>
     </li>
     {% endif %}
     {% if show_upload %}
@@ -128,6 +128,11 @@
 {% endfor %}
 </tr>
 {% endfor %}
+<tr>
+    <td {% if table_data %}colspan="{{ table_data.0|length }}"{% else %}{% endif %} style="text-align:center;">
+        {% include "admin/admin_pagination.html" %}
+    </td>
+</tr>
 </tbody>
 </table>
 {% endblock content_detail %}
@@ -143,26 +148,57 @@ $(document).ready(function () {
             id += $(this).data("id") + ",";
         });
         $.ajax({
-        type: "GET",
-        url: url+"?id="+id,
-        success: function (data) {
-            if(data.status == "SUCCESSFUL") {
-                window.location.reload();
+            type: "GET",
+            url: url+"?id="+id,
+            success: function (data) {
+                if(data.status == "SUCCESSFUL") {
+                    window.location.reload();
+                }
+            },
+            error: function (jqxhr, status, error) {
+
             }
-        },
-        error: function (jqxhr, status, error) {
+        })
+        .done(function (msg) {
 
-        }
-    })
-    .done(function (msg) {
-
+        });
     });
+
+    $(".deactivate-btn").click(function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+        var id = "";
+        $("#id_data_table").find(".item-check").each(function (e) {
+            id += $(this).data("id") + ",";
+        });
+        $.ajax({
+            type: "GET",
+            url: url+"?id="+id,
+            success: function (data) {
+                if(data.status == "SUCCESSFUL") {
+                    window.location.reload();
+                }
+            },
+            error: function (jqxhr, status, error) {
+
+            }
+        })
+        .done(function (msg) {
+
+        });
     });
     
     $(".btn-download").click(function (e) {
         e.preventDefault();
         var form_data = $("#id_search_form").serialize();
         var target_url = $(this).data("url")+"?"+form_data;
+        window.open(target_url, "_self");
+    });
+
+    $(".btn-upload-template").click(function (e) {
+        e.preventDefault();
+        var form_data = $("#id_search_form").serialize();
+        var target_url = $(this).data("url")+"&"+form_data;
         window.open(target_url, "_self");
     });
     

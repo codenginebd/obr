@@ -67,6 +67,10 @@ class ProductCategory(BaseEntity):
         return all_categories
 
     @classmethod
+    def get_download_headers(cls):
+        return ["Code", "Name(English)", "Name(Bangla)", "Show Bangla", "Parent"]
+
+    @classmethod
     def get_download_template_headers(cls):
         return ["Code", "Name(English)", "Name(Bangla)", "Show Bangla", "Parent"]
 
@@ -77,6 +81,14 @@ class ProductCategory(BaseEntity):
             table_data += [[q_object.code, q_object.name, q_object.name_2,
                             "Yes" if q_object.show_name_2 else "No", q_object.parent.name if q_object.parent else "-"]]
         return table_data
+
+    @classmethod
+    def prepare_download_template_data(cls, queryset):
+        template_data = []
+        for q_object in queryset:
+            template_data += [[q_object.code, q_object.name, q_object.name_2,
+                            "1" if q_object.show_name_2 else "0", q_object.parent.name if q_object.parent else ""]]
+        return template_data
 
     @classmethod
     def get_downloader_class(cls):
@@ -101,6 +113,10 @@ class ProductCategory(BaseEntity):
     @classmethod
     def get_activate_link(cls):
         return reverse("admin_category_activate_view")
+
+    @classmethod
+    def get_deactivate_link(cls):
+        return reverse("admin_category_deactivate_view")
 
     @classmethod
     def apply_search_filters(cls, request, queryset=None):

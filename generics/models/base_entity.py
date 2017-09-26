@@ -54,6 +54,16 @@ class BaseEntity(models.Model, PermissionModelMixin, FilterModelMixin, TemplateP
         return []
 
     @classmethod
+    def prepare_download_template_data(cls, queryset):
+        return []
+
+    @classmethod
+    def get_download_headers(cls):
+        return [
+            "Code", "Name"
+        ]
+
+    @classmethod
     def get_download_template_headers(cls):
         return [
             "Code", "Name"
@@ -112,11 +122,11 @@ class BaseEntity(models.Model, PermissionModelMixin, FilterModelMixin, TemplateP
         return ""
 
     @classmethod
-    def get_activate_link(cls, object_id):
+    def get_activate_link(cls):
         return ""
 
     @classmethod
-    def get_deactivate_link(cls, object_id):
+    def get_deactivate_link(cls):
         return ""
 
     @classmethod

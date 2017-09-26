@@ -32,5 +32,14 @@ class AdminActionButtonMixin(object):
     def get_download_link(self):
         return self.model.get_download_link()
 
+    def get_download_template_link(self):
+        download_link = self.get_download_link()
+        if download_link:
+            return download_link + "?template=1"
+        return download_link
+
     def get_activate_link(self):
         return self.model.get_activate_link()
+
+    def get_deactivate_link(self):
+        return self.model.get_deactivate_link()

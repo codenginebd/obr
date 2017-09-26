@@ -7,8 +7,13 @@ class DownloadBaseView(ListView):
 
     def get(self, request, *args, **kwargs):
         queryset = self.model.apply_search_filters(request=request)
-        download_data = self.model.prepare_table_data(queryset=queryset)
-        download_headers = self.model.get_download_template_headers()
+        if request.GET.get("template", None):
+            download_headers = self.model.get_download_template_headers()
+            download_data = self.model.prepare_download_template_data(queryset=queryset)
+        else:
+            download_headers = self.model.get_download_headers()
+            download_data = self.model.prepare_table_data(queryset=queryset)
+
         downloader_class = self.model.get_downloader_class()
 
         response = HttpResponse(content_type='application/ms-excel')
