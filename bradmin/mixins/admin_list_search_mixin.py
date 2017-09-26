@@ -20,3 +20,10 @@ class AdminListSearchMixin(object):
             if key != 'by' and key != 'keyword':
                 params[key] = value
         return params
+
+    def collect_search_params(self, request):
+        params = []
+        for key, value in request.GET.items():
+            if key == 'by' or key == 'keyword':
+                params += [key+"="+value]
+        return "&".join(params)

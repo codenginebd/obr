@@ -2,7 +2,11 @@
 <ul class="pagination">
 {% if page_obj.has_previous %}
     <li>
+        {% if search_param_url %}
+        <span><a href="?{{ search_param_url }}&page={{ page_obj.previous_page_number }}">Previous</a></span>
+        {% else %}
         <span><a href="?page={{ page_obj.previous_page_number }}">Previous</a></span>
+        {% endif %}
     </li>
 {% endif %}
     <li class="">
@@ -10,7 +14,11 @@
     </li>
 {% if page_obj.has_next %}
     <li>
+        {% if search_param_url %}
+        <span><a href="?{{ search_param_url }}&page={{ page_obj.next_page_number }}">Next</a></span>
+        {% else %}
         <span><a href="?page={{ page_obj.next_page_number }}">Next</a></span>
+        {% endif %}
     </li>
 {% endif %}
 </ul>

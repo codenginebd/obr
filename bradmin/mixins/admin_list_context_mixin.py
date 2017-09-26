@@ -9,7 +9,9 @@ class AdminListContextMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super(AdminListContextMixin, self).get_context_data(**kwargs)
-        paginator = Paginator(self.get_queryset(), self.paginate_by)
+        queryset = self.get_queryset()
+        total_count = queryset.count()
+        paginator = Paginator(queryset, self.paginate_by)
         page = self.request.GET.get('page')
         try:
             object_list = paginator.page(page)
@@ -30,6 +32,7 @@ class AdminListContextMixin(object):
         context["search_by"] = self.collect_search_by(request=self.request)
         context["search_keyword"] = self.collect_search_keyword(request=self.request)
         context["search_advanced_params"] = self.collect_search_advanced_params(request=self.request)
+        context["search_param_url"] = self.collect_search_params(request=self.request)
         context["upload_link"] = self.get_upload_link()
         context["download_link"] = self.get_download_link()
         context["download_template_link"] = self.get_download_template_link()
@@ -40,6 +43,7 @@ class AdminListContextMixin(object):
         context["left_menu_items"] = self.get_left_menu_items()
         context["headers"] = self.get_table_headers()
         context["table_data"] = self.prepare_table_data(queryset=object_list)
+        context["total_count"] = total_count
         extra_context = self.get_extra_context(request=self.request, queryset=object_list)
         for key, item in extra_context.items():
             if key not in context.keys():

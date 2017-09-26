@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.query_utils import Q
 from django.template.defaultfilters import slugify
 from django.urls.base import reverse
 from book_rental.libs.downloader.category_downloader import CategoryDownloader
@@ -134,7 +135,17 @@ class ProductCategory(BaseEntity):
                         queryset = queryset.models.objects.none()
                 elif by == "code":
                     queryset = queryset.filter(code=keyword)
+                elif by == "name":
+                    queryset = queryset.filter(Q(name__icontains=keyword) | Q(name_2__icontains=keyword))
         return queryset
+
+    @classmethod
+    def get_search_by_options(cls):
+        return [
+            ("By ID", "id"),
+            ("By Code", "code"),
+            ("By Name", "name")
+        ]
 
         
         

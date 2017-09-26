@@ -36,7 +36,7 @@
         </div>
     </div>
 </div>
-<div style="padding-left: 20px;">
+<div style="padding-left: 20px; display: none;">
     <a href="#" id="id_admin_search_options">Advance Options</a>
 </div>
 <div id="id_admin_search_filters" style="padding: 5px 0px 0px 15px; display: none;">
@@ -102,6 +102,10 @@
 </div>
 {% endblock action_area %}
 {% block content_detail %}
+<div style="padding: 10px;">
+<span>Showing {{ page_obj.start_index }} - {{ page_obj.end_index }} of {{ total_count }} Items.</span>
+<span class="pull-right">Total: {{ total_count }}</span>
+</div>
 <table class="table">
 <thead>
 <tr>
