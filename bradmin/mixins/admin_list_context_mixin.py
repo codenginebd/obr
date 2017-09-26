@@ -36,6 +36,7 @@ class AdminListContextMixin(object):
         context["upload_link"] = self.get_upload_link()
         context["download_link"] = self.get_download_link()
         context["download_template_link"] = self.get_download_template_link()
+        context["delete_link"] = self.get_delete_link()
         context["activate_link"] = self.get_activate_link()
         context["deactivate_link"] = self.get_deactivate_link()
         context["upload_redirect"] = self.get_upload_redirect_url(request=self.request)

@@ -120,6 +120,10 @@ class ProductCategory(BaseEntity):
         return reverse("admin_category_deactivate_view")
 
     @classmethod
+    def get_delete_link(cls):
+        return reverse("admin_category_delete_view")
+
+    @classmethod
     def apply_search_filters(cls, request, queryset=None):
         if not queryset:
             queryset = cls.objects.all()
@@ -132,7 +136,7 @@ class ProductCategory(BaseEntity):
                         id_val = int(keyword)
                         queryset = queryset.filter(pk=id_val)
                     except:
-                        queryset = queryset.models.objects.none()
+                        queryset = cls.objects.none()
                 elif by == "code":
                     queryset = queryset.filter(code=keyword)
                 elif by == "name":

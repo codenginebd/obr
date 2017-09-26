@@ -24,7 +24,7 @@ class BaseEntity(models.Model, PermissionModelMixin, FilterModelMixin, TemplateP
     created_by = models.ForeignKey(User, related_name='+', null=True)
     last_updated_by = models.ForeignKey(User, related_name='+', null=True)
 
-    objects = BaseEntityModelManager()
+    objects = BaseEntityModelManager(filter={"is_deleted":False})
 
     def get_code_prefix(self):
         prefix = ''.join([c for c in self.__class__.__name__ if c.isupper()])
@@ -135,6 +135,10 @@ class BaseEntity(models.Model, PermissionModelMixin, FilterModelMixin, TemplateP
 
     @classmethod
     def get_upload_link(cls):
+        return ""
+
+    @classmethod
+    def get_delete_link(cls):
         return ""
 
     def save(self, force_insert=False, force_update=False, using=None,

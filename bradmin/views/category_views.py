@@ -4,6 +4,7 @@ from django.views.generic.base import TemplateView
 from bradmin.views.activate_base_view import ActivateBaseView
 from bradmin.views.base_list_view import BaseListView
 from bradmin.views.deactivate_base_view import DeactivateBaseView
+from bradmin.views.delete_base_view import DeleteBaseView
 from bradmin.views.download_base_view import DownloadBaseView
 from bradmin.views.upload_base_view import UploadBaseView
 from ecommerce.models.sales.category import ProductCategory
@@ -84,4 +85,8 @@ class AdminCategoryActivateView(ActivateBaseView):
 
 
 class AdminCategoryDeactivateView(DeactivateBaseView):
+    model = ProductCategory
+
+
+class AdminCategoryDeleteView(DeleteBaseView):
     model = ProductCategory

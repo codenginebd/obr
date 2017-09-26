@@ -38,6 +38,9 @@ class AdminActionButtonMixin(object):
             return download_link + "?template=1"
         return download_link
 
+    def get_delete_link(self):
+        return self.model.get_delete_link()
+
     def get_activate_link(self):
         return self.model.get_activate_link()
 

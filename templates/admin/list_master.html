@@ -64,7 +64,7 @@
     {% endif %}
     {% if show_delete %}
     <li style="margin-bottom: 6px;">
-        <a href="#" class="delete-btn btn btn-primary btn-md disabled">Delete</a>
+        <a href="#" data-url="{{ delete_link }}" class="delete-btn btn btn-primary btn-md disabled">Delete</a>
     </li>
     {% endif %}
     {% if show_activate %}
@@ -169,6 +169,30 @@ $(document).ready(function () {
     });
 
     $(".deactivate-btn").click(function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+        var id = "";
+        $("#id_data_table").find(".item-check").each(function (e) {
+            id += $(this).data("id") + ",";
+        });
+        $.ajax({
+            type: "GET",
+            url: url+"?id="+id,
+            success: function (data) {
+                if(data.status == "SUCCESSFUL") {
+                    window.location.reload();
+                }
+            },
+            error: function (jqxhr, status, error) {
+
+            }
+        })
+        .done(function (msg) {
+
+        });
+    });
+
+    $(".delete-btn").click(function (e) {
         e.preventDefault();
         var url = $(this).data("url");
         var id = "";
