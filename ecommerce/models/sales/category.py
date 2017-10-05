@@ -124,6 +124,10 @@ class ProductCategory(BaseEntity):
         return reverse("admin_category_delete_view")
 
     @classmethod
+    def get_list_url(cls):
+        return reverse("admin_category_view")
+
+    @classmethod
     def get_detail_link(cls, object_id):
         return reverse("admin_category_details_view", kwargs={'pk': object_id})
 

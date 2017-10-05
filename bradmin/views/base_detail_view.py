@@ -25,6 +25,7 @@ class BaseDetailView(AdminActionButtonMixin, DetailView):
         context["show_deactivate"] = self.show_deactivate()
         context["edit_link"] = self.get_edit_link(object_id=self.object.pk)
         context["delete_link"] = self.get_delete_link()
+        context["list_url"] = self.model.get_list_url()
         context["activate_link"] = self.get_activate_link()
         context["deactivate_link"] = self.get_deactivate_link()
         return context

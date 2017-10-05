@@ -158,6 +158,10 @@ class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
         return ""
 
     @classmethod
+    def get_list_url(cls):
+        return ""
+
+    @classmethod
     def get_download_link(cls):
         return ""
 

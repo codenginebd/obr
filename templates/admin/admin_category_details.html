@@ -38,6 +38,14 @@
                 {% if object.parent %}{{ object.parent }}{% else %}-{% endif %}
             </td>
         </tr>
+        <tr>
+            <th>
+                Is Active
+            </th>
+            <td>
+                {% if object.is_active %}Yes{% else %}No{% endif %}
+            </td>
+        </tr>
     </tbody>
 </table>
 {% endblock detail_content %}

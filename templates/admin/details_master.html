@@ -7,16 +7,22 @@
     <div class="col-md-12">
         <ul class="list-inline pull-right">
             {% if show_edit %}
-                <li><a class="btn-edit btn btn-default" data-url="{{ edit_link }}" href="#">Edit</a></li>
+                <li><a class="btn-edit btn btn-default {% if object.is_deleted %}disabled{% endif %}" data-url="{{ edit_link }}" href="#">Edit</a></li>
             {% endif %}
             {% if show_delete %}
-                <li><a class="btn-delete btn btn-default" data-url="{{ delete_link }}" href="#">Delete</a></li>
+                <li><a class="btn-delete btn btn-default {% if object.is_deleted %}disabled{% endif %}" data-url="{{ delete_link }}"
+                       data-id="{{ object.pk }}"
+                       data-redirect="{{ list_url }}" href="#">Delete</a></li>
             {% endif %}
             {% if show_activate %}
-                <li><a class="btn-activate btn btn-default" data-url="{{ activate_link }}" href="#">Activate</a></li>
+                <li><a class="btn-activate btn btn-default {% if object.is_active %}disabled{% endif %}"
+                       data-url="{{ activate_link }}"
+                       data-id="{{ object.pk }}" href="#">Activate</a></li>
             {% endif %}
             {% if show_deactivate %}
-                <li><a class="btn-deactivate btn btn-default" data-url="{{ deactivate_link }}" href="#">Deactivate</a></li>
+                <li><a class="btn-deactivate btn btn-default {% if not object.is_active %}disabled{% endif %}"
+                       data-url="{{ deactivate_link }}"
+                       data-id="{{ object.pk }}" href="#">Deactivate</a></li>
             {% endif %}
         </ul>
     </div>
@@ -30,3 +36,85 @@
     </div>
 </div>
 {% endblock content %}
+{% block bottom_script %}
+<script type="text/javascript">
+$(document).ready(function () {
+   $(".btn-delete").click(function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+        var id = $(this).data("id");
+        var redirect_url = $(this).data("redirect");
+        $.ajax({
+            type: "GET",
+            url: url+"?id="+id,
+            success: function (data) {
+                if(data.status == "SUCCESSFUL") {
+                    if(redirect_url != "")
+                    {
+                        window.location.href = redirect_url;
+                    }
+                    else {
+                        window.location.href = "/admin/"
+                    }
+                }
+            },
+            error: function (jqxhr, status, error) {
+
+            }
+        })
+        .done(function (msg) {
+
+        });
+    });
+
+    $(".btn-activate").click(function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+        var id = $(this).data("id");
+        $.ajax({
+            type: "GET",
+            url: url+"?id="+id,
+            success: function (data) {
+                if(data.status == "SUCCESSFUL") {
+                    window.location.reload();
+                }
+            },
+            error: function (jqxhr, status, error) {
+
+            }
+        })
+        .done(function (msg) {
+
+        });
+    });
+
+    $(".btn-deactivate").click(function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+        var id = $(this).data("id");
+        $.ajax({
+            type: "GET",
+            url: url+"?id="+id,
+            success: function (data) {
+                if(data.status == "SUCCESSFUL") {
+                    window.location.reload();
+                }
+            },
+            error: function (jqxhr, status, error) {
+
+            }
+        })
+        .done(function (msg) {
+
+        });
+    });
+
+    $(".btn-edit").click(function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+        window.location.href = url;
+    });
+
+});
+</script>
+{% endblock bottom_script %}
