@@ -124,6 +124,26 @@ class ProductCategory(BaseEntity):
         return reverse("admin_category_delete_view")
 
     @classmethod
+    def get_detail_link(cls, object_id):
+        return reverse("admin_category_details_view", kwargs={'pk': object_id})
+
+    @classmethod
+    def show_edit(cls):
+        return True
+
+    @classmethod
+    def show_delete(cls):
+        return True
+
+    @classmethod
+    def show_activate(cls):
+        return True
+
+    @classmethod
+    def show_deactivate(cls):
+        return True
+
+    @classmethod
     def apply_search_filters(cls, request, queryset=None):
         if not queryset:
             queryset = cls.objects.all()

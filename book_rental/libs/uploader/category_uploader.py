@@ -26,10 +26,8 @@ class CategoryUploader(object):
                     parent_name = row[index] if row[index] else None
 
                     if not category_name:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Category name is missing. Data %s' % str(row)
-                        error_log.save()
+                        ErrorLog.log(url='', stacktrace='Category name is missing. Data %s' % str(row),
+                                     context=ProductCategory.__name__)
                         continue
 
                     try:
@@ -38,16 +36,12 @@ class CategoryUploader(object):
                         show_name_2 = int(show_name_2)
                         if show_name_2 == 1:
                             if not category_name_2:
-                                error_log = ErrorLog()
-                                error_log.url = ''
-                                error_log.stacktrace = 'Category name 2 missing. Data: %s skipping...' % row
-                                error_log.save()
+                                ErrorLog.log(url='', stacktrace='Category name 2 missing. Data: %s skipping...' % row,
+                                             context=ProductCategory.__name__)
                                 continue
                     except Exception as exp:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Show name 2 must be number. Given %s. skipping...' % show_name_2
-                        error_log.save()
+                        ErrorLog.log(url='', stacktrace='Show name 2 must be number. Given %s. skipping...' % show_name_2,
+                                     context=ProductCategory.__name__)
                         continue
 
                     if code:
@@ -60,10 +54,9 @@ class CategoryUploader(object):
                                 if parent_categories.exists():
                                     parent_category = parent_categories.first()
                                 else:
-                                    error_log = ErrorLog()
-                                    error_log.url = ''
-                                    error_log.stacktrace = "Parent category doesn't exist. Skipping... Data: %s" % str(row)
-                                    error_log.save()
+                                    ErrorLog.log(url='',
+                                                 stacktrace="Parent category doesn't exist. Skipping... Data: %s" % str(row),
+                                                 context=ProductCategory.__name__)
                                     continue
 
                                 category_object.name = category_name
@@ -82,10 +75,9 @@ class CategoryUploader(object):
                                 category_object.save()
 
                         else:
-                            error_log = ErrorLog()
-                            error_log.url = ''
-                            error_log.stacktrace = "Invalid Category Code. Skipping... Data: %s" % str(row)
-                            error_log.save()
+                            ErrorLog.log(url='',
+                                         stacktrace="Invalid Category Code. Skipping... Data: %s" % str(row),
+                                         context=ProductCategory.__name__)
                             continue
                     else:
 
@@ -97,11 +89,10 @@ class CategoryUploader(object):
                                 if parent_categories.exists():
                                     parent_category = parent_categories.first()
                                 else:
-                                     error_log = ErrorLog()
-                                     error_log.url = ''
-                                     error_log.stacktrace = "Parent category doesn't exist. Skipping... Data: %s" % str(row)
-                                     error_log.save()
-                                     continue
+                                    ErrorLog.log(url='',
+                                                 stacktrace="Parent category doesn't exist. Skipping... Data: %s" % str(row),
+                                                 context=ProductCategory.__name__)
+                                    continue
                                 category_object.name = category_name
                                 if show_name_2 == 1:
                                     category_object.name_2 = category_name_2
@@ -121,10 +112,9 @@ class CategoryUploader(object):
                                 if parent_categories.exists():
                                     parent_category = parent_categories.first()
                                 else:
-                                    error_log = ErrorLog()
-                                    error_log.url = ''
-                                    error_log.stacktrace = "Parent category doesn't exist. Skipping... Data: %s" % str(row)
-                                    error_log.save()
+                                    ErrorLog.log(url='',
+                                                 stacktrace="Parent category doesn't exist. Skipping... Data: %s" % str(row),
+                                                 context=ProductCategory.__name__)
                                     continue
 
                                 category_object.name = category_name
@@ -142,4 +132,7 @@ class CategoryUploader(object):
                                 category_object.save()
             return True
         except Exception as exp:
+            ErrorLog.log(url='',
+                         stacktrace="Exception Occured. Message: %s" % str(exp),
+                         context=ProductCategory.__name__)
             return False

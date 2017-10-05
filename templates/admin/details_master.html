@@ -1,0 +1,32 @@
+{% extends "admin/master.html" %}
+{% load staticfiles %}
+{% block content %}
+{% block detail_action %}
+{% if details_action %}
+<div class="row" style="">
+    <div class="col-md-12">
+        <ul class="list-inline pull-right">
+            {% if show_edit %}
+                <li><a class="btn-edit btn btn-default" data-url="{{ edit_link }}" href="#">Edit</a></li>
+            {% endif %}
+            {% if show_delete %}
+                <li><a class="btn-delete btn btn-default" data-url="{{ delete_link }}" href="#">Delete</a></li>
+            {% endif %}
+            {% if show_activate %}
+                <li><a class="btn-activate btn btn-default" data-url="{{ activate_link }}" href="#">Activate</a></li>
+            {% endif %}
+            {% if show_deactivate %}
+                <li><a class="btn-deactivate btn btn-default" data-url="{{ deactivate_link }}" href="#">Deactivate</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endif %}
+{% endblock detail_action %}
+<div class="row">
+    <div class="col-md-12">
+        {% block detail_content %}
+        {% endblock detail_content %}
+    </div>
+</div>
+{% endblock content %}

@@ -3,25 +3,25 @@ from django.urls.base import reverse, resolve
 
 class AdminActionButtonMixin(object):
     def show_upload(self):
-        return False
+        return self.model.show_upload()
 
     def show_download(self):
-        return False
+        return self.model.show_download()
 
     def show_download_template(self):
-        return False
+        return self.model.show_download_template()
 
     def show_edit(self):
-        return False
+        return self.model.show_edit()
 
     def show_delete(self):
-        return False
+        return self.model.show_delete()
 
     def show_activate(self):
-        return False
+        return self.model.show_activate()
 
     def show_deactivate(self):
-        return False
+        return self.model.show_deactivate()
 
     def get_upload_link(self):
         return self.model.get_upload_link()
@@ -37,6 +37,9 @@ class AdminActionButtonMixin(object):
         if download_link:
             return download_link + "?template=1"
         return download_link
+
+    def get_edit_link(self, object_id):
+        return self.model.get_edit_link(object_id=object_id)
 
     def get_delete_link(self):
         return self.model.get_delete_link()

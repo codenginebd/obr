@@ -1,0 +1,43 @@
+{% extends "admin/details_master.html" %}
+{% load staticfiles %}
+{% block detail_content %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Category Details(ID: {{ object.pk }})
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>
+                Name(English)
+            </th>
+            <td>
+                {{ object.name }}
+            </td>
+            <th>
+                Name(Bangla)
+            </th>
+            <td>
+                {{ object.name_2 }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Show Bangla
+            </th>
+            <td>
+                Yes {{ object.show_2 }}
+            </td>
+            <th>
+                Parent Category
+            </th>
+            <td>
+                {% if object.parent %}{{ object.parent }}{% else %}-{% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock detail_content %}

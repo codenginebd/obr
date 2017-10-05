@@ -2,6 +2,7 @@ from django.urls.base import reverse
 from django.views.generic.base import TemplateView
 
 from bradmin.views.activate_base_view import ActivateBaseView
+from bradmin.views.base_detail_view import BaseDetailView
 from bradmin.views.base_list_view import BaseListView
 from bradmin.views.deactivate_base_view import DeactivateBaseView
 from bradmin.views.delete_base_view import DeleteBaseView
@@ -90,3 +91,12 @@ class AdminCategoryDeactivateView(DeactivateBaseView):
 
 class AdminCategoryDeleteView(DeleteBaseView):
     model = ProductCategory
+
+
+class AdminCategoryDetailsView(BaseDetailView):
+    model = ProductCategory
+
+    def get_template_names(self):
+        return [
+            "admin/admin_category_details.html"
+        ]

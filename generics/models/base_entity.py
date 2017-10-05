@@ -14,8 +14,8 @@ from generics.mixin.modelmixin.template_provider_mixin import TemplateProviderMi
 from generics.models.code_pointer import CodePointer
 
 
-class BaseEntity(models.Model, PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
-                 SearchableModelMixin):
+class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
+                 SearchableModelMixin, models.Model):
     code = models.CharField(max_length=50)
     date_created = models.BigIntegerField()
     last_updated = models.BigIntegerField()
@@ -25,6 +25,34 @@ class BaseEntity(models.Model, PermissionModelMixin, FilterModelMixin, TemplateP
     last_updated_by = models.ForeignKey(User, related_name='+', null=True)
 
     objects = BaseEntityModelManager(filter={"is_deleted":False})
+
+    @classmethod
+    def show_upload(cls):
+        return False
+
+    @classmethod
+    def show_download(cls):
+        return False
+
+    @classmethod
+    def show_download_template(cls):
+        return False
+
+    @classmethod
+    def show_edit(cls):
+        return False
+
+    @classmethod
+    def show_delete(cls):
+        return False
+
+    @classmethod
+    def show_activate(cls):
+        return False
+
+    @classmethod
+    def show_deactivate(cls):
+        return False
 
     def get_code_prefix(self):
         prefix = ''.join([c for c in self.__class__.__name__ if c.isupper()])
