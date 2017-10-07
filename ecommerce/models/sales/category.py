@@ -124,12 +124,28 @@ class ProductCategory(BaseEntity):
         return reverse("admin_category_delete_view")
 
     @classmethod
+    def get_create_link(cls):
+        return reverse("admin_category_create_view")
+
+    @classmethod
+    def get_edit_link_name(cls):
+        return "admin_category_edit_link_view"
+
+    @classmethod
+    def get_edit_link(cls, object_id):
+        return reverse("admin_category_edit_link_view", kwargs={"pk": object_id})
+
+    @classmethod
     def get_list_url(cls):
         return reverse("admin_category_view")
 
     @classmethod
     def get_detail_link(cls, object_id):
         return reverse("admin_category_details_view", kwargs={'pk': object_id})
+
+    @classmethod
+    def show_create(cls):
+        return True
 
     @classmethod
     def show_edit(cls):

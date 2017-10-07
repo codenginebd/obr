@@ -11,6 +11,9 @@ class AdminActionButtonMixin(object):
     def show_download_template(self):
         return self.model.show_download_template()
 
+    def show_create(self):
+        return self.model.show_create()
+
     def show_edit(self):
         return self.model.show_edit()
 
@@ -37,6 +40,12 @@ class AdminActionButtonMixin(object):
         if download_link:
             return download_link + "?template=1"
         return download_link
+
+    def get_create_link(self):
+        return self.model.get_create_link()
+
+    def get_edit_link_name(self):
+        return self.model.get_edit_link_name()
 
     def get_edit_link(self, object_id):
         return self.model.get_edit_link(object_id=object_id)

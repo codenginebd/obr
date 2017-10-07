@@ -1,18 +1,23 @@
 from django.urls.base import reverse
+
+from bradmin.views.base_detail_view import BaseDetailView
 from bradmin.views.base_list_view import BaseListView
 from ecommerce.models.sales.category import ProductCategory
 from logger.models.error_log import ErrorLog
 
 
-class AdminCategoryLogView(BaseListView):
+class AdminErrorLogView(BaseListView):
     model = ErrorLog
     template_name = "admin/errorlog_list.html"
 
     def get_left_menu_items(self):
         return {
             "All": reverse("admin_category_view"),
-            "Error Logs": reverse("admin_category_logs_view") + "?context=%s" % ProductCategory.__name__
+            "Error Logs": reverse("admin_error_logs_view") + "?context=%s" % ProductCategory.__name__
         }
+
+    def get_page_title(self):
+        return "Category Logs"
 
     def get_table_headers(self):
         return [
@@ -31,3 +36,15 @@ class AdminCategoryLogView(BaseListView):
                 ]
             ]
         return data
+
+
+class AdminErrorLogsDetailsView(BaseDetailView):
+    model = ErrorLog
+
+    def get_template_names(self):
+        return [
+            "admin/admin_error_log_details.html"
+        ]
+
+    def get_page_title(self):
+        return "Error Log Details | BDReads.com"

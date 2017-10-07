@@ -39,6 +39,12 @@
 {% block bottom_script %}
 <script type="text/javascript">
 $(document).ready(function () {
+
+    $(".btn-edit").click(function (e) {
+        var edit_url = $(this).data("url");
+        window.location.href = edit_url;
+    });
+
    $(".btn-delete").click(function (e) {
         e.preventDefault();
         var url = $(this).data("url");

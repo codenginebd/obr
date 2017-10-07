@@ -8,7 +8,7 @@ from bradmin.mixins.admin_list_search_mixin import AdminListSearchMixin
 
 class BaseListView(AdminActionButtonMixin, AdminListDataMixin, AdminListSearchMixin,
                    AdminListContextMixin, AdminListMenuMixin, ListView):
-    paginate_by = 5
+    paginate_by = 13
 
     def get_queryset(self):
         queryset = super(BaseListView, self).get_queryset()

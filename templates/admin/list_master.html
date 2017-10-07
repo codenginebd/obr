@@ -9,6 +9,9 @@
 <div class="row">
 <div class="col-md-6">
 <form id="id_search_form" action="" method="GET">
+{% if search_param_context %}
+<input type="hidden" name="context" value="{{ search_param_context }}"/>
+{% endif %}
 <div class="row">
     <div class="col-md-4" style="padding-right: 0px !important;">
         <div class="form-group">
@@ -57,6 +60,11 @@
 </div>
 <div class="col-md-6">
 <ul class="list-inline pull-right">
+    {% if show_create %}
+    <li style="margin-bottom: 6px;">
+        <a href="#" class="create-btn btn btn-primary btn-md" data-url="{{ create_link }}">Create</a>
+    </li>
+    {% endif %}
     {% if show_edit %}
     <li style="margin-bottom: 6px;">
         <a href="#" class="edit-btn btn btn-primary btn-md disabled">Edit</a>
@@ -123,7 +131,7 @@
 {% for row in table_data %}
 <tr>
 <td>
-    <label><input data-id="{{ row.0 }}" class="item-check" name="item-check-{{ forloop.counter0 }}" type="checkbox" name="list-item-checkbox"/></label>
+    <label><input data-edit-url="{% if edit_link_name %}{% url edit_link_name row.0 %}{% endif %}" data-id="{{ row.0 }}" class="item-check" name="item-check-{{ forloop.counter0 }}" type="checkbox" name="list-item-checkbox"/></label>
 </td>
 {% for col in row %}
 <td>
@@ -143,6 +151,22 @@
 {% block bottom_script %}
 <script type="text/javascript">
 $(document).ready(function () {
+
+    $(".create-btn").click(function (e) {
+        var url = $(this).data("url");
+        window.location.href = url;
+    });
+
+    $(".edit-btn").click(function (e) {
+        var url = "";
+        $("#id_data_table").find(".item-check").each(function (e) {
+            if($(this).is(":checked")) {
+                url = $(this).data("edit-url");
+                return;
+            }
+        });
+        window.location.href = url;
+    });
 
     $(".activate-btn").click(function (e) {
         e.preventDefault();

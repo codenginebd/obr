@@ -16,9 +16,13 @@ class BaseDetailView(AdminActionButtonMixin, DetailView):
     def get_context_object_name(self, obj):
         return super(BaseDetailView, self).get_context_object_name(obj=obj)
 
+    def get_page_title(self):
+        return "BDReads.com"
+
     def get_context_data(self, **kwargs):
         context = super(BaseDetailView, self).get_context_data(kwargs=kwargs)
         context["details_action"] = True
+        context["page_title"] = self.get_page_title()
         context["show_edit"] = self.show_edit()
         context["show_delete"] = self.show_delete()
         context["show_activate"] = self.show_activate()

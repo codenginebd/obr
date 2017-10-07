@@ -1,9 +1,12 @@
 from django.urls.base import reverse
 from django.views.generic.base import TemplateView
 
+from bradmin.forms.category_forms import AdminCategoryForm
 from bradmin.views.activate_base_view import ActivateBaseView
+from bradmin.views.base_create_view import BRBaseCreateView
 from bradmin.views.base_detail_view import BaseDetailView
 from bradmin.views.base_list_view import BaseListView
+from bradmin.views.base_update_view import BRBaseUpdateView
 from bradmin.views.deactivate_base_view import DeactivateBaseView
 from bradmin.views.delete_base_view import DeleteBaseView
 from bradmin.views.download_base_view import DownloadBaseView
@@ -28,18 +31,6 @@ class AdminCategoryListView(BaseListView):
     def show_download_template(self):
         return True
 
-    def show_edit(self):
-        return True
-
-    def show_delete(self):
-        return True
-
-    def show_activate(self):
-        return True
-
-    def show_deactivate(self):
-        return True
-
     def get_breadcumb(self, request):
         return [
 
@@ -51,7 +42,7 @@ class AdminCategoryListView(BaseListView):
     def get_left_menu_items(self):
         return {
             "All": reverse("admin_category_view"),
-            "Error Logs": reverse("admin_category_logs_view")+"?context=%s" % self.model.__name__
+            "Error Logs": reverse("admin_error_logs_view")+"?context=%s" % self.model.__name__
         }
 
     def get_table_headers(self):
@@ -71,6 +62,9 @@ class AdminCategoryListView(BaseListView):
                 ]
             ]
         return data
+
+    def get_page_title(self):
+        return "Category List | BDReads.com"
 
 
 class AdminCategoryUploadView(UploadBaseView):
@@ -100,3 +94,41 @@ class AdminCategoryDetailsView(BaseDetailView):
         return [
             "admin/admin_category_details.html"
         ]
+
+    def get_page_title(self):
+        return "Category Details | BDReads.com"
+
+
+class AdminCategoryCreateView(BRBaseCreateView):
+    form_class =AdminCategoryForm
+    template_name = "admin/admin_category_create.html"
+
+    def get_form_title(self):
+        return "Category Create"
+
+    def get_success_url(self):
+        return reverse("admin_category_view")
+
+    def get_cancel_url(self):
+        return reverse("admin_category_view")
+
+    def get_page_title(self):
+        return "Create Category | BDReads.com"
+
+
+class AdminCategoryUpdateView(BRBaseUpdateView):
+    form_class = AdminCategoryForm
+    queryset = ProductCategory.objects.all()
+    template_name = "admin/admin_category_create.html"
+
+    def get_form_title(self):
+        return "Category Update(#%s)" % self.object.pk
+
+    def get_success_url(self):
+        return reverse("admin_category_view")
+
+    def get_cancel_url(self):
+        return reverse("admin_category_view")
+
+    def get_page_title(self):
+        return "Update Category | BDReads.com"

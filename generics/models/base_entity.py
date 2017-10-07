@@ -39,6 +39,10 @@ class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
         return False
 
     @classmethod
+    def show_create(cls):
+        return False
+
+    @classmethod
     def show_edit(cls):
         return False
 
@@ -143,6 +147,14 @@ class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
 
     @classmethod
     def get_detail_link(cls, object_id):
+        return ""
+
+    @classmethod
+    def get_create_link(cls):
+        return ""
+
+    @classmethod
+    def get_edit_link_name(cls):
         return ""
 
     @classmethod

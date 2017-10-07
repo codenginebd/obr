@@ -1,18 +1,41 @@
 from django import forms
-from bdadmin.forms.base_form import BRBaseForm
+from bradmin.forms.base_model_form import BRBaseModelForm
+from bradmin.forms.fields.br_model_choice_field import BRBaseModelChoiceField
 from ecommerce.models.sales.category import ProductCategory
 
-class AdminCategoryForm(BRBaseForm):
+
+class CategoryModelChoiceField(BRBaseModelChoiceField):
+
+    def label_from_instance(self, obj):
+        if obj.name_2:
+            return obj.name + "(%s)" % obj.name_2
+        else:
+            return obj.name
+
+
+class AdminCategoryForm(BRBaseModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AdminCategoryForm, self).__init__(*args, **kwargs)
 
-    def make_parent_choices(self):
-        all_categories = ProductCategory.objects.values_list('pk', 'name', 'name_2', flat=True)
-        return tuple(tuple(a[0], a[1] + "(%s)" % a[2] if a[2] else a[1]))
-        
-    name = forms.CharField(label='Name(English)', required=True)
-    name_bn = forms.CharField(label='Name(Bangla)', required=False)
-    show_bn = forms.BooleanField(required=False)
-    parent = forms.ChoiceField(choices = make_parent_choices(), label="Parent Category", initial='', widget=forms.Select(), required=False)
+    parent = CategoryModelChoiceField(required=False, queryset=ProductCategory.objects.all(),
+                                      widget=forms.Select(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = ProductCategory
+        fields = ['name', 'name_2', 'show_name_2', 'parent', 'is_active']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'name_2': forms.TextInput(attrs={'class': 'form-control'}),
+            'show_name_2': forms.CheckboxInput(attrs={'class': 'form-control'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'name': "Name(English)",
+            'name_2': "Name(Bangla)",
+            'show_name_2': "Show Bangla",
+            'parent': "Parent",
+            'is_active': "Active",
+        }
+        fields_required = ['name']
     

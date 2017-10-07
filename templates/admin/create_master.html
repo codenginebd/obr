@@ -1,0 +1,49 @@
+{% extends "admin/master.html" %}
+{% load staticfiles %}
+{% block content %}
+{% block create_action %}
+{% if details_action %}
+<div class="row" style="">
+    <div class="col-md-12">
+        <ul class="list-inline pull-right">
+
+        </ul>
+    </div>
+</div>
+{% endif %}
+{% endblock create_action %}
+<style type="text/css">
+.form-container {
+    max-width: 600px;
+}
+.form-container input[type=checkbox] {
+    width: 20px;
+}
+.form-container th {
+    min-width: 180px;
+}
+</style>
+<div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8 form-container">
+        <form action="{{ submit_url }}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>{{ form_title }}</h3>
+        <hr/>
+        {% block form_content %}
+        {% endblock form_content %}
+        <div class="row">
+            <div class="col-md-6">
+                <button class="btn btn-primary" style="width: 100%;">Submit</button>
+            </div>
+            <div class="col-md-6">
+                <a href="{{ cancel_url }}" class="btn btn-danger" style="width: 100%;">Cancel</a>
+            </div>
+        </div>
+        </form>
+    </div>
+    <div class="col-md-2">
+    </div>
+</div>
+{% endblock content %}

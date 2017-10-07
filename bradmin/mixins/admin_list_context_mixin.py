@@ -7,6 +7,12 @@ class AdminListContextMixin(object):
     def get_extra_context(self, request, queryset):
         return {}
 
+    def get_page_title(self):
+        return "BDReads.com"
+
+    def get_search_param_context(self, request):
+        return request.GET.get("context", "")
+
     def get_context_data(self, **kwargs):
         context = super(AdminListContextMixin, self).get_context_data(**kwargs)
         queryset = self.get_queryset()
@@ -20,9 +26,11 @@ class AdminListContextMixin(object):
         except EmptyPage:
             object_list = paginator.page(paginator.num_pages)
         self.object_list = object_list
+        context["page_title"] = self.get_page_title()
         context["show_upload"] = self.show_upload()
         context["show_download"] = self.show_download()
         context["show_download_template"] = self.show_download_template()
+        context["show_create"] = self.show_create()
         context["show_edit"] = self.show_edit()
         context["show_delete"] = self.show_delete()
         context["show_activate"] = self.show_activate()
@@ -33,9 +41,12 @@ class AdminListContextMixin(object):
         context["search_keyword"] = self.collect_search_keyword(request=self.request)
         context["search_advanced_params"] = self.collect_search_advanced_params(request=self.request)
         context["search_param_url"] = self.collect_search_params(request=self.request)
+        context["search_param_context"] = self.get_search_param_context(request=self.request)
         context["upload_link"] = self.get_upload_link()
         context["download_link"] = self.get_download_link()
         context["download_template_link"] = self.get_download_template_link()
+        context["create_link"] = self.get_create_link()
+        context["edit_link_name"] = self.get_edit_link_name()
         context["delete_link"] = self.get_delete_link()
         context["activate_link"] = self.get_activate_link()
         context["deactivate_link"] = self.get_deactivate_link()

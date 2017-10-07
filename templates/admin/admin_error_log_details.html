@@ -5,45 +5,43 @@
     <thead>
         <tr>
             <th>
-                Category Details(ID: {{ object.pk }})
+                Error Log Details(ID: {{ object.pk }})
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <th>
-                Name(English)
+                ID
             </th>
             <td>
-                {{ object.name }}
-            </td>
-            <th>
-                Name(Bangla)
-            </th>
-            <td>
-                {{ object.name_2 }}
+                {{ object.pk }}
             </td>
         </tr>
         <tr>
             <th>
-                Show Bangla
+                URL
             </th>
             <td>
-                Yes {{ object.show_2 }}
-            </td>
-            <th>
-                Parent Category
-            </th>
-            <td>
-                {% if object.parent %}{{ object.parent.name }}{% else %}-{% endif %}
+                {{ object.url }}
             </td>
         </tr>
         <tr>
             <th>
-                Is Active
+                Context
             </th>
             <td>
-                {% if object.is_active %}Yes{% else %}No{% endif %}
+                {{ object.context }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Stacktrace
+            </th>
+            <td>
+                <pre>
+                {{ object.stacktrace }}
+                </pre>
             </td>
         </tr>
     </tbody>
