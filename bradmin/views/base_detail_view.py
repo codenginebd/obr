@@ -1,8 +1,9 @@
 from django.views.generic.detail import DetailView
 from bradmin.mixins.admin_action_button_mixin import AdminActionButtonMixin
+from bradmin.mixins.admin_list_menu_mixin import AdminListMenuMixin
 
 
-class BaseDetailView(AdminActionButtonMixin, DetailView):
+class BaseDetailView(AdminActionButtonMixin, AdminListMenuMixin, DetailView):
 
     def get_template_names(self):
         return []
@@ -32,4 +33,6 @@ class BaseDetailView(AdminActionButtonMixin, DetailView):
         context["list_url"] = self.model.get_list_url()
         context["activate_link"] = self.get_activate_link()
         context["deactivate_link"] = self.get_deactivate_link()
+        context["breadcumb"] = self.get_breadcumb(request=self.request)
+        context["left_menu_items"] = self.get_left_menu_items()
         return context

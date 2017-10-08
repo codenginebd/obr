@@ -95,6 +95,12 @@ class AdminCategoryDetailsView(BaseDetailView):
             "admin/admin_category_details.html"
         ]
 
+    def get_left_menu_items(self):
+        return {
+            "All": reverse("admin_category_view"),
+            "Error Logs": reverse("admin_error_logs_view") + "?context=%s" % self.model.__name__
+        }
+
     def get_page_title(self):
         return "Category Details | BDReads.com"
 

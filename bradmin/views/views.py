@@ -44,7 +44,8 @@ class AdminHomeView(AdminLoginRequired, TemplateView):
         return context
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name,context={})
+        return HttpResponseRedirect(reverse("admin_category_view"))
+        # return render(request, self.template_name,context={})
 
 class AdminLogoutView(View):
     def get(self, request, *args, **kwargs):

@@ -1,8 +1,10 @@
 from django.views.generic.edit import UpdateView
 from django.contrib import messages
 
+from bradmin.mixins.admin_list_menu_mixin import AdminListMenuMixin
 
-class BRBaseUpdateView(UpdateView):
+
+class BRBaseUpdateView(AdminListMenuMixin, UpdateView):
     def get_form_title(self):
         return "Update"
 
@@ -24,6 +26,8 @@ class BRBaseUpdateView(UpdateView):
         context["form_title"] = self.get_form_title()
         context["submit_url"] = self.get_submit_url()
         context["cancel_url"] = self.get_cancel_url()
+        context["breadcumb"] = self.get_breadcumb(request=self.request)
+        context["left_menu_items"] = self.get_left_menu_items()
         return context
 
     def get(self, request, *args, **kwargs):
