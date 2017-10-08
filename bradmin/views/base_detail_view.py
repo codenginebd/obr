@@ -20,6 +20,12 @@ class BaseDetailView(AdminActionButtonMixin, AdminListMenuMixin, DetailView):
     def get_page_title(self):
         return "BDReads.com"
 
+    def get_ttab_name(self):
+        return ""
+
+    def get_ltab_name(self):
+        return ""
+
     def get_context_data(self, **kwargs):
         context = super(BaseDetailView, self).get_context_data(kwargs=kwargs)
         context["details_action"] = True
@@ -35,4 +41,6 @@ class BaseDetailView(AdminActionButtonMixin, AdminListMenuMixin, DetailView):
         context["deactivate_link"] = self.get_deactivate_link()
         context["breadcumb"] = self.get_breadcumb(request=self.request)
         context["left_menu_items"] = self.get_left_menu_items()
+        context["ttab"] = self.get_ttab_name()
+        context["ltab"] = self.get_ltab_name()
         return context

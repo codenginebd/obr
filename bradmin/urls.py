@@ -6,12 +6,14 @@ from bradmin.views.admin_error_log_view import AdminErrorLogView, AdminErrorLogs
 from bradmin.views.category_views import AdminCategoryView, AdminCategoryUploadView, AdminCategoryListView, \
     AdminCategoryDownloadView, AdminCategoryActivateView, AdminCategoryDeactivateView, AdminCategoryDeleteView, \
     AdminCategoryDetailsView, AdminCategoryCreateView, AdminCategoryUpdateView
+from bradmin.views.publisher_views import AdminPublisherListView
 from bradmin.views.views import AdminHomeView, AdminLoginView, AdminLogoutView
 
 urlpatterns = [
     url(r'^$', AdminHomeView.as_view(), name='admin_home_view'),
     url(r'^login/', AdminLoginView.as_view(), name="admin_login_view"),
     url(r'^logout/', AdminLogoutView.as_view(), name="admin_logout_view"),
+    #Category
     url(r'^category/', AdminCategoryListView.as_view(), name="admin_category_view"),
     url(r'^category-upload/', AdminCategoryUploadView.as_view(), name="admin_category_upload_view"),
     url(r'^category-download/', AdminCategoryDownloadView.as_view(), name="admin_category_download_view"),
@@ -21,7 +23,8 @@ urlpatterns = [
     url(r'^category-details/(?P<pk>[0-9]+)/$', AdminCategoryDetailsView.as_view(), name="admin_category_details_view"),
     url(r'^category-create/$', AdminCategoryCreateView.as_view(), name="admin_category_create_view"),
     url(r'^category-edit/(?P<pk>[0-9]+)/$', AdminCategoryUpdateView.as_view(), name="admin_category_edit_link_view"),
-
+    #Publisher
+    url(r'^publishers/', AdminPublisherListView.as_view(), name="admin_publishers_view"),
     #Books
     url(r'^books/', AdminBooksView.as_view(), name="admin_books_view"),
     url(r'^books-upload/', AdminBooksUploadView.as_view(), name="admin_books_upload_view"),

@@ -36,6 +36,12 @@ class AdminCategoryListView(BaseListView):
 
         ]
 
+    def get_ttab_name(self):
+        return "category"
+
+    def get_ltab_name(self):
+        return "All"
+
     def apply_filter(self, request, queryset):
         return queryset
 
@@ -104,6 +110,9 @@ class AdminCategoryDetailsView(BaseDetailView):
     def get_page_title(self):
         return "Category Details | BDReads.com"
 
+    def get_ttab_name(self):
+        return "category"
+
 
 class AdminCategoryCreateView(BRBaseCreateView):
     form_class =AdminCategoryForm
@@ -120,6 +129,12 @@ class AdminCategoryCreateView(BRBaseCreateView):
 
     def get_page_title(self):
         return "Create Category | BDReads.com"
+
+    def get_left_menu_items(self):
+        return {
+            "All": reverse("admin_category_view"),
+            "Error Logs": reverse("admin_error_logs_view") + "?context=%s" % ProductCategory.__name__
+        }
 
 
 class AdminCategoryUpdateView(BRBaseUpdateView):
@@ -138,3 +153,9 @@ class AdminCategoryUpdateView(BRBaseUpdateView):
 
     def get_page_title(self):
         return "Update Category | BDReads.com"
+
+    def get_left_menu_items(self):
+        return {
+            "All": reverse("admin_category_view"),
+            "Error Logs": reverse("admin_error_logs_view") + "?context=%s" % ProductCategory.__name__
+        }

@@ -2,7 +2,11 @@
 {% load staticfiles %}
 {% block leftmenu %}
     {% for menu_title, menu_url in left_menu_items.items %}
-    <li><a href="{{ menu_url }}">{{ menu_title }}</a></li>
+    {% if ltab == menu_title %}
+        <li class="active"><a href="{{ menu_url }}">{{ menu_title }}</a></li>
+    {% else %}
+        <li><a href="{{ menu_url }}">{{ menu_title }}</a></li>
+    {% endif %}
     {% endfor %}
 {% endblock leftmenu %}
 {% block action_area %}

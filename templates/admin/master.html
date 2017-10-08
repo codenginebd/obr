@@ -9,6 +9,13 @@
     <title>{{ page_title }}</title>
     {% include "scripts/admin/stylesheets.html" %}
     {% include "scripts/admin/javascripts.html" %}
+    <style type="text/css">
+        .active > a {
+            font-weight: bold !important;
+            background-color: #19a8d2 !important;
+            color: white !important;
+        }
+    </style>
     {% block more_stylesheet %}
 
     {% endblock more_stylesheet %}
@@ -51,7 +58,7 @@
       <li {% if ttab == "category" %}class="active" {% endif %}>
           <a href="{% url "admin_category_view" %}">Category</a>
       </li>
-      <li><a href="#">Publishers</a></li>
+      <li {% if ttab == "publisher" %}class="active" {% endif %}><a href="{% url "admin_publishers_view" %}">Publishers</a></li>
       <li {% if ttab == "books" %}class="active" {% endif %}><a href="{% url "admin_books_view" %}">Books</a></li>
       <li {% if ttab == "inventory" %}class="active" {% endif %}><a href="#">Inventory</a></li>
       <li {% if ttab == "orders" %}class="active" {% endif %}><a href="#">Orders</a></li>
@@ -73,7 +80,7 @@
 </div>
 {% block content %}
 <div class="row" style="min-height: 400px">
-<div class="col-md-2">
+<div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
     <ul class="nav">
         {% block leftmenu %}
 

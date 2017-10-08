@@ -1,6 +1,11 @@
 {% extends "admin/master.html" %}
 {% load staticfiles %}
-{% block content %}
+{% block leftmenu %}
+    {% for menu_title, menu_url in left_menu_items.items %}
+    <li><a href="{{ menu_url }}">{{ menu_title }}</a></li>
+    {% endfor %}
+{% endblock leftmenu %}
+{% block content_detail %}
 {% block create_action %}
 {% if details_action %}
 <div class="row" style="">
@@ -24,9 +29,7 @@
 }
 </style>
 <div class="row">
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-8 form-container">
+    <div class="col-md-10 form-container">
         <form action="{{ submit_url }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <h3>{{ form_title }}</h3>
@@ -46,4 +49,4 @@
     <div class="col-md-2">
     </div>
 </div>
-{% endblock content %}
+{% endblock content_detail %}

@@ -13,6 +13,12 @@ class AdminListContextMixin(object):
     def get_search_param_context(self, request):
         return request.GET.get("context", "")
 
+    def get_ttab_name(self):
+        return ""
+
+    def get_ltab_name(self):
+        return ""
+
     def get_context_data(self, **kwargs):
         context = super(AdminListContextMixin, self).get_context_data(**kwargs)
         queryset = self.get_queryset()
@@ -56,6 +62,8 @@ class AdminListContextMixin(object):
         context["headers"] = self.get_table_headers()
         context["table_data"] = self.prepare_table_data(queryset=object_list)
         context["total_count"] = total_count
+        context["ttab"] = self.get_ttab_name()
+        context["ltab"] = self.get_ltab_name()
         extra_context = self.get_extra_context(request=self.request, queryset=object_list)
         for key, item in extra_context.items():
             if key not in context.keys():
