@@ -165,22 +165,14 @@ class ProductCategory(BaseEntity):
 
     @classmethod
     def apply_search_filters(cls, request, queryset=None):
+        queryset = super(ProductCategory, cls).apply_search_filters(request, queryset=queryset)
         if not queryset:
             queryset = cls.objects.all()
         by = request.GET.get("by", None)
-        if by:
-            keyword = request.GET.get("keyword", None)
-            if keyword:
-                if by == "id":
-                    try:
-                        id_val = int(keyword)
-                        queryset = queryset.filter(pk=id_val)
-                    except:
-                        queryset = cls.objects.none()
-                elif by == "code":
-                    queryset = queryset.filter(code=keyword)
-                elif by == "name":
-                    queryset = queryset.filter(Q(name__icontains=keyword) | Q(name_2__icontains=keyword))
+        keyword = request.GET.get('keyword', None)
+        if by and keyword:
+            if by == "name":
+                queryset = queryset.filter(Q(name__icontains=keyword) | Q(name_2__icontains=keyword))
         return queryset
 
     @classmethod

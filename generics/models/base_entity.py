@@ -142,7 +142,18 @@ class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
     def apply_search_filters(cls, request, queryset=None):
         if not queryset:
             queryset = cls.objects.all()
-
+        by = request.GET.get("by", None)
+        if by:
+            keyword = request.GET.get("keyword", None)
+            if keyword:
+                if by == "id":
+                    try:
+                        id_val = int(keyword)
+                        queryset = queryset.filter(pk=id_val)
+                    except:
+                        queryset = cls.objects.none()
+                elif by == "code":
+                    queryset = queryset.filter(code=keyword)
         return queryset
 
     @classmethod

@@ -143,6 +143,12 @@
 </td>
 {% endfor %}
 </tr>
+{% empty %}
+<tr>
+<td>
+    No data found.
+</td>
+</tr>
 {% endfor %}
 <tr>
     <td {% if table_data %}colspan="{{ table_data.0|length }}"{% else %}{% endif %} style="text-align:center;">

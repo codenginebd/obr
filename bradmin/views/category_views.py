@@ -98,7 +98,7 @@ class AdminCategoryDetailsView(BaseDetailView):
 
     def get_template_names(self):
         return [
-            "admin/admin_category_details.html"
+            "admin/admin_publisher_details.html"
         ]
 
     def get_left_menu_items(self):

@@ -1,0 +1,63 @@
+{% extends "admin/details_master.html" %}
+{% load staticfiles %}
+{% block detail_content %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Publisher Details(ID: {{ object.pk }})
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>
+                Name(English)
+            </th>
+            <td>
+                {{ object.name }}
+            </td>
+            <th>
+                Name(Bangla)
+            </th>
+            <td>
+                {{ object.name_2 }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Description(English)
+            </th>
+            <td>
+                {{ object.description }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Description(Bangla)
+            </th>
+            <td>
+                {{ object.description_2 }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Show Bangla
+            </th>
+            <td>
+                {% if object.show_2 %}
+                    Yes
+                {% else %}
+                    No
+                {% endif %}
+            </td>
+            <th>
+                Is Active
+            </th>
+            <td>
+                {% if object.is_active %}Yes{% else %}No{% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock detail_content %}
