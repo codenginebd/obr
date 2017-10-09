@@ -109,47 +109,47 @@ class AdminBookPublisherDetailsView(BaseDetailView):
 
 
 class AdminBookPublisherCreateView(BRBaseCreateView):
-    form_class =BookPublisher
-    template_name = "admin/admin_category_create.html"
+    form_class =AdminBookPublisherForm
+    template_name = "admin/publisher/admin_publisher_create.html"
 
     def get_form_title(self):
-        return "Category Create"
+        return "Publisher Create"
 
     def get_success_url(self):
-        return reverse("admin_category_view")
+        return reverse("admin_publishers_view")
 
     def get_cancel_url(self):
-        return reverse("admin_category_view")
+        return reverse("admin_publishers_view")
 
     def get_page_title(self):
-        return "Create Category | BDReads.com"
+        return "Create Publisher | BDReads.com"
 
     def get_left_menu_items(self):
         return {
-            "All": reverse("admin_category_view"),
-            "Error Logs": reverse("admin_error_logs_view") + "?context=%s" % ProductCategory.__name__
+            "All": reverse("admin_publishers_view"),
+            "Error Logs": reverse("admin_error_logs_view") + "?context=%s" % BookPublisher.__name__
         }
 
 
 class AdminBookPublisherUpdateView(BRBaseUpdateView):
     form_class = AdminBookPublisherForm
     queryset = BookPublisher.objects.all()
-    template_name = "admin/admin_category_create.html"
+    template_name = "admin/publisher/admin_publisher_create.html"
 
     def get_form_title(self):
-        return "Category Update(#%s)" % self.object.pk
+        return "Publisher Update(#%s)" % self.object.pk
 
     def get_success_url(self):
-        return reverse("admin_category_view")
+        return reverse("admin_publishers_view")
 
     def get_cancel_url(self):
-        return reverse("admin_category_view")
+        return reverse("admin_publishers_view")
 
     def get_page_title(self):
-        return "Update Category | BDReads.com"
+        return "Update Publisher | BDReads.com"
 
     def get_left_menu_items(self):
         return {
-            "All": reverse("admin_category_view"),
-            "Error Logs": reverse("admin_error_logs_view") + "?context=%s" % ProductCategory.__name__
+            "All": reverse("admin_publishers_view"),
+            "Error Logs": reverse("admin_error_logs_view") + "?context=%s" % BookPublisher.__name__
         }

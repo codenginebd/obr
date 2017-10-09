@@ -128,6 +128,18 @@ class BookPublisher(BaseEntity, ThumbnailModelMixin):
         return reverse("admin_book_publisher_details_view", kwargs={'pk': object_id})
 
     @classmethod
+    def get_create_link(cls):
+        return reverse("admin_book_publisher_create_view")
+
+    @classmethod
+    def get_edit_link_name(cls):
+        return "admin_book_publisher_edit_link_view"
+
+    @classmethod
+    def get_edit_link(cls, object_id):
+        return reverse("admin_book_publisher_edit_link_view", kwargs={"pk": object_id})
+
+    @classmethod
     def get_search_by_options(cls):
         return [
             ("By ID", "id"),

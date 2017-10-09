@@ -8,7 +8,8 @@ from bradmin.views.category_views import AdminCategoryView, AdminCategoryUploadV
     AdminCategoryDetailsView, AdminCategoryCreateView, AdminCategoryUpdateView
 from bradmin.views.publisher_views import AdminPublisherListView, AdminBookPublisherUploadView, \
     AdminBookPublisherDownloadView, AdminBookPublisherActivateView, AdminBookPublisherDeactivateView, \
-    AdminBookPublisherDeleteView, AdminBookPublisherDetailsView
+    AdminBookPublisherDeleteView, AdminBookPublisherDetailsView, AdminBookPublisherCreateView, \
+    AdminBookPublisherUpdateView
 from bradmin.views.views import AdminHomeView, AdminLoginView, AdminLogoutView
 
 urlpatterns = [
@@ -33,8 +34,8 @@ urlpatterns = [
     url(r'^publishers-deactivate/', AdminBookPublisherDeactivateView.as_view(), name="admin_book_publisher_deactivate_view"),
     url(r'^publishers-delete/', AdminBookPublisherDeleteView.as_view(), name="admin_book_publisher_delete_view"),
     url(r'^publishers-details/(?P<pk>[0-9]+)/$', AdminBookPublisherDetailsView.as_view(), name="admin_book_publisher_details_view"),
-    url(r'^publishers-create/$', AdminCategoryCreateView.as_view(), name="admin_book_publisher_create_view"),
-    url(r'^publishers-edit/(?P<pk>[0-9]+)/$', AdminCategoryUpdateView.as_view(), name="admin_book_publisher_edit_link_view"),
+    url(r'^publishers-create/$', AdminBookPublisherCreateView.as_view(), name="admin_book_publisher_create_view"),
+    url(r'^publishers-edit/(?P<pk>[0-9]+)/$', AdminBookPublisherUpdateView.as_view(), name="admin_book_publisher_edit_link_view"),
     #Books
     url(r'^books/', AdminBooksView.as_view(), name="admin_books_view"),
     url(r'^books-upload/', AdminBooksUploadView.as_view(), name="admin_books_upload_view"),
