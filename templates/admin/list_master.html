@@ -1,11 +1,11 @@
 {% extends "admin/master.html" %}
 {% load staticfiles %}
 {% block leftmenu %}
-    {% for menu_title, menu_url in left_menu_items.items %}
-    {% if ltab == menu_title %}
-        <li class="active"><a href="{{ menu_url }}">{{ menu_title }}</a></li>
+    {% for menu_item in left_menu_items %}
+    {% if ltab == menu_item.0 %}
+        <li class="active"><a href="{{ menu_item.1 }}">{{ menu_item.0 }}</a></li>
     {% else %}
-        <li><a href="{{ menu_url }}">{{ menu_title }}</a></li>
+        <li><a href="{{ menu_item.1 }}">{{ menu_item.0 }}</a></li>
     {% endif %}
     {% endfor %}
 {% endblock leftmenu %}

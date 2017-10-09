@@ -58,7 +58,9 @@ class AdminListContextMixin(object):
         context["deactivate_link"] = self.get_deactivate_link()
         context["upload_redirect"] = self.get_upload_redirect_url(request=self.request)
         context["breadcumb"] = self.get_breadcumb(request=self.request)
-        context["left_menu_items"] = self.get_left_menu_items()
+        left_menu = self.get_left_menu_items()
+        left_menu = sorted(left_menu.items())
+        context["left_menu_items"] = left_menu
         context["headers"] = self.get_table_headers()
         context["table_data"] = self.prepare_table_data(queryset=object_list)
         context["total_count"] = total_count

@@ -12,12 +12,17 @@ class AdminErrorLogView(BaseListView):
     template_name = "admin/errorlog_list.html"
 
     def get_left_menu_items(self):
+        context = self.request.GET.get('context', None)
         error_log_url = reverse("admin_error_logs_view")
-        if self.request.GET.get('context', None):
+        if context:
             error_log_url +=  "?context=%s" % self.request.GET.get('context')
-
+        all_url = ""
+        if context == ProductCategory.__name__:
+            all_url = reverse("admin_category_view")
+        elif context == BookPublisher.__name__:
+            all_url = reverse("admin_publishers_view")
         return {
-            "All": reverse("admin_category_view"),
+            "All": all_url,
             "Error Logs": error_log_url
         }
 
