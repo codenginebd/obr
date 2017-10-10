@@ -71,12 +71,23 @@ class BookPublisher(BaseEntity, ThumbnailModelMixin):
                 "description(Bangla)", "Show Bangla", "Image", "Email(s)", "Phone(s)"]
 
     @classmethod
+    def get_table_headers(cls):
+        return [
+            "ID", "Code", "Name(English)", "Name(Bangla)", "Active?", "Show Bangla", "Details"
+        ]
+
+    @classmethod
     def prepare_table_data(cls, queryset):
-        table_data = []
+        data = []
         for q_object in queryset:
-            table_data += [[q_object.code, q_object.name, q_object.name_2, q_object.description, q_object.description_2,
-                            "Yes" if q_object.show_2 else "No"]]
-        return table_data
+            data += [
+                [
+                    q_object.pk, q_object.code, q_object.name, q_object.name_2, "Yes" if q_object.is_active else "No",
+                    "Yes" if q_object.show_2 else "No",
+                    '<a href="%s">Details</a>' % q_object.get_detail_link(object_id=q_object.pk)
+                ]
+            ]
+        return data
 
     @classmethod
     def prepare_download_template_data(cls, queryset):
@@ -141,11 +152,11 @@ class BookPublisher(BaseEntity, ThumbnailModelMixin):
 
     @classmethod
     def get_search_by_options(cls):
-        return [
-            ("By ID", "id"),
-            ("By Code", "code"),
+        search_by_options = super(BookPublisher, cls).get_search_by_options()
+        search_by_options += [
             ("By Name", "name")
         ]
+        return search_by_options
 
     @classmethod
     def apply_search_filters(cls, request, queryset=None):

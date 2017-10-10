@@ -76,12 +76,24 @@ class ProductCategory(BaseEntity):
         return ["Code", "Name(English)", "Name(Bangla)", "Show Bangla", "Parent"]
 
     @classmethod
+    def get_table_headers(cls):
+        return [
+            "ID", "Code", "Name(English)", "Name(Bangla)", "Active?", "Show Bangla", "Parent", "Details"
+        ]
+
+    @classmethod
     def prepare_table_data(cls, queryset):
-        table_data = []
+        tdata = []
         for q_object in queryset:
-            table_data += [[q_object.code, q_object.name, q_object.name_2,
-                            "Yes" if q_object.show_name_2 else "No", q_object.parent.name if q_object.parent else "-"]]
-        return table_data
+            tdata += [
+                [
+                    q_object.pk, q_object.code, q_object.name, q_object.name_2, "Yes" if q_object.is_active else "No",
+                    "Yes" if q_object.show_name_2 else "No",
+                    q_object.parent.name if q_object.parent else "-",
+                    '<a href="%s">Details</a>' % q_object.get_detail_link(object_id=q_object.pk)
+                ]
+            ]
+        return tdata
 
     @classmethod
     def prepare_download_template_data(cls, queryset):
@@ -185,7 +197,7 @@ class ProductCategory(BaseEntity):
 
     @classmethod
     def get_datefields(cls):
-        return ["name"]
+        return []
 
         
         

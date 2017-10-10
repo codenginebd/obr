@@ -46,23 +46,6 @@ class AdminPublisherListView(BaseListView):
             "Error Logs": reverse("admin_error_logs_view")+"?context=%s" % self.model.__name__
         }
 
-    def get_table_headers(self):
-        return [
-            "ID", "Code", "Name(English)", "Name(Bangla)", "Active?", "Show Bangla", "Details"
-        ]
-
-    def prepare_table_data(self, queryset):
-        data = []
-        for q_object in queryset:
-            data += [
-                [
-                    q_object.pk, q_object.code, q_object.name, q_object.name_2, q_object.is_active,
-                    True if q_object.show_2 else False,
-                    '<a href="%s">Details</a>' % q_object.get_detail_link(object_id=q_object.pk)
-                ]
-            ]
-        return data
-
     def get_page_title(self):
         return "Publisher List | BDReads.com"
 
