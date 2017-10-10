@@ -5,6 +5,7 @@ from django.db import models
 
 from book_rental.libs.downloader.downloader import Downloader
 from book_rental.libs.uploader.uploader import Uploader
+from bradmin.enums import ViewAction
 from engine.clock.Clock import Clock
 from generics.manager.modelmanager.base_entity_model_manager import BaseEntityModelManager
 from generics.mixin.modelmixin.filter_model_mixin import FilterModelMixin
@@ -25,6 +26,22 @@ class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
     last_updated_by = models.ForeignKey(User, related_name='+', null=True)
 
     objects = BaseEntityModelManager(filter={"is_deleted":False})
+
+    @classmethod
+    def get_view_actions(cls):
+        return {
+            ViewAction.CREATE: "",
+            ViewAction.EDIT: "",
+            ViewAction.EDIT_NAME: "",
+            ViewAction.DELETE: "",
+            ViewAction.UPLOAD: "",
+            ViewAction.DOWNLOAD: "",
+            ViewAction.DOWNLOAD_TEMPLATE: "",
+            ViewAction.ACTIVATE: "",
+            ViewAction.DEACTIVATE: "",
+            ViewAction.APPROVE: "",
+            ViewAction.REJECT: ""
+        }
 
     @classmethod
     def show_upload(cls):
@@ -137,6 +154,10 @@ class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
             ("By ID", "id"),
             ("By Code", "code")
         ]
+
+    @classmethod
+    def get_datefields(cls):
+        return []
 
     @classmethod
     def apply_search_filters(cls, request, queryset=None):

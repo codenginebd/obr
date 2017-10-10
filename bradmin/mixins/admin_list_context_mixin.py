@@ -3,6 +3,8 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from logger.models.error_log import ErrorLog
 
 
+
+
 class AdminListContextMixin(object):
     def get_extra_context(self, request, queryset):
         return {}
@@ -18,6 +20,14 @@ class AdminListContextMixin(object):
 
     def get_ltab_name(self):
         return ""
+
+    def collect_search_filters(self, request):
+        search_by_options = [name for (title, name) in self.model.get_search_by_options()]
+        filters = {}
+        for key, value in request.GET.items():
+            if key in search_by_options:
+                filters[key] = value
+        return filters
 
     def get_context_data(self, **kwargs):
         context = super(AdminListContextMixin, self).get_context_data(**kwargs)
@@ -42,10 +52,9 @@ class AdminListContextMixin(object):
         context["show_activate"] = self.show_activate()
         context["show_deactivate"] = self.show_deactivate()
         context["search_by_options"] = self.get_search_by_options()
+        context["search_datefields"] = self.model.get_datefields()
         context["advanced_search_options"] = self.get_advanced_search_options()
-        context["search_by"] = self.collect_search_by(request=self.request)
-        context["search_keyword"] = self.collect_search_keyword(request=self.request)
-        context["search_advanced_params"] = self.collect_search_advanced_params(request=self.request)
+        context["search_filters"] = self.collect_search_filters(request=self.request)
         context["search_param_url"] = self.collect_search_params(request=self.request)
         context["search_param_context"] = self.get_search_param_context(request=self.request)
         context["upload_link"] = self.get_upload_link()
@@ -74,4 +83,14 @@ class AdminListContextMixin(object):
                 ErrorLog.log(url='',
                              stacktrace='%s cannot be used as key as it is already in use in the parent context',
                              context='%s' % self.model.__name__)
+        # view_actions = self.get_view_actions()
+        # print(view_actions)
+        # for key, item in view_actions.items():
+        #     if key not in context.keys():
+        #         context[key] = item
+        #     else:
+        #         ErrorLog.log(url='',
+        #                      stacktrace='%s cannot be used as key as it is already in use in the parent context',
+        #                      context='%s' % self.model.__name__)
+        # print(context.get("show_create"))
         return context

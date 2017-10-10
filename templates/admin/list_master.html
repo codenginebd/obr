@@ -12,56 +12,48 @@
 {% block action_area %}
 <div class="row">
 <div class="col-md-6">
-<form id="id_search_form" action="" method="GET">
-{% if search_param_context %}
-<input type="hidden" name="context" value="{{ search_param_context }}"/>
-{% endif %}
+
 <div style="padding: 10px; border: 1px solid #bce8f1; border-radius: 10px; ">
 <div class="row">
     <div class="col-md-4" style="padding-right: 0px !important;">
         <div class="form-group">
-            <select class="form-control" name="by" style="height: 42px !important;">
+            <select id="id_field_option_by" class="form-control" name="by" style="height: 42px !important;">
                 {% for option in search_by_options %}
-                    {% if option.1 == search_by %}
-                    <option selected value="{{ option.1 }}">
+                    <option {% if option.1 in search_datefields %}data-datefield="true"{% endif %} value="{{ option.1 }}">
                       {{ option.0 }}
                     </option>
-                    {% else %}
-                    <option value="{{ option.1 }}">
-                      {{ option.0 }}
-                    </option>
-                    {% endif %}
                 {% endfor %}
             </select>
         </div>
     </div>
     <div class="col-md-8" style="padding-left: 0px !important;">
-{#        <div class="input-group add-on">#}
-{#          <input class="form-control" style="width: 235px; padding: 20px !important; " {% if search_keyword %}value="{{ search_keyword }}" {% endif %} placeholder="Type to add filter..." name="keyword" id="id_search_term" type="text">#}
-{#          <div class="input-group-btn">#}
-{#            <button title="Add Search Filter" class="btn btn-default" style="padding: 10px;"><i class="glyphicon glyphicon-plus"></i></button>#}
-{#          </div>#}
-{#        </div>#}
-        <div class="input-group add-on">
-          <input class="form-control" style="width: 117px; padding: 20px !important; " {% if search_keyword1 %}value="{{ search_keyword1 }}" {% endif %} placeholder="From Date" name="keyword" id="id_search_term1" type="text">
-         <input class="form-control" style="width: 118px; padding: 20px !important; " {% if search_keyword %}value="{{ search_keyword2 }}" {% endif %} placeholder="To Date" name="keyword" id="id_search_term2" type="text">
+        <div id="id_field_input_single" class="input-group add-on">
+          <input class="form-control" style="width: 235px; padding: 20px !important; " {% if search_keyword %}value="{{ search_keyword }}" {% endif %} placeholder="Type to add filter..." name="keyword" id="id_search_term" type="text">
           <div class="input-group-btn">
-            <button title="Add Search Filter" class="btn btn-default" style="padding: 10px;"><i class="glyphicon glyphicon-plus"></i></button>
+            <button id="id_btn_add1" title="Add Search Filter" class="btn btn-default" style="padding: 10px;"><i class="glyphicon glyphicon-plus"></i></button>
+          </div>
+        </div>
+        <div id="id_field_input_date" class="input-group add-on" style="display: none;">
+          <input class="form-control" style="width: 113px; padding: 20px !important; " {% if search_keyword1 %}value="{{ search_keyword1 }}" {% endif %} placeholder="From Date" name="keyword" id="id_search_term1" type="text">
+         <input class="form-control" style="width: 114px; padding: 20px !important; " {% if search_keyword %}value="{{ search_keyword2 }}" {% endif %} placeholder="To Date" name="keyword" id="id_search_term2" type="text">
+          <div class="input-group-btn">
+            <button id="id_btn_add2" title="Add Search Filter" class="btn btn-default" style="padding: 10px;"><i class="glyphicon glyphicon-plus"></i></button>
           </div>
         </div>
     </div>
 </div>
+<form id="id_search_form" action="" method="GET">
+{% if search_param_context %}
+<input type="hidden" name="context" value="{{ search_param_context }}"/>
+{% endif %}
 <div class="row">
     <div class="col-md-12" style="padding-right: 0px !important;">
-        <p style="padding: 10px; border: 1px solid #bce8f1; border-radius: 10px; margin-right: 13px;">
-            <label class="search_tag" style="padding: 10px; color: grey; border: 1px solid #9d9d9d; border-radius: 10px; background-color: #f9f6f6; "
-                   class="badge">
-                <input type="hidden" name="id" value="1"/>
-                <span>Id: 1</span> <i style="cursor: pointer;" class="search_tag_remove glyphicon glyphicon-remove"></i></label>
-            <label class="search_tag" style="padding: 10px; color: grey; border: 1px solid #9d9d9d; border-radius: 10px; background-color: #f9f6f6; "
-                   class="badge">
-                <input type="hidden" name="name" value="Humayun"/>
-                <span>Name: Humayun</span> <i class="search_tag_remove glyphicon glyphicon-remove"></i></label>
+        <p id="id_search_tag_plate" style="padding: 10px; border: 1px solid #bce8f1; border-radius: 10px; margin-right: 13px;">
+            {% for key, value in search_filters.items %}
+                <label class="search_tag" style="padding: 10px; color: grey; border: 1px solid #9d9d9d; border-radius: 10px;
+                background-color: #f9f6f6; "><input type="hidden" name="{{ key }}" value="{{ value }}"><span>{{ key }}: {{ value }}</span>
+                    <i style="cursor: pointer;" class="search_tag_remove glyphicon glyphicon-remove"></i></label>
+            {% endfor %}
         </p>
     </div>
 </div>
@@ -70,23 +62,6 @@
     </div>
     <div class="col-md-8" style="padding-left: 0px !important;">
         <button style="width: 140px; float: right;" type="submit" class="btn btn-danger"><i style="position: relative; top: 3px;" class="glyphicon glyphicon-search"></i> <span>Apply Search </span></button>
-    </div>
-</div>
-<div style="padding-left: 20px; display: none;">
-    <a href="#" id="id_admin_search_options">Advance Options</a>
-</div>
-<div id="id_admin_search_filters" style="padding: 5px 0px 0px 15px; display: none;">
-    <ul class="list-inline">
-        {% for advance_option in advanced_search_options %}
-            <li>
-                <label>
-                    <input name="{{ advance_option.1 }}" type="checkbox" value="1"/> {{ advance_option.0 }}
-                </label>
-            </li>
-        {% endfor %}
-    </ul>
-    <div>
-        <a href="#" class="hide_admin_search_filters">Hide</a>
     </div>
 </div>
 </div>
@@ -191,17 +166,60 @@
 {% block bottom_script %}
 <script type="text/javascript">
 $(document).ready(function () {
-    
-    $("#id_search_term1").datetimepicker({
-        format:'YYYY-MM-DD',
-			icons: {
-				time: "fa fa-clock-o",
-				date: "fa fa-calendar",
-				up: "fa fa-arrow-up",
-				down: "fa fa-arrow-down"
-			}
-		})
 
+    $("#id_field_option_by").change(function (e) {
+        var date_field = $("#id_field_option_by option:selected").data("datefield");
+        if(date_field == true) {
+            $("#id_field_input_single").hide();
+            $("#id_field_input_date").show();
+        }
+        else {
+            $("#id_field_input_single").show();
+            $("#id_field_input_date").hide();
+        }
+    });
+    
+    $("#id_btn_add1, #id_btn_add2").click(function (e) {
+        e.preventDefault();
+        var tag = '<label class="search_tag" style="padding: 10px; color: grey; border: 1px solid #9d9d9d; ' +
+                'border-radius: 10px; background-color: #f9f6f6; "><input type="hidden" name="id" value="1">' +
+                '<span>Id: 1</span> <i style="cursor: pointer;" class="search_tag_remove glyphicon glyphicon-remove"></i></label>';
+        if($("#id_field_input_single").is(":visible")) {
+            var option_name = $("#id_field_option_by option:selected").text();
+            var option_value = $("#id_field_option_by option:selected").val();
+            var input = $("#id_search_term").val();
+            if(input == "") {
+                $("#id_search_term").focus();
+                return false;
+            }
+            var tag = '<label class="search_tag" style="padding: 10px; color: grey; border: 1px solid #9d9d9d; ' +
+                'border-radius: 10px; background-color: #f9f6f6; "><input type="hidden" name="'+ option_value +'" value="'+ input +'">' +
+                '<span>'+ option_value +': '+ input +'</span> <i style="cursor: pointer;" class="search_tag_remove glyphicon glyphicon-remove"></i></label>';
+            $("#id_search_tag_plate").append(tag);
+        }
+        else {
+            var option_name = $("#id_field_option_by option:selected").text();
+            var option_value = $("#id_field_option_by option:selected").val();
+            var input1 = $("#id_search_term1").val();
+            var input2 = $("#id_search_term2").val();
+            if(input1 == "" || input2 == "") {
+                if(input1 == "") {
+                    $("#id_search_term1").focus();
+                }
+                else {
+                    $("#id_search_term2").focus();
+                }
+                return false;
+            }
+            var input = input1 + "-" + input2;
+            var tag = '<label class="search_tag" style="padding: 10px; color: grey; border: 1px solid #9d9d9d; ' +
+                'border-radius: 10px; background-color: #f9f6f6; "><input type="hidden" name="'+ option_value +'" value="'+ input +'">' +
+                '<span>'+ option_value +': '+ input +'</span> <i style="cursor: pointer;" class="search_tag_remove glyphicon glyphicon-remove"></i></label>';
+            $("#id_search_tag_plate").append(tag);
+        }
+        return false;
+    });
+    
     $(document).on("click", ".search_tag_remove", function (e) {
         $(this).parent().remove();
     });

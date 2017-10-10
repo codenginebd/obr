@@ -183,6 +183,10 @@ class ProductCategory(BaseEntity):
             ("By Name", "name")
         ]
 
+    @classmethod
+    def get_datefields(cls):
+        return ["name"]
+
         
         
 

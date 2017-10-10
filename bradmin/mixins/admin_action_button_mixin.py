@@ -1,5 +1,7 @@
 from django.urls.base import reverse, resolve
 
+from bradmin.enums import ViewAction
+
 
 class AdminActionButtonMixin(object):
     def show_upload(self):
@@ -58,3 +60,16 @@ class AdminActionButtonMixin(object):
 
     def get_deactivate_link(self):
         return self.model.get_deactivate_link()
+
+    def get_view_actions(self):
+        actions = self.model.get_view_actions()
+        context = {}
+        for key, link in actions.items():
+            if key.value == ViewAction.EDIT_NAME:
+                if link:
+                    context["edit_link_name"] = link
+            else:
+                if link:
+                    context["show_%s" % key.value] = True
+                    context["%s_link" % key.value] = link
+        return context
