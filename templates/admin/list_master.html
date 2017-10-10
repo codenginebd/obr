@@ -16,6 +16,7 @@
 {% if search_param_context %}
 <input type="hidden" name="context" value="{{ search_param_context }}"/>
 {% endif %}
+<div style="padding: 10px; border: 1px solid #bce8f1; border-radius: 10px; ">
 <div class="row">
     <div class="col-md-4" style="padding-right: 0px !important;">
         <div class="form-group">
@@ -35,12 +36,40 @@
         </div>
     </div>
     <div class="col-md-8" style="padding-left: 0px !important;">
+{#        <div class="input-group add-on">#}
+{#          <input class="form-control" style="width: 235px; padding: 20px !important; " {% if search_keyword %}value="{{ search_keyword }}" {% endif %} placeholder="Type to add filter..." name="keyword" id="id_search_term" type="text">#}
+{#          <div class="input-group-btn">#}
+{#            <button title="Add Search Filter" class="btn btn-default" style="padding: 10px;"><i class="glyphicon glyphicon-plus"></i></button>#}
+{#          </div>#}
+{#        </div>#}
         <div class="input-group add-on">
-          <input class="form-control" style="width: 260px; padding: 20px !important; " {% if search_keyword %}value="{{ search_keyword }}" {% endif %} placeholder="Search..." name="keyword" id="id_search_term" type="text">
+          <input class="form-control" style="width: 117px; padding: 20px !important; " {% if search_keyword1 %}value="{{ search_keyword1 }}" {% endif %} placeholder="From Date" name="keyword" id="id_search_term1" type="text">
+         <input class="form-control" style="width: 118px; padding: 20px !important; " {% if search_keyword %}value="{{ search_keyword2 }}" {% endif %} placeholder="To Date" name="keyword" id="id_search_term2" type="text">
           <div class="input-group-btn">
-            <button class="btn btn-default" style="padding: 10px;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            <button title="Add Search Filter" class="btn btn-default" style="padding: 10px;"><i class="glyphicon glyphicon-plus"></i></button>
           </div>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12" style="padding-right: 0px !important;">
+        <p style="padding: 10px; border: 1px solid #bce8f1; border-radius: 10px; margin-right: 13px;">
+            <label class="search_tag" style="padding: 10px; color: grey; border: 1px solid #9d9d9d; border-radius: 10px; background-color: #f9f6f6; "
+                   class="badge">
+                <input type="hidden" name="id" value="1"/>
+                <span>Id: 1</span> <i style="cursor: pointer;" class="search_tag_remove glyphicon glyphicon-remove"></i></label>
+            <label class="search_tag" style="padding: 10px; color: grey; border: 1px solid #9d9d9d; border-radius: 10px; background-color: #f9f6f6; "
+                   class="badge">
+                <input type="hidden" name="name" value="Humayun"/>
+                <span>Name: Humayun</span> <i class="search_tag_remove glyphicon glyphicon-remove"></i></label>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4" style="padding-right: 0px !important;">
+    </div>
+    <div class="col-md-8" style="padding-left: 0px !important;">
+        <button style="width: 140px; float: right;" type="submit" class="btn btn-danger"><i style="position: relative; top: 3px;" class="glyphicon glyphicon-search"></i> <span>Apply Search </span></button>
     </div>
 </div>
 <div style="padding-left: 20px; display: none;">
@@ -59,6 +88,7 @@
     <div>
         <a href="#" class="hide_admin_search_filters">Hide</a>
     </div>
+</div>
 </div>
 </form>
 </div>
@@ -161,6 +191,20 @@
 {% block bottom_script %}
 <script type="text/javascript">
 $(document).ready(function () {
+    
+    $("#id_search_term1").datetimepicker({
+        format:'YYYY-MM-DD',
+			icons: {
+				time: "fa fa-clock-o",
+				date: "fa fa-calendar",
+				up: "fa fa-arrow-up",
+				down: "fa fa-arrow-down"
+			}
+		})
+
+    $(document).on("click", ".search_tag_remove", function (e) {
+        $(this).parent().remove();
+    });
 
     $(".create-btn").click(function (e) {
         var url = $(this).data("url");
@@ -183,7 +227,9 @@ $(document).ready(function () {
         var url = $(this).data("url");
         var id = "";
         $("#id_data_table").find(".item-check").each(function (e) {
-            id += $(this).data("id") + ",";
+            if($(this).is(":checked")) {
+                id += $(this).data("id") + ",";
+            }
         });
         $.ajax({
             type: "GET",
@@ -207,7 +253,9 @@ $(document).ready(function () {
         var url = $(this).data("url");
         var id = "";
         $("#id_data_table").find(".item-check").each(function (e) {
-            id += $(this).data("id") + ",";
+            if($(this).is(":checked")) {
+                id += $(this).data("id") + ",";
+            }
         });
         $.ajax({
             type: "GET",
@@ -231,7 +279,9 @@ $(document).ready(function () {
         var url = $(this).data("url");
         var id = "";
         $("#id_data_table").find(".item-check").each(function (e) {
-            id += $(this).data("id") + ",";
+            if($(this).is(":checked")) {
+                id += $(this).data("id") + ",";
+            }
         });
         $.ajax({
             type: "GET",

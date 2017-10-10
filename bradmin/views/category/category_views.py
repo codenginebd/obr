@@ -20,7 +20,7 @@ class AdminCategoryView(TemplateView):
 
 class AdminCategoryListView(BaseListView):
     model = ProductCategory
-    template_name = "admin/category_list.html"
+    template_name = "admin/category/category_list.html"
 
     def show_upload(self):
         return True
@@ -98,7 +98,7 @@ class AdminCategoryDetailsView(BaseDetailView):
 
     def get_template_names(self):
         return [
-            "admin/admin_publisher_details.html"
+            "admin/admin_category_details.html"
         ]
 
     def get_left_menu_items(self):
@@ -116,7 +116,7 @@ class AdminCategoryDetailsView(BaseDetailView):
 
 class AdminCategoryCreateView(BRBaseCreateView):
     form_class =AdminCategoryForm
-    template_name = "admin/admin_category_create.html"
+    template_name = "admin/category/admin_category_create.html"
 
     def get_form_title(self):
         return "Category Create"
@@ -140,7 +140,7 @@ class AdminCategoryCreateView(BRBaseCreateView):
 class AdminCategoryUpdateView(BRBaseUpdateView):
     form_class = AdminCategoryForm
     queryset = ProductCategory.objects.all()
-    template_name = "admin/admin_category_create.html"
+    template_name = "admin/category/admin_category_create.html"
 
     def get_form_title(self):
         return "Category Update(#%s)" % self.object.pk

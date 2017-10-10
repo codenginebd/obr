@@ -1,12 +1,13 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 
-from bradmin.views.admin_logs_view import AdminLogView
-from bradmin.views.books_views import AdminBooksView, AdminBooksUploadView
 from bradmin.views.admin_error_log_view import AdminErrorLogView, AdminErrorLogsDetailsView
-from bradmin.views.category_views import AdminCategoryView, AdminCategoryUploadView, AdminCategoryListView, \
+from bradmin.views.book.book_views import AdminBooksListView, AdminBookUploadView, AdminBookDownloadView, \
+    AdminBookActivateView, AdminBookDeactivateView, AdminBookDeleteView
+from bradmin.views.books_views import AdminBooksView, AdminBooksUploadView
+from bradmin.views.category.category_views import AdminCategoryUploadView, AdminCategoryListView, \
     AdminCategoryDownloadView, AdminCategoryActivateView, AdminCategoryDeactivateView, AdminCategoryDeleteView, \
     AdminCategoryDetailsView, AdminCategoryCreateView, AdminCategoryUpdateView
-from bradmin.views.publisher_views import AdminPublisherListView, AdminBookPublisherUploadView, \
+from bradmin.views.publisher.publisher_views import AdminPublisherListView, AdminBookPublisherUploadView, \
     AdminBookPublisherDownloadView, AdminBookPublisherActivateView, AdminBookPublisherDeactivateView, \
     AdminBookPublisherDeleteView, AdminBookPublisherDetailsView, AdminBookPublisherCreateView, \
     AdminBookPublisherUpdateView
@@ -37,8 +38,12 @@ urlpatterns = [
     url(r'^publishers-create/$', AdminBookPublisherCreateView.as_view(), name="admin_book_publisher_create_view"),
     url(r'^publishers-edit/(?P<pk>[0-9]+)/$', AdminBookPublisherUpdateView.as_view(), name="admin_book_publisher_edit_link_view"),
     #Books
-    url(r'^books/', AdminBooksView.as_view(), name="admin_books_view"),
-    url(r'^books-upload/', AdminBooksUploadView.as_view(), name="admin_books_upload_view"),
+    url(r'^books/', AdminBooksListView.as_view(), name="admin_book_list_view"),
+    url(r'^books-upload/', AdminBookUploadView.as_view(), name="admin_book_upload_view"),
+    url(r'^books-download/', AdminBookDownloadView.as_view(), name="admin_book_download_view"),
+    url(r'^books-activate/', AdminBookActivateView.as_view(), name="admin_book_activate_view"),
+    url(r'^books-deactivate/', AdminBookDeactivateView.as_view(),name="admin_book_deactivate_view"),
+    url(r'^publishers-delete/', AdminBookDeleteView.as_view(), name="admin_book_delete_view"),
 
     url(r'^error-logs/', AdminErrorLogView.as_view(), name="admin_error_logs_view"),
     url(r'^error-log/details/(?P<pk>[0-9]+)/$', AdminErrorLogsDetailsView.as_view(), name="admin_error_log_details_view"),

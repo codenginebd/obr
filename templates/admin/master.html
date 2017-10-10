@@ -59,12 +59,15 @@
           <a href="{% url "admin_category_view" %}">Category</a>
       </li>
       <li {% if ttab == "publisher" %}class="active" {% endif %}><a href="{% url "admin_publishers_view" %}">Publishers</a></li>
-      <li {% if ttab == "books" %}class="active" {% endif %}><a href="{% url "admin_books_view" %}">Books</a></li>
+      <li {% if ttab == "book" %}class="active" {% endif %}><a href="{% url "admin_book_list_view" %}">Books</a></li>
       <li {% if ttab == "inventory" %}class="active" {% endif %}><a href="#">Inventory</a></li>
       <li {% if ttab == "orders" %}class="active" {% endif %}><a href="#">Orders</a></li>
       <li {% if ttab == "promotions" %}class="active" {% endif %}><a href="#">Promotions</a></li>
       <li {% if ttab == "coupons" %}class="active" {% endif %}><a href="#">Coupons</a></li>
       <li {% if ttab == "customers" %}class="active" {% endif %}><a href="#">Customers</a></li>
+      <li {% if ttab == "return" %}class="active" {% endif %}><a href="#">Book Returns</a></li>
+      <li {% if ttab == "feedback" %}class="active" {% endif %}><a href="#">Customer Feedback</a></li>
+      <li {% if ttab == "alert" %}class="active" {% endif %}><a href="#">Alerts</a></li>
     </ul>
   </div>
 </nav>

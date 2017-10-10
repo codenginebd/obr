@@ -4,10 +4,10 @@ from django.db import transaction
 from book_rental.models.author import Author
 from book_rental.models.book_publisher import BookPublisher
 from book_rental.models.language import BookLanguage
-from book_rental.models.sales.book import Book
 from ecommerce.models.sales.category import ProductCategory
 from ecommerce.models.sales.keyword import TagKeyword
 from ecommerce.models.sales.product_images import ProductImage
+from generics.libs.loader.loader import load_model
 from generics.libs.utils import get_relative_path_to_media
 from logger.models.error_log import ErrorLog
 
@@ -19,6 +19,7 @@ class BookUploader(object):
         self.kwargs = kwargs
 
     def handle_upload(self):
+        Book = load_model(app_label="book_rental", model_name="Book")
         self.data = self.data[1:]
         for row in self.data:
             with transaction.atomic():
