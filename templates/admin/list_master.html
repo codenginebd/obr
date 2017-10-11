@@ -461,6 +461,8 @@ $(document).ready(function () {
             $(".delete-btn").removeClass("disabled");
             $(".activate-btn").removeClass("disabled");
             $(".deactivate-btn").removeClass("disabled");
+            $(".approve-btn").removeClass("disabled");
+            $(".reject-btn").removeClass("disabled");
         }
         else {
             $("#id_data_table").find(".item-check").each(function (e) {
@@ -470,6 +472,8 @@ $(document).ready(function () {
             $(".delete-btn").addClass("disabled");
             $(".activate-btn").addClass("disabled");
             $(".deactivate-btn").addClass("disabled");
+            $(".approve-btn").addClass("disabled");
+            $(".reject-btn").addClass("disabled");
         }
     });
     $("#id_data_table").find(".item-check").click(function (e) {
@@ -499,6 +503,8 @@ $(document).ready(function () {
             $(".delete-btn").removeClass("disabled");
             $(".activate-btn").removeClass("disabled");
             $(".deactivate-btn").removeClass("disabled");
+            $(".approve-btn").removeClass("disabled");
+            $(".reject-btn").removeClass("disabled");
         }
         else {
             $("#id_all_check").prop("checked", false);
@@ -516,6 +522,8 @@ $(document).ready(function () {
                 $(".delete-btn").addClass("disabled");
                 $(".activate-btn").addClass("disabled");
                 $(".deactivate-btn").addClass("disabled");
+                $(".approve-btn").addClass("disabled");
+                $(".reject-btn").addClass("disabled");
             }
         }
     });
