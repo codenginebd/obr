@@ -10,6 +10,14 @@
     {% endfor %}
 {% endblock leftmenu %}
 {% block action_area %}
+<style type="text/css">
+.btn-action {
+    color: #1C2331 !important;
+    background-color: transparent !important;
+    border-color: #bce8f1 !important;
+    padding-bottom: 13px !important;
+}
+</style>
 <div class="row">
 <div class="col-md-6">
 
@@ -71,27 +79,36 @@
 <ul class="list-inline pull-right">
     {% if show_create %}
     <li style="margin-bottom: 6px;">
-        <a href="#" class="create-btn btn btn-primary btn-md" data-url="{{ create_link }}">Create</a>
+        <a href="#" class="create-btn btn btn-primary btn-md btn-action" data-url="{{ create_link }}">
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-plus"> Create</span></a>
     </li>
     {% endif %}
     {% if show_edit %}
     <li style="margin-bottom: 6px;">
-        <a href="#" class="edit-btn btn btn-primary btn-md disabled">Edit</a>
+        <a href="#" class="edit-btn btn btn-primary btn-md btn-action disabled">
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-edit"> Edit</span>
+        </a>
     </li>
     {% endif %}
     {% if show_delete %}
     <li style="margin-bottom: 6px;">
-        <a href="#" data-url="{{ delete_link }}" class="delete-btn btn btn-primary btn-md disabled">Delete</a>
+        <a href="#" data-url="{{ delete_link }}" class="delete-btn btn btn-primary btn-md btn-action disabled">
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-trash"> Delete</span>
+        </a>
     </li>
     {% endif %}
     {% if show_activate %}
     <li style="margin-bottom: 6px;">
-        <a href="#" data-url="{{ activate_link }}" class="activate-btn btn btn-primary btn-md disabled">Activate</a>
+        <a href="#" data-url="{{ activate_link }}" class="activate-btn btn btn-primary btn-md btn-action disabled">
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-ok-circle"> Activate</span>
+        </a>
     </li>
     {% endif %}
     {% if show_deactivate %}
     <li style="margin-bottom: 6px;">
-        <a href="#" data-url="{{ deactivate_link }}" class="deactivate-btn btn btn-danger btn-md disabled">Deactivate</a>
+        <a href="#" data-url="{{ deactivate_link }}" class="deactivate-btn btn btn-danger btn-md btn-action disabled">
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-ban-circle"> Deactivate</span>
+        </a>
     </li>
     {% endif %}
     {% if show_upload %}
@@ -101,17 +118,23 @@
             <input type="hidden" name="upload_redirect" value="{{ upload_redirect }}"/>
             <input type="file" name="uploaded_file" id="id_file_upload" style="display: none;"/>
         </form>
-        <button class="btn-upload btn btn-danger btn-md">Upload</button>
+        <button class="btn-upload btn btn-danger btn-md btn-action">
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-upload"> Upload</span>
+        </button>
     </li>
     {% endif %}
     {% if show_download %}
     <li style="margin-bottom: 6px;">
-        <a href="#" data-url="{{ download_link }}" class="btn-download btn btn-danger btn-md">Download</a>
+        <a href="#" data-url="{{ download_link }}" class="btn-download btn btn-danger btn-md btn-action">
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-download"> Download</span></a>
+        </a>
     </li>
     {% endif %}
     {% if show_download_template %}
     <li style="margin-bottom: 6px;">
-        <a href="#" data-url="{{ download_template_link }}" class="btn-upload-template btn btn-danger btn-md">Download Template</a>
+        <a href="#" data-url="{{ download_template_link }}" class="btn-upload-template btn btn-danger btn-md btn-action">
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-download"> Download Template</span>
+        </a>
     </li>
     {% endif %}
 </ul>
@@ -166,6 +189,9 @@
 {% block bottom_script %}
 <script type="text/javascript">
 $(document).ready(function () {
+
+    $("#id_search_term1").datepicker();
+    $("#id_search_term2").datepicker();
 
     $("#id_field_option_by").change(function (e) {
         var date_field = $("#id_field_option_by option:selected").data("datefield");

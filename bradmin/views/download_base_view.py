@@ -12,7 +12,7 @@ class DownloadBaseView(ListView):
             download_data = self.model.prepare_download_template_data(queryset=queryset)
         else:
             download_headers = self.model.get_download_headers()
-            download_data = self.model.prepare_table_data(queryset=queryset)
+            download_data = self.model.prepare_download_data(queryset=queryset)
 
         downloader_class = self.model.get_downloader_class()
 

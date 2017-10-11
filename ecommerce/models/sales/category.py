@@ -96,6 +96,14 @@ class ProductCategory(BaseEntity):
         return tdata
 
     @classmethod
+    def prepare_download_data(cls, queryset):
+        download_data = []
+        for q_object in queryset:
+            download_data += [[q_object.code, q_object.name, q_object.name_2,
+                               "Yes" if q_object.show_name_2 else "No", q_object.parent.name if q_object.parent else ""]]
+        return download_data
+
+    @classmethod
     def prepare_download_template_data(cls, queryset):
         template_data = []
         for q_object in queryset:
