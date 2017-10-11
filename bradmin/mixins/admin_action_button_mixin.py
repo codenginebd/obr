@@ -28,6 +28,12 @@ class AdminActionButtonMixin(object):
     def show_deactivate(self):
         return self.model.show_deactivate()
 
+    def show_approve(self):
+        return self.model.show_approve()
+
+    def show_reject(self):
+        return self.model.show_reject()
+
     def get_upload_link(self):
         return self.model.get_upload_link()
 

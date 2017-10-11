@@ -2,7 +2,7 @@ from django.conf.urls import url
 
 from bradmin.views.admin_error_log_view import AdminErrorLogView, AdminErrorLogsDetailsView
 from bradmin.views.book.book_views import AdminBooksListView, AdminBookUploadView, AdminBookDownloadView, \
-    AdminBookActivateView, AdminBookDeactivateView, AdminBookDeleteView
+    AdminBookActivateView, AdminBookDeactivateView, AdminBookDeleteView, AdminBookCreateView
 from bradmin.views.books_views import AdminBooksView, AdminBooksUploadView
 from bradmin.views.category.category_views import AdminCategoryUploadView, AdminCategoryListView, \
     AdminCategoryDownloadView, AdminCategoryActivateView, AdminCategoryDeactivateView, AdminCategoryDeleteView, \
@@ -44,6 +44,7 @@ urlpatterns = [
     url(r'^books-activate/', AdminBookActivateView.as_view(), name="admin_book_activate_view"),
     url(r'^books-deactivate/', AdminBookDeactivateView.as_view(),name="admin_book_deactivate_view"),
     url(r'^publishers-delete/', AdminBookDeleteView.as_view(), name="admin_book_delete_view"),
+    url(r'^books-create/$', AdminBookCreateView.as_view(), name="admin_book_create_view"),
 
     url(r'^error-logs/', AdminErrorLogView.as_view(), name="admin_error_logs_view"),
     url(r'^error-log/details/(?P<pk>[0-9]+)/$', AdminErrorLogsDetailsView.as_view(), name="admin_error_log_details_view"),

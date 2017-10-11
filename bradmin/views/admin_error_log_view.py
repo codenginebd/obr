@@ -1,6 +1,7 @@
 from django.urls.base import reverse
 
 from book_rental.models.book_publisher import BookPublisher
+from book_rental.models.sales.book import Book
 from bradmin.views.base_detail_view import BaseDetailView
 from bradmin.views.base_list_view import BaseListView
 from ecommerce.models.sales.category import ProductCategory
@@ -21,6 +22,8 @@ class AdminErrorLogView(BaseListView):
             all_url = reverse("admin_category_view")
         elif context == BookPublisher.__name__:
             all_url = reverse("admin_publishers_view")
+        elif context == Book.__name__:
+            all_url = reverse("admin_book_list_view")
         return {
             "All": all_url,
             "Error Logs": error_log_url
@@ -53,6 +56,8 @@ class AdminErrorLogView(BaseListView):
             return "category"
         elif context == BookPublisher.__name__:
             return "publisher"
+        elif context == Book.__name__:
+            return "book"
 
     def get_ltab_name(self):
         return "Error Logs"

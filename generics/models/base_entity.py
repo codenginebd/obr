@@ -75,6 +75,14 @@ class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
     def show_deactivate(cls):
         return False
 
+    @classmethod
+    def show_approve(cls):
+        return False
+
+    @classmethod
+    def show_reject(cls):
+        return False
+
     def get_code_prefix(self):
         prefix = ''.join([c for c in self.__class__.__name__ if c.isupper()])
         return prefix if prefix else self.__class__.__name__
@@ -221,6 +229,14 @@ class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
 
     @classmethod
     def get_delete_link(cls):
+        return ""
+
+    @classmethod
+    def get_approve_link(cls):
+        return ""
+
+    @classmethod
+    def get_reject_link(cls):
         return ""
 
     def save(self, force_insert=False, force_update=False, using=None,

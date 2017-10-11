@@ -85,7 +85,7 @@ class Book(Product):
 
     @classmethod
     def get_download_file_name(cls):
-        return "Publisher List"
+        return "Book List"
 
     @classmethod
     def get_reader_class(cls):
@@ -121,7 +121,7 @@ class Book(Product):
 
     @classmethod
     def get_create_link(cls):
-        return ""
+        return reverse("admin_book_create_view")
 
     @classmethod
     def get_edit_link_name(cls):

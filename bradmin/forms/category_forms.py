@@ -1,16 +1,7 @@
 from django import forms
 from bradmin.forms.base_model_form import BRBaseModelForm
-from bradmin.forms.fields.br_model_choice_field import BRBaseModelChoiceField
+from bradmin.forms.fields.category_model_choice_field import CategoryModelChoiceField
 from ecommerce.models.sales.category import ProductCategory
-
-
-class CategoryModelChoiceField(BRBaseModelChoiceField):
-
-    def label_from_instance(self, obj):
-        if obj.name_2:
-            return obj.name + "(%s)" % obj.name_2
-        else:
-            return obj.name
 
 
 class AdminCategoryForm(BRBaseModelForm):

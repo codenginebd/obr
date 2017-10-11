@@ -1,7 +1,9 @@
 from django.urls.base import reverse
 
 from book_rental.models.sales.book import Book
+from bradmin.forms.admin_book_form import AdminBookForm
 from bradmin.views.activate_base_view import ActivateBaseView
+from bradmin.views.base_create_view import BRBaseCreateView
 from bradmin.views.base_list_view import BaseListView
 from bradmin.views.deactivate_base_view import DeactivateBaseView
 from bradmin.views.delete_base_view import DeleteBaseView
@@ -64,3 +66,26 @@ class AdminBookDeactivateView(DeactivateBaseView):
 
 class AdminBookDeleteView(DeleteBaseView):
     model = Book
+
+
+class AdminBookCreateView(BRBaseCreateView):
+    form_class =AdminBookForm
+    template_name = "admin/book/admin_book_create.html"
+
+    def get_form_title(self):
+        return "Book Create"
+
+    def get_success_url(self):
+        return reverse("admin_book_list_view")
+
+    def get_cancel_url(self):
+        return reverse("admin_book_list_view")
+
+    def get_page_title(self):
+        return "Create Book | BDReads.com"
+
+    def get_left_menu_items(self):
+        return {
+            "All": reverse("admin_book_list_view"),
+            "Error Logs": reverse("admin_error_logs_view") + "?context=%s" % Book.__name__
+        }
