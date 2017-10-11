@@ -4,7 +4,7 @@ from django.db import transaction
 from datetime import datetime
 from bauth.models.email import Email
 from bauth.models.phone import Phone
-from book_rental.models.author import Author
+from generics.libs.loader.loader import load_model
 from generics.libs.utils import get_relative_path_to_media
 from logger.models.error_log import ErrorLog
 
@@ -16,6 +16,7 @@ class AuthorUploader(object):
         self.kwargs = kwargs
 
     def handle_upload(self):
+        Author = load_model(app_label="book_rental", model_name="Author")
         self.data = self.data[1:]
         for row in self.data:
             try:
@@ -56,7 +57,7 @@ class AuthorUploader(object):
                                 ErrorLog.log(url='', stacktrace='Author name bn and author description bn missing. Data: %s skipping...' % row, context='Author')
                                 continue
                     except Exception as exp:
-                        ErrorLog.log(url='', stacktrace='Show BN must be number. Given %s. skipping...' % show_2, context='Author')
+                        ErrorLog.log(url='', stacktrace='Show 2 must be number. Given %s. skipping...' % show_2, context='Author')
                         continue
 
                     if emails:
@@ -104,7 +105,7 @@ class AuthorUploader(object):
 
                     if date_of_birth:
                         try:
-                            date_of_birth = datetime.strptime(date_of_birth, "%d/%m/%Y")
+                            date_of_birth = date_of_birth.date() #datetime.strptime(date_of_birth, "%d/%m/%Y")
                         except Exception as exp:
                             date_of_birth = None
                             ErrorLog.log(url='', stacktrace='Author date of birth format incorrect. Correct format: dd/mm/yyyy. skipping...', context='Author')
@@ -149,7 +150,7 @@ class AuthorUploader(object):
                 ErrorLog.log(url='', stacktrace='Exception Occured. Exception message: %s. Skipping...Date: %s' % (str(exp), row), context='Author')
 
 
-
+        return True
 
 
 

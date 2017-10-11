@@ -1,6 +1,9 @@
 from django.conf.urls import url
 
 from bradmin.views.admin_error_log_view import AdminErrorLogView, AdminErrorLogsDetailsView
+from bradmin.views.author.author_views import AdminAuthorListView, AdminAuthorCreateView, AdminBAuthorDetailsView, \
+    AdminAuthorUpdateView, AdminAuthorUploadView, AdminAuthorDownloadView, AdminAuthorActivateView, \
+    AdminAuthorDeactivateView, AdminAuthorDeleteView
 from bradmin.views.book.book_views import AdminBooksListView, AdminBookUploadView, AdminBookDownloadView, \
     AdminBookActivateView, AdminBookDeactivateView, AdminBookDeleteView, AdminBookCreateView
 from bradmin.views.books_views import AdminBooksView, AdminBooksUploadView
@@ -37,6 +40,16 @@ urlpatterns = [
     url(r'^publishers-details/(?P<pk>[0-9]+)/$', AdminBookPublisherDetailsView.as_view(), name="admin_book_publisher_details_view"),
     url(r'^publishers-create/$', AdminBookPublisherCreateView.as_view(), name="admin_book_publisher_create_view"),
     url(r'^publishers-edit/(?P<pk>[0-9]+)/$', AdminBookPublisherUpdateView.as_view(), name="admin_book_publisher_edit_link_view"),
+    #Author
+    url(r'^authors/', AdminAuthorListView.as_view(), name="admin_author_list_view"),
+    url(r'^author-upload/', AdminAuthorUploadView.as_view(), name="admin_author_upload_view"),
+    url(r'^author-download/', AdminAuthorDownloadView.as_view(), name="admin_author_download_view"),
+    url(r'^author-activate/', AdminAuthorActivateView.as_view(), name="admin_author_activate_view"),
+    url(r'^author-deactivate/', AdminAuthorDeactivateView.as_view(), name="admin_author_deactivate_view"),
+    url(r'^author-delete/', AdminAuthorDeleteView.as_view(), name="admin_author_delete_view"),
+    url(r'^author-details/(?P<pk>[0-9]+)/$', AdminBAuthorDetailsView.as_view(), name="admin_author_details_view"),
+    url(r'^author-create/$', AdminAuthorCreateView.as_view(), name="admin_author_create_view"),
+    url(r'^author-edit/(?P<pk>[0-9]+)/$', AdminAuthorUpdateView.as_view(), name="admin_author_edit_link_view"),
     #Books
     url(r'^books/', AdminBooksListView.as_view(), name="admin_book_list_view"),
     url(r'^books-upload/', AdminBookUploadView.as_view(), name="admin_book_upload_view"),
