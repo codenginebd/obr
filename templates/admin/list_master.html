@@ -97,6 +97,20 @@
         </a>
     </li>
     {% endif %}
+    {% if show_approve %}
+    <li style="margin-bottom: 6px;">
+        <a href="#" data-url="{{ approve_link }}" class="approve-btn btn btn-primary btn-md btn-action disabled">
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-ok-circle"> Approve</span>
+        </a>
+    </li>
+    {% endif %}
+    {% if show_reject %}
+    <li style="margin-bottom: 6px;">
+        <a href="#" data-url="{{ reject_link }}" class="reject-btn btn btn-primary btn-md btn-action disabled">
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-ban-circle"> Reject</span>
+        </a>
+    </li>
+    {% endif %}
     {% if show_activate %}
     <li style="margin-bottom: 6px;">
         <a href="#" data-url="{{ activate_link }}" class="activate-btn btn btn-primary btn-md btn-action disabled">
@@ -267,6 +281,58 @@ $(document).ready(function () {
     });
 
     $(".activate-btn").click(function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+        var id = "";
+        $("#id_data_table").find(".item-check").each(function (e) {
+            if($(this).is(":checked")) {
+                id += $(this).data("id") + ",";
+            }
+        });
+        $.ajax({
+            type: "GET",
+            url: url+"?id="+id,
+            success: function (data) {
+                if(data.status == "SUCCESSFUL") {
+                    window.location.reload();
+                }
+            },
+            error: function (jqxhr, status, error) {
+
+            }
+        })
+        .done(function (msg) {
+
+        });
+    });
+
+    $(".approve-btn").click(function (e) {
+        e.preventDefault();
+        var url = $(this).data("url");
+        var id = "";
+        $("#id_data_table").find(".item-check").each(function (e) {
+            if($(this).is(":checked")) {
+                id += $(this).data("id") + ",";
+            }
+        });
+        $.ajax({
+            type: "GET",
+            url: url+"?id="+id,
+            success: function (data) {
+                if(data.status == "SUCCESSFUL") {
+                    window.location.reload();
+                }
+            },
+            error: function (jqxhr, status, error) {
+
+            }
+        })
+        .done(function (msg) {
+
+        });
+    });
+
+    $(".reject-btn").click(function (e) {
         e.preventDefault();
         var url = $(this).data("url");
         var id = "";

@@ -80,6 +80,14 @@ class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
         return prefix if prefix else self.__class__.__name__
 
     @classmethod
+    def approve(cls, id_list=[]):
+        pass
+
+    @classmethod
+    def reject(cls, id_list=[]):
+        pass
+
+    @classmethod
     def activate(cls, id_list=[]):
         object_list = cls.objects.filter(pk__in=id_list)
         object_list.update(is_active=True)
@@ -163,18 +171,16 @@ class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
     def apply_search_filters(cls, request, queryset=None):
         if not queryset:
             queryset = cls.objects.all()
-        by = request.GET.get("by", None)
-        if by:
-            keyword = request.GET.get("keyword", None)
-            if keyword:
-                if by == "id":
-                    try:
-                        id_val = int(keyword)
-                        queryset = queryset.filter(pk=id_val)
-                    except:
-                        queryset = cls.objects.none()
-                elif by == "code":
-                    queryset = queryset.filter(code=keyword)
+        id = request.GET.get("id", None)
+        code = request.GET.get("code", None)
+        if id:
+            try:
+                id = int(id)
+                queryset = queryset.filter(pk=id)
+            except:
+                queryset = cls.objects.none()
+        if code:
+            queryset = queryset.filter(code=code)
         return queryset
 
     @classmethod
