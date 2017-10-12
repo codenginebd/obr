@@ -1,6 +1,7 @@
 from django.db import transaction
 
 from book_rental.libs.uploader.uploader import Uploader
+from book_rental.models.language import BookLanguage
 from generics.models.language import Language
 from logger.models.error_log import ErrorLog
 from engine.exceptions.br_exception import BRException
@@ -24,6 +25,7 @@ class LanguageUploader(Uploader):
 
     def handle_upload(self):
 
+        BookLanguage.objects.all().delete()
         Language.objects.all().delete()
 
         self.data = self.data_as_list()
@@ -44,3 +46,12 @@ class LanguageUploader(Uploader):
                 language_object.short_name = row[0]
             language_object.name = row[1]
             language_object.save()
+
+            book_language_objects = BookLanguage.objects.filter(short_name=row[0])
+            if book_language_objects.exists():
+                book_language_object = book_language_objects.first()
+            else:
+                book_language_object = BookLanguage()
+                book_language_object.short_name = row[0]
+            book_language_object.name = row[1]
+            book_language_object.save()

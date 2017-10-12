@@ -96,7 +96,7 @@ class BookUploader(object):
                     rent_available = row[index]
 
                     # Validate data
-                    if any([not item for item in [book_title, sub_title, description, isbn,
+                    if any([not item for item in [book_title, sub_title, description,
                                                   edition, total_page, publisher_code, published_date,
                                                   language, keywords, authors
                                                   ]]):
@@ -104,18 +104,13 @@ class BookUploader(object):
                                      context=Book.__name__)
                         continue
                         
-                    if not isbn and not isbn13:
-                        ErrorLog.log(url='', stacktrace='ISBN or ISBN13 must be there. Missing both. Skipping... Data %s' % str(row),
-                                     context=Book.__name__)
-                        continue
-
-                    if len(isbn) != 10:
+                    if isbn and len(isbn) != 10:
                         ErrorLog.log(url='',
                                      stacktrace='ISBN number must be 10 digit long. Skipping... Data %s' % str(row),
                                      context=Book.__name__)
                         continue
                         
-                    if len(isbn13) != 13:
+                    if isbn13 and len(isbn13) != 13:
                         ErrorLog.log(url='',
                                      stacktrace='ISBN13 number must be 13 digit long. Skipping... Data %s' % str(row),
                                      context=Book.__name__)
@@ -331,6 +326,8 @@ class BookUploader(object):
                     ErrorLog.log(url='',
                                  stacktrace='Exception Occured. Message: %s' % str(exp),
                                  context=Book.__name__)
+
+        return True
 
 
 

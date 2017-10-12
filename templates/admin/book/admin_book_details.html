@@ -1,0 +1,155 @@
+{% extends "admin/details_master.html" %}
+{% load staticfiles %}
+{% block detail_content %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Book Details(ID: {{ object.pk }})
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>
+                Code:
+            </th>
+            <td>
+                {{ object.code }}
+            </td>
+            <th>
+                ID:
+            </th>
+            <td>
+                {{ object.id }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Title:
+            </th>
+            <td>
+                {{ object.title }}
+            </td>
+            <th>
+                Title 2:
+            </th>
+            <td>
+                {{ object.title_2 }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Description:
+            </th>
+            <td>
+                {{ object.description }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Description 2:
+            </th>
+            <td>
+                {{ object.description_2 }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                ISBN 10:
+            </th>
+            <td>
+                {{ object.isbn }}
+            </td>
+            <th>
+                ISBN 13:
+            </th>
+            <td>
+                {{ object.isbn13 }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Categories:
+            </th>
+            <td>
+                {{ object.get_category_codes }}
+            </td>
+            <th>
+                Authors
+            </th>
+            <td>
+                {{ object.get_author_codes }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Publisher:
+            </th>
+            <td>
+                {{ object.get_publisher_display }}
+            </td>
+            <th>
+                Published Date
+            </th>
+            <td>
+                {{ object.publish_date }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Edition:
+            </th>
+            <td>
+                {{ object.edition }}
+            </td>
+            <th>
+                Total Page Count:
+            </th>
+            <td>
+                {{ object.page_count }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Sale Available:
+            </th>
+            <td>
+                {% if object.sale_available %}"Yes"{% else %}"No"{% endif %}
+            </td>
+            <th>
+                Rent Available:
+            </th>
+            <td>
+                {% if object.rent_available %}"Yes"{% else %}"No"{% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Book Language:
+            </th>
+            <td>
+                {{ object.language.short_name }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Show 2:
+            </th>
+            <td>
+                {% if object.show_2 %}
+                    Yes
+                {% else %}
+                    No
+                {% endif %}
+            </td>
+            <th>
+                Is Active:
+            </th>
+            <td>
+                {% if object.is_active %}Yes{% else %}No{% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock detail_content %}

@@ -4,6 +4,7 @@ from book_rental.models.sales.book import Book
 from bradmin.forms.admin_book_form import AdminBookForm
 from bradmin.views.activate_base_view import ActivateBaseView
 from bradmin.views.base_create_view import BRBaseCreateView
+from bradmin.views.base_detail_view import BaseDetailView
 from bradmin.views.base_list_view import BaseListView
 from bradmin.views.deactivate_base_view import DeactivateBaseView
 from bradmin.views.delete_base_view import DeleteBaseView
@@ -66,6 +67,27 @@ class AdminBookDeactivateView(DeactivateBaseView):
 
 class AdminBookDeleteView(DeleteBaseView):
     model = Book
+
+
+class AdminBookDetailsView(BaseDetailView):
+    model = Book
+
+    def get_template_names(self):
+        return [
+            "admin/book/admin_book_details.html"
+        ]
+
+    def get_left_menu_items(self):
+        return {
+            "All": reverse("admin_book_list_view"),
+            "Error Logs": reverse("admin_error_logs_view") + "?context=%s" % self.model.__name__
+        }
+
+    def get_page_title(self):
+        return "Book Details | BDReads.com"
+
+    def get_ttab_name(self):
+        return "book"
 
 
 class AdminBookCreateView(BRBaseCreateView):

@@ -23,8 +23,8 @@ class Book(Product):
 
     @classmethod
     def get_table_headers(self):
-        return ["Code", "Book Title", "Book Title 2(Optional)",
-                "ISBN(Optional)", "ISBN3(Optional)","Show 2", "Category Code(s)", "Edition",
+        return ["Code", "Book Title", "Book Title 2",
+                "ISBN", "ISBN3","Show 2", "Category Code(s)", "Edition",
                 "Publisher Code", "Author Codes(s)", "Details"]
 
     @classmethod
@@ -53,11 +53,16 @@ class Book(Product):
     def get_author_codes(self):
         return ','.join(self.authors.values_list('code', flat=True))
 
+    def get_publisher_display(self):
+        if self.publisher:
+            return self.publisher.name
+        return ""
+
     @classmethod
     def get_download_template_headers(cls):
-        return ["Code", "Book Title", "Book Title 2(Optional)", "Book Subtitle", "Book Subtitle 2(Optional)",
-                "ISBN(Optional)", "ISBN3(Optional)",
-                "Description", "Description 2(Optional)", "Show 2", "Category Code(s)", "Edition",
+        return ["Code", "Book Title", "Book Title 2", "Book Subtitle", "Book Subtitle 2",
+                "ISBN", "ISBN3",
+                "Description", "Description 2", "Show 2", "Category Code(s)", "Edition",
                 "Total Page", "Publisher Code", "Published date(dd/mm/YYYY)", "Cover Photo", "Language", "Keyword(s)",
                 "Author Codes(s)", "Sale Available", "Rent Available"]
 
@@ -80,8 +85,8 @@ class Book(Product):
     @classmethod
     def get_download_headers(cls):
         return ["Code", "Book Title", "Book Title 2", "Book Subtitle", "Book Subtitle 2",
-                "ISBN(Optional)", "ISBN3",
-                "Description", "Description 2(Optional)", "Show 2", "Category Code(s)", "Edition",
+                "ISBN", "ISBN3",
+                "Description", "Description 2", "Show 2", "Category Code(s)", "Edition",
                 "Total Page", "Publisher Code", "Published date(dd/mm/YYYY)", "Cover Photo", "Language", "Keyword(s)",
                 "Author Codes(s)", "Sale Available", "Rent Available"]
 
@@ -138,8 +143,12 @@ class Book(Product):
         return reverse("admin_book_delete_view")
 
     @classmethod
+    def get_list_url(cls):
+        return reverse("admin_book_list_view")
+
+    @classmethod
     def get_detail_link(cls, object_id):
-        return ""
+        return reverse("admin_book_details_view", kwargs={"pk": object_id})
 
     @classmethod
     def get_search_by_options(cls):

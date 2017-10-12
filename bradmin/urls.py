@@ -5,7 +5,7 @@ from bradmin.views.author.author_views import AdminAuthorListView, AdminAuthorCr
     AdminAuthorUpdateView, AdminAuthorUploadView, AdminAuthorDownloadView, AdminAuthorActivateView, \
     AdminAuthorDeactivateView, AdminAuthorDeleteView
 from bradmin.views.book.book_views import AdminBooksListView, AdminBookUploadView, AdminBookDownloadView, \
-    AdminBookActivateView, AdminBookDeactivateView, AdminBookDeleteView, AdminBookCreateView
+    AdminBookActivateView, AdminBookDeactivateView, AdminBookDeleteView, AdminBookCreateView, AdminBookDetailsView
 from bradmin.views.books_views import AdminBooksView, AdminBooksUploadView
 from bradmin.views.category.category_views import AdminCategoryUploadView, AdminCategoryListView, \
     AdminCategoryDownloadView, AdminCategoryActivateView, AdminCategoryDeactivateView, AdminCategoryDeleteView, \
@@ -56,7 +56,8 @@ urlpatterns = [
     url(r'^books-download/', AdminBookDownloadView.as_view(), name="admin_book_download_view"),
     url(r'^books-activate/', AdminBookActivateView.as_view(), name="admin_book_activate_view"),
     url(r'^books-deactivate/', AdminBookDeactivateView.as_view(),name="admin_book_deactivate_view"),
-    url(r'^publishers-delete/', AdminBookDeleteView.as_view(), name="admin_book_delete_view"),
+    url(r'^books-delete/', AdminBookDeleteView.as_view(), name="admin_book_delete_view"),
+    url(r'^book-details/(?P<pk>[0-9]+)/$', AdminBookDetailsView.as_view(), name="admin_book_details_view"),
     url(r'^books-create/$', AdminBookCreateView.as_view(), name="admin_book_create_view"),
 
     url(r'^error-logs/', AdminErrorLogView.as_view(), name="admin_error_logs_view"),
