@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls.base import reverse
+
 from ecommerce.models.sales.warehouse import Warehouse
 from generics.models.base_entity import BaseEntity
 
@@ -23,3 +25,15 @@ class Inventory(BaseEntity):
             return "Color"
         elif self.print_type == 'ECO':
             return "Economy"
+
+    @classmethod
+    def show_create(cls):
+        return True
+
+    @classmethod
+    def show_edit(cls):
+        return True
+
+    @classmethod
+    def get_create_link(cls):
+        return reverse("admin_inventory_create_view")

@@ -10,6 +10,7 @@ from bradmin.views.books_views import AdminBooksView, AdminBooksUploadView
 from bradmin.views.category.category_views import AdminCategoryUploadView, AdminCategoryListView, \
     AdminCategoryDownloadView, AdminCategoryActivateView, AdminCategoryDeactivateView, AdminCategoryDeleteView, \
     AdminCategoryDetailsView, AdminCategoryCreateView, AdminCategoryUpdateView
+from bradmin.views.inventory.inventory_views import AdminInventoryListView, AdminInventoryCreateView
 from bradmin.views.publisher.publisher_views import AdminPublisherListView, AdminBookPublisherUploadView, \
     AdminBookPublisherDownloadView, AdminBookPublisherActivateView, AdminBookPublisherDeactivateView, \
     AdminBookPublisherDeleteView, AdminBookPublisherDetailsView, AdminBookPublisherCreateView, \
@@ -72,6 +73,9 @@ urlpatterns = [
     url(r'^warehouse-delete/', AdminWarehouseDeleteView.as_view(), name="admin_warehouse_delete_view"),
     url(r'^warehouse-create/$', AdminWarehouseCreateView.as_view(), name="admin_warehouse_create_view"),
     url(r'^warehouse-edit/(?P<pk>[0-9]+)/$', AdminWarehouseUpdateView.as_view(), name="admin_warehouse_edit_link_view"),
+    #Inventory
+    url(r'^inventory/', AdminInventoryListView.as_view(), name="admin_inventory_list_view"),
+    url(r'^inventory-create/$', AdminInventoryCreateView.as_view(), name="admin_inventory_create_view"),
 
     url(r'^error-logs/', AdminErrorLogView.as_view(), name="admin_error_logs_view"),
     url(r'^error-log/details/(?P<pk>[0-9]+)/$', AdminErrorLogsDetailsView.as_view(), name="admin_error_log_details_view"),
