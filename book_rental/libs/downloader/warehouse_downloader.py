@@ -6,13 +6,8 @@ from generics.libs.writer.writter import Writter
 
 class WarehouseDownloader(Downloader):
 
-    def __init__(self, file_name, *args, **kwargs):
+    def __init__(self, file_name=None, *args, **kwargs):
         super(WarehouseDownloader, self).__init__(file_name=file_name, *args, **kwargs)
 
     def get_default_writer(self):
         return ExcelFileWriter
-
-    def get_header_names(self):
-        return [
-            "Code", "Name", "Description", "Contact Name", "Contact No"
-        ]

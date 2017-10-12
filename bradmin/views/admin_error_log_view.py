@@ -6,6 +6,7 @@ from book_rental.models.sales.book import Book
 from bradmin.views.base_detail_view import BaseDetailView
 from bradmin.views.base_list_view import BaseListView
 from ecommerce.models.sales.category import ProductCategory
+from ecommerce.models.sales.warehouse import Warehouse
 from logger.models.error_log import ErrorLog
 
 
@@ -27,6 +28,8 @@ class AdminErrorLogView(BaseListView):
             all_url = reverse("admin_book_list_view")
         elif context == Author.__name__:
             all_url = reverse("admin_author_list_view")
+        elif context == Warehouse.__name__:
+            all_url = reverse("admin_warehouse_list_view")
         return {
             "All": all_url,
             "Error Logs": error_log_url
@@ -63,6 +66,8 @@ class AdminErrorLogView(BaseListView):
             return "book"
         elif context == Author.__name__:
             return "author"
+        elif context == Warehouse.__name__:
+            return "warehouse"
 
     def get_ltab_name(self):
         return "Error Logs"

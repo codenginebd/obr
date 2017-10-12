@@ -15,6 +15,9 @@ from bradmin.views.publisher.publisher_views import AdminPublisherListView, Admi
     AdminBookPublisherDeleteView, AdminBookPublisherDetailsView, AdminBookPublisherCreateView, \
     AdminBookPublisherUpdateView
 from bradmin.views.views import AdminHomeView, AdminLoginView, AdminLogoutView
+from bradmin.views.warehouse.warehouse_views import AdminWarehouseListView, AdminWarehouseCreateView, \
+    AdminWarehouseUpdateView, AdminWarehouseUploadView, AdminWarehouseDownloadView, AdminWarehouseActivateView, \
+    AdminWarehouseDeactivateView, AdminWarehouseDeleteView, AdminDetailsDetailsView
 
 urlpatterns = [
     url(r'^$', AdminHomeView.as_view(), name='admin_home_view'),
@@ -59,6 +62,16 @@ urlpatterns = [
     url(r'^books-delete/', AdminBookDeleteView.as_view(), name="admin_book_delete_view"),
     url(r'^book-details/(?P<pk>[0-9]+)/$', AdminBookDetailsView.as_view(), name="admin_book_details_view"),
     url(r'^books-create/$', AdminBookCreateView.as_view(), name="admin_book_create_view"),
+    #Warehouse
+    url(r'^warehouse/', AdminWarehouseListView.as_view(), name="admin_warehouse_list_view"),
+    url(r'^warehouse-details/(?P<pk>[0-9]+)/$', AdminDetailsDetailsView.as_view(), name="admin_warehouse_details_view"),
+    url(r'^warehouse-upload/', AdminWarehouseUploadView.as_view(), name="admin_warehouse_upload_view"),
+    url(r'^warehouse-download/', AdminWarehouseDownloadView.as_view(), name="admin_warehouse_download_view"),
+    url(r'^warehouse-activate/', AdminWarehouseActivateView.as_view(), name="admin_warehouse_activate_view"),
+    url(r'^warehouse-deactivate/', AdminWarehouseDeactivateView.as_view(),name="admin_warehouse_deactivate_view"),
+    url(r'^warehouse-delete/', AdminWarehouseDeleteView.as_view(), name="admin_warehouse_delete_view"),
+    url(r'^warehouse-create/$', AdminWarehouseCreateView.as_view(), name="admin_warehouse_create_view"),
+    url(r'^warehouse-edit/(?P<pk>[0-9]+)/$', AdminWarehouseUpdateView.as_view(), name="admin_warehouse_edit_link_view"),
 
     url(r'^error-logs/', AdminErrorLogView.as_view(), name="admin_error_logs_view"),
     url(r'^error-log/details/(?P<pk>[0-9]+)/$', AdminErrorLogsDetailsView.as_view(), name="admin_error_log_details_view"),

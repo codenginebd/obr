@@ -1,7 +1,7 @@
 from django.db import transaction
 # from brlogger.models.error_log import ErrorLog
 from bauth.models.phone import Phone
-from ecommerce.models.sales.warehouse import Warehouse
+from generics.libs.loader.loader import load_model
 from logger.models.error_log import ErrorLog
 
 
@@ -12,6 +12,7 @@ class WarehouseUploader(object):
         self.kwargs = kwargs
 
     def handle_upload(self):
+        Warehouse = load_model(app_label="ecommerce", model_name="Warehouse")
         self.data = self.data[1:]
         for row in self.data:
             try:
@@ -28,17 +29,13 @@ class WarehouseUploader(object):
                     contact_no = row[index] if row[index] else None
 
                     if not name:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Warehouse name must be given. skipping...'
-                        error_log.save()
+                        ErrorLog.log(url='', stacktrace='Warehouse name must be given. skipping...',
+                                     context=Warehouse.__name__)
                         continue
 
                     if not description:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Warehouse description must be given. skipping...'
-                        error_log.save()
+                        ErrorLog.log(url='', stacktrace='Warehouse description must be given. skipping...',
+                                     context=Warehouse.__name__)
                         continue
 
                     if code:
@@ -46,10 +43,8 @@ class WarehouseUploader(object):
                         if wh_objects.exists():
                             wh_object = wh_objects.first()
                         else:
-                            error_log = ErrorLog()
-                            error_log.url = ''
-                            error_log.stacktrace = 'Invalid code given. Data %s' % str(row)
-                            error_log.save()
+                            ErrorLog.log(url='', stacktrace='Invalid code given. Data %s' % str(row),
+                                         context=Warehouse.__name__)
                             continue
                     else:
                         wh_objects = Warehouse.objects.filter(name=str(name))
@@ -75,8 +70,9 @@ class WarehouseUploader(object):
 
                     wh_object.save()
             except Exception as exp:
-                print("Exception occured")
-                print(str(exp))
+                ErrorLog.log(url='', stacktrace='Exception Occured. Message: %s' % str(exp),
+                             context=Warehouse.__name__)
+        return True
                     
                 
 

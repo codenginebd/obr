@@ -1,0 +1,37 @@
+{% extends "admin/details_master.html" %}
+{% load staticfiles %}
+{% block detail_content %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Warehouse Details(ID: {{ object.pk }})
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>
+                Name
+            </th>
+            <td>
+                {{ object.name }}
+            </td>
+            <th>
+                Description
+            </th>
+            <td>
+                {{ object.description }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Is Active
+            </th>
+            <td>
+                {% if object.is_active %}Yes{% else %}No{% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock detail_content %}

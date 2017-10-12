@@ -61,7 +61,7 @@
       <li {% if ttab == "publisher" %}class="active" {% endif %}><a href="{% url "admin_publishers_view" %}">Publishers</a></li>
       <li {% if ttab == "author" %}class="active" {% endif %}><a href="{% url "admin_author_list_view" %}">Authors</a></li>
       <li {% if ttab == "book" %}class="active" {% endif %}><a href="{% url "admin_book_list_view" %}">Books</a></li>
-      <li {% if ttab == "warehouse" %}class="active" {% endif %}><a href="">Warehouse</a></li>
+      <li {% if ttab == "warehouse" %}class="active" {% endif %}><a href="{% url "admin_warehouse_list_view" %}">Warehouse</a></li>
       <li {% if ttab == "inventory" %}class="active" {% endif %}><a href="#">Inventory</a></li>
       <li {% if ttab == "orders" %}class="active" {% endif %}><a href="#">Orders</a></li>
       <li {% if ttab == "promotions" %}class="active" {% endif %}><a href="#">Promotions</a></li>
