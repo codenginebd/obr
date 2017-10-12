@@ -100,31 +100,25 @@ class BookUploader(object):
                                                   edition, total_page, publisher_code, published_date,
                                                   language, keywords, authors
                                                   ]]):
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Book Upload missing data: %s. Skipping...' % str(row)
-                        error_log.save()
+                        ErrorLog.log(url='', stacktrace='Book Upload missing data: %s. Skipping...' % str(row),
+                                     context=Book.__name__)
                         continue
                         
                     if not isbn and not isbn13:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'ISBN or ISBN13 must be there. Missing both. Skipping... Data %s' % str(row)
-                        error_log.save()
+                        ErrorLog.log(url='', stacktrace='ISBN or ISBN13 must be there. Missing both. Skipping... Data %s' % str(row),
+                                     context=Book.__name__)
                         continue
 
                     if len(isbn) != 10:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'ISBN number must be 10 digit long. Skipping... Data %s' % str(row)
-                        error_log.save()
+                        ErrorLog.log(url='',
+                                     stacktrace='ISBN number must be 10 digit long. Skipping... Data %s' % str(row),
+                                     context=Book.__name__)
                         continue
                         
                     if len(isbn13) != 13:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'ISBN13 number must be 13 digit long. Skipping... Data %s' % str(row)
-                        error_log.save()
+                        ErrorLog.log(url='',
+                                     stacktrace='ISBN13 number must be 13 digit long. Skipping... Data %s' % str(row),
+                                     context=Book.__name__)
                         continue
 
                     try:
@@ -133,42 +127,37 @@ class BookUploader(object):
                             show_2 = int(show_2)
                         if show_2 == 1:
                             if not book_title_2 or not description_2:
-                                error_log = ErrorLog()
-                                error_log.url = ''
-                                error_log.stacktrace = 'Book Title, Description is mandatory. Data: %s skipping...' % row
-                                error_log.save()
+                                ErrorLog.log(url='',
+                                             stacktrace='Book Title, Description is mandatory. Data: %s skipping...' % row,
+                                             context=Book.__name__)
                                 continue
                     except Exception as exp:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'show_2 must be number. Given %s. skipping...' % show_2
-                        error_log.save()
+                        ErrorLog.log(url='',
+                                     stacktrace='show_2 must be number. Given %s. skipping...' % show_2,
+                                     context=Book.__name__)
                         continue
 
                     try:
                         int(float(edition))
                     except Exception as exp:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Invalid edition. Must be number. Skipping... data: %s' % str(row)
-                        error_log.save()
+                        ErrorLog.log(url='',
+                                     stacktrace='Invalid edition. Must be number. Skipping... data: %s' % str(row),
+                                     context=Book.__name__)
                         continue
 
                     try:
                         total_page = int(float(total_page))
                     except Exception as exp:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Total page must be number. Skipping... data: %s' % str(row)
-                        error_log.save()
+                        ErrorLog.log(url='',
+                                     stacktrace='Total page must be number. Skipping... data: %s' % str(row),
+                                     context=Book.__name__)
                         continue
 
                     book_languages = BookLanguage.objects.filter(short_name=language)
                     if not book_languages.exists():
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Invalid language code given. Skipping... Data: %s' % str(row)
-                        error_log.save()
+                        ErrorLog.log(url='',
+                                     stacktrace='Invalid language code given. Skipping... Data: %s' % str(row),
+                                     context=Book.__name__)
                         continue
                     else:
                         language = book_languages.first().pk
@@ -176,10 +165,9 @@ class BookUploader(object):
                     try:
                         published_date = published_date.date()
                     except Exception as exp:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Invalid published date format given. Skipping... Data: %s' % str(row)
-                        error_log.save()
+                        ErrorLog.log(url='',
+                                     stacktrace='Invalid published date format given. Skipping... Data: %s' % str(row),
+                                     context=Book.__name__)
                         continue
 
                     cat_ids = []
@@ -196,24 +184,21 @@ class BookUploader(object):
                                 cat_ids += [ cat_object['id'] ]
 
                         if cat_not_found:
-                            error_log = ErrorLog()
-                            error_log.url = ''
-                            error_log.stacktrace = 'Invalid category code given. Skipping... Data: %s' % str(row)
-                            error_log.save()
+                            ErrorLog.log(url='',
+                                         stacktrace='Invalid category code given. Skipping... Data: %s' % str(row),
+                                         context=Book.__name__)
                             continue
                     else:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'No Category found. Skipping... Data: %s' % str(row)
-                        error_log.save()
+                        ErrorLog.log(url='',
+                                     stacktrace='No Category found. Skipping... Data: %s' % str(row),
+                                     context=Book.__name__)
                         continue
 
                     publisher_objects = BookPublisher.objects.filter(code=str(publisher_code))
                     if not publisher_objects.exists():
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'Invalid publisher code given. Data: %s' % str(row)
-                        error_log.save()
+                        ErrorLog.log(url='',
+                                     stacktrace='Invalid publisher code given. Data: %s' % str(row),
+                                     context=Book.__name__)
                         continue
                     publisher_id = publisher_objects.first().pk
 
@@ -223,26 +208,23 @@ class BookUploader(object):
                         for author_code in authors:
                             athr_objects = Author.objects.filter(code=str(author_code.strip()))
                             if not athr_objects.exists():
-                                error_log = ErrorLog()
-                                error_log.url = ''
-                                error_log.stacktrace = 'Invalid author code given. Data: %s' % str(row)
-                                error_log.save()
+                                ErrorLog.log(url='',
+                                             stacktrace='Invalid author code given. Data: %s' % str(row),
+                                             context=Book.__name__)
                                 athr_not_found = True
                                 break
 
                             author_object_list += [athr_objects.first()]
 
                         if athr_not_found:
-                            error_log = ErrorLog()
-                            error_log.url = ''
-                            error_log.stacktrace = 'Invalid author code given. Data: %s' % str(row)
-                            error_log.save()
+                            ErrorLog.log(url='',
+                                         stacktrace='Invalid author code given. Data: %s' % str(row),
+                                         context=Book.__name__)
                             continue
                     else:
-                        error_log = ErrorLog()
-                        error_log.url = ''
-                        error_log.stacktrace = 'NO author found. Data: %s' % str(row)
-                        error_log.save()
+                        ErrorLog.log(url='',
+                                     stacktrace='NO author found. Data: %s' % str(row),
+                                     context=Book.__name__)
                         continue
 
                     try:
@@ -281,10 +263,9 @@ class BookUploader(object):
                         if book_objects.exists():
                             book_object = book_objects.first()
                         else:
-                            error_log = ErrorLog()
-                            error_log.url = ''
-                            error_log.stacktrace = 'Invalid code given for book. Skipping.... Data %s' % str(code)
-                            error_log.save()
+                            ErrorLog.log(url='',
+                                         stacktrace='Invalid code given for book. Skipping.... Data %s' % str(code),
+                                         context=Book.__name__)
                             continue
                     else:
                         book_objects = Book.objects.filter(title=book_title, isbn=str(isbn))
@@ -326,10 +307,9 @@ class BookUploader(object):
                             product_image.save()
                             book_object.images.add(product_image)
                         else:
-                            error_log = ErrorLog()
-                            error_log.url = ''
-                            error_log.stacktrace = 'Product image %s not found...' % cover_photo
-                            error_log.save()
+                            ErrorLog.log(url='',
+                                         stacktrace='Product image %s not found...' % cover_photo,
+                                         context=Book.__name__)
 
                     book_object.tags.clear()
 
@@ -347,11 +327,10 @@ class BookUploader(object):
                     book_object.authors.clear()
 
                     book_object.authors.add(*author_object_list)
-
-                    print("Done!")
                 except Exception as exp:
-                    print("Exception Occured")
-                    print(str(exp))
+                    ErrorLog.log(url='',
+                                 stacktrace='Exception Occured. Message: %s' % str(exp),
+                                 context=Book.__name__)
 
 
 

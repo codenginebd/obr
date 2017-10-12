@@ -27,6 +27,15 @@ class Product(BaseEntity):
     images = models.ManyToManyField(ProductImage)
     rating = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
 
+    def get_category_codes(self):
+        return ','.join(self.categories.values_list('code', flat=True))
+
+    def get_image_names(self):
+        return ','.join(self.images.values_list('name', flat=True))
+
+    def get_tag_names(self):
+        return ','.join(self.tags.values_list('name', flat=True))
+
     @classmethod
     def apply_search(cls, queryset, request=None, **kwargs):
         if request and request.GET.get('id'):

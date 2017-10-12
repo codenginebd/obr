@@ -78,7 +78,7 @@ class ProductCategory(BaseEntity):
     @classmethod
     def get_table_headers(cls):
         return [
-            "ID", "Code", "Name(English)", "Name(Bangla)", "Active?", "Show Bangla", "Parent", "Details"
+            "ID", "Code", "Name(English)", "Name(Bangla)", "Active?", "Show Bangla", "Parent", "c"
         ]
 
     @classmethod

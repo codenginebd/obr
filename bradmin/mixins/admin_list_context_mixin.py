@@ -76,6 +76,7 @@ class AdminListContextMixin(object):
         context["left_menu_items"] = left_menu
         context["headers"] = self.get_table_headers()
         context["table_data"] = self.prepare_table_data(queryset=object_list)
+        context["table_column_count"] = len(context["headers"])
         context["total_count"] = total_count
         context["ttab"] = self.get_ttab_name()
         context["ltab"] = self.get_ltab_name()

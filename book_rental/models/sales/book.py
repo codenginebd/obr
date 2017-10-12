@@ -23,30 +23,20 @@ class Book(Product):
 
     @classmethod
     def get_table_headers(self):
-        return [
-            "ID", "Code", "Title", "Title2", "Active?", "Show 2", "Details"
-        ]
+        return ["Code", "Book Title", "Book Title 2(Optional)",
+                "ISBN(Optional)", "ISBN3(Optional)","Show 2", "Category Code(s)", "Edition",
+                "Publisher Code", "Author Codes(s)", "Details"]
 
     @classmethod
     def prepare_table_data(self, queryset):
         data = []
         for q_object in queryset:
             data += [
-                [
-                    q_object.pk, q_object.code, q_object.title, q_object.title_2, "Yes" if q_object.is_active else "No",
-                    "Yes" if q_object.show_2 else "No",
-                    '<a href="%s">Details</a>' % q_object.get_detail_link(object_id=q_object.pk)
-                ]
-            ]
+                [q_object.code, q_object.title, q_object.title_2, q_object.isbn, q_object.isbn13,"Yes" if q_object.show_2 else "No",
+                 q_object.get_category_codes(), q_object.edition,q_object.publisher.code if q_object.publisher else "",
+                 q_object.get_author_codes(),
+                 '<a href="%s">Details</a>' % q_object.get_detail_link(object_id=q_object.pk)]]
         return data
-
-    @classmethod
-    def show_create(cls):
-        return True
-
-    @classmethod
-    def show_edit(cls):
-        return True
 
     @classmethod
     def show_delete(cls):
@@ -60,24 +50,56 @@ class Book(Product):
     def show_deactivate(cls):
         return True
 
-    @classmethod
-    def get_download_headers(cls):
-        return ["Code", "Book Title", "Book Subtitle", "ISBN", "Description", "Category Code(s)", "Edition",
-            "Total Page", "Publisher Code", "Published date(dd/mm/YYYY)", "Cover Photo", "Language", "Keyword(s)"]
+    def get_author_codes(self):
+        return ','.join(self.authors.values_list('code', flat=True))
 
     @classmethod
     def get_download_template_headers(cls):
-        return []
+        return ["Code", "Book Title", "Book Title 2(Optional)", "Book Subtitle", "Book Subtitle 2(Optional)",
+                "ISBN(Optional)", "ISBN3(Optional)",
+                "Description", "Description 2(Optional)", "Show 2", "Category Code(s)", "Edition",
+                "Total Page", "Publisher Code", "Published date(dd/mm/YYYY)", "Cover Photo", "Language", "Keyword(s)",
+                "Author Codes(s)", "Sale Available", "Rent Available"]
 
     @classmethod
     def prepare_download_template_data(cls, queryset):
         template_data = []
         for q_object in queryset:
             template_data += [
-                [q_object.code, q_object.name, q_object.name_2, q_object.description, q_object.description_2,
-                 "1" if q_object.show_2 else "0", q_object.image.name if q_object.image else '',
-                 q_object.get_emails(), q_object.get_phones()]]
+                [q_object.code, q_object.title, q_object.title_2, q_object.subtitle, q_object.subtitle_2,
+                 q_object.isbn, q_object.isbn13,
+                 q_object.description, q_object.description_2, "1" if q_object.show_2 else "0",
+                 q_object.get_category_codes(), q_object.edition,
+                 q_object.page_count, q_object.publisher.code if q_object.publisher else "",
+                 q_object.publish_date.strftime("%d/%m/%Y") if q_object.publish_date else "",
+                 q_object.get_image_names(), q_object.language.short_name, q_object.get_tag_names(),
+                 q_object.get_author_codes(), "1" if q_object.sale_available else "0",
+                 "1" if q_object.rent_available else "0"]]
         return template_data
+
+    @classmethod
+    def get_download_headers(cls):
+        return ["Code", "Book Title", "Book Title 2", "Book Subtitle", "Book Subtitle 2",
+                "ISBN(Optional)", "ISBN3",
+                "Description", "Description 2(Optional)", "Show 2", "Category Code(s)", "Edition",
+                "Total Page", "Publisher Code", "Published date(dd/mm/YYYY)", "Cover Photo", "Language", "Keyword(s)",
+                "Author Codes(s)", "Sale Available", "Rent Available"]
+
+    @classmethod
+    def prepare_download_data(cls, queryset):
+        download_data = []
+        for q_object in queryset:
+            download_data += [
+                [q_object.code, q_object.title, q_object.title_2, q_object.subtitle, q_object.subtitle_2,
+                 q_object.isbn, q_object.isbn13,
+                 q_object.description, q_object.description_2, "1" if q_object.show_2 else "0",
+                 q_object.get_category_codes(), q_object.edition,
+                 q_object.page_count, q_object.publisher.code if q_object.publisher else "",
+                 q_object.publish_date.strftime("%d/%m/%Y") if q_object.publish_date else "",
+                 q_object.get_image_names(), q_object.language.short_name, q_object.get_tag_names(),
+                 q_object.get_author_codes(), "1" if q_object.sale_available else "0",
+                 "1" if q_object.rent_available else "0"]]
+        return download_data
 
     @classmethod
     def get_downloader_class(cls):
@@ -117,18 +139,6 @@ class Book(Product):
 
     @classmethod
     def get_detail_link(cls, object_id):
-        return ""
-
-    @classmethod
-    def get_create_link(cls):
-        return reverse("admin_book_create_view")
-
-    @classmethod
-    def get_edit_link_name(cls):
-        return ""
-
-    @classmethod
-    def get_edit_link(cls, object_id):
         return ""
 
     @classmethod
