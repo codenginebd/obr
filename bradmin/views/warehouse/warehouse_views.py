@@ -61,7 +61,7 @@ class AdminWarehouseDeleteView(DeleteBaseView):
     model = Warehouse
 
 
-class AdminDetailsDetailsView(BaseDetailView):
+class AdminWarehouseDetailsView(BaseDetailView):
     model = Warehouse
 
     def get_template_names(self):

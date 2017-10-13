@@ -1,7 +1,6 @@
 from django.db import transaction
-from book_rental.models.sales.book import Book
 from ecommerce.models.sales.warehouse import Warehouse
-from inventory.models.inventory import Inventory
+from generics.libs.loader.loader import load_model
 from inventory.models.inventory_transaction import InventoryTransaction
 from inventory.models.product_supplier import ProductSupplier
 from logger.models.error_log import ErrorLog
@@ -14,6 +13,8 @@ class InventoryUploader(object):
         self.kwargs = kwargs
 
     def handle_upload(self):
+        Book = load_model(app_label="book_rental", model_name="Book")
+        Inventory = load_model(app_label="inventory", model_name="Inventory")
         self.data = self.data[1:]
         for row in self.data:
             try:

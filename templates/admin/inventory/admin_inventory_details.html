@@ -1,0 +1,71 @@
+{% extends "admin/details_master.html" %}
+{% load staticfiles %}
+{% block detail_content %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Inventory Details(ID: {{ object.pk }})
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>
+                Product:
+            </th>
+            <td>
+                {{ object.get_product_name }}
+            </td>
+            <th>
+                Warehouse:
+            </th>
+            <td>
+                {{ object.warehouse.name }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Stock:
+            </th>
+            <td>
+                {{ object.stock }}
+            </td>
+            <th>
+                Available For Sale:
+            </th>
+            <td>
+                {% if object.available_for_sale %}Yes{% else %}No{% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Available For Rent:
+            </th>
+            <td>
+                {% if object.available_for_rent %}Yes{% else %}No{% endif %}
+            </td>
+            <th>
+                Available For Buy:
+            </th>
+            <td>
+                {% if object.available_for_buy %}Yes{% else %}No{% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Printing Type:
+            </th>
+            <td>
+                {{ object.print_type_full_name }}
+            </td>
+            <th>
+                Is Active
+            </th>
+            <td>
+                {% if object.is_active %}Yes{% else %}No{% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock detail_content %}
