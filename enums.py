@@ -54,3 +54,15 @@ class InventoryTXNType(Enum):
     STOCK_OUT = "STOCK_OUT"
     TNX_DB = "TNX_DB"
     TNX_CR = "TNX_CR"
+
+
+class FrontListRule(Enum):
+    TOP_X_PTC_DISCOUNT = "top_x_percentage_discount"
+    MOST_POPULAR = "most_popular"
+    MOST_POPULAR_ALL = "most_popular_all"
+    BEST_SELLER = "best_seller"
+    BEST_SELLER_ALL = "best_seller_all"
+    TOP_SEARCHED = "top_searched"
+    TOP_SEARCHED_ALL = "top_searched_all"
+    NEW_BOOKS = "new_books"
+    NEW_BOOKS_ALL = "new_books_all"
