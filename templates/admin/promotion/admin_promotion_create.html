@@ -4,4 +4,11 @@
     <table class="table">
     {{ form.as_table }}
     </table>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    $("#id_start_date").datepicker();
+    $("#id_end_date").datepicker();
+});
+</script>
 {% endblock form_content %}
