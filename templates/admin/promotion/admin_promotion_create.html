@@ -1,8 +1,46 @@
 {% extends "admin/create_master.html" %}
 {% load staticfiles %}
 {% block form_content %}
+    <style type="text/css">
+    .form-container {
+        max-width: 100% !important;
+    }
+    .form-container input[type=checkbox] {
+        width: 20px;
+    }
+    .form-container th {
+        min-width: 80px;
+    }
+    </style>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                <tr>
+                    <th>
+                        Title:
+                    </th>
+                    <td>
+                        {{ form.title }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Description:
+                    </th>
+                    <td>
+                        {{ form.description }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h4>Promotion Rules</h4>
+            <hr/>
+            <a href="#" class="btn btn-default pull-right"><i class="glyphicon glyphicon-plus"></i> Add Rule</a>
+        </div>
+    </div>
     <table class="table">
-    {{ form.as_table }}
+{#    {{ form.as_table }}#}
     </table>
 
 <script type="text/javascript">
