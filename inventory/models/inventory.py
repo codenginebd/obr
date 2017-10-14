@@ -133,8 +133,8 @@ class Inventory(BaseEntity):
     @classmethod
     def get_download_template_headers(cls):
         return [
-            "Code", "Warehouse Code", "Book Code", "Is New?", "Print Type", "Item Total", "Available For Sale",
-            "Available For Rent", "Available For Buy",
+            "Code", "Warehouse Code", "Book Code", "Is New?", "Print Type", "Current Stock", "New Stock",
+            "Available For Sale","Available For Rent", "Available For Buy",
             "Supplier Name", "Address 1", "Address2", "Address3", "Address4", "Phone1", "Phone2", "Note"
         ]
 
@@ -149,8 +149,9 @@ class Inventory(BaseEntity):
             data += [
                 [
                     q_object.code, q_object.warehouse.code ,q_object.get_product_code(), "1" if q_object.is_new == 1 else "0",
-                    q_object.print_type, q_object.stock, "1" if q_object.available_for_sale else "0",
+                    q_object.print_type, q_object.stock, "0", "1" if q_object.available_for_sale else "0",
                     "1" if q_object.available_for_rent else "0", "1" if q_object.available_for_buy else "0",
+                    "", "", "", "", "", "", "", ""
 
                 ]
             ]

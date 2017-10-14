@@ -47,3 +47,10 @@ class PaymentStatus(Enum):
     PROCESSED = 1
     FAILED = 2
     CANCELLED = 3
+
+
+class InventoryTXNType(Enum):
+    STOCK_IN = "STOCK_IN"
+    STOCK_OUT = "STOCK_OUT"
+    TNX_DB = "TNX_DB"
+    TNX_CR = "TNX_CR"
