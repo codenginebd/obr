@@ -8,7 +8,8 @@ from promotion.models.promotion_reward_products import PromotionRewardProduct
 class AdminPromotionRewardProductForm(BRBaseModelForm):
 
     product = ProductModelChoiceField(label="Select Product",
-                                      queryset=Book.objects.all())
+                                      queryset=Book.objects.all(),
+                                      widget=forms.Select(attrs={"class": "form-control"}))
 
     print_type = forms.ChoiceField(label="Printing Type",
                                    choices=(("ECO", "Economy"), ("COL", "Color"), ("ORI", "Original")),

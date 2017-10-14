@@ -34,6 +34,10 @@
         {% csrf_token %}
         <h3>{{ form_title }}</h3>
         <hr/>
+        <div style="display: none;" id="id_hidden_content">
+        {% block hidden_content %}
+        {% endblock hidden_content %}
+        </div>
         {% block form_content %}
         {% endblock form_content %}
         <div class="row">

@@ -1,6 +1,9 @@
 from django.urls.base import reverse
 
 from bradmin.forms.admin_promotion_forms import AdminPromotionForm
+from bradmin.forms.admin_promotion_reward_forms import AdminPromotionRewardForm
+from bradmin.forms.admin_promotion_reward_product_forms import AdminPromotionRewardProductForm
+from bradmin.forms.admin_promotion_rule_forms import AdminPromotionRuleForm
 from bradmin.views.base_create_view import BRBaseCreateView
 from bradmin.views.base_list_view import BaseListView
 from promotion.models.promotion import Promotion
@@ -55,3 +58,10 @@ class AdminPromotionCreateView(BRBaseCreateView):
             "All": reverse("admin_promotion_list_view"),
             "Error Logs": reverse("admin_error_logs_view") + "?context=%s" % Promotion.__name__
         }
+
+    def get_context_data(self, **kwargs):
+        context = super(AdminPromotionCreateView, self).get_context_data(**kwargs)
+        context["rule_form"] = AdminPromotionRuleForm()
+        context["reward_form"] = AdminPromotionRewardForm()
+        context["reward_product_form"] = AdminPromotionRewardProductForm()
+        return context
