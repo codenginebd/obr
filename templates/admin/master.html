@@ -70,6 +70,8 @@
       <li {% if ttab == "return" %}class="active" {% endif %}><a href="#">Book Returns</a></li>
       <li {% if ttab == "feedback" %}class="active" {% endif %}><a href="#">Customer Feedback</a></li>
       <li {% if ttab == "alert" %}class="active" {% endif %}><a href="#">Alerts</a></li>
+      <li {% if ttab == "frontpalatte" %}class="active" {% endif %}><a href="{% url "admin_front_palette_list_view" %}">Front Palatte</a></li>
+      <li {% if ttab == "frontlist" %}class="active" {% endif %}><a href="{% url "admin_frontlist_list_view" %}">Front List</a></li>
     </ul>
   </div>
 </nav>

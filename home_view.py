@@ -1,8 +1,6 @@
 from bauth.decorators.authentication import UserLoginRequired
 from book_rental.mixin.common_data_mixin import CommonDataMixin
 from ecommerce.models.sales.category import ProductCategory
-from ecommerce.models.sales.front_list import FrontList
-from ecommerce.models.sales.list_group import ListGroup
 from generics.views.base_template_view import BaseTemplateView
 
 
@@ -60,13 +58,6 @@ class HomeView(BaseTemplateView, CommonDataMixin):
 
         # Front List
         front_lists = []
-        groups = ListGroup.objects.filter(is_active=True)
-        for group in groups:
-            group_list = {}
-            flists = FrontList.objects.filter(is_active=True, group_id=group.pk)
-            for flist in flists:
-                group_list[flist.name] = {
-                    ''
-                }
+
 
         return context

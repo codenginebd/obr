@@ -5,6 +5,7 @@ from book_rental.models.book_publisher import BookPublisher
 from book_rental.models.sales.book import Book
 from bradmin.views.base_detail_view import BaseDetailView
 from bradmin.views.base_list_view import BaseListView
+from ecommerce.models.front_palette import FrontPalette
 from ecommerce.models.sales.category import ProductCategory
 from ecommerce.models.sales.warehouse import Warehouse
 from inventory.models.inventory import Inventory
@@ -36,6 +37,8 @@ class AdminErrorLogView(BaseListView):
             all_url = reverse("admin_inventory_list_view")
         elif context == Promotion.__name__:
             all_url = reverse("admin_promotion_list_view")
+        elif context == FrontPalette.__name__:
+            all_url = reverse("admin_front_palette_list_view")
         return {
             "All": all_url,
             "Error Logs": error_log_url
@@ -78,6 +81,8 @@ class AdminErrorLogView(BaseListView):
             return "inventory"
         elif context == Promotion.__name__:
             return "promotion"
+        elif context == FrontPalette.__name__:
+            return "frontpalatte"
 
     def get_ltab_name(self):
         return "Error Logs"

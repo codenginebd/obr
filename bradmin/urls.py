@@ -9,6 +9,10 @@ from bradmin.views.book.book_views import AdminBooksListView, AdminBookUploadVie
 from bradmin.views.category.category_views import AdminCategoryUploadView, AdminCategoryListView, \
     AdminCategoryDownloadView, AdminCategoryActivateView, AdminCategoryDeactivateView, AdminCategoryDeleteView, \
     AdminCategoryDetailsView, AdminCategoryCreateView, AdminCategoryUpdateView
+from bradmin.views.frontlist.front_palette_views import AdminFrontPaletteListView, AdminFrontPaletteCreateView, \
+    AdminFrontPaletteUpdateView, AdminFrontPaletteActivateView, \
+    AdminFrontPaletteDeactivateView, AdminFrontPaletteDeleteView
+from bradmin.views.frontlist.frontlist_views import AdminFrontListListView
 from bradmin.views.inventory.inventory_views import AdminInventoryListView, AdminInventoryCreateView, \
     AdminInventoryUpdateView, AdminInventoryDetailsView, AdminInventoryActivateView, AdminInventoryDeactivateView, \
     AdminInventoryDeleteView, AdminInventoryUploadView, AdminInventoryDownloadView, AdminInventoryAlertListView
@@ -89,6 +93,14 @@ urlpatterns = [
     #Promotion
     url(r'^promotions/$', AdminPromotionListView.as_view(), name="admin_promotion_list_view"),
     url(r'^promotion-create/$', AdminPromotionCreateView.as_view(), name="admin_promotion_create_view"),
+    #Frontlist
+    url(r'^front-list/$', AdminFrontListListView.as_view(), name="admin_frontlist_list_view"),
+    url(r'^front-palette/$', AdminFrontPaletteListView.as_view(), name="admin_front_palette_list_view"),
+    url(r'^front-palette-activate/', AdminFrontPaletteActivateView.as_view(), name="admin_front_palette_activate_view"),
+    url(r'^front-palette-deactivate/', AdminFrontPaletteDeactivateView.as_view(),name="admin_front_palette_deactivate_view"),
+    url(r'^front-palette-delete/', AdminFrontPaletteDeleteView.as_view(), name="admin_front_palette_delete_view"),
+    url(r'^front-palette-create/$', AdminFrontPaletteCreateView.as_view(), name="admin_front_palette_create_view"),
+    url(r'^front-palette-edit/(?P<pk>[0-9]+)/$', AdminFrontPaletteUpdateView.as_view(), name="admin_front_palette_edit_link_view"),
 
     url(r'^error-logs/', AdminErrorLogView.as_view(), name="admin_error_logs_view"),
     url(r'^error-log/details/(?P<pk>[0-9]+)/$', AdminErrorLogsDetailsView.as_view(), name="admin_error_log_details_view"),
