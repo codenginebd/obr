@@ -192,3 +192,18 @@ class Inventory(BaseEntity):
                 ]
             ]
         return data
+
+    @classmethod
+    def get_search_by_options(cls):
+        search_by_options = super(Inventory, cls).get_search_by_options()
+        search_by_options += [
+            ("By Product", "product"),
+            ("By Warehouse", "warehouse"),
+            ("Is New", "is_new"),
+            ("By Print Type", "print_type"),
+            ("By Stock", "stock"),
+            ("By Sale Available", "by_sale_available"),
+            ("By Rent Available", "by_rent_available"),
+            ("By Buy Available", "by_buy_available")
+        ]
+        return search_by_options

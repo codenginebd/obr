@@ -10,7 +10,11 @@ class BaseListView(AdminActionButtonMixin, AdminListDataMixin, AdminListSearchMi
                    AdminListContextMixin, AdminListMenuMixin, ListView):
     paginate_by = 13
 
+    def apply_filter(self, request, queryset):
+        return queryset
+
     def get_queryset(self):
         queryset = super(BaseListView, self).get_queryset()
         queryset = self.apply_search_filter(request=self.request, queryset=queryset)
+        queryset = self.apply_filter(request=self.request, queryset=queryset)
         return queryset

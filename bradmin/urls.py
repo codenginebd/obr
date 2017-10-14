@@ -11,7 +11,7 @@ from bradmin.views.category.category_views import AdminCategoryUploadView, Admin
     AdminCategoryDetailsView, AdminCategoryCreateView, AdminCategoryUpdateView
 from bradmin.views.inventory.inventory_views import AdminInventoryListView, AdminInventoryCreateView, \
     AdminInventoryUpdateView, AdminInventoryDetailsView, AdminInventoryActivateView, AdminInventoryDeactivateView, \
-    AdminInventoryDeleteView, AdminInventoryUploadView, AdminInventoryDownloadView
+    AdminInventoryDeleteView, AdminInventoryUploadView, AdminInventoryDownloadView, AdminInventoryAlertListView
 from bradmin.views.publisher.publisher_views import AdminPublisherListView, AdminBookPublisherUploadView, \
     AdminBookPublisherDownloadView, AdminBookPublisherActivateView, AdminBookPublisherDeactivateView, \
     AdminBookPublisherDeleteView, AdminBookPublisherDetailsView, AdminBookPublisherCreateView, \
@@ -75,7 +75,8 @@ urlpatterns = [
     url(r'^warehouse-create/$', AdminWarehouseCreateView.as_view(), name="admin_warehouse_create_view"),
     url(r'^warehouse-edit/(?P<pk>[0-9]+)/$', AdminWarehouseUpdateView.as_view(), name="admin_warehouse_edit_link_view"),
     #Inventory
-    url(r'^inventory/', AdminInventoryListView.as_view(), name="admin_inventory_list_view"),
+    url(r'^inventory/$', AdminInventoryListView.as_view(), name="admin_inventory_list_view"),
+    url(r'^inventory-alerts/$', AdminInventoryAlertListView.as_view(), name="admin_inventory_alert_list_view"),
     url(r'^inventory-details/(?P<pk>[0-9]+)/$', AdminInventoryDetailsView.as_view(), name="admin_inventory_details_view"),
     url(r'^inventory-upload/', AdminInventoryUploadView.as_view(), name="admin_inventory_upload_view"),
     url(r'^inventory-download/', AdminInventoryDownloadView.as_view(), name="admin_inventory_download_view"),

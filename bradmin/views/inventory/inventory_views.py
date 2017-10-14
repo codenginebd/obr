@@ -33,11 +33,42 @@ class AdminInventoryListView(BaseListView):
     def get_left_menu_items(self):
         return {
             "All": reverse("admin_inventory_list_view"),
+            'Inventory Alert': reverse("admin_inventory_alert_list_view"),
             "Error Logs": reverse("admin_error_logs_view")+"?context=%s" % self.model.__name__
         }
 
     def get_page_title(self):
         return "Inventory List | BDReads.com"
+
+
+class AdminInventoryAlertListView(BaseListView):
+    model = Inventory
+    template_name = "admin/inventory/inventory_list.html"
+
+    def get_breadcumb(self, request):
+        return [
+
+        ]
+
+    def get_ttab_name(self):
+        return "inventory"
+
+    def get_ltab_name(self):
+        return "Inventory Alert"
+
+    def apply_filter(self, request, queryset):
+        queryset = queryset.filter(stock__lte=5)
+        return queryset
+
+    def get_left_menu_items(self):
+        return {
+            "All": reverse("admin_inventory_list_view"),
+            'Inventory Alert': reverse("admin_inventory_alert_list_view"),
+            "Error Logs": reverse("admin_error_logs_view")+"?context=%s" % self.model.__name__
+        }
+
+    def get_page_title(self):
+        return "Inventory Alerts | BDReads.com"
 
 
 class AdminInventoryUploadView(UploadBaseView):
@@ -71,6 +102,7 @@ class AdminInventoryDetailsView(BaseDetailView):
     def get_left_menu_items(self):
         return {
             "All": reverse("admin_inventory_list_view"),
+            'Inventory Alert': reverse("admin_inventory_alert_list_view"),
             "Error Logs": reverse("admin_error_logs_view") + "?context=%s" % self.model.__name__
         }
 
@@ -100,6 +132,7 @@ class AdminInventoryCreateView(BRBaseCreateView):
     def get_left_menu_items(self):
         return {
             "All": reverse("admin_inventory_list_view"),
+            'Inventory Alert': reverse("admin_inventory_alert_list_view"),
             "Error Logs": reverse("admin_error_logs_view") + "?context=%s" % Inventory.__name__
         }
 
@@ -124,5 +157,6 @@ class AdminInventoryUpdateView(BRBaseUpdateView):
     def get_left_menu_items(self):
         return {
             "All": reverse("admin_inventory_list_view"),
+            'Inventory Alert': reverse("admin_inventory_alert_list_view"),
             "Error Logs": reverse("admin_error_logs_view") + "?context=%s" % Inventory.__name__
         }
