@@ -9,6 +9,7 @@ from ecommerce.models.sales.category import ProductCategory
 from ecommerce.models.sales.warehouse import Warehouse
 from inventory.models.inventory import Inventory
 from logger.models.error_log import ErrorLog
+from promotion.models.promotion import Promotion
 
 
 class AdminErrorLogView(BaseListView):
@@ -33,6 +34,8 @@ class AdminErrorLogView(BaseListView):
             all_url = reverse("admin_warehouse_list_view")
         elif context == Inventory.__name__:
             all_url = reverse("admin_inventory_list_view")
+        elif context == Promotion.__name__:
+            all_url = reverse("admin_promotion_list_view")
         return {
             "All": all_url,
             "Error Logs": error_log_url
@@ -73,6 +76,8 @@ class AdminErrorLogView(BaseListView):
             return "warehouse"
         elif context == Warehouse.__name__:
             return "inventory"
+        elif context == Promotion.__name__:
+            return "promotion"
 
     def get_ltab_name(self):
         return "Error Logs"

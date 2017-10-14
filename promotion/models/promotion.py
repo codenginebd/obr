@@ -1,6 +1,8 @@
 from datetime import datetime
 from django.db import models, transaction
 from django.db.models.query_utils import Q
+from django.urls.base import reverse
+
 from enums import PromotionRewardTypes, PromotionTypes
 from generics.models.base_entity import BaseEntity
 from payment.models.currency import Currency
@@ -46,9 +48,46 @@ class Promotion(BaseEntity):
 
     currency = models.ForeignKey(Currency)
     
-    objects_by_quantity = PromotionManagerByQuantity()
-    objects_by_amount = PromotionManagerByAmount()
-    objects_by_products = PromotionManagerByProducts()
+    # objects_by_quantity = PromotionManagerByQuantity()
+    # objects_by_amount = PromotionManagerByAmount()
+    # objects_by_products = PromotionManagerByProducts()
+
+    def get_promotion_type(self):
+        if self.promotion_type == PromotionTypes.BUY.value:
+            return "Buy"
+        elif self.promotion_type == PromotionTypes.RENT.value:
+            return "Rent"
+        elif self.promotion_type == PromotionTypes.ANY.value:
+            return "Any"
+
+    @classmethod
+    def show_create(cls):
+        return True
+
+    @classmethod
+    def show_edit(cls):
+        return True
+
+    @classmethod
+    def get_create_link(cls):
+        return reverse("admin_promotion_create_view")
+
+    @classmethod
+    def get_table_headers(self):
+        return ["Id", "Code", "Title", "Promotion Type", "Start Date", "Expiry Date", "Details"]
+
+    @classmethod
+    def prepare_table_data(cls, queryset):
+        data = []
+        for q_object in queryset:
+            data += [
+                [q_object.pk, q_object.code, q_object.title, q_object.get_promotion_type(),
+                 q_object.start_date.strftime("%d/%m/%Y") if q_object.start_date else "",
+                 q_object.end_date.strftime("%d/%m/%Y") if q_object.end_date else "",
+                 '<a href="%s">Details</a>' % q_object.get_detail_link(object_id=q_object.pk)]
+            ]
+        return data
+
 
     def get_code_prefix(self):
         return "PROMO"
