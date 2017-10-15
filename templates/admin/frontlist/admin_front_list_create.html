@@ -11,11 +11,22 @@ $(document).ready(function () {
     $("#id_show_2").click(function (e) {
         if($(this).is(":checked")) {
             $("#id_title_2").prop("disabled", false);
+            $("#id_title_2").prop("required", true);
         }
         else {
             $("#id_title_2").prop("disabled", true);
+            $("#id_title_2").prop("required", false);
         }
     });
+
+    if($("#id_show_2").is(":checked")) {
+        $("#id_title_2").prop("disabled", false);
+        $("#id_title_2").prop("required", true);
+    }
+    else {
+        $("#id_title_2").prop("disabled", true);
+        $("#id_title_2").prop("required", false);
+    }
 
     $("#id_by_rule").click(function (e) {
         if($(this).is(":checked")) {
