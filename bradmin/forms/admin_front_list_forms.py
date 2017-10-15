@@ -15,6 +15,10 @@ class AdminFrontListForm(BRBaseModelForm):
                                               queryset=Book.objects.all(),
                                               widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
 
+    exclude_front_products = forms.ModelMultipleChoiceField(label="Exclude Products",
+                                                    queryset=Book.objects.all(),
+                                                    widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
+
     rule_name = forms.ChoiceField(choices=(
         (FrontListRule.TOP_X_PTC_DISCOUNT.value, "Top X Percentage Discount"),
         (FrontListRule.MOST_POPULAR.value, "Most Popular On Category"),
@@ -50,12 +54,20 @@ class AdminFrontListForm(BRBaseModelForm):
                     book_instances = Book.objects.filter(pk__in=fl_products)
                     self.fields['front_products'].initial = book_instances
 
+            if instance and instance.exclude_products.exists():
+                product_model = instance.exclude_products.first().product_model
+                if product_model == "Book":
+                    Book = load_model(app_label="book_rental", model_name="Book")
+                    fl_products = instance.exclude_products.values_list('product_id', flat=True)
+                    book_instances = Book.objects.filter(pk__in=fl_products)
+                    self.fields['exclude_front_products'].initial = book_instances
+
 
     class Meta:
         model = FrontList
         fields = ['title', 'title_2', 'show_2', 'description',
                   'by_rule', 'rule_name', 'category', 'top_limit', 'max_limit', 'detail_url', 'palette',
-                  'front_products']
+                  'front_products', 'exclude_front_products']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'title_2': forms.TextInput(attrs={'class': 'form-control', 'disabled': 'disabled'}),
@@ -72,6 +84,7 @@ class AdminFrontListForm(BRBaseModelForm):
     def save(self, commit=True):
         instance = super(AdminFrontListForm, self).save(commit=commit)
         front_products = self.cleaned_data['front_products']
+        exclude_front_products = self.cleaned_data['exclude_front_products']
         instance.products.clear()
         for f_product in front_products:
             fl_products = FrontListProduct.objects.filter(product_id=f_product.pk,
@@ -83,4 +96,17 @@ class AdminFrontListForm(BRBaseModelForm):
                                                           product_model=f_product.__class__.__name__)
                 fl_product.save()
             instance.products.add(fl_product)
+
+        instance.exclude_products.clear()
+        for f_product in exclude_front_products:
+            fl_products = FrontListProduct.objects.filter(product_id=f_product.pk,
+                                                          product_model=f_product.__class__.__name__)
+            if fl_products.exists():
+                fl_product = fl_products.first()
+            else:
+                fl_product = FrontListProduct(product_id=f_product.pk,
+                                              product_model=f_product.__class__.__name__)
+                fl_product.save()
+            instance.exclude_products.add(fl_product)
+
         return instance

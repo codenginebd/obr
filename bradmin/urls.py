@@ -13,7 +13,7 @@ from bradmin.views.frontlist.front_palette_views import AdminFrontPaletteListVie
     AdminFrontPaletteUpdateView, AdminFrontPaletteActivateView, \
     AdminFrontPaletteDeactivateView, AdminFrontPaletteDeleteView
 from bradmin.views.frontlist.frontlist_views import AdminFrontListListView, AdminFrontListCreateView, \
-    AdminFrontListUpdateView
+    AdminFrontListUpdateView, AdminFrontListActivateView, AdminFrontListDeactivateView, AdminFrontListDeleteView
 from bradmin.views.inventory.inventory_views import AdminInventoryListView, AdminInventoryCreateView, \
     AdminInventoryUpdateView, AdminInventoryDetailsView, AdminInventoryActivateView, AdminInventoryDeactivateView, \
     AdminInventoryDeleteView, AdminInventoryUploadView, AdminInventoryDownloadView, AdminInventoryAlertListView
@@ -96,6 +96,9 @@ urlpatterns = [
     url(r'^promotion-create/$', AdminPromotionCreateView.as_view(), name="admin_promotion_create_view"),
     #Frontlist
     url(r'^front-list/$', AdminFrontListListView.as_view(), name="admin_frontlist_list_view"),
+    url(r'^front-list-activate/', AdminFrontListActivateView.as_view(), name="admin_front_list_activate_view"),
+    url(r'^front-list-deactivate/', AdminFrontListDeactivateView.as_view(),name="admin_front_list_deactivate_view"),
+    url(r'^front-list-delete/', AdminFrontListDeleteView.as_view(), name="admin_front_list_delete_view"),
     url(r'^front-list-create/$', AdminFrontListCreateView.as_view(), name="admin_front_list_create_view"),
     url(r'^front-list-edit/(?P<pk>[0-9]+)/$', AdminFrontListUpdateView.as_view(), name="admin_front_list_edit_link_view"),
     url(r'^front-palette/$', AdminFrontPaletteListView.as_view(), name="admin_front_palette_list_view"),

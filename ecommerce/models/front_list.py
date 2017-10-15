@@ -17,6 +17,7 @@ class FrontList(BaseEntity):
     rule_name = models.CharField(max_length=100, null=True)  # FrontListRule.TOP_X_PTC_DISCOUNT.value
     top_limit = models.IntegerField(default=0, null=True)
     max_limit = models.IntegerField(default=0, null=True)
+    exclude_products = models.ManyToManyField(FrontListProduct, related_name="Front_list_exclude_products")
     products = models.ManyToManyField(FrontListProduct)
     detail_url = models.CharField(max_length=200)
     palette = models.ForeignKey(FrontPalette)
@@ -37,6 +38,18 @@ class FrontList(BaseEntity):
         return True
 
     @classmethod
+    def show_activate(cls):
+        return True
+
+    @classmethod
+    def show_deactivate(cls):
+        return True
+
+    @classmethod
+    def show_delete(cls):
+        return True
+
+    @classmethod
     def get_create_link(cls):
         return reverse("admin_front_list_create_view")
 
@@ -49,8 +62,20 @@ class FrontList(BaseEntity):
         return "admin_front_list_edit_link_view"
 
     @classmethod
+    def get_activate_link(cls):
+        return reverse("admin_front_list_activate_view")
+
+    @classmethod
+    def get_deactivate_link(cls):
+        return reverse("admin_front_list_deactivate_view")
+
+    @classmethod
+    def get_delete_link(cls):
+        return reverse("admin_front_list_delete_view")
+
+    @classmethod
     def get_table_headers(self):
-        return ["ID", "Code", "Title", "Title 2", "Show 2", "By Rule", "Rule Name", "Details"]
+        return ["ID", "Code", "Title", "Title 2", "Show 2", "By Rule", "Rule Name", "Is Active", "Details"]
 
     @classmethod
     def prepare_table_data(cls, queryset):
@@ -59,7 +84,7 @@ class FrontList(BaseEntity):
             data += [
                 [q_object.pk, q_object.code, q_object.title, q_object.title_2,
                  "Yes" if q_object.show_2 else "No", "Yes" if q_object.by_rule else "No",
-                 q_object.rule_name,
+                 q_object.rule_name, "Yes" if q_object.is_active else "No",
                  '<a href="%s">Details</a>' % q_object.get_detail_link(object_id=q_object.pk)]
             ]
         return data

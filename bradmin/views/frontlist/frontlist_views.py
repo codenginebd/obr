@@ -1,9 +1,12 @@
 from django.urls.base import reverse
 
 from bradmin.forms.admin_front_list_forms import AdminFrontListForm
+from bradmin.views.activate_base_view import ActivateBaseView
 from bradmin.views.base_create_view import BRBaseCreateView
 from bradmin.views.base_list_view import BaseListView
 from bradmin.views.base_update_view import BRBaseUpdateView
+from bradmin.views.deactivate_base_view import DeactivateBaseView
+from bradmin.views.delete_base_view import DeleteBaseView
 from ecommerce.models.front_list import FrontList
 
 
@@ -33,6 +36,18 @@ class AdminFrontListListView(BaseListView):
 
     def get_page_title(self):
         return "Front List | BDReads.com"
+
+
+class AdminFrontListActivateView(ActivateBaseView):
+    model = FrontList
+
+
+class AdminFrontListDeactivateView(DeactivateBaseView):
+    model = FrontList
+
+
+class AdminFrontListDeleteView(DeleteBaseView):
+    model = FrontList
 
 
 class AdminFrontListCreateView(BRBaseCreateView):
