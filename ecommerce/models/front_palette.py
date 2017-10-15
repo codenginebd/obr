@@ -10,6 +10,9 @@ class FrontPalette(BaseEntity):
     show_2 = models.BooleanField(default=False)
     order = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.name
+
     @classmethod
     def show_create(cls):
         return True

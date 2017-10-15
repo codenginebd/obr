@@ -54,7 +54,7 @@ class AdminFrontPaletteDeleteView(DeleteBaseView):
 
 class AdminFrontPaletteCreateView(BRBaseCreateView):
     form_class =AdminFrontPaletteForm
-    template_name = "admin/warehouse/admin_warehouse_create.html"
+    template_name = "admin/frontlist/admin_front_palette_create.html"
 
     def get_form_title(self):
         return "Front Palette Create"

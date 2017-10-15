@@ -31,7 +31,7 @@ class Product(BaseEntity):
         return ','.join(self.categories.values_list('code', flat=True))
 
     def get_image_names(self):
-        return ','.join(self.images.values_list('name', flat=True))
+        return ','.join(self.images.values_list('image', flat=True))
 
     def get_tag_names(self):
         return ','.join(self.tags.values_list('name', flat=True))

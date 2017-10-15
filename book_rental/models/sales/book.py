@@ -21,6 +21,9 @@ class Book(Product):
     language = models.ForeignKey(BookLanguage)
     page_count = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.title
+
     @classmethod
     def get_table_headers(self):
         return ["Code", "Book Title", "Book Title 2",

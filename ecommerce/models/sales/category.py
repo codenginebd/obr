@@ -15,6 +15,9 @@ class ProductCategory(BaseEntity):
     parent = models.ForeignKey('self', null=True)
     slug = models.SlugField()
 
+    def __str__(self):
+        return self.name
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(ProductCategory, self).save(*args, **kwargs)
