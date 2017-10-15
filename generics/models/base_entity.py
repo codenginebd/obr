@@ -195,6 +195,9 @@ class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
     def get_detail_link(cls, object_id):
         return ""
 
+    def get_object_detail_link(self):
+        return ""
+
     @classmethod
     def get_create_link(cls):
         return ""

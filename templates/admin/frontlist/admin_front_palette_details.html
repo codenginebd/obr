@@ -1,0 +1,112 @@
+{% extends "admin/details_master.html" %}
+{% load staticfiles %}
+{% block detail_content %}
+<style type="text/css">
+a.front_product_class {
+    background-color: transparent !important;
+    color: black !important;
+    padding-right: 20px !important;
+}
+</style>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Front Palette Details(ID: {{ object.pk }})
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>
+                Name:
+            </th>
+            <td>
+                {{ object.name }}
+            </td>
+            <th>
+                Name 2:
+            </th>
+            <td>
+                {{ object.name_2 }}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Show 2:
+            </th>
+            <td>
+                {% if object.show_2 %}Yes{% else %}No{% endif %}
+            </td>
+            <th>
+                Is Active:
+            </th>
+            <td>
+                {% if object.is_active %}Yes{% else %}No{% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Palette Order:
+            </th>
+            <td>
+                {{ object.order }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul class="nav nav-tabs">
+                  <li class="active"><a data-toggle="tab" href="#tab1">Front Lists</a></li>
+                </ul>
+
+                <div class="tab-content">
+                  <div id="tab1" class="tab-pane fade in active">
+                        <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Title
+                                </th>
+                                <th>
+                                    Title 2
+                                </th>
+                                <th>
+                                    Show 2
+                                </th>
+                                <th>
+                                    Is Active
+                                </th>
+                                <th>
+                                    Details
+                                </th>
+                            </tr>
+                        </thead>
+                        {% for front_list_object in object.get_front_list %}
+                        <tbody>
+                        <tr>
+                            <td>
+                                {{ front_list_object.title }}
+                            </td>
+                            <td>
+                                {{ front_list_object.title_2 }}
+                            </td>
+                            <td>
+                                {% if front_list_object.show_2 %}Yes{% else %}No{% endif %}
+                            </td>
+                            <td>
+                                {% if front_list_object.is_active %}Yes{% else %}No{% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ front_list_object.get_object_detail_link|safe }}">Details</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                        {% endfor %}
+                        </table>
+                  </div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock detail_content %}

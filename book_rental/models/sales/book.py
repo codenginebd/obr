@@ -22,7 +22,7 @@ class Book(Product):
     page_count = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.title
+        return self.code + ":" + self.title
 
     @classmethod
     def get_table_headers(self):

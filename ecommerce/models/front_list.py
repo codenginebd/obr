@@ -4,6 +4,7 @@ from django.urls.base import reverse
 from ecommerce.models.front_list_product import FrontListProduct
 from ecommerce.models.front_palette import FrontPalette
 from ecommerce.models.sales.category import ProductCategory
+from generics.libs.loader.loader import load_model
 from generics.models.base_entity import BaseEntity
 
 
@@ -21,6 +22,29 @@ class FrontList(BaseEntity):
     products = models.ManyToManyField(FrontListProduct)
     detail_url = models.CharField(max_length=200)
     palette = models.ForeignKey(FrontPalette)
+
+
+    def get_front_products(self):
+        products = []
+        if self.products.exists():
+            product_model = self.products.first().product_model
+            product_ids = self.products.values_list('product_id', flat=True)
+            if product_model == "Book":
+                Book = load_model(app_label="book_rental", model_name="Book")
+                products = Book.objects.filter(pk__in=product_ids)
+        product_list = ['<a class="front_product_class" href="%s">%s</a>' % (p.get_detail_link(object_id=p.pk), str(p)) for p in products]
+        return ','.join(product_list)
+
+    def get_exclude_products(self):
+        products = []
+        if self.exclude_products.exists():
+            product_model = self.exclude_products.first().product_model
+            product_ids = self.exclude_products.values_list('product_id', flat=True)
+            if product_model == "Book":
+                Book = load_model(app_label="book_rental", model_name="Book")
+                products = Book.objects.filter(pk__in=product_ids)
+        product_list = ['<a class="front_product_class" href="%s">%s</a>' % (p.get_detail_link(object_id=p.pk), str(p)) for p in products]
+        return ','.join(product_list)
 
 
     def get_product_list(self):
@@ -72,6 +96,13 @@ class FrontList(BaseEntity):
     @classmethod
     def get_delete_link(cls):
         return reverse("admin_front_list_delete_view")
+
+    @classmethod
+    def get_detail_link(cls, object_id):
+        return reverse("admin_front_list_details_view", kwargs={"pk": object_id})
+
+    def get_object_detail_link(self):
+        return reverse("admin_front_list_details_view", kwargs={"pk": self.pk})
 
     @classmethod
     def get_table_headers(self):
