@@ -10,12 +10,13 @@ from generics.models.base_entity import BaseEntity
 class FrontList(BaseEntity):
     title = models.CharField(max_length=400)
     title_2 = models.CharField(max_length=400, null=True)
-    show_2 = models.BooleanField(default=False)
+    show_2 = models.BooleanField(default=False, null=True)
     description = models.TextField(null=True)
-    by_rule = models.BooleanField(default=False)
+    by_rule = models.BooleanField(default=False, null=True)
     category = models.ForeignKey(ProductCategory, null=True)
     rule_name = models.CharField(max_length=100, null=True)  # FrontListRule.TOP_X_PTC_DISCOUNT.value
-    top_limit = models.IntegerField(default=0)
+    top_limit = models.IntegerField(default=0, null=True)
+    max_limit = models.IntegerField(default=0, null=True)
     products = models.ManyToManyField(FrontListProduct)
     detail_url = models.CharField(max_length=200)
     palette = models.ForeignKey(FrontPalette)
@@ -32,8 +33,20 @@ class FrontList(BaseEntity):
         return True
 
     @classmethod
+    def show_edit(cls):
+        return True
+
+    @classmethod
     def get_create_link(cls):
         return reverse("admin_front_list_create_view")
+
+    @classmethod
+    def get_edit_link(cls, object_id):
+        return reverse("admin_front_list_edit_link_view", kwargs={"pk": object_id})
+
+    @classmethod
+    def get_edit_link_name(cls):
+        return "admin_front_list_edit_link_view"
 
     @classmethod
     def get_table_headers(self):

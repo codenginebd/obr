@@ -265,11 +265,13 @@ $(document).ready(function () {
     });
 
     $(".create-btn").click(function (e) {
+        e.preventDefault();
         var url = $(this).data("url");
         window.location.href = url;
     });
 
     $(".edit-btn").click(function (e) {
+        e.preventDefault();
         var url = "";
         $("#id_data_table").find(".item-check").each(function (e) {
             if($(this).is(":checked")) {

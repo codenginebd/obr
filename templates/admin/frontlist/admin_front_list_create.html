@@ -4,4 +4,71 @@
     <table class="table">
     {{ form.as_table }}
     </table>
+<script type="text/javascript">
+$(document).ready(function () {
+    $("#id_front_products").select2();
+
+    $("#id_show_2").click(function (e) {
+        if($(this).is(":checked")) {
+            $("#id_title_2").prop("disabled", false);
+        }
+        else {
+            $("#id_title_2").prop("disabled", true);
+        }
+    });
+
+    $("#id_by_rule").click(function (e) {
+        if($(this).is(":checked")) {
+            $("#id_rule_name").prop("disabled", false);
+            $("#id_category").prop("disabled", false);
+            $("#id_top_limit").prop("disabled", false);
+            $("#id_max_limit").prop("disabled", false);
+            $("#id_front_products").prop("disabled", true);
+            $("#id_rule_name").prop("required", true);
+            $("#id_category").prop("required", true);
+            $("#id_top_limit").prop("required", true);
+            $("#id_max_limit").prop("required", true);
+            $("#id_front_products").prop("required", false);
+        }
+        else {
+            $("#id_rule_name").prop("disabled", true);
+            $("#id_category").prop("disabled", true);
+            $("#id_top_limit").prop("disabled", true);
+            $("#id_max_limit").prop("disabled", true);
+            $("#id_front_products").prop("disabled", false);
+            $("#id_rule_name").prop("required", false);
+            $("#id_category").prop("required", false);
+            $("#id_top_limit").prop("required", false);
+            $("#id_max_limit").prop("required", false);
+            $("#id_front_products").prop("required", true);
+        }
+    });
+
+    if($("#id_by_rule").is(":checked")) {
+        $("#id_rule_name").prop("disabled", false);
+        $("#id_category").prop("disabled", false);
+        $("#id_top_limit").prop("disabled", false);
+        $("#id_max_limit").prop("disabled", false);
+        $("#id_front_products").prop("disabled", true);
+        $("#id_rule_name").prop("required", true);
+        $("#id_category").prop("required", true);
+        $("#id_top_limit").prop("required", true);
+        $("#id_max_limit").prop("required", true);
+        $("#id_front_products").prop("required", false);
+    }
+    else {
+        $("#id_rule_name").prop("disabled", true);
+        $("#id_category").prop("disabled", true);
+        $("#id_top_limit").prop("disabled", true);
+        $("#id_max_limit").prop("disabled", true);
+        $("#id_front_products").prop("disabled", false);
+        $("#id_rule_name").prop("required", false);
+        $("#id_category").prop("required", false);
+        $("#id_top_limit").prop("required", false);
+        $("#id_max_limit").prop("required", false);
+        $("#id_front_products").prop("required", true);
+    }
+
+});
+</script>
 {% endblock form_content %}

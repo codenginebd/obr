@@ -3,6 +3,7 @@ from django.urls.base import reverse
 from bradmin.forms.admin_front_list_forms import AdminFrontListForm
 from bradmin.views.base_create_view import BRBaseCreateView
 from bradmin.views.base_list_view import BaseListView
+from bradmin.views.base_update_view import BRBaseUpdateView
 from ecommerce.models.front_list import FrontList
 
 
@@ -49,6 +50,30 @@ class AdminFrontListCreateView(BRBaseCreateView):
 
     def get_page_title(self):
         return "Create Front List | BDReads.com"
+
+    def get_left_menu_items(self):
+        return {
+            "All": reverse("admin_frontlist_list_view"),
+            "Error Logs": reverse("admin_error_logs_view") + "?context=%s" % FrontList.__name__
+        }
+
+
+class AdminFrontListUpdateView(BRBaseUpdateView):
+    form_class = AdminFrontListForm
+    template_name = "admin/frontlist/admin_front_list_create.html"
+    queryset = FrontList.objects.all()
+
+    def get_form_title(self):
+        return "Frot List Update(#%s)" % self.object.pk
+
+    def get_success_url(self):
+        return reverse("admin_frontlist_list_view")
+
+    def get_cancel_url(self):
+        return reverse("admin_frontlist_list_view")
+
+    def get_page_title(self):
+        return "Update Front List | BDReads.com"
 
     def get_left_menu_items(self):
         return {
