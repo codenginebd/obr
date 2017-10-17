@@ -63,6 +63,7 @@
       <li {% if ttab == "book" %}class="active" {% endif %}><a href="{% url "admin_book_list_view" %}">Books</a></li>
       <li {% if ttab == "warehouse" %}class="active" {% endif %}><a href="{% url "admin_warehouse_list_view" %}">Warehouse</a></li>
       <li {% if ttab == "inventory" %}class="active" {% endif %}><a href="{% url "admin_inventory_list_view" %}">Inventory</a></li>
+      <li {% if ttab == "productprice" %}class="active" {% endif %}><a href="{% url "admin_product_price_list_view" %}">Product Price</a></li>
       <li {% if ttab == "orders" %}class="active" {% endif %}><a href="#">Orders</a></li>
       <li {% if ttab == "promotion" %}class="active" {% endif %}><a href="{% url "admin_promotion_list_view" %}">Promotions</a></li>
       <li {% if ttab == "coupons" %}class="active" {% endif %}><a href="#">Coupons</a></li>
@@ -72,6 +73,10 @@
       <li {% if ttab == "alert" %}class="active" {% endif %}><a href="#">Alerts</a></li>
       <li {% if ttab == "frontpalette" %}class="active" {% endif %}><a href="{% url "admin_front_palette_list_view" %}">Front Palatte</a></li>
       <li {% if ttab == "frontlist" %}class="active" {% endif %}><a href="{% url "admin_frontlist_list_view" %}">Front List</a></li>
+      <li {% if ttab == "querylog" %}class="active" {% endif %}><a href="#">Query Logs</a></li>
+      <li {% if ttab == "paymentmethod" %}class="active" {% endif %}><a href="#">Payment Methods</a></li>
+      <li {% if ttab == "payments" %}class="active" {% endif %}><a href="#">Payments</a></li>
+      <li {% if ttab == "merchannt" %}class="active" {% endif %}><a href="#">Merchant Settings</a></li>
     </ul>
   </div>
 </nav>

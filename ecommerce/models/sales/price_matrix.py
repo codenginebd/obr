@@ -1,8 +1,11 @@
 from django.db import models
 from datetime import datetime
 from django.db.models.query_utils import Q
+from django.urls.base import reverse
+
 from ecommerce.models.rent_plan import RentPlan
 from ecommerce.models.sales.rent_plan_relation import RentPlanRelation
+from generics.libs.loader.loader import load_model
 from generics.models.base_entity import BaseEntity
 from payment.models.currency import Currency
 from engine.clock.Clock import Clock
@@ -39,3 +42,34 @@ class PriceMatrix(BaseEntity):
     
     class Meta:
         index_together = [ 'product_code', 'product_model', 'is_new', 'print_type' ]
+
+    def get_product(self):
+        if self.product_model == "Book":
+            Book = load_model(app_label="book_rental", model_name="Book")
+            book_objects = Book.objects.filter(code=self.code)
+            if book_objects.exists():
+                return book_objects.first()
+
+    @classmethod
+    def show_create(cls):
+        return True
+
+    @classmethod
+    def get_create_link(cls):
+        return reverse("admin_product_price_create_view")
+
+    @classmethod
+    def get_table_headers(self):
+        return ["ID", "Code", "Product", "Is New", "Print Type", "Rent Available", "Details"]
+
+    @classmethod
+    def prepare_table_data(cls, queryset):
+        data = []
+        for q_object in queryset:
+            data += [
+                [q_object.pk, q_object.code, q_object.get_product(),
+                 "Yes" if q_object.is_new else "No", q_object.print_type,
+                 "Yes" if q_object.is_rent else "No",
+                 '<a href="%s">Details</a>' % q_object.get_detail_link(object_id=q_object.pk)]
+            ]
+        return data

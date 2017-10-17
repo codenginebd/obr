@@ -59,7 +59,7 @@ urlpatterns += [
     url('^api/v1/rent-plan-options/$', RentPlanOptionsAPIView.as_view()),
     url('^api/v1/shopping/add-to-cart/$', AddToCartAPIView.as_view()),
     url('^api/v1/sale-price/$', SalePriceAPIView.as_view()),
-    url('^api/v1/product-prices/$', PriceMatrixAPIView.as_view()),
+    url('^api/v1/product-productprices/$', PriceMatrixAPIView.as_view()),
     url('^api/v1/login/$', APILoginView.as_view())
 ]
 

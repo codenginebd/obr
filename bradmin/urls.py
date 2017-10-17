@@ -18,6 +18,7 @@ from bradmin.views.frontlist.frontlist_views import AdminFrontListListView, Admi
 from bradmin.views.inventory.inventory_views import AdminInventoryListView, AdminInventoryCreateView, \
     AdminInventoryUpdateView, AdminInventoryDetailsView, AdminInventoryActivateView, AdminInventoryDeactivateView, \
     AdminInventoryDeleteView, AdminInventoryUploadView, AdminInventoryDownloadView, AdminInventoryAlertListView
+from bradmin.views.productprices.product_price_views import AdminProductPriceListView, AdminProductPriceCreateView
 from bradmin.views.promotion.promotion_views import AdminPromotionListView, AdminPromotionCreateView
 from bradmin.views.publisher.publisher_views import AdminPublisherListView, AdminBookPublisherUploadView, \
     AdminBookPublisherDownloadView, AdminBookPublisherActivateView, AdminBookPublisherDeactivateView, \
@@ -110,6 +111,9 @@ urlpatterns = [
     url(r'^front-palette-delete/', AdminFrontPaletteDeleteView.as_view(), name="admin_front_palette_delete_view"),
     url(r'^front-palette-create/$', AdminFrontPaletteCreateView.as_view(), name="admin_front_palette_create_view"),
     url(r'^front-palette-edit/(?P<pk>[0-9]+)/$', AdminFrontPaletteUpdateView.as_view(), name="admin_front_palette_edit_link_view"),
+    #Product Price
+    url(r'^product-price-list/$', AdminProductPriceListView.as_view(), name="admin_product_price_list_view"),
+    url(r'^product-price-create/$', AdminProductPriceCreateView.as_view(), name="admin_product_price_create_view"),
 
     url(r'^error-logs/', AdminErrorLogView.as_view(), name="admin_error_logs_view"),
     url(r'^error-log/details/(?P<pk>[0-9]+)/$', AdminErrorLogsDetailsView.as_view(), name="admin_error_log_details_view"),
