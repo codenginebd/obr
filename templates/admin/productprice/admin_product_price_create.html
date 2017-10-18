@@ -1,7 +1,178 @@
 {% extends "admin/create_master.html" %}
 {% load staticfiles %}
 {% block form_content %}
-    <table class="table">
-    {{ form.as_table }}
-    </table>
+<style type="text/css">
+.form-container {
+    max-width: 90% !important;
+}
+.form-container input[type=checkbox] {
+    width: 20px;
+}
+.form-container th {
+    min-width: 180px;
+}
+</style>
+    <div class="row">
+        <div class="col-md-12"><h4 style="padding: 10px; font-size: 16px; font-weight: bold;">Basic Information</h4></div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                <tr>
+                    <td>
+                        <label>{{ form.product.label }}:</label>
+                    </td>
+                    <td>
+                        {{ form.product }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>{{ form.is_new.label }}:</label>
+                    </td>
+                    <td>
+                        {{ form.is_new }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>{{ form.print_type.label }}:</label>
+                    </td>
+                    <td>
+                        {{ form.print_type }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>{{ form.currency.label }}:</label>
+                    </td>
+                    <td>
+                        {{ form.currency }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table">
+                <tr>
+                    <td>
+                        <label>{{ form.base_price.label }}:</label>
+                    </td>
+                    <td>
+                        {{ form.base_price }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>{{ form.market_price.label }}:</label>
+                    </td>
+                    <td>
+                        {{ form.market_price }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>{{ form.sale_price.label }}:</label>
+                    </td>
+                    <td>
+                        {{ form.sale_price }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>{{ form.initial_payable_rent_price.label }}:</label>
+                    </td>
+                    <td>
+                        {{ form.initial_payable_rent_price }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"><h4 style="padding: 10px; font-size: 16px; font-weight: bold;">Special Offer</h4></div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                <tr>
+                    <td>
+                        <label>{{ form.special_price.label }}:</label>
+                    </td>
+                    <td>
+                        {{ form.special_price }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>{{ form.offer_price_p.label }}:</label>
+                    </td>
+                    <td>
+                        {{ form.offer_price_p }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>{{ form.offer_price_v.label }}:</label>
+                    </td>
+                    <td>
+                        {{ form.offer_price_v }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table">
+                <tr>
+                    <td>
+                        <label>{{ form.offer_date_start.label }}:</label>
+                    </td>
+                    <td>
+                        {{ form.offer_date_start }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>{{ form.offer_date_end.label }}:</label>
+                    </td>
+                    <td>
+                        {{ form.offer_date_end }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"><h4 style="padding: 10px; font-size: 16px; font-weight: bold;">Rent Plans</h4></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+        {% for rent_plan_form in rent_plan_forms.forms %}
+            <table class="table">
+            <tr>
+                <td>
+                    {{ rent_plan_form.rent_plan }}
+                </td>
+                <td>
+                    {{ rent_plan_form.rent_rate }}
+                </td>
+                <td>
+                    {{ rent_plan_form.is_special_offer }}
+                </td>
+                <td>
+                    {{ rent_plan_form.special_rate }}
+                </td>
+                <td>
+                    {{ rent_plan_form.start_time }}
+                </td>
+                <td>
+                    {{ rent_plan_form.end_time }}
+                </td>
+            </tr>
+            </table>
+        {% endfor %}
+
+        </div>
+    </div>
 {% endblock form_content %}
