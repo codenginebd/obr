@@ -17,6 +17,7 @@
 </div>
 {% endif %}
 {% endblock create_action %}
+{% block css_style %}
 <style type="text/css">
 .form-container {
     max-width: 600px;
@@ -28,8 +29,11 @@
     min-width: 180px;
 }
 </style>
+{% endblock css_style %}
+{% block form_container_main %}
 <div class="row">
     <div class="col-md-12 form-container">
+        {% block form_container %}
         <form action="{{ submit_url }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <h3>{{ form_title }}</h3>
@@ -40,6 +44,7 @@
         </div>
         {% block form_content %}
         {% endblock form_content %}
+        {% block form_button %}
         <div class="row">
             <div class="col-md-6">
                 <button class="btn btn-primary" style="width: 100%;">Submit</button>
@@ -48,9 +53,12 @@
                 <a href="{{ cancel_url }}" class="btn btn-danger" style="width: 100%;">Cancel</a>
             </div>
         </div>
+        {% endblock form_button %}
         </form>
+        {% endblock form_container %}
     </div>
     <div class="col-md-2">
     </div>
 </div>
+{% endblock form_container_main %}
 {% endblock content_detail %}
