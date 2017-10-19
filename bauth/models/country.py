@@ -12,3 +12,6 @@ class Country(LocationEntity):
 
     class Meta:
         proxy = True
+
+    def __str__(self):
+        return self.code + ": " + self.short_name + "(%s)" % self.name

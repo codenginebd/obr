@@ -18,6 +18,8 @@ from bradmin.views.frontlist.frontlist_views import AdminFrontListListView, Admi
 from bradmin.views.inventory.inventory_views import AdminInventoryListView, AdminInventoryCreateView, \
     AdminInventoryUpdateView, AdminInventoryDetailsView, AdminInventoryActivateView, AdminInventoryDeactivateView, \
     AdminInventoryDeleteView, AdminInventoryUploadView, AdminInventoryDownloadView, AdminInventoryAlertListView
+from bradmin.views.productprices.currency_views import AdminCurrencyListView, AdminCurrencyCreateView, \
+    AdminCurrencyUpdateView, AdminCurrencyActivateView, AdminCurrencyDeactivateView, AdminCurrencyDeleteView
 from bradmin.views.productprices.product_price_views import AdminProductPriceListView, AdminProductPriceCreateView
 from bradmin.views.productprices.rent_plan_views import AdminRentPlanListView, AdminRentPlanCreateView, \
     AdminRentPlanUpdateView, AdminRentPlanActivateView, AdminRentPlanDeactivateView, AdminRentPlanDeleteView
@@ -123,6 +125,13 @@ urlpatterns = [
     url(r'^rent-plan-activate/', AdminRentPlanActivateView.as_view(), name="admin_rent_plan_activate_view"),
     url(r'^rent-plan-deactivate/', AdminRentPlanDeactivateView.as_view(),name="admin_rent_plan_deactivate_view"),
     url(r'^rent-plan-delete/', AdminRentPlanDeleteView.as_view(), name="admin_rent_plan_delete_view"),
+    #Currency
+    url(r'^currency-list/$', AdminCurrencyListView.as_view(), name="admin_currency_list_view"),
+    url(r'^currency-create/$', AdminCurrencyCreateView.as_view(), name="admin_currency_create_view"),
+    url(r'^currency-edit/(?P<pk>[0-9]+)/$', AdminCurrencyUpdateView.as_view(), name="admin_currency_edit_link_view"),
+    url(r'^currency-activate/', AdminCurrencyActivateView.as_view(), name="admin_currency_activate_view"),
+    url(r'^currency-deactivate/', AdminCurrencyDeactivateView.as_view(),name="admin_currency_deactivate_view"),
+    url(r'^currency-delete/', AdminCurrencyDeleteView.as_view(), name="admin_currency_delete_view"),
 
     url(r'^error-logs/', AdminErrorLogView.as_view(), name="admin_error_logs_view"),
     url(r'^error-log/details/(?P<pk>[0-9]+)/$', AdminErrorLogsDetailsView.as_view(), name="admin_error_log_details_view"),

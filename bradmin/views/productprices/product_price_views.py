@@ -2,9 +2,10 @@ from django.forms.formsets import formset_factory
 from django.urls.base import reverse
 
 from bradmin.forms.admin_product_price_forms import AdminProductPriceForm
-from bradmin.forms.admin_rent_plan_relation_forms import AdminRentPlanRelationForm
+from bradmin.forms.admin_rent_plan_relation_forms import AdminRentPlanRelationForm, AdminRentPlanFormSet
 from bradmin.views.base_create_view import BRBaseCreateView
 from bradmin.views.base_list_view import BaseListView
+from ecommerce.models.rent_plan import RentPlan
 from ecommerce.models.sales.price_matrix import PriceMatrix
 
 
@@ -60,11 +61,8 @@ class AdminProductPriceCreateView(BRBaseCreateView):
 
     def get_context_data(self, **kwargs):
         context = super(AdminProductPriceCreateView, self).get_context_data(**kwargs)
-        AdminRentPlanRelationFormSet = formset_factory(AdminRentPlanRelationForm, extra=4)
-        context["rent_plan_forms"] = AdminRentPlanRelationFormSet(initial=
-                                                                  [
-                                                                      {"rent_plan": "Plan 1"}
-                                                                      ,
-                                                                      {"rent_plan": 2}
-                                                                  ])
+        AdminRentPlanRelationFormSet = formset_factory(AdminRentPlanRelationForm,
+                                                       formset=AdminRentPlanFormSet)
+        initial = [{"rent_plan": rent_plan_instance.name} for rent_plan_instance in RentPlan.objects.all()]
+        context["rent_plan_forms"] = AdminRentPlanRelationFormSet(initial=initial)
         return context

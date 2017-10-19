@@ -156,30 +156,30 @@
     <div class="row">
         <div class="col-md-12">
 
-        {% for rent_plan_form in rent_plan_forms.forms %}
-            <table class="table">
-            <tr>
-                <td>
-                    {{ rent_plan_form.rent_plan }}
-                </td>
-                <td>
-                    {{ rent_plan_form.rent_rate }}
-                </td>
-                <td>
-                    {{ rent_plan_form.is_special_offer }}
-                </td>
-                <td>
-                    {{ rent_plan_form.special_rate }}
-                </td>
-                <td>
-                    {{ rent_plan_form.start_time }}
-                </td>
-                <td>
-                    {{ rent_plan_form.end_time }}
-                </td>
-            </tr>
-            </table>
-        {% endfor %}
+            {% for rent_plan_form in rent_plan_forms.forms %}
+                <table class="table">
+                <tr>
+                    <td>
+                        {{ rent_plan_form.rent_plan }}
+                    </td>
+                    <td>
+                        {{ rent_plan_form.rent_rate }}
+                    </td>
+                    <td>
+                        {{ rent_plan_form.is_special_offer }}
+                    </td>
+                    <td>
+                        {{ rent_plan_form.special_rate }}
+                    </td>
+                    <td>
+                        {{ rent_plan_form.start_time }}
+                    </td>
+                    <td>
+                        {{ rent_plan_form.end_time }}
+                    </td>
+                </tr>
+                </table>
+            {% endfor %}
 
         </div>
     </div>
