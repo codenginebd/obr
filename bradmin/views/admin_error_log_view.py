@@ -48,10 +48,13 @@ class AdminErrorLogView(BaseListView):
             all_url = reverse("admin_product_price_list_view")
         elif context == RentPlan.__name__:
             all_url = reverse("admin_rent_plan_list_view")
-        return {
+        left_menus =  {
             "All": all_url,
             "Error Logs": error_log_url
         }
+        if context == Inventory.__name__:
+            left_menus["Inventory Alert"] = reverse("admin_inventory_alert_list_view")
+        return left_menus
 
     def get_page_title(self):
         return "Category Logs"
@@ -86,12 +89,12 @@ class AdminErrorLogView(BaseListView):
             return "author"
         elif context == Warehouse.__name__:
             return "warehouse"
-        elif context == Warehouse.__name__:
+        elif context == Inventory.__name__:
             return "inventory"
         elif context == Promotion.__name__:
             return "promotion"
         elif context == FrontPalette.__name__:
-            return "frontpalatte"
+            return "frontpalette"
         elif context == FrontList.__name__:
             return "frontlist"
         elif context == PriceMatrix.__name__:

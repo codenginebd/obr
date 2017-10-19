@@ -27,6 +27,12 @@ class AdminRentPlanRelationForm(BRBaseModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AdminRentPlanRelationForm, self).__init__(*args, **kwargs)
+        initial_plan = kwargs.get("initial", None)
+        if initial_plan:
+            initial_plan = initial_plan.get("rent_plan", None)
+        if initial_plan:
+            self.fields["rent_plan"].queryset = RentPlan.objects.filter(pk=initial_plan)
+        self.fields["rent_plan"].empty_label = None
         self.fields["rent_rate"].widget.attrs["class"] = "form-control"
         self.fields["rent_rate"].widget.attrs["style"] = "min-width: 120px;"
 

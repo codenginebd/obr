@@ -1,4 +1,5 @@
 from django.forms.formsets import formset_factory
+from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
 
 from bradmin.forms.admin_product_price_forms import AdminProductPriceForm
@@ -66,3 +67,12 @@ class AdminProductPriceCreateView(BRBaseCreateView):
         initial = [{"rent_plan": rent_plan_instance.pk} for rent_plan_instance in RentPlan.objects.all()]
         context["rent_plan_forms"] = AdminRentPlanRelationFormSet(initial=initial)
         return context
+
+
+    def post(self, request, *args, **kwargs):
+        price_matrix_form = AdminProductPriceForm(request.POST)
+        AdminRentPlanRelationFormSet = formset_factory(AdminRentPlanRelationForm,
+                                                       formset=AdminRentPlanFormSet, max_num=RentPlan.objects.count())
+        rent_plan_form = AdminRentPlanRelationFormSet(request.POST)
+
+        return HttpResponseRedirect(self.get_success_url())
