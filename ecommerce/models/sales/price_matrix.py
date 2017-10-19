@@ -37,6 +37,7 @@ class PriceMatrix(BaseEntity):
     sale_price = models.DecimalField(max_digits=20, decimal_places=2, null=True)
     initial_payable_rent_price = models.DecimalField(max_digits=20, decimal_places=2, null=True)
     currency = models.ForeignKey(Currency)
+    custom_rent_plan_available = models.BooleanField(default=False)
     
     objects = PriceMatrixManager()
     
