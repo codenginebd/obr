@@ -8,6 +8,9 @@ class RentPlan(BaseEntity):
     name = models.CharField(max_length=200)
     days = models.IntegerField(default=1)
 
+    def __str__(self):
+        return self.code + ":" + self.name
+
     @classmethod
     def show_create(cls):
         return True

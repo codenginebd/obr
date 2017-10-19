@@ -26,8 +26,8 @@ class PriceMatrix(BaseEntity):
     offer_price_p = models.DecimalField(max_digits=20, decimal_places=2, default=0)  # value in percentage
     offer_price_v = models.DecimalField(max_digits=20, decimal_places=2, default=0)  # value in value
     special_price = models.BooleanField(default=False)
-    offer_date_start = models.BigIntegerField(default=0)
-    offer_date_end = models.BigIntegerField(default=0)
+    offer_date_start = models.BigIntegerField(null=True)
+    offer_date_end = models.BigIntegerField(null=True)
     product_code = models.CharField(max_length=20)
     product_model = models.CharField(max_length=100)
     is_new = models.IntegerField(default=0)

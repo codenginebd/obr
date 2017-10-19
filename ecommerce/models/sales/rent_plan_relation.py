@@ -20,8 +20,8 @@ class RentPlanRelationManager(models.Manager):
 class RentPlanRelation(BaseEntity):
     plan = models.ForeignKey(RentPlan)
     price_matrix = models.ForeignKey('PriceMatrix')
-    start_time = models.BigIntegerField(default=0)
-    end_time = models.BigIntegerField(default=0)
+    start_time = models.BigIntegerField(null=True)
+    end_time = models.BigIntegerField(null=True)
     is_special_offer = models.BooleanField(default=False)
     special_rate = models.DecimalField(decimal_places=2, max_digits=20, default=0.0)
     rent_rate = models.DecimalField(decimal_places=2, max_digits=20, default=0.0)

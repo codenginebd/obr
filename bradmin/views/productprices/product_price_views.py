@@ -62,7 +62,7 @@ class AdminProductPriceCreateView(BRBaseCreateView):
     def get_context_data(self, **kwargs):
         context = super(AdminProductPriceCreateView, self).get_context_data(**kwargs)
         AdminRentPlanRelationFormSet = formset_factory(AdminRentPlanRelationForm,
-                                                       formset=AdminRentPlanFormSet)
-        initial = [{"rent_plan": rent_plan_instance.name} for rent_plan_instance in RentPlan.objects.all()]
+                                                       formset=AdminRentPlanFormSet, max_num=RentPlan.objects.count())
+        initial = [{"rent_plan": rent_plan_instance.pk} for rent_plan_instance in RentPlan.objects.all()]
         context["rent_plan_forms"] = AdminRentPlanRelationFormSet(initial=initial)
         return context

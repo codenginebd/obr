@@ -28,6 +28,9 @@ class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
 
     objects = BaseEntityModelManager(filter=settings.GLOBAL_MODEL_FILTER)
 
+    def __str__(self):
+        return self.code
+
     @classmethod
     def get_view_actions(cls):
         return {

@@ -9,6 +9,7 @@ from ecommerce.models.front_list import FrontList
 from ecommerce.models.front_palette import FrontPalette
 from ecommerce.models.rent_plan import RentPlan
 from ecommerce.models.sales.category import ProductCategory
+from ecommerce.models.sales.price_matrix import PriceMatrix
 from ecommerce.models.sales.warehouse import Warehouse
 from inventory.models.inventory import Inventory
 from logger.models.error_log import ErrorLog
@@ -43,6 +44,8 @@ class AdminErrorLogView(BaseListView):
             all_url = reverse("admin_front_palette_list_view")
         elif context == FrontList.__name__:
             all_url = reverse("admin_frontlist_list_view")
+        elif context == PriceMatrix.__name__:
+            all_url = reverse("admin_product_price_list_view")
         elif context == RentPlan.__name__:
             all_url = reverse("admin_rent_plan_list_view")
         return {
@@ -91,6 +94,8 @@ class AdminErrorLogView(BaseListView):
             return "frontpalatte"
         elif context == FrontList.__name__:
             return "frontlist"
+        elif context == PriceMatrix.__name__:
+            return "productprice"
         elif context == RentPlan.__name__:
             return "rentplan"
 

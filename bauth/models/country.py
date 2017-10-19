@@ -18,7 +18,7 @@ class Country(LocationEntity):
         proxy = True
 
     def __str__(self):
-        return self.code + ": " + self.short_name + "(%s)" % self.name
+        return self.code + ": " + self.name + "(%s)" % self.short_name
 
     @classmethod
     def show_create(cls):

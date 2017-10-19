@@ -13,7 +13,7 @@
 }
 </style>
     <div class="row">
-        <div class="col-md-12"><h4 style="padding: 10px; font-size: 16px; font-weight: bold;">Basic Information</h4></div>
+        <div class="col-md-12"><h4 style="padding: 10px; font-size: 16px; font-weight: bold;">Basic Price Information</h4></div>
     </div>
     <div class="row">
         <div class="col-md-6">
@@ -78,22 +78,6 @@
                         {{ form.sale_price }}
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <label>{{ form.initial_payable_rent_price.label }}:</label>
-                    </td>
-                    <td>
-                        {{ form.initial_payable_rent_price }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>{{ form.custom_rent_plan_available.label }}:</label>
-                    </td>
-                    <td>
-                        {{ form.custom_rent_plan_available }}
-                    </td>
-                </tr>
             </table>
         </div>
     </div>
@@ -155,32 +139,175 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-
-            {% for rent_plan_form in rent_plan_forms.forms %}
-                <table class="table">
+            <table class="table">
                 <tr>
                     <td>
-                        {{ rent_plan_form.rent_plan }}
+                        <label>{{ form.is_rent.label }}:</label>
                     </td>
                     <td>
-                        {{ rent_plan_form.rent_rate }}
-                    </td>
-                    <td>
-                        {{ rent_plan_form.is_special_offer }}
-                    </td>
-                    <td>
-                        {{ rent_plan_form.special_rate }}
-                    </td>
-                    <td>
-                        {{ rent_plan_form.start_time }}
-                    </td>
-                    <td>
-                        {{ rent_plan_form.end_time }}
+                        {{ form.is_rent }}
                     </td>
                 </tr>
-                </table>
+                <tr>
+                    <td>
+                        <label>{{ form.initial_payable_rent_price.label }}:</label>
+                    </td>
+                    <td>
+                        {{ form.initial_payable_rent_price }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>{{ form.custom_rent_plan_available.label }}:</label>
+                    </td>
+                    <td>
+                        {{ form.custom_rent_plan_available }}
+                    </td>
+                </tr>
+            </table>
+            <table class="table">
+            {% for rent_plan_form in rent_plan_forms.forms %}
+                {% if forloop.first %}
+                    <thead>
+                        <tr>
+                            <td style="width: 180px;">
+                                <label>{{ rent_plan_form.rent_plan.label }}</label>
+                            </td>
+                            <td style="width: 120px;">
+                                <label>{{ rent_plan_form.rent_rate.label }}</label>
+                            </td>
+                            <td style="width: 120px;">
+                                <label>{{ rent_plan_form.is_special_offer.label }}</label>
+                            </td>
+                            <td style="width: 120px;">
+                                <label>{{ rent_plan_form.special_rate.label }}</label>
+                            </td>
+                            <td style="width: 120px;">
+                                <label>{{ rent_plan_form.start_time.label }}</label>
+                            </td>
+                            <td style="width: 120px;">
+                                <label>{{ rent_plan_form.end_time.label }}</label>
+                            </td>
+                        </tr>
+                    </thead>
+                {% endif %}
+                <tbody>
+                    <tr>
+                        <td>
+                            {{ rent_plan_form.rent_plan }}
+                        </td>
+                        <td>
+                            {{ rent_plan_form.rent_rate }}
+                        </td>
+                        <td>
+                            {{ rent_plan_form.is_special_offer }}
+                        </td>
+                        <td>
+                            {{ rent_plan_form.special_rate }}
+                        </td>
+                        <td>
+                            {{ rent_plan_form.start_time }}
+                        </td>
+                        <td>
+                            {{ rent_plan_form.end_time }}
+                        </td>
+                    </tr>
+                </tbody>
             {% endfor %}
-
+            </table>
         </div>
     </div>
+<script type="text/javascript">
+$(document).ready(function () {
+
+    $("#id_offer_date_start").datepicker();
+    $("#id_offer_date_end").datepicker();
+
+    $("[id$=start_time]").datepicker();
+    $("[id$=end_time]").datepicker();
+
+    function toggle_special_price(disabled) {
+        $("#id_offer_price_p").prop("disabled", disabled);
+        $("#id_offer_price_v").prop("disabled", disabled);
+        $("#id_offer_date_start").prop("disabled", disabled);
+        $("#id_offer_date_end").prop("disabled", disabled);
+    }
+
+    if($("#id_special_price").is(":checked")) {
+        toggle_special_price(false);
+    }
+    else {
+        toggle_special_price(true);
+    }
+    
+    $("#id_special_price").click(function (e) {
+        if($(this).is(":checked")) {
+            toggle_special_price(false);
+        }
+        else {
+            toggle_special_price(true);
+        }
+    });
+
+    function toggle_rent_price(disabled) {
+        $("#id_initial_payable_rent_price").prop("disabled", disabled);
+        $("#id_custom_rent_plan_available").prop("disabled", disabled);
+        $('[id$="rent_rate"]').prop("disabled", disabled);
+        $('[id$="is_special_offer"]').prop("disabled", disabled);
+        if(!disabled) {
+            $('[id$="is_special_offer"]').each(function (i) {
+                if(!$(this).is(":checked")) {
+                    $(this).parent().parent().find('[id$="special_rate"]').prop("disabled", !disabled);
+                    $(this).parent().parent().find('[id$="start_time"]').prop("disabled", !disabled);
+                    $(this).parent().parent().find('[id$="end_time"]').prop("disabled", !disabled);
+                }
+                else {
+                    $(this).parent().parent().find('[id$="special_rate"]').prop("disabled", disabled);
+                    $(this).parent().parent().find('[id$="start_time"]').prop("disabled", disabled);
+                    $(this).parent().parent().find('[id$="end_time"]').prop("disabled", disabled);
+                }
+            });
+
+
+        }
+        else {
+            $('[id$="special_rate"]').prop("disabled", disabled);
+            $('[id$="start_time"]').prop("disabled", disabled);
+            $('[id$="end_time"]').prop("disabled", disabled);
+        }
+    }
+
+    function toggle_rent_offer(this_ref, disabled) {
+        $(this_ref).parent().parent().find('[id$="special_rate"]').prop("disabled", disabled);
+        $(this_ref).parent().parent().find('[id$="start_time"]').prop("disabled", disabled);
+        $(this_ref).parent().parent().find('[id$="end_time"]').prop("disabled", disabled);
+    }
+
+    $('[id$="is_special_offer"]').click(function (e) {
+        if($(this).is(":checked")) {
+            toggle_rent_offer(this, false);
+        }
+        else {
+            toggle_rent_offer(this, true);
+        }
+    });
+
+    if($("#id_is_rent").is(":checked")) {
+        toggle_rent_price(false);
+    }
+    else {
+        toggle_rent_price(true);
+    }
+
+    $("#id_is_rent").click(function (e) {
+        if($(this).is(":checked")) {
+            toggle_rent_price(false);
+        }
+        else {
+            toggle_rent_price(true);
+        }
+    });
+
+})
+</script>
 {% endblock form_content %}
