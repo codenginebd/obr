@@ -19,6 +19,8 @@ from bradmin.views.inventory.inventory_views import AdminInventoryListView, Admi
     AdminInventoryUpdateView, AdminInventoryDetailsView, AdminInventoryActivateView, AdminInventoryDeactivateView, \
     AdminInventoryDeleteView, AdminInventoryUploadView, AdminInventoryDownloadView, AdminInventoryAlertListView
 from bradmin.views.productprices.product_price_views import AdminProductPriceListView, AdminProductPriceCreateView
+from bradmin.views.productprices.rent_plan_views import AdminRentPlanListView, AdminRentPlanCreateView, \
+    AdminRentPlanUpdateView, AdminRentPlanActivateView, AdminRentPlanDeactivateView, AdminRentPlanDeleteView
 from bradmin.views.promotion.promotion_views import AdminPromotionListView, AdminPromotionCreateView
 from bradmin.views.publisher.publisher_views import AdminPublisherListView, AdminBookPublisherUploadView, \
     AdminBookPublisherDownloadView, AdminBookPublisherActivateView, AdminBookPublisherDeactivateView, \
@@ -114,6 +116,13 @@ urlpatterns = [
     #Product Price
     url(r'^product-price-list/$', AdminProductPriceListView.as_view(), name="admin_product_price_list_view"),
     url(r'^product-price-create/$', AdminProductPriceCreateView.as_view(), name="admin_product_price_create_view"),
+    #Rent Plan
+    url(r'^rent-plan-list/$', AdminRentPlanListView.as_view(), name="admin_rent_plan_list_view"),
+    url(r'^rent-plan-create/$', AdminRentPlanCreateView.as_view(), name="admin_rent_plan_create_view"),
+    url(r'^rent-plan-edit/(?P<pk>[0-9]+)/$', AdminRentPlanUpdateView.as_view(), name="admin_rent_plan_edit_link_view"),
+    url(r'^rent-plan-activate/', AdminRentPlanActivateView.as_view(), name="admin_rent_plan_activate_view"),
+    url(r'^rent-plan-deactivate/', AdminRentPlanDeactivateView.as_view(),name="admin_rent_plan_deactivate_view"),
+    url(r'^rent-plan-delete/', AdminRentPlanDeleteView.as_view(), name="admin_rent_plan_delete_view"),
 
     url(r'^error-logs/', AdminErrorLogView.as_view(), name="admin_error_logs_view"),
     url(r'^error-log/details/(?P<pk>[0-9]+)/$', AdminErrorLogsDetailsView.as_view(), name="admin_error_log_details_view"),

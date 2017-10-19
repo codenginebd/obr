@@ -27,7 +27,7 @@ class AdminProductPriceForm(BRBaseModelForm):
     class Meta:
         model = PriceMatrix
         fields = ['product', "is_new", "print_type", "base_price", "market_price", "sale_price",
-                  "initial_payable_rent_price", "currency", "offer_date_start", "offer_date_end",
+                  "initial_payable_rent_price", "custom_rent_plan_available", "currency", "offer_date_start", "offer_date_end",
                   "special_price", "offer_price_p", "offer_price_v","is_rent"]
         widgets = {
                 "is_new": forms.CheckboxInput(attrs={"class": "form-control"})

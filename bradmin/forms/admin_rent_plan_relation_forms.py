@@ -6,9 +6,15 @@ from generics.libs.loader.loader import load_model
 
 
 class AdminRentPlanForm(BRBaseModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(AdminRentPlanForm, self).__init__(*args, **kwargs)
+        self.fields["name"].required = True
+        self.fields["days"].widget.attrs["min"] = 1
+
     class Meta:
         model = RentPlan
-        fields = ["name ", "days ", "is_active"]
+        fields = ["name", "days", "is_active"]
 
 
 class AdminRentPlanRelationForm(BRBaseModelForm):
