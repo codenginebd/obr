@@ -1,5 +1,6 @@
 import uuid
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -25,7 +26,7 @@ class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
     created_by = models.ForeignKey(User, related_name='+', null=True)
     last_updated_by = models.ForeignKey(User, related_name='+', null=True)
 
-    objects = BaseEntityModelManager(filter={"is_deleted":False})
+    objects = BaseEntityModelManager(filter=settings.GLOBAL_MODEL_FILTER)
 
     @classmethod
     def get_view_actions(cls):

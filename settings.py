@@ -215,3 +215,6 @@ MEDIA_BOOK_PATH = os.path.join(MEDIA_ROOT,"books")
 MEDIA_AUTHOR_THUMB_PATH = os.path.join(MEDIA_AUTHOR_PATH,"thumbnails")
 MEDIA_PUBLISHER_THUMB_PATH = os.path.join(MEDIA_PUBLISHER_PATH,"thumbnails")
 MEDIA_BOOK_THUMB_PATH = os.path.join(MEDIA_BOOK_PATH,"thumbnails")
+
+
+GLOBAL_MODEL_FILTER = {"is_deleted":False}
