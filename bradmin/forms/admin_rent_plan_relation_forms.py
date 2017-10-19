@@ -5,6 +5,12 @@ from ecommerce.models.sales.rent_plan_relation import RentPlanRelation
 from generics.libs.loader.loader import load_model
 
 
+class AdminRentPlanForm(BRBaseModelForm):
+    class Meta:
+        model = RentPlan
+        fields = ["name ", "days ", "is_active"]
+
+
 class AdminRentPlanRelationForm(BRBaseModelForm):
 
     rent_plan = forms.CharField(widget=forms.TextInput(attrs={"readonly": True,
