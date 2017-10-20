@@ -56,8 +56,20 @@ class PriceMatrix(BaseEntity):
         return True
 
     @classmethod
+    def show_edit(cls):
+        return True
+
+    @classmethod
     def get_create_link(cls):
         return reverse("admin_product_price_create_view")
+
+    @classmethod
+    def get_edit_link(cls, object_id):
+        return reverse("admin_product_price_edit_link_view", kwargs={"pk": object_id})
+
+    @classmethod
+    def get_edit_link_name(cls):
+        return "admin_product_price_edit_link_view"
 
     @classmethod
     def get_table_headers(self):

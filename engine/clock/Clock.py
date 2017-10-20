@@ -1,6 +1,8 @@
 import pytz
 from datetime import datetime
 import time
+
+from django.conf import settings
 from django.utils import timezone
 
 __author__ = 'codengine'
@@ -48,7 +50,9 @@ class Clock(object):
         return int(time.mktime(timezone.now().replace(tzinfo=None).timetuple())) #int(time.mktime(datetime.utcnow().timetuple()))
 
     @classmethod
-    def utc_to_local_datetime(cls,dt,tz):
+    def utc_to_local_datetime(cls,dt,tz=None):
+        if not tz:
+            tz = settings.DEFAULT_FALLBACK_TZ
         local_tz = pytz.timezone(tz)
         utc_dt = pytz.utc.localize(dt)
         return utc_dt.astimezone(local_tz)
@@ -85,6 +89,11 @@ class Clock(object):
     def convert_utc_to_local_timestamp(cls,timezone,ts):
         local_dt = Clock.utc_to_local_datetime(datetime.fromtimestamp(int(ts)),timezone)
         return int(local_dt.strftime("%s"))
+
+    @classmethod
+    def convert_utc_timestamt_to_local_datetime(cls, ts, tz=None):
+        local_dt = Clock.utc_to_local_datetime(datetime.fromtimestamp(int(ts)), tz)
+        return local_dt
 
     @classmethod
     def get_all_timezones(cls, **kwargs):

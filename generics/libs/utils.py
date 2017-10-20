@@ -14,3 +14,7 @@ def merge_dict(*d):
             for key, item in each.items():
                 merged_dict[key] = item
     return merged_dict
+
+
+def get_tz_from_request(request):
+    return settings.DEFAULT_FALLBACK_TZs

@@ -22,7 +22,8 @@ from bradmin.views.location.country_views import AdminCountryListView, AdminCoun
     AdminCountryActivateView, AdminCountryDeactivateView, AdminCountryDeleteView
 from bradmin.views.productprices.currency_views import AdminCurrencyListView, AdminCurrencyCreateView, \
     AdminCurrencyUpdateView, AdminCurrencyActivateView, AdminCurrencyDeactivateView, AdminCurrencyDeleteView
-from bradmin.views.productprices.product_price_views import AdminProductPriceListView, AdminProductPriceCreateView
+from bradmin.views.productprices.product_price_views import AdminProductPriceListView, AdminProductPriceCreateView, \
+    AdminProductPriceUpdateView
 from bradmin.views.productprices.rent_plan_views import AdminRentPlanListView, AdminRentPlanCreateView, \
     AdminRentPlanUpdateView, AdminRentPlanActivateView, AdminRentPlanDeactivateView, AdminRentPlanDeleteView
 from bradmin.views.promotion.promotion_views import AdminPromotionListView, AdminPromotionCreateView
@@ -120,6 +121,7 @@ urlpatterns = [
     #Product Price
     url(r'^product-price-list/$', AdminProductPriceListView.as_view(), name="admin_product_price_list_view"),
     url(r'^product-price-create/$', AdminProductPriceCreateView.as_view(), name="admin_product_price_create_view"),
+    url(r'^product-price-edit/(?P<pk>[0-9]+)/$', AdminProductPriceUpdateView.as_view(), name="admin_product_price_edit_link_view"),
     #Rent Plan
     url(r'^rent-plan-list/$', AdminRentPlanListView.as_view(), name="admin_rent_plan_list_view"),
     url(r'^rent-plan-create/$', AdminRentPlanCreateView.as_view(), name="admin_rent_plan_create_view"),

@@ -165,6 +165,9 @@
                     </td>
                 </tr>
             </table>
+            <div style="display: none;">
+                {{ rent_plan_forms.management_form }}
+            </div>
             <table class="table">
             {% for rent_plan_form in rent_plan_forms.forms %}
                 {% if forloop.first %}
@@ -252,6 +255,7 @@ $(document).ready(function () {
     function toggle_rent_price(disabled) {
         $("#id_initial_payable_rent_price").prop("disabled", disabled);
         $("#id_custom_rent_plan_available").prop("disabled", disabled);
+        $('[id$="rent_plan"]').prop("disabled", disabled);
         $('[id$="rent_rate"]').prop("disabled", disabled);
         $('[id$="is_special_offer"]').prop("disabled", disabled);
         if(!disabled) {

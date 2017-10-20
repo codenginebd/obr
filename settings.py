@@ -218,3 +218,5 @@ MEDIA_BOOK_THUMB_PATH = os.path.join(MEDIA_BOOK_PATH,"thumbnails")
 
 
 GLOBAL_MODEL_FILTER = {"is_deleted":False}
+
+DEFAULT_FALLBACK_TZ = "Asia/Dhaka"
