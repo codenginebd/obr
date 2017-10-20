@@ -1,49 +1,5 @@
 {% extends "admin/create_master.html" %}
 {% load staticfiles %}
-{% block hidden_content %}
-<div id="id_promo_rule_initial">
-<div>
-<div style="padding: 10px;">
-    <span>Add New Rule</span><span class="pull-right remove-item" style="cursor: pointer;"><i class="glyphicon glyphicon-close">X</i></span>
-</div>
-<table class="table">
-    {{ rule_form.as_table }}
-</table>
-<br/>
-</div>
-</div>
-<div id="id_promo_reward_initial">
-<div>
-<div style="padding: 10px;">
-    <span>Add New Reward</span><span class="pull-right remove-item" style="cursor: pointer;"><i class="glyphicon glyphicon-close">X</i></span>
-</div>
-<table class="table">
-    {{ reward_form.as_table }}
-</table>
-    <div>
-    <div style="padding: 10px;">
-        <span>Add Product</span><span class="pull-right remove-item" style="cursor: pointer;"><i class="glyphicon glyphicon-close">X</i></span>
-    </div>
-    <table class="table">
-        {{ reward_product_form.as_table }}
-    </table>
-    <br/>
-    </div>
-<br/>
-</div>
-</div>
-<div id="id_promo_reward_product_initial">
-<div>
-<div style="padding: 10px;">
-    <span>Add Product</span><span class="pull-right remove-item" style="cursor: pointer;"><i class="glyphicon glyphicon-close">X</i></span>
-</div>
-<table class="table">
-    {{ reward_product_form.as_table }}
-</table>
-<br/>
-</div>
-</div>
-{% endblock hidden_content %}
 {% block form_content %}
     <style type="text/css">
     .form-container {
@@ -178,9 +134,11 @@
                 <h4 class="promo-heading">Promotion Rules</h4>
                 <hr/>
                 <div id="id_promo_rules">
+                    {% for rule_form in rule_formset.forms %}
                     <table class="table">
                     {{ rule_form.as_table }}
                     </table>
+                    {% endfor %}
                 </div>
                 <a href="#" id="id_add_promo_rule" class="btn btn-default pull-right"><i class="glyphicon glyphicon-plus"></i> Add Rule</a>
             </div>
@@ -202,15 +160,19 @@
             <h4 class="promo-heading">Promotion Rewards</h4>
             <hr/>
             <div id="id_promo_rewards">
+                {% for reward_form in reward_formset.forms %}
                 <table class="table">
                     {{ reward_form.as_table }}
                 </table>
+                {% endfor %}
                 <div>
                     <div class="promo_reward_product">
                         <div>
+                            {% for reward_product_form in reward_product_formset.forms %}
                             <table class="table">
                                 {{ reward_product_form.as_table }}
                             </table>
+                            {% endfor %}
                             <br/>
                         </div>
                     </div>
@@ -232,9 +194,31 @@ $(document).ready(function () {
     $("#id_start_date").datepicker();
     $("#id_end_date").datepicker();
     
+    function add_promotion_rule() {
+        var last_product_name = $("#id_promo_rules").find(".table").last().find("[name$=product]").prop("name");
+        var last_index = last_product_name.replace("form-", "").replace("-product", "")
+        last_index = parseInt(last_index);
+        last_index += 1;
+        var first_table = $("#id_promo_rules").find(".table").first().html();
+        $(first_table).find("[name$=product]").val("");
+        $(first_table).find("[name$=is_new]").prop("checked", false);
+        $(first_table).find("[name$=min_qty]").val("0");
+        $(first_table).find("[name$=min_amount]").val("0.0");
+
+        var pattern = /form-0-/i;
+        var new_table = "<div class='table-container' style='padding-10px;'><span style='font-weight: bold;'>Promotion Rule</span><span style='cursor: pointer;' class='glyphicon glyphicon-close pull-right remove-promotion-rule'>X</span>";
+        new_table += "<table class='table' style='margin-top: 10px;'>" + first_table.replace(pattern, "form-"+last_index+"-") + "</table>";
+        new_table += "</div>";
+        $("#id_promo_rules").append(new_table);
+    }
+    
     $("#id_add_promo_rule").click(function (e) {
-        var rule_form_initial = $("#id_promo_rule_initial").html();
-        $("#id_promo_rules").append(rule_form_initial);
+        add_promotion_rule();
+        return false;
+    });
+
+    $(document).on("click", ".remove-promotion-rule", function (e) {
+        $(this).parent().remove();
         return false;
     });
 

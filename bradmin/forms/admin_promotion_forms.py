@@ -24,6 +24,15 @@ class AdminPromotionForm(BRBaseModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AdminPromotionForm, self).__init__(*args, **kwargs)
+        self.fields["title"].widget.attrs["class"] = "form-control"
+        self.fields["description"].widget.attrs["class"] = "form-control"
+        self.fields["promotion_type"].widget.attrs["class"] = "form-control"
+        self.fields["currency"].widget.attrs["class"] = "form-control"
+        self.fields["currency"].empty_label = None
+        self.fields["min_qty"].widget.attrs["class"] = "form-control"
+        self.fields["min_amount"].widget.attrs["class"] = "form-control"
+        self.fields["start_date"].widget.attrs["class"] = "form-control"
+        self.fields["end_date"].widget.attrs["class"] = "form-control"
 
     class Meta:
         model = Promotion

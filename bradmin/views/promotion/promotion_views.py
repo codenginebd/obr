@@ -1,3 +1,4 @@
+from django.forms.formsets import formset_factory
 from django.urls.base import reverse
 
 from bradmin.forms.admin_promotion_forms import AdminPromotionForm
@@ -61,7 +62,12 @@ class AdminPromotionCreateView(BRBaseCreateView):
 
     def get_context_data(self, **kwargs):
         context = super(AdminPromotionCreateView, self).get_context_data(**kwargs)
-        context["rule_form"] = AdminPromotionRuleForm()
-        context["reward_form"] = AdminPromotionRewardForm()
-        context["reward_product_form"] = AdminPromotionRewardProductForm()
+        AdminPromotionRuleFormSet = formset_factory(AdminPromotionRuleForm)
+        AdminPromotionRewardFormSet = formset_factory(AdminPromotionRewardForm)
+        AdminPromotionRewardProductFormSet = formset_factory(AdminPromotionRewardProductForm)
+
+        context["rule_formset"] = AdminPromotionRuleFormSet()
+        context["reward_formset"] = AdminPromotionRewardFormSet()
+        context["reward_product_formset"] = AdminPromotionRewardProductFormSet()
+
         return context
