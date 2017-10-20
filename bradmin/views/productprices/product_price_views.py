@@ -5,9 +5,14 @@ from django.contrib import messages
 
 from bradmin.forms.admin_product_price_forms import AdminProductPriceForm
 from bradmin.forms.admin_rent_plan_relation_forms import AdminRentPlanRelationForm, AdminRentPlanFormSet
+from bradmin.views.activate_base_view import ActivateBaseView
 from bradmin.views.base_create_view import BRBaseCreateView
 from bradmin.views.base_list_view import BaseListView
 from bradmin.views.base_update_view import BRBaseUpdateView
+from bradmin.views.deactivate_base_view import DeactivateBaseView
+from bradmin.views.delete_base_view import DeleteBaseView
+from bradmin.views.download_base_view import DownloadBaseView
+from bradmin.views.upload_base_view import UploadBaseView
 from ecommerce.models.rent_plan import RentPlan
 from ecommerce.models.sales.price_matrix import PriceMatrix
 from ecommerce.models.sales.rent_plan_relation import RentPlanRelation
@@ -41,6 +46,26 @@ class AdminProductPriceListView(BaseListView):
 
     def get_page_title(self):
         return "Product Price List | BDReads.com"
+
+
+class AdminProductPriceUploadView(UploadBaseView):
+    model = PriceMatrix
+
+
+class AdminProductPriceDownloadView(DownloadBaseView):
+    model = PriceMatrix
+
+
+class AdminProductPriceActivateView(ActivateBaseView):
+    model = PriceMatrix
+
+
+class AdminProductPriceDeactivateView(DeactivateBaseView):
+    model = PriceMatrix
+
+
+class AdminProductPriceDeleteView(DeleteBaseView):
+    model = PriceMatrix
 
 
 class AdminProductPriceCreateView(BRBaseCreateView):

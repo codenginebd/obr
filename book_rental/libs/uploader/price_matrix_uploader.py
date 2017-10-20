@@ -3,9 +3,9 @@ from django.conf import settings
 from django.db import transaction
 from book_rental.models.sales.book import Book
 from ecommerce.models.rent_plan import RentPlan
-from ecommerce.models.sales.price_matrix import PriceMatrix
 from ecommerce.models.sales.rent_plan_relation import RentPlanRelation
 from engine.clock.Clock import Clock
+from generics.libs.loader.loader import load_model
 from logger.models.error_log import ErrorLog
 from payment.models.currency import Currency
 
@@ -17,6 +17,7 @@ class PriceMatrixUploader(object):
         self.kwargs = kwargs
         
     def handle_sale_price_upload(self):
+        PriceMatrix = load_model(app_label="ecommerce", model_name="PriceMatrix")
         for row in self.data:
             with transaction.atomic():
                 index = 0

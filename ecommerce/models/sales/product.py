@@ -3,11 +3,12 @@ from django.template.defaultfilters import slugify
 from ecommerce.models.sales.category import ProductCategory
 from ecommerce.models.sales.keyword import TagKeyword
 from ecommerce.models.sales.product_images import ProductImage
+from generics.libs.loader.loader import load_model
 from generics.models.base_entity import BaseEntity
-from ecommerce.models.sales.price_matrix import PriceMatrix
 from engine.clock.Clock import Clock
 from ecommerce.models.sales.rent_plan_relation import RentPlanRelation
 
+PriceMatrix = load_model(app_label="ecommerce", model_name="PriceMatrix")
 
 class Product(BaseEntity):
     title = models.CharField(max_length=500)

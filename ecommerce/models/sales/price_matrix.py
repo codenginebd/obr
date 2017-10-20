@@ -3,9 +3,12 @@ from datetime import datetime
 from django.db.models.query_utils import Q
 from django.urls.base import reverse
 
+from book_rental.libs.downloader.rent_price_downloader import RentPriceDownloader
+from book_rental.libs.uploader.price_matrix_uploader import PriceMatrixUploader
 from ecommerce.models.rent_plan import RentPlan
 from ecommerce.models.sales.rent_plan_relation import RentPlanRelation
 from generics.libs.loader.loader import load_model
+from generics.libs.reader.excel_file_reader import ExcelFileReader
 from generics.models.base_entity import BaseEntity
 from payment.models.currency import Currency
 from engine.clock.Clock import Clock
@@ -47,7 +50,7 @@ class PriceMatrix(BaseEntity):
     def get_product(self):
         if self.product_model == "Book":
             Book = load_model(app_label="book_rental", model_name="Book")
-            book_objects = Book.objects.filter(code=self.code)
+            book_objects = Book.objects.filter(code=self.product_code)
             if book_objects.exists():
                 return book_objects.first()
 
@@ -58,6 +61,30 @@ class PriceMatrix(BaseEntity):
     @classmethod
     def show_edit(cls):
         return True
+
+    @classmethod
+    def show_activate(cls):
+        return True
+
+    @classmethod
+    def show_deactivate(cls):
+        return True
+
+    @classmethod
+    def show_upload(cls):
+        return False
+
+    @classmethod
+    def show_download(cls):
+        return False
+
+    @classmethod
+    def show_download_template(cls):
+        return False
+
+    @classmethod
+    def get_download_file_name(cls):
+        return "Product Price List"
 
     @classmethod
     def get_create_link(cls):
@@ -72,8 +99,28 @@ class PriceMatrix(BaseEntity):
         return "admin_product_price_edit_link_view"
 
     @classmethod
+    def get_upload_link(cls):
+        return reverse("admin_product_price_upload_view")
+
+    @classmethod
+    def get_download_link(cls):
+        return reverse("admin_product_price_download_view")
+
+    @classmethod
+    def get_activate_link(cls):
+        return reverse("admin_product_price_activate_view")
+
+    @classmethod
+    def get_deactivate_link(cls):
+        return reverse("admin_product_price_deactivate_view")
+
+    @classmethod
+    def get_delete_link(cls):
+        return reverse("admin_product_price_delete_view")
+
+    @classmethod
     def get_table_headers(self):
-        return ["ID", "Code", "Product", "Is New", "Print Type", "Rent Available", "Details"]
+        return ["ID", "Code", "Product", "Is New", "Print Type", "Rent Available", "Is Active", "Details"]
 
     @classmethod
     def prepare_table_data(cls, queryset):
@@ -83,6 +130,15 @@ class PriceMatrix(BaseEntity):
                 [q_object.pk, q_object.code, q_object.get_product(),
                  "Yes" if q_object.is_new else "No", q_object.print_type,
                  "Yes" if q_object.is_rent else "No",
+                 "Yes" if q_object.is_active else "No",
                  '<a href="%s">Details</a>' % q_object.get_detail_link(object_id=q_object.pk)]
             ]
         return data
+
+    @classmethod
+    def get_uploader_class(cls):
+        return PriceMatrixUploader
+
+    @classmethod
+    def get_reader_class(cls):
+        return ExcelFileReader

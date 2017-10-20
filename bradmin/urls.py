@@ -23,7 +23,8 @@ from bradmin.views.location.country_views import AdminCountryListView, AdminCoun
 from bradmin.views.productprices.currency_views import AdminCurrencyListView, AdminCurrencyCreateView, \
     AdminCurrencyUpdateView, AdminCurrencyActivateView, AdminCurrencyDeactivateView, AdminCurrencyDeleteView
 from bradmin.views.productprices.product_price_views import AdminProductPriceListView, AdminProductPriceCreateView, \
-    AdminProductPriceUpdateView
+    AdminProductPriceUpdateView, AdminProductPriceUploadView, AdminProductPriceDownloadView, \
+    AdminProductPriceActivateView, AdminProductPriceDeactivateView, AdminProductPriceDeleteView
 from bradmin.views.productprices.rent_plan_views import AdminRentPlanListView, AdminRentPlanCreateView, \
     AdminRentPlanUpdateView, AdminRentPlanActivateView, AdminRentPlanDeactivateView, AdminRentPlanDeleteView
 from bradmin.views.promotion.promotion_views import AdminPromotionListView, AdminPromotionCreateView
@@ -120,6 +121,11 @@ urlpatterns = [
     url(r'^front-palette-edit/(?P<pk>[0-9]+)/$', AdminFrontPaletteUpdateView.as_view(), name="admin_front_palette_edit_link_view"),
     #Product Price
     url(r'^product-price-list/$', AdminProductPriceListView.as_view(), name="admin_product_price_list_view"),
+    url(r'^product-price-upload/', AdminProductPriceUploadView.as_view(), name="admin_product_price_upload_view"),
+    url(r'^product-price-download/', AdminProductPriceDownloadView.as_view(), name="admin_product_price_download_view"),
+    url(r'^product-price-activate/', AdminProductPriceActivateView.as_view(), name="admin_product_price_activate_view"),
+    url(r'^product-price-deactivate/', AdminProductPriceDeactivateView.as_view(),name="admin_product_price_deactivate_view"),
+    url(r'^product-price-delete/', AdminProductPriceDeleteView.as_view(), name="admin_product_price_delete_view"),
     url(r'^product-price-create/$', AdminProductPriceCreateView.as_view(), name="admin_product_price_create_view"),
     url(r'^product-price-edit/(?P<pk>[0-9]+)/$', AdminProductPriceUpdateView.as_view(), name="admin_product_price_edit_link_view"),
     #Rent Plan
