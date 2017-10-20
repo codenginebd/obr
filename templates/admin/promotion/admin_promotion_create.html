@@ -134,11 +134,48 @@
                 <h4 class="promo-heading">Promotion Rules</h4>
                 <hr/>
                 <div id="id_promo_rules">
-                    {% for rule_form in rule_formset.forms %}
                     <table class="table">
-                    {{ rule_form.as_table }}
-                    </table>
+                    {% for rule_form in rule_formset.forms %}
+                    {% if forloop.first %}
+                        <thead>
+                            <tr>
+                            <th>
+                                {{ rule_form.product.label }}
+                            </th>
+                            <th>
+                                {{ rule_form.is_new.label }}
+                            </th>
+                            <th>
+                                {{ rule_form.print_type.label }}
+                            </th>
+                            <th>
+                                {{ rule_form.min_qty.label }}
+                            </th>
+                            <th>
+                                {{ rule_form.min_amount.label }}
+                            </th>
+                        </tr>
+                        </thead>
+                    {% endif %}
+                    <tr>
+                        <td>
+                            {{ rule_form.product }}
+                        </td>
+                        <td>
+                            {{ rule_form.is_new }}
+                        </td>
+                        <td>
+                            {{ rule_form.print_type }}
+                        </td>
+                        <td>
+                            {{ rule_form.min_qty }}
+                        </td>
+                        <td>
+                            {{ rule_form.min_amount }}
+                        </td>
+                    </tr>
                     {% endfor %}
+                    </table>
                 </div>
                 <a href="#" id="id_add_promo_rule" class="btn btn-default pull-right"><i class="glyphicon glyphicon-plus"></i> Add Rule</a>
             </div>
@@ -165,20 +202,60 @@
                     {{ reward_form.as_table }}
                 </table>
                 {% endfor %}
-                <div>
-                    <div class="promo_reward_product">
-                        <div>
-                            {% for reward_product_form in reward_product_formset.forms %}
-                            <table class="table">
-                                {{ reward_product_form.as_table }}
-                            </table>
-                            {% endfor %}
-                            <br/>
-                        </div>
-                    </div>
-                    <a href="#" style="margin-bottom: 20px;" id="id_add_promo_reward_product"
-                       class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> Add Product</a>
-                </div>
+                <table class="table">
+                    <tr>
+                        <td>
+                            Reward Products
+                        </td>
+                        <td>
+                            <div class="promo_reward_product">
+                                <div>
+                                    <table class="table">
+                                    {% for reward_product_form in reward_product_formset.forms %}
+                                        {% if forloop.first %}
+                                            <tr>
+                                                <th>
+                                                    {{ reward_product_form.product.label }}
+                                                </th>
+                                                <th>
+                                                    {{ reward_product_form.is_new.label }}
+                                                </th>
+                                                <th>
+                                                    {{ reward_product_form.print_type.label }}
+                                                </th>
+                                                <th>
+                                                    {{ reward_product_form.quantity.label }}
+                                                </th>
+                                            </tr>
+                                        {% endif %}
+                                        <tr>
+                                            <td>
+                                                {{ reward_product_form.product }}
+                                            </td>
+                                            <td>
+                                                {{ reward_product_form.is_new }}
+                                            </td>
+                                            <td>
+                                                {{ reward_product_form.print_type }}
+                                            </td>
+                                            <td>
+                                                {{ reward_product_form.quantity }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td colspan="4">
+                                            <a href="#" style="margin-bottom: 20px;" id="id_add_promo_reward_product"
+                                                class="btn btn-default pull-right"><i class="glyphicon glyphicon-plus"></i> Add Product</a>
+                                        </td>
+                                    </tr>
+                                    </table>
+                                    <br/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <a href="#" id="id_add_promo_reward" class="btn btn-default pull-right"><i class="glyphicon glyphicon-plus"></i> Add Reward</a>
         </div>
@@ -199,16 +276,18 @@ $(document).ready(function () {
         var last_index = last_product_name.replace("form-", "").replace("-product", "")
         last_index = parseInt(last_index);
         last_index += 1;
-        var first_table = $("#id_promo_rules").find(".table").first().html();
+        var first_table = $("#id_promo_rules").find(".table").first().find("tbody").html();
         $(first_table).find("[name$=product]").val("");
         $(first_table).find("[name$=is_new]").prop("checked", false);
         $(first_table).find("[name$=min_qty]").val("0");
         $(first_table).find("[name$=min_amount]").val("0.0");
+        console.log(first_table);
+        var new_content = first_table.replace("/form-0-/g", "form-"+last_index+"-");
 
-        var pattern = /form-0-/i;
         var new_table = "<div class='table-container' style='padding-10px;'><span style='font-weight: bold;'>Promotion Rule</span><span style='cursor: pointer;' class='glyphicon glyphicon-close pull-right remove-promotion-rule'>X</span>";
-        new_table += "<table class='table' style='margin-top: 10px;'>" + first_table.replace(pattern, "form-"+last_index+"-") + "</table>";
+        new_table += "<table class='table' style='margin-top: 10px;'>" + new_content + "</table>";
         new_table += "</div>";
+        console.log(new_table);
         $("#id_promo_rules").append(new_table);
     }
     
