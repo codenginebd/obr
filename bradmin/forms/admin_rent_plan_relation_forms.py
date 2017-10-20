@@ -8,6 +8,7 @@ from ecommerce.models.rent_plan import RentPlan
 from ecommerce.models.sales.rent_plan_relation import RentPlanRelation
 from engine.clock.Clock import Clock
 from generics.libs.loader.loader import load_model
+from generics.libs.utils import get_tz_from_request
 
 
 class AdminRentPlanForm(BRBaseModelForm):
@@ -28,38 +29,51 @@ class AdminRentPlanRelationForm(BRBaseModelForm):
                                        widget=forms.Select(attrs={"class": "form-control",
                                                                   "style": "min-width: 140px;"}))
 
+    start_date = forms.CharField(label="Start Date",
+                                 widget=forms.TextInput(attrs={"class": "form-control"}))
+
+    end_date = forms.CharField(label="End Date",
+                                 widget=forms.TextInput(attrs={"class": "form-control"}))
+
     def __init__(self, *args, **kwargs):
+        if "request" in kwargs:
+            self.request = kwargs.pop('request')
+        else:
+            self.request = None
         super(AdminRentPlanRelationForm, self).__init__(*args, **kwargs)
-        initial_plan = kwargs.get("initial", None)
-        if initial_plan:
-            initial_plan = initial_plan.get("rent_plan", None)
-        if initial_plan:
-            self.fields["rent_plan"].queryset = RentPlan.objects.filter(pk=initial_plan)
+        if not self.instance.pk:
+            initial_plan = kwargs.get("initial", None)
+            if initial_plan:
+                initial_plan = initial_plan.get("rent_plan", None)
+            if initial_plan:
+                self.fields["rent_plan"].queryset = RentPlan.objects.filter(pk=initial_plan)
         self.fields["rent_plan"].empty_label = None
         self.fields["rent_rate"].widget.attrs["class"] = "form-control"
         self.fields["rent_rate"].widget.attrs["style"] = "min-width: 120px;"
+        self.fields["rent_rate"].widget.attrs["min"] = "1.0"
+        self.fields["rent_rate"].required = True
 
         self.fields["is_special_offer"].widget.attrs["style"] = "min-width: 120px;"
 
         self.fields["special_rate"].widget.attrs["class"] = "form-control"
         self.fields["special_rate"].widget.attrs["style"] = "min-width: 120px;"
+        self.fields["special_rate"].required = True
+        self.fields["special_rate"].widget.attrs["min"] = "1.0"
 
-        self.fields["start_time"].widget.attrs["class"] = "form-control"
-        self.fields["start_time"].widget.attrs["style"] = "min-width: 120px;"
+        self.fields["start_date"].widget.attrs["class"] = "form-control"
+        self.fields["start_date"].widget.attrs["style"] = "min-width: 120px;"
+        self.fields["start_date"].widget.attrs["readonly"] = "readonly"
+        self.fields["start_date"].required = True
 
-        self.fields["end_time"].widget.attrs["class"] = "form-control"
-        self.fields["end_time"].widget.attrs["style"] = "min-width: 120px;"
+        self.fields["end_date"].widget.attrs["class"] = "form-control"
+        self.fields["end_date"].widget.attrs["style"] = "min-width: 120px;"
+        self.fields["end_date"].widget.attrs["readonly"] = "readonly"
+        self.fields["end_date"].required = True
 
 
     class Meta:
         model = RentPlanRelation
-        fields = ["rent_plan", "rent_rate", "is_special_offer", "special_rate", "start_time", "end_time"]
-        widgets = {
-            "start_time": forms.DateInput(),
-            "end_time": forms.DateInput()
-        }
-        labels = {
-        }
+        fields = ["rent_plan", "rent_rate", "is_special_offer", "special_rate", "start_date", "end_date"]
 
     def is_valid(self):
         prefix = self.prefix
@@ -67,8 +81,8 @@ class AdminRentPlanRelationForm(BRBaseModelForm):
         rent_rate = self.data.get(prefix + "-rent_rate")
         is_special_offer = self.data.get(prefix + "-is_special_offer")
         special_rate = self.data.get(prefix + "-special_rate")
-        start_time = self.data.get(prefix + "-start_time")
-        end_time = self.data.get(prefix + "-end_time")
+        start_time = self.data.get(prefix + "-start_date")
+        end_time = self.data.get(prefix + "-end_date")
         rent_plan = RentPlan.objects.get(pk=int(rent_plan))
         if not rent_rate:
             return False
@@ -97,19 +111,24 @@ class AdminRentPlanRelationForm(BRBaseModelForm):
         self.cleaned_data["is_special_offer"] = is_special_offer
         if is_special_offer:
             self.cleaned_data["special_rate"] = special_rate
-            self.cleaned_data["start_time"] = Clock.convert_datetime_to_utc_timestamp(start_time)
-            self.cleaned_data["end_time"] = Clock.convert_datetime_to_utc_timestamp(end_time)
+            if start_time != "0":
+                self.cleaned_data["start_time"] = Clock.convert_datetime_to_utc_timestamp(start_time)
+            else:
+                self.cleaned_data["start_time"] = 0
+            if end_time != "0":
+                self.cleaned_data["end_time"] = Clock.convert_datetime_to_utc_timestamp(end_time)
+            else:
+                self.cleaned_data["end_time"] = 0
         return True
 
     def save(self, commit=True, **kwargs):
         price_matrix_instance = kwargs.get("price_matrix_instance")
-        if not self.instance:
-            rent_plan_relation_instances = RentPlanRelation.objects.filter(price_matrix_id=price_matrix_instance.pk,
-                                                            plan_id=self.cleaned_data["rent_plan"].pk)
-            if rent_plan_relation_instances.exists():
-                self.instance = rent_plan_relation_instances.first()
-            else:
-                self.instance = RentPlanRelation()
+        rent_plan_relation_instances = RentPlanRelation.objects.filter(price_matrix_id=price_matrix_instance.pk,
+                                                        plan_id=self.cleaned_data["rent_plan"].pk)
+        if rent_plan_relation_instances.exists():
+            self.instance = rent_plan_relation_instances.first()
+        else:
+            self.instance = RentPlanRelation()
 
         self.instance.plan_id = self.cleaned_data["rent_plan"].pk
         self.instance.price_matrix_id = price_matrix_instance.pk
@@ -119,6 +138,10 @@ class AdminRentPlanRelationForm(BRBaseModelForm):
             self.instance.special_rate = self.cleaned_data["special_rate"]
             self.instance.start_time = self.cleaned_data["start_time"]
             self.instance.end_time = self.cleaned_data["end_time"]
+        else:
+            self.instance.special_rate = Decimal(0.0)
+            self.instance.start_time = 0
+            self.instance.end_time = 0
         self.instance.save()
         return self.instance
 

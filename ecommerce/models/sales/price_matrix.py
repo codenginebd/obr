@@ -16,7 +16,7 @@ class PriceMatrixManager(models.Manager):
         todays_datetime = datetime.now()
         todays_ts = Clock.convert_datetime_to_utc_timestamp(todays_datetime)    
         queryset = super(PriceMatrixManager, self).get_queryset()
-        queryset = queryset.filter(Q(is_rent=False) | (Q(is_rent=True) & Q(offer_date_start__isnull=False) & Q(offer_date_start__lte=todays_ts) & Q(offer_date_end__isnull=False) & Q(offer_date_end__gte=todays_ts)))
+        # queryset = queryset.filter(Q(is_rent=False) | (Q(is_rent=True) & Q(offer_date_start__isnull=False) & Q(offer_date_start__lte=todays_ts) & Q(offer_date_end__isnull=False) & Q(offer_date_end__gte=todays_ts)))
         return queryset
 
 

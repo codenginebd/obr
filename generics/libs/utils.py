@@ -17,4 +17,4 @@ def merge_dict(*d):
 
 
 def get_tz_from_request(request):
-    return settings.DEFAULT_FALLBACK_TZs
+    return settings.DEFAULT_FALLBACK_TZ

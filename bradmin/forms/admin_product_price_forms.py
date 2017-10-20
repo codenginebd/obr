@@ -26,11 +26,25 @@ class AdminProductPriceForm(BRBaseModelForm):
     currency = CurrencyModelChoiceField(label="Select Currency", queryset=Currency.objects.all(),
                                         widget=forms.Select(attrs={"class": "form-control"}))
 
+    offer_start_date = forms.CharField(label="Offer Start Date",
+                                       widget=forms.TextInput(attrs={"class": "form-control"}))
+
+    offer_end_date = forms.CharField(label="Offer End Date",
+                                     widget=forms.TextInput(attrs={"class": "form-control"}))
+
     is_new = forms.ChoiceField(label="Is New",
                                    choices=(("1", "Yes"), ("0", "No")),
                                    widget=forms.Select(attrs={"class": "form-control"}))
 
     def __init__(self, *args, **kwargs):
+        if 'request' in kwargs:
+            self.request = kwargs.pop('request')
+        else:
+            self.request = None
+        if kwargs.get('pk'):
+            self.pk = kwargs.pop('pk')
+        else:
+            self.pk = None
         super(AdminProductPriceForm, self).__init__(*args, **kwargs)
         self.fields["base_price"].widget.attrs["class"] = "form-control"
         self.fields["market_price"].widget.attrs["class"] = "form-control"
@@ -38,8 +52,10 @@ class AdminProductPriceForm(BRBaseModelForm):
         self.fields["initial_payable_rent_price"].widget.attrs["class"] = "form-control"
         self.fields["offer_price_p"].widget.attrs["class"] = "form-control"
         self.fields["offer_price_v"].widget.attrs["class"] = "form-control"
-        self.fields["offer_date_start"].widget.attrs["class"] = "form-control"
-        self.fields["offer_date_end"].widget.attrs["class"] = "form-control"
+        self.fields["offer_start_date"].widget.attrs["class"] = "form-control"
+        self.fields["offer_start_date"].widget.attrs["readonly"] = "readonly"
+        self.fields["offer_end_date"].widget.attrs["class"] = "form-control"
+        self.fields["offer_end_date"].widget.attrs["readonly"] = "readonly"
         self.fields["product"].empty_label = None
         self.fields["currency"].empty_label = None
         if kwargs.get("instance"):
@@ -50,27 +66,22 @@ class AdminProductPriceForm(BRBaseModelForm):
                 self.fields["is_new"].initial = "0"
 
             if instance.special_price:
-                special_offer_start = Clock.convert_utc_timestamt_to_local_datetime(instance.offer_start_date, get_tz_from_request(self.request))
-                special_offer_end = Clock.convert_utc_timestamt_to_local_datetime(instance.offer_date_end,
-                                                                                    get_tz_from_request(self.request))
-                self.fields["offer_date_start"].initial = special_offer_start
-                self.fields["offer_date_end"].initial = special_offer_end
+                special_offer_start = Clock.convert_utc_timestamp_to_local_datetime(instance.offer_date_start, get_tz_from_request(self.request))
+                special_offer_end = Clock.convert_utc_timestamp_to_local_datetime(instance.offer_date_end,
+                                                                                  get_tz_from_request(self.request))
+                self.fields["offer_start_date"].initial = special_offer_start.date().strftime("%m/%d/%Y")
+                self.fields["offer_end_date"].initial = special_offer_end.date().strftime("%m/%d/%Y")
 
     class Meta:
         model = PriceMatrix
         fields = ['product', "is_new", "print_type", "base_price", "market_price", "sale_price", "is_rent",
-                  "initial_payable_rent_price", "custom_rent_plan_available", "currency", "offer_date_start", "offer_date_end",
-                  "special_price", "offer_price_p", "offer_price_v","is_rent"]
+                  "initial_payable_rent_price", "custom_rent_plan_available", "currency", "offer_start_date",
+                  "offer_end_date","special_price", "offer_price_p", "offer_price_v","is_rent"]
 
         labels = {
             "offer_price_p": "Offer Price(%)",
             "offer_price_v": "Offer Price(Value)",
             "is_rent": "Is Rent Available"
-        }
-
-        widgets = {
-            "offer_date_start": forms.DateInput(),
-            "offer_date_end": forms.DateInput()
         }
 
     def is_valid(self):
@@ -109,8 +120,8 @@ class AdminProductPriceForm(BRBaseModelForm):
         special_price = self.data.get("special_price")
         offer_price_p = self.data.get("offer_price_p")
         offer_price_v = self.data.get("offer_price_v")
-        offer_date_start = self.data.get("offer_date_start")
-        offer_date_end = self.data.get("offer_date_end")
+        offer_date_start = self.data.get("offer_start_date")
+        offer_date_end = self.data.get("offer_end_date")
         special_price = 0 if not special_price else 1
         special_price = bool(special_price)
         if special_price:
@@ -162,16 +173,18 @@ class AdminProductPriceForm(BRBaseModelForm):
             self.cleaned_data["offer_date_start"] = Clock.convert_datetime_to_utc_timestamp(offer_date_start)
             self.cleaned_data["offer_date_end"] = Clock.convert_datetime_to_utc_timestamp(offer_date_end)
 
+        self.cleaned_data["is_rent"] = is_rent
         if is_rent:
-            self.cleaned_data["is_rent"] = is_rent
             self.cleaned_data["initial_payable_rent_price"] = initial_payable_rent_price
             self.cleaned_data["custom_rent_plan_available"] = custom_rent_plan_available
 
         return True
 
     def save(self, commit=True):
-        if not self.instance:
+        if not self.pk:
             self.instance = PriceMatrix()
+        else:
+            self.instance = PriceMatrix.objects.get(pk=self.pk)
 
         self.instance.product_code = self.cleaned_data["product"].code
         self.instance.product_model = self.cleaned_data["product"].__class__.__name__
@@ -189,8 +202,8 @@ class AdminProductPriceForm(BRBaseModelForm):
             self.instance.offer_date_start = self.cleaned_data["offer_date_start"]
             self.instance.offer_date_end = self.cleaned_data["offer_date_end"]
         else:
-            self.instance.offer_price_p = None
-            self.instance.offer_price_v = None
+            self.instance.offer_price_p = 0
+            self.instance.offer_price_v = 0
             self.instance.offer_date_start = None
             self.instance.offer_date_end = None
 
@@ -200,7 +213,7 @@ class AdminProductPriceForm(BRBaseModelForm):
             self.instance.custom_rent_plan_available = self.cleaned_data["custom_rent_plan_available"]
         else:
             self.instance.initial_payable_rent_price = None
-            self.instance.custom_rent_plan_available = None
+            self.instance.custom_rent_plan_available = False
         self.instance.save()
         return self.instance
 

@@ -91,9 +91,12 @@ class Clock(object):
         return int(local_dt.strftime("%s"))
 
     @classmethod
-    def convert_utc_timestamt_to_local_datetime(cls, ts, tz=None):
-        local_dt = Clock.utc_to_local_datetime(datetime.fromtimestamp(int(ts)), tz)
-        return local_dt
+    def convert_utc_timestamp_to_local_datetime(cls, ts, tz=None):
+        try:
+            local_dt = Clock.utc_to_local_datetime(datetime.fromtimestamp(int(ts)), tz)
+            return local_dt
+        except:
+            return None
 
     @classmethod
     def get_all_timezones(cls, **kwargs):

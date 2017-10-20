@@ -117,18 +117,18 @@
             <table class="table">
                 <tr>
                     <td>
-                        <label>{{ form.offer_date_start.label }}:</label>
+                        <label>{{ form.offer_start_date.label }}:</label>
                     </td>
                     <td>
-                        {{ form.offer_date_start }}
+                        {{ form.offer_start_date }}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <label>{{ form.offer_date_end.label }}:</label>
+                        <label>{{ form.offer_end_date.label }}:</label>
                     </td>
                     <td>
-                        {{ form.offer_date_end }}
+                        {{ form.offer_end_date }}
                     </td>
                 </tr>
             </table>
@@ -186,10 +186,10 @@
                                 <label>{{ rent_plan_form.special_rate.label }}</label>
                             </td>
                             <td style="width: 120px;">
-                                <label>{{ rent_plan_form.start_time.label }}</label>
+                                <label>{{ rent_plan_form.start_date.label }}</label>
                             </td>
                             <td style="width: 120px;">
-                                <label>{{ rent_plan_form.end_time.label }}</label>
+                                <label>{{ rent_plan_form.end_date.label }}</label>
                             </td>
                         </tr>
                     </thead>
@@ -209,10 +209,10 @@
                             {{ rent_plan_form.special_rate }}
                         </td>
                         <td>
-                            {{ rent_plan_form.start_time }}
+                            {{ rent_plan_form.start_date }}
                         </td>
                         <td>
-                            {{ rent_plan_form.end_time }}
+                            {{ rent_plan_form.end_date }}
                         </td>
                     </tr>
                 </tbody>
@@ -226,14 +226,14 @@ $(document).ready(function () {
     $("#id_offer_date_start").datepicker();
     $("#id_offer_date_end").datepicker();
 
-    $("[id$=start_time]").datepicker();
-    $("[id$=end_time]").datepicker();
+    $("[id$=start_date]").datepicker();
+    $("[id$=end_date]").datepicker();
 
     function toggle_special_price(disabled) {
         $("#id_offer_price_p").prop("disabled", disabled);
         $("#id_offer_price_v").prop("disabled", disabled);
-        $("#id_offer_date_start").prop("disabled", disabled);
-        $("#id_offer_date_end").prop("disabled", disabled);
+        $("#id_offer_start_date").prop("disabled", disabled);
+        $("#id_offer_end_date").prop("disabled", disabled);
     }
 
     if($("#id_special_price").is(":checked")) {
@@ -262,13 +262,13 @@ $(document).ready(function () {
             $('[id$="is_special_offer"]').each(function (i) {
                 if(!$(this).is(":checked")) {
                     $(this).parent().parent().find('[id$="special_rate"]').prop("disabled", !disabled);
-                    $(this).parent().parent().find('[id$="start_time"]').prop("disabled", !disabled);
-                    $(this).parent().parent().find('[id$="end_time"]').prop("disabled", !disabled);
+                    $(this).parent().parent().find('[id$="start_date"]').prop("disabled", !disabled);
+                    $(this).parent().parent().find('[id$="end_date"]').prop("disabled", !disabled);
                 }
                 else {
                     $(this).parent().parent().find('[id$="special_rate"]').prop("disabled", disabled);
-                    $(this).parent().parent().find('[id$="start_time"]').prop("disabled", disabled);
-                    $(this).parent().parent().find('[id$="end_time"]').prop("disabled", disabled);
+                    $(this).parent().parent().find('[id$="start_date"]').prop("disabled", disabled);
+                    $(this).parent().parent().find('[id$="end_date"]').prop("disabled", disabled);
                 }
             });
 
@@ -283,8 +283,8 @@ $(document).ready(function () {
 
     function toggle_rent_offer(this_ref, disabled) {
         $(this_ref).parent().parent().find('[id$="special_rate"]').prop("disabled", disabled);
-        $(this_ref).parent().parent().find('[id$="start_time"]').prop("disabled", disabled);
-        $(this_ref).parent().parent().find('[id$="end_time"]').prop("disabled", disabled);
+        $(this_ref).parent().parent().find('[id$="start_date"]').prop("disabled", disabled);
+        $(this_ref).parent().parent().find('[id$="end_date"]').prop("disabled", disabled);
     }
 
     $('[id$="is_special_offer"]').click(function (e) {

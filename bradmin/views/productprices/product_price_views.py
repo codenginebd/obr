@@ -11,6 +11,8 @@ from bradmin.views.base_update_view import BRBaseUpdateView
 from ecommerce.models.rent_plan import RentPlan
 from ecommerce.models.sales.price_matrix import PriceMatrix
 from ecommerce.models.sales.rent_plan_relation import RentPlanRelation
+from engine.clock.Clock import Clock
+from generics.libs.utils import get_tz_from_request
 
 
 class AdminProductPriceListView(BaseListView):
@@ -68,6 +70,7 @@ class AdminProductPriceCreateView(BRBaseCreateView):
         AdminRentPlanRelationFormSet = formset_factory(AdminRentPlanRelationForm,
                                                        formset=AdminRentPlanFormSet, max_num=RentPlan.objects.count())
         initial = [{"rent_plan": rent_plan_instance.pk} for rent_plan_instance in RentPlan.objects.all()]
+        context["form"] = self.form_class(request=self.request)
         context["rent_plan_forms"] = AdminRentPlanRelationFormSet(initial=initial)
         return context
 
@@ -75,11 +78,9 @@ class AdminProductPriceCreateView(BRBaseCreateView):
         price_matrix_form = AdminProductPriceForm(request.POST)
         AdminRentPlanRelationFormSet = formset_factory(AdminRentPlanRelationForm,
                                                        formset=AdminRentPlanFormSet, max_num=RentPlan.objects.count())
-        rent_plan_form = AdminRentPlanRelationFormSet(request.POST)
-
         if price_matrix_form.is_valid():
             if price_matrix_form.cleaned_data.get("is_rent"):
-                rent_plan_formset = AdminRentPlanRelationFormSet(request.POST)
+                rent_plan_formset = AdminRentPlanRelationFormSet(request.POST, form_kwargs={'request': self.request})
                 if rent_plan_formset.is_valid():
                     price_matrix_instance = price_matrix_form.save()
                     for rent_plan_form in rent_plan_formset.forms:
@@ -89,6 +90,10 @@ class AdminProductPriceCreateView(BRBaseCreateView):
                 else:
                     messages.add_message(request=self.request, level=messages.INFO,
                                          message="Form Validation Failed")
+            else:
+                price_matrix_instance = price_matrix_form.save()
+                messages.add_message(request=self.request, level=messages.INFO,
+                                     message="Created Successfully")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -132,14 +137,52 @@ class AdminProductPriceUpdateView(BRBaseUpdateView):
             'form-INITIAL_FORMS': '%s' % form_count,
             'form-MAX_NUM_FORMS': '%s' % form_count,
         }
+
         for index, rent_plan_object in enumerate(rent_plan_objects):
             if rent_plan_relation_object_dict.get(rent_plan_object.pk):
-                data["form-%s-price_matrix" % index] = self.object,
-                data["form-%s-plan" % index] = rent_plan_object,
-                data["form-%s-rent_rate" % index] = rent_plan_relation_object_dict[rent_plan_object.pk].rent_rate,
-                data["form-%s-is_special_offer" % index] = rent_plan_relation_object_dict[rent_plan_object.pk].is_special_offer,
-                data["form-%s-special_rate" % index] = rent_plan_relation_object_dict[rent_plan_object.pk].special_rate,
-                data["form-%s-start_time" % index] = rent_plan_relation_object_dict[rent_plan_object.pk].start_time,
-                data["form-%s-end_time" % index] = rent_plan_relation_object_dict[rent_plan_object.pk].end_time
+                data["form-%s-price_matrix" % index] = self.object
+                data["form-%s-plan" % index] = rent_plan_object
+                data["form-%s-rent_rate" % index] = rent_plan_relation_object_dict[rent_plan_object.pk].rent_rate
+                data["form-%s-is_special_offer" % index] = rent_plan_relation_object_dict[rent_plan_object.pk].is_special_offer
+                data["form-%s-special_rate" % index] = rent_plan_relation_object_dict[rent_plan_object.pk].special_rate
+                start_time = rent_plan_relation_object_dict[rent_plan_object.pk].start_time
+                if start_time:
+                    start_time = Clock.convert_utc_timestamp_to_local_datetime(start_time,
+                                                                           get_tz_from_request(self.request))
+                else:
+                    start_time = ""
+                data["form-%s-start_date" % index] = start_time.date().strftime("%m/%d/%Y") if start_time else ""
+                end_time = rent_plan_relation_object_dict[rent_plan_object.pk].end_time
+                if end_time:
+                    end_time = Clock.convert_utc_timestamp_to_local_datetime(end_time,
+                                                                         get_tz_from_request(self.request))
+                else:
+                    end_time = ""
+                data["form-%s-end_date" % index] = end_time.date().strftime("%m/%d/%Y") if end_time else ""
         context["rent_plan_forms"] = AdminRentPlanRelationFormSet(initial=initial, data=data)
         return context
+
+    def post(self, request, *args, **kwargs):
+        price_matrix_form = AdminProductPriceForm(request.POST, pk=kwargs.get('pk'))
+        AdminRentPlanRelationFormSet = formset_factory(AdminRentPlanRelationForm,
+                                                       formset=AdminRentPlanFormSet, max_num=RentPlan.objects.count())
+        if price_matrix_form.is_valid():
+            if price_matrix_form.cleaned_data.get("is_rent"):
+                rent_plan_formset = AdminRentPlanRelationFormSet(request.POST, form_kwargs={'request': self.request})
+                if rent_plan_formset.is_valid():
+                    price_matrix_instance = price_matrix_form.save()
+                    for rent_plan_form in rent_plan_formset.forms:
+                        rent_plan_relation_instance = rent_plan_form.save(price_matrix_instance=price_matrix_instance)
+                    messages.add_message(request=self.request, level=messages.INFO,
+                                         message="Updated Successfully")
+                else:
+                    messages.add_message(request=self.request, level=messages.INFO,
+                                         message="Form Validation Failed")
+            else:
+                price_matrix_instance = price_matrix_form.save()
+                rent_plan_relation_instances = RentPlanRelation.objects.filter(price_matrix_id=price_matrix_instance.pk,
+                                                                               plan_id__in=RentPlan.objects.values_list('pk', flat=True))
+                rent_plan_relation_instances.delete()
+                messages.add_message(request=self.request, level=messages.INFO,
+                                     message="Updated Successfully")
+        return HttpResponseRedirect(self.get_success_url())

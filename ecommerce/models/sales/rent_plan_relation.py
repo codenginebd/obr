@@ -13,7 +13,7 @@ class RentPlanRelationManager(models.Manager):
         queryset = super(RentPlanRelationManager, self).get_queryset()
         now_datetime = datetime.now()
         now_ts = Clock.convert_datetime_to_utc_timestamp(now_datetime)
-        queryset = queryset.filter(Q(is_special_offer=False) | ( Q(is_special_offer=True) & Q(start_time__lte=now_ts) & Q(end_time__lte=now_ts)))
+        # queryset = queryset.filter(Q(is_special_offer=False) | ( Q(is_special_offer=True) & Q(start_time__lte=now_ts) & Q(end_time__lte=now_ts)))
         return queryset
 
 
