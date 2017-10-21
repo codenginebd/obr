@@ -198,64 +198,76 @@
             <hr/>
             <div id="id_promo_rewards">
                 {% for reward_form in reward_formset.forms %}
-                <table class="table">
-                    {{ reward_form.as_table }}
-                </table>
-                {% endfor %}
-                <table class="table">
-                    <tr>
-                        <td>
-                            Reward Products
-                        </td>
-                        <td>
-                            <div class="promo_reward_product">
-                                <div>
-                                    <table class="table">
-                                    {% for reward_product_form in reward_product_formset.forms %}
-                                        {% if forloop.first %}
+                <div class="promo-reward-entry">
+                    <table class="table">
+                        {{ reward_form.as_table }}
+                    </table>
+                    {% endfor %}
+                    <table class="table">
+                        <tr>
+                            <td>
+                                Reward Products
+                            </td>
+                            <td>
+                                <div class="promo_reward_product">
+                                    <div>
+                                        <table class="table">
+                                        {% for reward_product_form in reward_product_formset.forms %}
+                                            {% if forloop.first %}
+                                                <thead>
+                                                <tr>
+                                                    <th>
+                                                        {{ reward_product_form.product.label }}
+                                                    </th>
+                                                    <th>
+                                                        {{ reward_product_form.is_new.label }}
+                                                    </th>
+                                                    <th>
+                                                        {{ reward_product_form.print_type.label }}
+                                                    </th>
+                                                    <th>
+                                                        {{ reward_product_form.quantity.label }}
+                                                    </th>
+                                                    <th>
+
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                            {% endif %}
                                             <tr>
-                                                <th>
-                                                    {{ reward_product_form.product.label }}
-                                                </th>
-                                                <th>
-                                                    {{ reward_product_form.is_new.label }}
-                                                </th>
-                                                <th>
-                                                    {{ reward_product_form.print_type.label }}
-                                                </th>
-                                                <th>
-                                                    {{ reward_product_form.quantity.label }}
-                                                </th>
+                                                <td>
+                                                    {{ reward_product_form.product }}
+                                                </td>
+                                                <td>
+                                                    {{ reward_product_form.is_new }}
+                                                </td>
+                                                <td>
+                                                    {{ reward_product_form.print_type }}
+                                                </td>
+                                                <td>
+                                                    {{ reward_product_form.quantity }}
+                                                </td>
+                                                <td>
+
+                                                </td>
                                             </tr>
-                                        {% endif %}
-                                        <tr>
-                                            <td>
-                                                {{ reward_product_form.product }}
-                                            </td>
-                                            <td>
-                                                {{ reward_product_form.is_new }}
-                                            </td>
-                                            <td>
-                                                {{ reward_product_form.print_type }}
-                                            </td>
-                                            <td>
-                                                {{ reward_product_form.quantity }}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    <tr>
-                                        <td colspan="4">
-                                            <a href="#" style="margin-bottom: 20px;" id="id_add_promo_reward_product"
-                                                class="btn btn-default pull-right"><i class="glyphicon glyphicon-plus"></i> Add Product</a>
-                                        </td>
-                                    </tr>
-                                    </table>
-                                    <br/>
+                                        {% endfor %}
+                                        </table>
+                                        <table class="table">
+                                            <tr>
+                                                <td colspan="4">
+                                                    <a href="#" style="margin-bottom: 20px;" id="id_add_promo_reward_product"
+                                                        class="btn btn-primary pull-right add-promo-reward-product"><i class="glyphicon glyphicon-plus"></i> Add Reward Product</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <hr/>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                            </td>
+                        </tr>
+                    </table>
+                 </div>
             </div>
             <a href="#" id="id_add_promo_reward" class="btn btn-default pull-right"><i class="glyphicon glyphicon-plus"></i> Add Reward</a>
         </div>
@@ -270,6 +282,7 @@
 $(document).ready(function () {
     $("#id_start_date").datepicker();
     $("#id_end_date").datepicker();
+    $("[id$=credit_expiry_time]").datepicker();
     
     function add_promotion_rule() {
         var last_product_name = $("#id_promo_rules").find(".table").last().find("[name$=product]").prop("name");
@@ -301,15 +314,36 @@ $(document).ready(function () {
         return false;
     });
 
-    $("#id_add_promo_reward").click(function (e) {
-        var form_initial = $("#id_promo_reward_initial").html();
-        $("#id_promo_rewards").append(form_initial);
+
+    $(document).on("click", ".add-promo-reward-product", function (e) {
+
+        var first_row = $(this).parent().parent().parent().parent().parent().find(".table").first().find("tbody").find("tr").first().html();
+        var last_product_name = $(this).parent().parent().parent().parent().parent().find(".table").first().find("tbody").find("tr").last().find("[name$=product]").prop("name");
+        var last_index = last_product_name.replace("form-", "").replace("-product", "");
+        last_index = parseInt(last_index);
+        var regex = /form-0/g;
+        var new_row = "<tr>" + first_row;
+        new_row += "<td><span style='cursor: pointer;' class='glyphicon glyphicon-close pull-right remove-promotion-reward-product'>X</span></td>"
+        new_row += "</tr>";
+        $(this).parent().parent().parent().parent().parent().find(".table").first().find("tbody").append(new_row);
         return false;
     });
 
-    $("#id_add_promo_reward_product").click(function (e) {
-        var form_initial = $("#id_promo_reward_product_initial").html();
-        $(this).parent().find(".promo_reward_product").append(form_initial);
+    $(document).on("click", ".remove-promotion-reward-product", function (e) {
+        $(this).parent().parent().remove();
+        return false;
+    });
+
+    $("#id_add_promo_reward").click(function (e) {
+        var first_reward = $("#id_promo_rewards").find(".promo-reward-entry").first().html();
+        var last_reward_reward_name = $("#id_promo_rewards").find(".promo-reward-entry").first().find("[name$=reward_type]").prop("name");
+        var last_index = last_reward_reward_name.replace("form-", "").replace("-reward_type", "");
+        last_index = parseInt(last_index);
+
+        var new_row = '<div class="promo-reward-entry">';
+        new_row += first_reward;
+        new_row += "</div>";
+        $("#id_promo_rewards").append(new_row);
         return false;
     });
 
