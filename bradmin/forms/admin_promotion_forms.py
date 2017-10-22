@@ -18,10 +18,10 @@ class AdminPromotionForm(BRBaseModelForm):
     promotion_type = forms.ChoiceField(choices=promo_type_choices,
                                        widget=forms.Select(attrs={"class": "form-control"}))
 
-    by_cart_choice = forms.ChoiceField(choices=(("By Cart", "by_cart"), ("By Products", "by_products"), ("By Date", "by_date")),
+    by_cart_choice = forms.ChoiceField(choices=(("by_cart", "By Cart"), ("by_products", "By Products"), ("by_date", "By Date")),
                                        widget=forms.Select(attrs={"class": "form-control"}))
-    by_amount_choice = forms.ChoiceField(choices=("By Amount", "by_amount"), ("By Quantity", "by_quantity")),
-                                       widget=forms.Select(attrs={"class": "form-control"}))
+    by_amount_choice = forms.ChoiceField(choices=(("by_amount", "By Amount"), ("by_quantity", "By Quantity")),
+                                         widget=forms.Select(attrs={"class": "form-control"}))
 
     currency = CurrencyModelChoiceField(label="Select Currency", queryset=Currency.objects.all(),
                                         widget=forms.Select(attrs={"class": "form-control"}))
@@ -40,7 +40,9 @@ class AdminPromotionForm(BRBaseModelForm):
         self.fields["min_qty"].widget.attrs["class"] = "form-control"
         self.fields["min_amount"].widget.attrs["class"] = "form-control"
         self.fields["start_date"].widget.attrs["class"] = "form-control"
+        self.fields["start_date"].widget.attrs["readonly"] = "readonly"
         self.fields["end_date"].widget.attrs["class"] = "form-control"
+        self.fields["end_date"].widget.attrs["readonly"] = "readonly"
         self.fields["by_cart_choice"].empty_label = None
         self.fields["by_amount_choice"].empty_label = None
 
@@ -48,11 +50,6 @@ class AdminPromotionForm(BRBaseModelForm):
         model = Promotion
         fields = ['title', 'description', 'promotion_type', 'currency', 'by_cart_choice', 'by_amount_choice', 'min_qty',
                   'min_amount', 'start_date', 'end_date']
-        widgets = {
-
-        }
-        labels = {
-        }
         
     def is_valid(self):
         self.errors_messages = []
@@ -69,7 +66,7 @@ class AdminPromotionForm(BRBaseModelForm):
         end_date = self.data.get("end_date")
         mandatory_list = [ title, description, promotion_type, currency, by_cart_choice, by_amount_choice, start_date, end_date ]
         mandatory_list_name = [ "title", "description", "promotion_type", "currency", "by_cart_choice", "by_amount_choice", "start_date", "end_date" ]
-        if any([not field in mandatory_list]):
+        if any([not field for field in mandatory_list]):
             self.errors_messages += [" ".join([word.capitalize() for word in field.split("_")]) + " is required" for field in mandatory_list_name if not field ]
             return False
             

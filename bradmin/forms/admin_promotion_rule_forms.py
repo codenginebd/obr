@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django import forms
 from book_rental.models.sales.book import Book
 from bradmin.forms.base_model_form import BRBaseModelForm
@@ -7,11 +8,13 @@ from promotion.models.promotion_products_rule import PromotionProductRule
 
 class AdminPromotionRuleForm(BRBaseModelForm):
 
-    product = ProductModelChoiceField(label="Select Product",
+    rule_product = ProductModelChoiceField(label="Select Product",
                                       queryset=Book.objects.all(),
                                       widget=forms.Select(attrs={"class": "form-control"}))
 
-    print_type = forms.ChoiceField(label="Printing Type",
+    rule_is_new = forms.BooleanField(label="Is New")
+
+    rule_print_type = forms.ChoiceField(label="Printing Type",
                                    choices=(("ECO", "Economy"), ("COL", "Color"), ("ORI", "Original")),
                                    widget=forms.Select(attrs={"class": "form-control"}))
 
@@ -20,15 +23,15 @@ class AdminPromotionRuleForm(BRBaseModelForm):
 
     class Meta:
         model = PromotionProductRule
-        fields = ['product', 'is_new', 'print_type', 'min_qty', 'min_amount']
+        fields = ['rule_product', 'rule_is_new', 'rule_print_type', 'min_qty', 'min_amount']
         
     def is_valid(self):
         self.error_messages = []
         self.cleaned_data = {}
         prefix = self.prefix
-        product = self.data.get(prefix + "-product")
-        is_new = self.data.get(prefix + "-is_new")
-        print_type = self.data.get(prefix + "-print_type")
+        product = self.data.get(prefix + "-rule_product")
+        is_new = self.data.get(prefix + "-rule_is_new")
+        print_type = self.data.get(prefix + "-rule_print_type")
         min_qty = self.data.get(prefix + "-min_qty")
         min_amount = self.data.get(prefix + "-min_amount")
         by_cart_choice = self.data.get("by_cart_choice")
@@ -37,21 +40,21 @@ class AdminPromotionRuleForm(BRBaseModelForm):
             if by_amount_choice == "by_amount":
                 if not min_amount:
                     self.error_messages += [ "Product rule Min Amount is required" ]
-                    return false
+                    return False
                 try:
                     min_amount = Decimal(min_amount)
                 except:
                     self.error_messages += [ "A valid product rule Min Amount is required" ]
-                    return false
+                    return False
             if by_amount_choice == "by_qty":
                 if not min_qty:
                     self.error_messages += [ "Product rule Min Qty is required" ]
-                    return false
+                    return False
                 try:
                     min_qty = Decimal(min_qty)
                 except:
                     self.error_messages += [ "A valid product rule Min Qty is required" ]
-                    return false
+                    return False
         
         is_new = 1 if is_new else 0
         product = Book.objects.get(pk=int(product))

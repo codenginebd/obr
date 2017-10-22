@@ -33,83 +33,80 @@
         <div class="col-md-12">
             <h4 class="promo-heading">Basic Info</h4>
             <hr/>
-            <table class="table" style="padding-right: 20px;">
-                <tr>
-                    <th>
-                        Title:
-                    </th>
-                    <td>
-                        {{ form.title }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Description:
-                    </th>
-                    <td>
-                        {{ form.description }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-
-                    </th>
-                    <td>
-                        {{ form.by_cart_hidden }}
-                        <ul class="list-inline">
-                            <li>
-                                <label><input type="radio" name="promotion_by_cart" value="by_cart"/> By Cart</label>
-                            </li>
-                            <li>
-                                <label><input type="radio" name="promotion_by_cart" value="by_product"/> By Product</label>
-                            </li>
-                            <li>
-                                <label><input type="radio" name="promotion_by_cart" value="by_date"/> By Date</label>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-
-                    </th>
-                    <td>
-                        {{ form.by_amount_hidden }}
-                        <ul class="list-inline">
-                            <li>
-                                <label><input type="radio" name="promotion_by_amount" value="by_amount"/> By Amount</label>
-                            </li>
-                            <li>
-                                <label><input type="radio" name="promotion_by_amount" value="by_quantity"/> By Quantity</label>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Currency:
-                    </th>
-                    <td>
-                        {{ form.currency }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Start Date:
-                    </th>
-                    <td>
-                        {{ form.start_date }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        End Date:
-                    </th>
-                    <td>
-                        {{ form.end_date }}
-                    </td>
-                </tr>
-            </table>
+            <div class="row">
+                <div class="col-md-6">
+                    <table class="table" style="padding-right: 20px;">
+                        <tr>
+                            <th>
+                                {{ form.title.label }}:
+                            </th>
+                            <td>
+                                {{ form.title }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ form.description.label }}:
+                            </th>
+                            <td>
+                                {{ form.description }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <table class="table" style="padding-right: 20px;">
+                        <tr>
+                            <th>
+                                {{ form.promotion_type.label }}:
+                            </th>
+                            <td>
+                                {{ form.promotion_type }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ form.by_cart_choice.label }}:
+                            </th>
+                            <td>
+                                {{ form.by_cart_choice }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ form.by_amount_choice.label }}:
+                            </th>
+                            <td>
+                                {{ form.by_amount_choice }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Currency:
+                            </th>
+                            <td>
+                                {{ form.currency }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Start Date:
+                            </th>
+                            <td>
+                                {{ form.start_date }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                End Date:
+                            </th>
+                            <td>
+                                {{ form.end_date }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <label style="color: green;">Next Step: Add Promotion Rule</label>
@@ -140,13 +137,13 @@
                         <thead>
                             <tr>
                             <th>
-                                {{ rule_form.product.label }}
+                                {{ rule_form.rule_product.label }}
                             </th>
                             <th>
-                                {{ rule_form.is_new.label }}
+                                {{ rule_form.rule_is_new.label }}
                             </th>
                             <th>
-                                {{ rule_form.print_type.label }}
+                                {{ rule_form.rule_print_type.label }}
                             </th>
                             <th>
                                 {{ rule_form.min_qty.label }}
@@ -159,13 +156,13 @@
                     {% endif %}
                     <tr>
                         <td>
-                            {{ rule_form.product }}
+                            {{ rule_form.rule_product }}
                         </td>
                         <td>
-                            {{ rule_form.is_new }}
+                            {{ rule_form.rule_is_new }}
                         </td>
                         <td>
-                            {{ rule_form.print_type }}
+                            {{ rule_form.rule_print_type }}
                         </td>
                         <td>
                             {{ rule_form.min_qty }}
@@ -205,7 +202,48 @@
                 {% for reward_form in reward_formset.forms %}
                 <div class="promo-reward-entry">
                     <table class="table">
-                        {{ reward_form.as_table }}
+                        <tr>
+                            <td>
+                                {{ reward_form.reward_type.label }}
+                            </td>
+                            <td>
+                                {{ reward_form.reward_type }}
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ reward_form.gift_amount.label }}
+                            </td>
+                            <td>
+                                {{ reward_form.gift_amount }}
+                            </td>
+                            <td>
+                                {{ reward_form.credit_expiry_time.label }}
+                            </td>
+                            <td>
+                                {{ reward_form.credit_expiry_time }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ reward_form.gift_amount_in_percentage.label }}
+                            </td>
+                            <td>
+                                {{ reward_form.gift_amount_in_percentage }}
+                            </td>
+                            <td>
+                                {{ reward_form.store_credit.label }}
+                            </td>
+                            <td>
+                                {{ reward_form.store_credit }}
+                            </td>
+                        </tr>
                     </table>
                     {% endfor %}
                     <table class="table">
@@ -216,7 +254,7 @@
                             <td>
                                 <div class="promo_reward_product">
                                     <div>
-                                        <table class="table">
+                                        <table class="table reward-table">
                                         {% for reward_product_form in reward_product_formset.forms %}
                                             {% if forloop.first %}
                                                 <thead>
@@ -225,10 +263,10 @@
                                                         {{ reward_product_form.product.label }}
                                                     </th>
                                                     <th>
-                                                        {{ reward_product_form.is_new.label }}
+                                                        {{ reward_product_form.reward_is_new.label }}
                                                     </th>
                                                     <th>
-                                                        {{ reward_product_form.print_type.label }}
+                                                        {{ reward_product_form.reward_print_type.label }}
                                                     </th>
                                                     <th>
                                                         {{ reward_product_form.quantity.label }}
@@ -241,13 +279,13 @@
                                             {% endif %}
                                             <tr>
                                                 <td>
-                                                    {{ reward_product_form.product }}
+                                                    {{ reward_product_form.reward_product }}
                                                 </td>
                                                 <td>
-                                                    {{ reward_product_form.is_new }}
+                                                    {{ reward_product_form.reward_is_new }}
                                                 </td>
                                                 <td>
-                                                    {{ reward_product_form.print_type }}
+                                                    {{ reward_product_form.reward_print_type }}
                                                 </td>
                                                 <td>
                                                     {{ reward_product_form.quantity }}
@@ -289,22 +327,22 @@ $(document).ready(function () {
     $("#id_end_date").datepicker();
     $("[id$=credit_expiry_time]").datepicker();
 
-    function replace_attribute_promotion_rule(postfix, form_index, attr, prefix) {
+    function replace_attribute_promotion($object, postfix, form_index, attr, prefix) {
         var find_attr = "["+ attr +"$="+ postfix + "]";
         var new_attr = prefix + "-"+form_index+"-"+postfix;
-        $("#id_promo_rules").find(".table").last().find(find_attr).prop(attr, new_attr);
+        $object.find(find_attr).prop(attr, new_attr);
     }
     
     function reset_promotion_rule_attributes() {
-        $("#id_promo_rules").find(".table").last().find("[name$=product]").val("");
+        $("#id_promo_rules").find(".table").last().find("[name$=rule_product]").val("");
         $("#id_promo_rules").find(".table").last().val("");
         $("#id_promo_rules").find(".table").last().prop("checked", false);
         $("#id_promo_rules").find(".table").last().val("0.0");
     }
     
     function add_promotion_rule() {
-        var last_product_name = $("#id_promo_rules").find(".table").last().find("[name$=product]").prop("name");
-        var last_index = last_product_name.replace("form-", "").replace("-product", "")
+        var last_product_name = $("#id_promo_rules").find(".table").last().find("[name$=rule_product]").prop("name");
+        var last_index = last_product_name.replace("form-", "").replace("-rule_product", "")
         last_index = parseInt(last_index);
         var total_element = $("#id_promo_rules").find(".table").length;
         if( total_element >= 19) {
@@ -318,14 +356,17 @@ $(document).ready(function () {
         new_table += "</div>";
         $("#id_promo_rules").append(new_table);
         reset_promotion_rule_attributes();
-        replace_attribute_promotion_rule("product", new_index, "name", "form");
-        replace_attribute_promotion_rule("product", new_index, "id", "id_form");
-        replace_attribute_promotion_rule("is_new", new_index, "name", "form");
-        replace_attribute_promotion_rule("is_new", new_index, "id", "id_form");
-        replace_attribute_promotion_rule("min_qty", new_index, "name", "form");
-        replace_attribute_promotion_rule("min_qty", new_index, "id", "id_form");
-        replace_attribute_promotion_rule("min_amount", new_index, "name", "form");
-        replace_attribute_promotion_rule("min_amount", new_index, "id", "id_form");
+        var object_ref = $("#id_promo_rules").find(".table").last();
+        replace_attribute_promotion(object_ref, "rule_product", new_index, "name", "form");
+        replace_attribute_promotion(object_ref, "rule_product", new_index, "id", "id_form");
+        replace_attribute_promotion(object_ref, "rule_is_new", new_index, "name", "form");
+        replace_attribute_promotion(object_ref, "rule_is_new", new_index, "id", "id_form");
+        replace_attribute_promotion(object_ref, "rule_print_type", new_index, "name", "form");
+        replace_attribute_promotion(object_ref, "rule_print_type", new_index, "id", "id_form");
+        replace_attribute_promotion(object_ref, "min_qty", new_index, "name", "form");
+        replace_attribute_promotion(object_ref, "min_qty", new_index, "id", "id_form");
+        replace_attribute_promotion(object_ref, "min_amount", new_index, "name", "form");
+        replace_attribute_promotion(object_ref, "min_amount", new_index, "id", "id_form");
     }
     
     $("#id_add_promo_rule").click(function (e) {
@@ -341,15 +382,36 @@ $(document).ready(function () {
 
     $(document).on("click", ".add-promo-reward-product", function (e) {
 
-        var first_row = $(this).parent().parent().parent().parent().parent().find(".table").first().find("tbody").find("tr").first().html();
-        var last_product_name = $(this).parent().parent().parent().parent().parent().find(".table").first().find("tbody").find("tr").last().find("[name$=product]").prop("name");
-        var last_index = last_product_name.replace("form-", "").replace("-product", "");
+        var first_row = $(this).parent().parent().parent().parent().parent().find(".reward-table").first().find("tbody").find("tr").first().html();
+        var last_product_name = $(this).parent().parent().parent().parent().parent().find(".reward-table").first().find("tbody").find("tr").last().find("[name$=reward_product]").prop("name");
+        var last_row_product_name = $(this).parent().parent().parent().parent().parent().find(".reward-table").last().find("tbody").find("tr").last().find("[name$=reward_product]").prop("name");
+        var last_form_index = last_row_product_name.replace("form-", "").replace("-reward_type", "");
+        last_form_index = parseInt(last_form_index);
+        var form_prefix = "form-"+last_form_index + "-form";
+        alert(last_product_name);
+        alert(last_form_index);
+        var last_index = last_product_name.replace("form-"+last_form_index+"-", "");
+        alert(last_index);
+        last_index = last_index.replace("form-", "");
+        alert(last_index);
+        last_index = last_index.replace("-reward_product", "");
+        alert(last_index);
         last_index = parseInt(last_index);
-        var regex = /form-0/g;
+        alert(last_index);
+        var new_index = last_index + 1;
         var new_row = "<tr>" + first_row;
         new_row += "<td><span style='cursor: pointer;' class='glyphicon glyphicon-close pull-right remove-promotion-reward-product'>X</span></td>"
         new_row += "</tr>";
-        $(this).parent().parent().parent().parent().parent().find(".table").first().find("tbody").append(new_row);
+        $(this).parent().parent().parent().parent().parent().find(".reward-table").first().find("tbody").append(new_row);
+        var object_ref = $(this).parent().parent().parent().parent().parent().find(".reward-table").first().find("tbody").find("tr").last();
+        replace_attribute_promotion(object_ref, "reward_product", new_index, "name", form_prefix);
+        replace_attribute_promotion(object_ref, "reward_product", new_index, "id", "id_"+form_prefix);
+        replace_attribute_promotion(object_ref, "reward_is_new", new_index, "name", form_prefix);
+        replace_attribute_promotion(object_ref, "reward_is_new", new_index, "id", "id_"+form_prefix);
+        replace_attribute_promotion(object_ref, "reward_print_type", new_index, "name", form_prefix);
+        replace_attribute_promotion(object_ref, "reward_print_type", new_index, "id", "id_"+form_prefix);
+        replace_attribute_promotion(object_ref, "quantity", new_index, "name", form_prefix);
+        replace_attribute_promotion(object_ref, "quantity", new_index, "id", "id_"+form_prefix);
         return false;
     });
 
@@ -363,16 +425,44 @@ $(document).ready(function () {
         var last_reward_reward_name = $("#id_promo_rewards").find(".promo-reward-entry").first().find("[name$=reward_type]").prop("name");
         var last_index = last_reward_reward_name.replace("form-", "").replace("-reward_type", "");
         last_index = parseInt(last_index);
+        var new_index = last_index + 1;
 
-        var new_row = '<div class="promo-reward-entry">';
+        var new_row = '<div class="promo-reward-entry"><span class="glyphicon glyphicon-close pull-right remove-promo-reward-entry" style="cursor: pointer; padding-bottom: 10px;">X</span>';
         new_row += first_reward;
         new_row += "</div>";
         $("#id_promo_rewards").append(new_row);
+        var object_ref = $("#id_promo_rewards").find(".promo-reward-entry").last();
+        replace_attribute_promotion(object_ref, "reward_type", new_index, "name", "form");
+        replace_attribute_promotion(object_ref, "reward_type", new_index, "id", "id_form");
+        replace_attribute_promotion(object_ref, "gift_amount", new_index, "name", "form");
+        replace_attribute_promotion(object_ref, "gift_amount", new_index, "id", "id_form");
+        replace_attribute_promotion(object_ref, "credit_expiry_time", new_index, "name", "form");
+        replace_attribute_promotion(object_ref, "credit_expiry_time", new_index, "id", "id_form");
+        replace_attribute_promotion(object_ref, "gift_amount_in_percentage", new_index, "name", "form");
+        replace_attribute_promotion(object_ref, "gift_amount_in_percentage", new_index, "id", "id_form");
+        replace_attribute_promotion(object_ref, "store_credit", new_index, "name", "form");
+        replace_attribute_promotion(object_ref, "store_credit", new_index, "id", "id_form");
+
+        replace_attribute_promotion(object_ref, "reward_product", new_index, "name", "form");
+        replace_attribute_promotion(object_ref, "reward_product", new_index, "id", "id_form");
+        replace_attribute_promotion(object_ref, "reward_is_new", new_index, "name", "form");
+        replace_attribute_promotion(object_ref, "reward_is_new", new_index, "id", "id_form");
+        replace_attribute_promotion(object_ref, "reward_print_type", new_index, "name", "form");
+        replace_attribute_promotion(object_ref, "reward_print_type", new_index, "id", "id_form");
+        replace_attribute_promotion(object_ref, "quantity", new_index, "name", "form");
+        replace_attribute_promotion(object_ref, "quantity", new_index, "id", "id_form");
+        $("#id_promo_rewards").find(".promo-reward-entry").last().find(".remove-promotion-reward-product").parent().parent().remove();
+
         return false;
     });
 
     $(document).on("click", ".remove-item", function (e) {
         $(this).parent().parent().remove();
+    });
+    
+    $(document).on("click", ".remove-promo-reward-entry", function (e) {
+        $(this).parent().remove();
+        return false;
     });
 
     $("#id_basic_info_toggle").click(function (e) {
@@ -390,6 +480,61 @@ $(document).ready(function () {
     $("#id_promotion_rewards_toggle").click(function (e) {
         return true;
     });
+
+
+    function toggle_promotion_rule_product(value) {
+        if(value == "by_cart") {
+            $("[id$=rule_product]").prop("disabled", true);
+            $("[id$=rule_is_new]").prop("disabled", true);
+            $("[id$=rule_print_type]").prop("disabled", true);
+        }
+        else if(value == "by_products") {
+            $("[id$=rule_product]").prop("disabled", false);
+            $("[id$=rule_is_new]").prop("disabled", false);
+            $("[id$=rule_print_type]").prop("disabled", false);
+        }
+        else if(value == "by_date") {
+            $("[id$=rule_product]").prop("disabled", true);
+            $("[id$=rule_is_new]").prop("disabled", true);
+            $("[id$=rule_print_type]").prop("disabled", true);
+        }
+    }
+    
+    
+    $("#id_by_cart_choice").click(function (e) {
+        var value = $(this).val();
+        toggle_promotion_rule_product(value);
+    });
+
+    function initial_product_rule_products() {
+        var value = $("#id_by_cart_choice").val();
+        toggle_promotion_rule_product(value);
+    }
+
+    setTimeout(initial_product_rule_products, 1000);
+
+    function toggle_promotion_rule_by_amount(value) {
+        if(value == "by_amount") {
+            $("[id$=min_qty]").prop("disabled", true);
+            $("[id$=min_amount]").prop("disabled", false);
+        }
+        else if(value == "by_quantity") {
+            $("[id$=min_qty]").prop("disabled", false);
+            $("[id$=min_amount]").prop("disabled", true);
+        }
+    }
+
+    $("#id_by_amount_choice").click(function (e) {
+        var value = $(this).val();
+        toggle_promotion_rule_by_amount(value);
+    });
+
+    function initial_product_rule_min_amount() {
+        var value = $("#id_by_amount_choice").val();
+        toggle_promotion_rule_by_amount(value);
+    }
+
+    setTimeout(initial_product_rule_min_amount, 1000);
 
 });
 </script>

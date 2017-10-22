@@ -7,11 +7,13 @@ from promotion.models.promotion_reward_products import PromotionRewardProduct
 
 class AdminPromotionRewardProductForm(BRBaseModelForm):
 
-    product = ProductModelChoiceField(label="Select Product",
+    reward_product = ProductModelChoiceField(label="Select Product",
                                       queryset=Book.objects.all(),
                                       widget=forms.Select(attrs={"class": "form-control"}))
 
-    print_type = forms.ChoiceField(label="Printing Type",
+    reward_is_new = forms.BooleanField(label="Is New")
+
+    reward_print_type = forms.ChoiceField(label="Printing Type",
                                    choices=(("ECO", "Economy"), ("COL", "Color"), ("ORI", "Original")),
                                    widget=forms.Select(attrs={"class": "form-control"}))
 
@@ -20,7 +22,7 @@ class AdminPromotionRewardProductForm(BRBaseModelForm):
 
     class Meta:
         model = PromotionRewardProduct
-        fields = ['product', 'is_new', 'print_type', 'quantity']
+        fields = ['reward_product', 'reward_is_new', 'reward_print_type', 'quantity']
         widgets = {
 
         }
