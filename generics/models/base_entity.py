@@ -50,42 +50,82 @@ class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
     @classmethod
     def show_upload(cls):
         return False
+        
+    @classmethod
+    def show_upload_as(cls):
+        return "Upload"
 
     @classmethod
     def show_download(cls):
         return False
+        
+    @classmethod
+    def show_download_as(cls):
+        return "Download"
 
     @classmethod
     def show_download_template(cls):
         return False
+        
+    @classmethod
+    def show_download_template_as(cls):
+        return "Download Template"
 
     @classmethod
     def show_create(cls):
         return False
+        
+    @classmethod
+    def show_create_as(cls):
+        return "Create"
 
     @classmethod
     def show_edit(cls):
         return False
+        
+    @classmethod
+    def show_edit_as(cls):
+        return "Edit"
 
     @classmethod
     def show_delete(cls):
         return False
+        
+    @classmethod
+    def show_delete_as(cls):
+        return "Delete"
 
     @classmethod
     def show_activate(cls):
         return False
+        
+    @classmethod
+    def show_activate_as(cls):
+        return "Activate"
 
     @classmethod
     def show_deactivate(cls):
         return False
+        
+    @classmethod
+    def show_deactivate_as(cls):
+        return "Deactivate"
 
     @classmethod
     def show_approve(cls):
         return False
+        
+    @classmethod
+    def show_approve_as(cls):
+        return "Approve"
 
     @classmethod
     def show_reject(cls):
         return False
+        
+    @classmethod
+    def show_reject_as(cls):
+        return "Reject"
 
     def get_code_prefix(self):
         prefix = ''.join([c for c in self.__class__.__name__ if c.isupper()])
