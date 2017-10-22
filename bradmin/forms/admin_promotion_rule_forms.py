@@ -21,10 +21,44 @@ class AdminPromotionRuleForm(BRBaseModelForm):
     class Meta:
         model = PromotionProductRule
         fields = ['product', 'is_new', 'print_type', 'min_qty', 'min_amount']
-        widgets = {
-
-        }
-        labels = {
-        }
-
-
+        
+    def is_valid(self):
+        self.error_messages = []
+        self.cleaned_data = {}
+        prefix = self.prefix
+        product = self.data.get(prefix + "-product")
+        is_new = self.data.get(prefix + "-is_new")
+        print_type = self.data.get(prefix + "-print_type")
+        min_qty = self.data.get(prefix + "-min_qty")
+        min_amount = self.data.get(prefix + "-min_amount")
+        by_cart_choice = self.data.get("by_cart_choice")
+        by_amount_choice = self.data.get("by_amount_choice")
+        if by_cart_choice == "by_products":
+            if by_amount_choice == "by_amount":
+                if not min_amount:
+                    self.error_messages += [ "Product rule Min Amount is required" ]
+                    return false
+                try:
+                    min_amount = Decimal(min_amount)
+                except:
+                    self.error_messages += [ "A valid product rule Min Amount is required" ]
+                    return false
+            if by_amount_choice == "by_qty":
+                if not min_qty:
+                    self.error_messages += [ "Product rule Min Qty is required" ]
+                    return false
+                try:
+                    min_qty = Decimal(min_qty)
+                except:
+                    self.error_messages += [ "A valid product rule Min Qty is required" ]
+                    return false
+        
+        is_new = 1 if is_new else 0
+        product = Book.objects.get(pk=int(product))
+        self.cleaned_data = {}
+        self.cleaned_data["product"] = product
+        self.cleaned_data["is_new"] = is_new
+        self.cleaned_data["print_type"] = print_type
+        self.cleaned_data["min_qty"] = min_qty
+        self.cleaned_data["min_amount"] = min_amount
+        return True
