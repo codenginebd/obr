@@ -80,48 +80,48 @@
     {% if show_create %}
     <li style="margin-bottom: 6px;">
         <a href="#" class="create-btn btn btn-primary btn-md btn-action" data-url="{{ create_link }}">
-            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-plus"> Create</span></a>
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-plus"> {{ show_create_as }}</span></a>
     </li>
     {% endif %}
     {% if show_edit %}
     <li style="margin-bottom: 6px;">
         <a href="#" class="edit-btn btn btn-primary btn-md btn-action disabled">
-            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-edit"> Edit</span>
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-edit"> {{ show_edit_as }}</span>
         </a>
     </li>
     {% endif %}
     {% if show_delete %}
     <li style="margin-bottom: 6px;">
         <a href="#" data-url="{{ delete_link }}" class="delete-btn btn btn-primary btn-md btn-action disabled">
-            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-trash"> Delete</span>
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-trash"> {{ show_delete_as }}</span>
         </a>
     </li>
     {% endif %}
     {% if show_approve %}
     <li style="margin-bottom: 6px;">
         <a href="#" data-url="{{ approve_link }}" class="approve-btn btn btn-primary btn-md btn-action disabled">
-            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-ok-circle"> Approve</span>
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-ok-circle"> {{ show_approve_as }}</span>
         </a>
     </li>
     {% endif %}
     {% if show_reject %}
     <li style="margin-bottom: 6px;">
         <a href="#" data-url="{{ reject_link }}" class="reject-btn btn btn-primary btn-md btn-action disabled">
-            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-ban-circle"> Reject</span>
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-ban-circle"> {{ show_reject_as }}</span>
         </a>
     </li>
     {% endif %}
     {% if show_activate %}
     <li style="margin-bottom: 6px;">
         <a href="#" data-url="{{ activate_link }}" class="activate-btn btn btn-primary btn-md btn-action disabled">
-            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-ok-circle"> Activate</span>
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-ok-circle"> {{ show_activate_as }}</span>
         </a>
     </li>
     {% endif %}
     {% if show_deactivate %}
     <li style="margin-bottom: 6px;">
         <a href="#" data-url="{{ deactivate_link }}" class="deactivate-btn btn btn-danger btn-md btn-action disabled">
-            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-ban-circle"> Deactivate</span>
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-ban-circle"> {{ show_deactivate_as }}</span>
         </a>
     </li>
     {% endif %}
@@ -133,21 +133,21 @@
             <input type="file" name="uploaded_file" id="id_file_upload" style="display: none;"/>
         </form>
         <button class="btn-upload btn btn-danger btn-md btn-action">
-            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-upload"> Upload</span>
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-upload"> {{ show_upload_as }}</span>
         </button>
     </li>
     {% endif %}
     {% if show_download %}
     <li style="margin-bottom: 6px;">
         <a href="#" data-url="{{ download_link }}" class="btn-download btn btn-danger btn-md btn-action">
-            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-download"> Download</span></a>
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-download"> {{ show_download_as }}</span></a>
         </a>
     </li>
     {% endif %}
     {% if show_download_template %}
     <li style="margin-bottom: 6px;">
         <a href="#" data-url="{{ download_template_link }}" class="btn-upload-template btn btn-danger btn-md btn-action">
-            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-download"> Download Template</span>
+            <span style="color: #1C2331; float: left; " class="glyphicon glyphicon-download"> {{ show_download_template_as }}</span>
         </a>
     </li>
     {% endif %}
