@@ -27,6 +27,10 @@ class AdminPromotionForm(BRBaseModelForm):
                                         widget=forms.Select(attrs={"class": "form-control"}))
 
     def __init__(self, *args, **kwargs):
+        if kwargs.get('pk'):
+            self.pk = kwargs.pop('pk')
+        else:
+            self.pk = None
         super(AdminPromotionForm, self).__init__(*args, **kwargs)
         self.fields["title"].widget.attrs["class"] = "form-control"
         self.fields["description"].widget.attrs["class"] = "form-control"
@@ -69,7 +73,7 @@ class AdminPromotionForm(BRBaseModelForm):
             self.errors_messages += [" ".join([word.capitalize() for word in field.split("_")]) + " is required" for field in mandatory_list_name if not field ]
             return False
             
-        if by_amount_choice == "by_amount":
+        if by_cart_choice == "by_cart" and by_amount_choice == "by_amount":
             if not min_amount:
                 self.errors_messages += [ "Min Amount is required" ]
                 return False
@@ -80,7 +84,7 @@ class AdminPromotionForm(BRBaseModelForm):
                 self.errors_messages += [ "A Valid Min Amount is required" ]
                 return False
                 
-        elif by_amount_choice == "by_quantity":
+        elif by_cart_choice == "by_cart" and by_amount_choice == "by_quantity":
             if not min_qty:
                 self.errors_messages += [ "Min Qty is required" ]
                 return False
@@ -92,13 +96,13 @@ class AdminPromotionForm(BRBaseModelForm):
                 return False
                 
         try:
-            start_date = datetime.strptime(start_date, "%m/%d/%Y")
+            start_date = datetime.strptime(start_date, "%m/%d/%Y").date()
         except:
             self.errors_messages += [ "Start Date is invalid. Expected format: mm/dd/YYYY" ]
             return False
             
         try:
-            end_date = datetime.strptime(end_date, "%m/%d/%Y")
+            end_date = datetime.strptime(end_date, "%m/%d/%Y").date()
         except:
             self.errors_messages += [ "End Date is invalid. Expected format: mm/dd/YYYY" ]
             return False
@@ -125,6 +129,48 @@ class AdminPromotionForm(BRBaseModelForm):
         
         return True
             
+    def save(self, commit=True):
+        if self.pk:
+            promotion_instance = Promotion.objects.get(pk=self.pk)
+        else:
+            promotion_instance = Promotion()
+            
+        promotion_instance.title = self.cleaned_data["title"]
+        promotion_instance.description = self.cleaned_data["description"]
+        promotion_instance.promotion_type = self.cleaned_data["promotion_type"]
+        promotion_instance.currency_id = self.cleaned_data["currency"].pk
+        by_cart_choice = self.cleaned_data["by_cart_choice"]
+        by_amount_choice = self.cleaned_data["by_amount_choice"]
+        if by_cart_choice == "by_cart":
+            promotion_instance.by_cart = True
+            promotion_instance.by_products = False
+            promotion_instance.by_dates = False
+        elif by_cart_choice == "by_products":
+            promotion_instance.by_cart = False
+            promotion_instance.by_products = True
+            promotion_instance.by_dates = False
+        elif by_cart_choice == "by_date":
+            promotion_instance.by_cart = False
+            promotion_instance.by_products = False
+            promotion_instance.by_dates = True
+            
+        if by_amount_choice == "by_amount":
+            promotion_instance.by_amount = True
+            promotion_instance.by_quantity = False
+            
+        elif by_amount_choice == "by_quantity":
+            promotion_instance.by_amount = False
+            promotion_instance.by_quantity = True
+            
+        if self.cleaned_data.get("min_qty"):
+            promotion_instance.min_qty = self.cleaned_data["min_qty"]
+            
+        if self.cleaned_data.get("min_amount"):
+            promotion_instance.min_amount = self.cleaned_data["min_amount"]
         
+        promotion_instance.start_date = self.cleaned_data["start_date"]
+        promotion_instance.end_date = self.cleaned_data["end_date"]
+        promotion_instance.save()
+        return promotion_instance
 
 
