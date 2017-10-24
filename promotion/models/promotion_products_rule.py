@@ -9,3 +9,9 @@ class PromotionProductRule(BaseEntity):
     print_type = models.CharField(max_length=100, null=True)
     min_qty = models.IntegerField(default=0)
     min_amount = models.DecimalField(max_digits=20, decimal_places=2, default=0.0)
+    
+    def get_product_instance(self):
+        if self.product_model == "Book":
+            Book = load_model(app_label="book_rental", model_name="Book")
+            return Book.objects.get(pk=self.product_id)
+            
