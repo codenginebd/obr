@@ -8,6 +8,8 @@ from promotion.models.promotion_products_rule import PromotionProductRule
 
 class AdminPromotionRuleForm(BRBaseModelForm):
 
+    id = forms.IntegerField(required=False, widget=forms.HiddenInput())
+
     rule_product = ProductModelChoiceField(label="Select Product",
                                       queryset=Book.objects.all(),
                                       widget=forms.Select(attrs={"class": "form-control"}))
@@ -23,12 +25,13 @@ class AdminPromotionRuleForm(BRBaseModelForm):
 
     class Meta:
         model = PromotionProductRule
-        fields = ['rule_product', 'rule_is_new', 'rule_print_type', 'min_qty', 'min_amount']
+        fields = ['id', 'rule_product', 'rule_is_new', 'rule_print_type', 'min_qty', 'min_amount']
         
     def is_valid(self):
         self.error_messages = []
         self.cleaned_data = {}
         prefix = self.prefix
+        id = self.data.get(prefix + "-id")
         product = self.data.get(prefix + "-rule_product")
         is_new = self.data.get(prefix + "-rule_is_new")
         print_type = self.data.get(prefix + "-rule_print_type")
@@ -37,6 +40,9 @@ class AdminPromotionRuleForm(BRBaseModelForm):
         by_cart_choice = self.data.get("by_cart_choice")
         by_amount_choice = self.data.get("by_amount_choice")
         if by_cart_choice == "by_products":
+            if not product or is_new is None or not print_type:
+                self.error_messages += [ "Product information missing in the rule" ]
+                return False
             if by_amount_choice == "by_amount":
                 if not min_amount:
                     self.error_messages += [ "Product rule Min Amount is required" ]
@@ -55,13 +61,46 @@ class AdminPromotionRuleForm(BRBaseModelForm):
                 except:
                     self.error_messages += [ "A valid product rule Min Qty is required" ]
                     return False
+            if id:
+                try:
+                    id = int(id)
+                except:
+                    self.error_messages += [ "Invalid ID Given" ]
+                    return False
         
-        is_new = 1 if is_new else 0
-        product = Book.objects.get(pk=int(product))
-        self.cleaned_data = {}
-        self.cleaned_data["product"] = product
-        self.cleaned_data["is_new"] = is_new
-        self.cleaned_data["print_type"] = print_type
-        self.cleaned_data["min_qty"] = min_qty
-        self.cleaned_data["min_amount"] = min_amount
+            is_new = 1 if is_new else 0
+        
+            self.cleaned_data = {}
+            self.cleaned_data["id"] = id
+            if product:
+                product = Book.objects.get(pk=int(product))
+                self.cleaned_data["product"] = product
+            if is_new:
+                self.cleaned_data["is_new"] = is_new
+            if print_type:
+                self.cleaned_data["print_type"] = print_type
+            if min_qty:
+                self.cleaned_data["min_qty"] = min_qty
+            if min_amount:
+                self.cleaned_data["min_amount"] = min_amount
+            return True
         return True
+        
+    def save(self, **kwargs):
+        if self.cleaned_data.get("id"):
+            promotion_rule_instance = PromotionProductRule.objects.get(pk=id)
+        else:
+            promotion_rule_instance = PromotionProductRule()
+        if self.cleaned_data.get('product'):
+            promotion_rule_instance.product_id = self.cleaned_data['product'].pk
+            promotion_rule_instance.product_model = self.cleaned_data['product'].__class__.__name__
+            promotion_rule_instance.is_new = self.cleaned_data['is_new']
+            promotion_rule_instance.print_type = self.cleaned_data['print_type']
+            if self.cleaned_data.get('min_qty'):
+                promotion_rule_instance.min_qty = self.cleaned_data['min_qty']
+            if self.cleaned_data.get('min_amount'):
+                promotion_rule_instance.min_qty = self.cleaned_data['min_amount']
+            promotion_rule_instance.save()
+            return promotion_rule_instance
+        return None
+    

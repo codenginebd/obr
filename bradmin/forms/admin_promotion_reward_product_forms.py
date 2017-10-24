@@ -7,6 +7,8 @@ from promotion.models.promotion_reward_products import PromotionRewardProduct
 
 class AdminPromotionRewardProductForm(BRBaseModelForm):
 
+    id = forms.IntegerField(widget=forms.HiddenInput())
+
     reward_product = ProductModelChoiceField(label="Select Product",
                                       queryset=Book.objects.all(),
                                       widget=forms.Select(attrs={"class": "form-control"}))
@@ -22,11 +24,7 @@ class AdminPromotionRewardProductForm(BRBaseModelForm):
 
     class Meta:
         model = PromotionRewardProduct
-        fields = ['reward_product', 'reward_is_new', 'reward_print_type', 'quantity']
-        widgets = {
-
-        }
-        labels = {
-        }
-
+        fields = ['id', 'reward_product', 'reward_is_new', 'reward_print_type', 'quantity']
+        
+    
 
