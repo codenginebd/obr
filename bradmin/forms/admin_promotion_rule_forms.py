@@ -94,5 +94,13 @@ class AdminPromotionRuleForm(BRBaseModelForm):
         if self.cleaned_data.get('product'):
             promotion_rule_instance.product_id = self.cleaned_data['product'].pk
             promotion_rule_instance.product_model = self.cleaned_data['product'].__class__.__name__
+            promotion_rule_instance.is_new = self.cleaned_data['is_new']
+            promotion_rule_instance.print_type = self.cleaned_data['print_type']
+            if self.cleaned_data.get('min_qty'):
+                promotion_rule_instance.min_qty = self.cleaned_data['min_qty']
+            if self.cleaned_data.get('min_amount'):
+                promotion_rule_instance.min_qty = self.cleaned_data['min_amount']
             promotion_rule_instance.save()
+            return promotion_rule_instance
+        return None
     
