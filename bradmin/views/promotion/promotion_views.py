@@ -72,6 +72,48 @@ class AdminPromotionCreateView(BRBaseCreateView):
 
         return context
         
+    def post(self, request, *args, **kwargs):
+        
+        AdminPromotionRuleFormSet = formset_factory(AdminPromotionRuleForm,max_num=20)
+        AdminPromotionRewardFormSet = formset_factory(AdminPromotionRewardForm, max_num=20)
+        AdminPromotionRewardProductFormSet = formset_factory(AdminPromotionRewardProductForm, max_num=20)
+        
+        promotion_form = AdminPromotionForm(request.POST)
+        promotion_rule_formset = AdminPromotionRuleFormSet(request.POST, prefix="rule-form", form_kwargs={'request': self.request})
+        promotion_reward_formset = AdminPromotionRewardFormSet(request.POST, prefix="reward-form", form_kwargs={'request': self.request})
+        promotion_reward_product_formset_dict = { i: AdminPromotionRewardProductFormSet(request.POST, prefix="reward-product-form-%s" % i, form_kwargs={'request': self.request, 'reward_form_prefix': 'reward-form'}) for i in range(0, len(promotion_reward_formset.forms))}
+        
+        if promotion_form.is_valid() and promotion_rule_formset.is_valid() and promotion_reward_formset.is_valid():
+            if all([promotion_reward_product_formset.is_valid() for index, promotion_reward_product_formset in promotion_reward_product_formset_dict.items()]):
+                
+                promotion_instance = promotion_form.save()
+                for product_rule_form in promotion_rule_formset.forms:
+                    promotion_product_rule_instance = product_rule_form.save()
+                    promotion_instance.product_rules.add(promotion_product_rule_instance)
+                
+                promotion_reward_instances = []
+                for index, promotion_reward_form in enumerate(promotion_reward_formset.forms):
+                    promotion_reward_instance = promotion_reward_form.save()
+                    promotion_reward_instances += [promotion_reward_instance]
+                    
+                    promotion_reward_product_instances = []
+                    promotion_reward_product_formset = promotion_reward_product_formset_dict.get(index)
+                    if promotion_reward_product_formset:
+                        for promotion_reward_product_form in promotion_reward_product_formset.forms:
+                            promotion_reward_product_instance = promotion_reward_product_form.save()
+                            promotion_reward_product_instances += [promotion_reward_product_instance]
+                    promotion_reward_instance.products.add(*promotion_reward_product_instances)
+                promotion_instance.rewards.add(*promotion_reward_instances)
+                messages.add_message(request=self.request, level=messages.INFO,
+                                         message="Created Successfully")
+            else:
+                messages.add_message(request=self.request, level=messages.INFO,
+                                         message="Form Validation Failed")
+        else:
+            messages.add_message(request=self.request, level=messages.INFO,
+                                         message="Form Validation Failed")
+        return HttpResponseRedirect(self.get_success_url())
+        
         
 class AdminPromotionUpdateView(BRBaseUpdateView):
     form_class =AdminPromotionForm
