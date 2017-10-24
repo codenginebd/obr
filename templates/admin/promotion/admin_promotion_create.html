@@ -602,6 +602,15 @@ $(document).ready(function () {
         $object.closest(".promo-reward-entry").find("[name$=-credit_expiry_time]").prop("disabled", true);
         $object.closest(".promo-reward-entry").find("[name$=-gift_amount_in_percentage]").prop("disabled", true);
         $object.closest(".promo-reward-entry").find("[name$=-store_credit]").prop("disabled", true);
+
+        $object.closest(".promo-reward-entry").find("[name$=-reward_product]").prop("disabled", true);
+        $object.closest(".promo-reward-entry").find("[name$=-reward_is_new]").prop("disabled", true);
+        $object.closest(".promo-reward-entry").find("[name$=-reward_print_type]").prop("disabled", true);
+        $object.closest(".promo-reward-entry").find("[name$=-quantity]").prop("disabled", true);
+
+        $object.closest(".promo-reward-entry").find(".add-promo-reward-product").prop("disabled", true);
+        $object.closest(".promo-reward-entry").find(".add-promo-reward-product").hide();
+
         var reward_type = $object.val();
         if(reward_type == "0") {
             $object.closest(".promo-reward-entry").find("[name$=-gift_amount]").prop("disabled", false);
@@ -611,13 +620,21 @@ $(document).ready(function () {
 
         }
         else if(reward_type == "2") {
+            $object.closest(".promo-reward-entry").find("[name$=-reward_product]").prop("disabled", false);
+            $object.closest(".promo-reward-entry").find("[name$=-reward_is_new]").prop("disabled", false);
+            $object.closest(".promo-reward-entry").find("[name$=-reward_print_type]").prop("disabled", false);
+            $object.closest(".promo-reward-entry").find("[name$=-quantity]").prop("disabled", false);
 
+            $object.closest(".promo-reward-entry").find(".add-promo-reward-product").prop("disabled", false);
+            $object.closest(".promo-reward-entry").find(".add-promo-reward-product").show();
         }
         else if(reward_type == "3") {
 
         }
         else if(reward_type == "4") {
-
+            $object.closest(".promo-reward-entry").find("[name$=-store_credit]").prop("checked", true);
+            $object.closest(".promo-reward-entry").find("[name$=-gift_amount]").prop("disabled", false);
+            $object.closest(".promo-reward-entry").find("[name$=-credit_expiry_time]").prop("disabled", false);
         }
     }
 
