@@ -68,7 +68,7 @@ class AdminPromotionCreateView(BRBaseCreateView):
 
         context["rule_formset"] = AdminPromotionRuleFormSet(prefix="rule-form")
         context["reward_formset"] = AdminPromotionRewardFormSet(prefix="reward-form")
-        context["reward_product_formset"] = AdminPromotionRewardProductFormSet(prefix="reward-product-form-0")
+        context["reward_product_formset_dict"] = {0: AdminPromotionRewardProductFormSet(prefix="reward-product-form-0")}
 
         return context
         
