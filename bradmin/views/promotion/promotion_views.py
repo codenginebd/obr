@@ -89,7 +89,8 @@ class AdminPromotionCreateView(BRBaseCreateView):
                 promotion_instance = promotion_form.save()
                 for product_rule_form in promotion_rule_formset.forms:
                     promotion_product_rule_instance = product_rule_form.save()
-                    promotion_instance.product_rules.add(promotion_product_rule_instance)
+                    if promotion_product_rule_instance:
+                        promotion_instance.product_rules.add(promotion_product_rule_instance)
                 
                 promotion_reward_instances = []
                 for index, promotion_reward_form in enumerate(promotion_reward_formset.forms):
@@ -216,7 +217,8 @@ class AdminPromotionUpdateView(BRBaseUpdateView):
                 promotion_instance = promotion_form.save()
                 for product_rule_form in promotion_rule_formset.forms:
                     promotion_product_rule_instance = product_rule_form.save()
-                    promotion_instance.product_rules.add(promotion_product_rule_instance)
+                    if promotion_product_rule_instance:
+                        promotion_instance.product_rules.add(promotion_product_rule_instance)
                 
                 promotion_reward_instances = []
                 for index, promotion_reward_form in enumerate(promotion_reward_formset.forms):
