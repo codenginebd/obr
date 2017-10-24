@@ -1,12 +1,14 @@
 from django.forms.formsets import formset_factory
+from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse
-
+from django.contrib import messages
 from bradmin.forms.admin_promotion_forms import AdminPromotionForm
 from bradmin.forms.admin_promotion_reward_forms import AdminPromotionRewardForm
 from bradmin.forms.admin_promotion_reward_product_forms import AdminPromotionRewardProductForm
 from bradmin.forms.admin_promotion_rule_forms import AdminPromotionRuleForm
 from bradmin.views.base_create_view import BRBaseCreateView
 from bradmin.views.base_list_view import BaseListView
+from bradmin.views.base_update_view import BRBaseUpdateView
 from promotion.models.promotion import Promotion
 
 
@@ -245,13 +247,7 @@ class AdminPromotionUpdateView(BRBaseUpdateView):
             messages.add_message(request=self.request, level=messages.INFO,
                                          message="Updated Successfully")
             return HttpResponseRedirect(self.get_success_url())
-           else:
-            messages.add_message(request=self.request, level=messages.INFO,
-                                         message="Form Validation Failed")
-            return HttpResponseRedirect(self.get_success_url())
         else:
             messages.add_message(request=self.request, level=messages.INFO,
                                          message="Form Validation Failed")
             return HttpResponseRedirect(self.get_success_url())
-        return HttpResponseRedirect(self.get_success_url())
-        

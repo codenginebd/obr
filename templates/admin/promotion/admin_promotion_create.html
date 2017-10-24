@@ -1,5 +1,6 @@
 {% extends "admin/create_master.html" %}
 {% load staticfiles %}
+{% load admin_tags %}
 {% block form_content %}
     <style type="text/css">
     .form-container {
@@ -52,6 +53,22 @@
                                 {{ form.description }}
                             </td>
                         </tr>
+                        <tr>
+                            <th>
+                                {{ form.start_date.label }}:
+                            </th>
+                            <td>
+                                {{ form.start_date }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ form.end_date.label }}:
+                            </th>
+                            <td>
+                                {{ form.end_date }}
+                            </td>
+                        </tr>
                     </table>
                 </div>
                 <div class="col-md-6">
@@ -90,18 +107,18 @@
                         </tr>
                         <tr>
                             <th>
-                                Start Date:
+                                {{ form.min_qty.label }}:
                             </th>
                             <td>
-                                {{ form.start_date }}
+                                {{ form.min_qty }}
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                End Date:
+                                {{ form.min_amount.label }}:
                             </th>
                             <td>
-                                {{ form.end_date }}
+                                {{ form.min_amount }}
                             </td>
                         </tr>
                     </table>
@@ -154,7 +171,7 @@
                         </tr>
                         </thead>
                     {% endif %}
-                    <tr>
+                    <tr data-prefix="{{ rule_form.prefix }}">
                         <td>
                             {{ rule_form.rule_product }}
                         </td>
@@ -201,7 +218,7 @@
             <div id="id_promo_rewards">
                 {% for reward_form in reward_formset.forms %}
                 <div class="promo-reward-entry">
-                    <table class="table">
+                    <table class="table" data-prefix="{{ reward_form.prefix }}">
                         <tr>
                             <td>
                                 {{ reward_form.reward_type.label }}
@@ -245,7 +262,6 @@
                             </td>
                         </tr>
                     </table>
-                    {% endfor %}
                     <table class="table">
                         <tr>
                             <td>
@@ -254,7 +270,9 @@
                             <td>
                                 <div class="promo_reward_product">
                                     <div>
-                                        <table class="table reward-table">
+                                        <table class="table reward-table" data-reward-prefix-index="{{ forloop.counter0 }}">
+                                        {% with index=forloop.counter0 %}
+                                        {% with reward_product_formset=reward_product_formset_dict|get_item_from_dict_by_key:index %}
                                         {% for reward_product_form in reward_product_formset.forms %}
                                             {% if forloop.first %}
                                                 <thead>
@@ -277,7 +295,7 @@
                                                 </tr>
                                                 </thead>
                                             {% endif %}
-                                            <tr>
+                                            <tr data-prefix="{{ reward_product_form.prefix }}">
                                                 <td>
                                                     {{ reward_product_form.reward_product }}
                                                 </td>
@@ -295,6 +313,8 @@
                                                 </td>
                                             </tr>
                                         {% endfor %}
+                                        {% endwith %}
+                                        {% endwith %}
                                         </table>
                                         <table class="table">
                                             <tr>
@@ -310,6 +330,7 @@
                             </td>
                         </tr>
                     </table>
+                    {% endfor %}
                  </div>
             </div>
             <a href="#" id="id_add_promo_reward" class="btn btn-default pull-right"><i class="glyphicon glyphicon-plus"></i> Add Reward</a>
@@ -329,20 +350,22 @@ $(document).ready(function () {
 
     function replace_attribute_promotion($object, postfix, form_index, attr, prefix) {
         var find_attr = "["+ attr +"$="+ postfix + "]";
-        var new_attr = prefix + "-"+form_index+"-"+postfix;
+        var new_attr = prefix + "-"+form_index+ postfix;
         $object.find(find_attr).prop(attr, new_attr);
     }
     
     function reset_promotion_rule_attributes() {
-        $("#id_promo_rules").find(".table").last().find("[name$=rule_product]").val("");
-        $("#id_promo_rules").find(".table").last().val("");
-        $("#id_promo_rules").find(".table").last().prop("checked", false);
-        $("#id_promo_rules").find(".table").last().val("0.0");
+        $("#id_promo_rules").find(".table").last().find("[name$=-rule_product]").val("");
+        $("#id_promo_rules").find(".table").last().find("[name$=-min_qty]").val("");
+        $("#id_promo_rules").find(".table").last().find("[name$=-min_amount]").val("");
+        $("#id_promo_rules").find(".table").last().find("[name$=-rule_is_new]").prop("checked", false);
     }
     
     function add_promotion_rule() {
-        var last_product_name = $("#id_promo_rules").find(".table").last().find("[name$=rule_product]").prop("name");
-        var last_index = last_product_name.replace("form-", "").replace("-rule_product", "")
+        var last_product_name = $("#id_promo_rules").find(".table").last().find("[name$=-rule_product]").prop("name");
+        var prefix = "rule-form";
+        var id_prefix = "id_rule-form";
+        var last_index = last_product_name.replace("rule-form-", "").replace("-rule_product", "");
         last_index = parseInt(last_index);
         var total_element = $("#id_promo_rules").find(".table").length;
         if( total_element >= 19) {
@@ -357,16 +380,16 @@ $(document).ready(function () {
         $("#id_promo_rules").append(new_table);
         reset_promotion_rule_attributes();
         var object_ref = $("#id_promo_rules").find(".table").last();
-        replace_attribute_promotion(object_ref, "rule_product", new_index, "name", "form");
-        replace_attribute_promotion(object_ref, "rule_product", new_index, "id", "id_form");
-        replace_attribute_promotion(object_ref, "rule_is_new", new_index, "name", "form");
-        replace_attribute_promotion(object_ref, "rule_is_new", new_index, "id", "id_form");
-        replace_attribute_promotion(object_ref, "rule_print_type", new_index, "name", "form");
-        replace_attribute_promotion(object_ref, "rule_print_type", new_index, "id", "id_form");
-        replace_attribute_promotion(object_ref, "min_qty", new_index, "name", "form");
-        replace_attribute_promotion(object_ref, "min_qty", new_index, "id", "id_form");
-        replace_attribute_promotion(object_ref, "min_amount", new_index, "name", "form");
-        replace_attribute_promotion(object_ref, "min_amount", new_index, "id", "id_form");
+        replace_attribute_promotion(object_ref, "-rule_product", new_index, "name", prefix);
+        replace_attribute_promotion(object_ref, "-rule_product", new_index, "id", id_prefix);
+        replace_attribute_promotion(object_ref, "-rule_is_new", new_index, "name", prefix);
+        replace_attribute_promotion(object_ref, "-rule_is_new", new_index, "id", id_prefix);
+        replace_attribute_promotion(object_ref, "-rule_print_type", new_index, "name", prefix);
+        replace_attribute_promotion(object_ref, "-rule_print_type", new_index, "id", id_prefix);
+        replace_attribute_promotion(object_ref, "-min_qty", new_index, "name", prefix);
+        replace_attribute_promotion(object_ref, "-min_qty", new_index, "id", id_prefix);
+        replace_attribute_promotion(object_ref, "-min_amount", new_index, "name", prefix);
+        replace_attribute_promotion(object_ref, "-min_amount", new_index, "id", id_prefix);
     }
     
     $("#id_add_promo_rule").click(function (e) {
@@ -384,34 +407,28 @@ $(document).ready(function () {
 
         var first_row = $(this).parent().parent().parent().parent().parent().find(".reward-table").first().find("tbody").find("tr").first().html();
         var last_product_name = $(this).parent().parent().parent().parent().parent().find(".reward-table").first().find("tbody").find("tr").last().find("[name$=reward_product]").prop("name");
+        var reward_prefix = "reward-product-form";
+        var reward_prefix_index = $(this).parent().parent().parent().parent().parent().find(".reward-table").first().data("reward-prefix-index");
         var last_row_product_name = $(this).parent().parent().parent().parent().parent().find(".reward-table").last().find("tbody").find("tr").last().find("[name$=reward_product]").prop("name");
-        var last_form_index = last_row_product_name.replace("form-", "").replace("-reward_type", "");
+        var last_form_index = last_row_product_name.replace(reward_prefix+"-"+reward_prefix_index+"-", "").replace("-reward_type", "");
         last_form_index = parseInt(last_form_index);
-        var form_prefix = "form-"+last_form_index + "-form";
-        alert(last_product_name);
         alert(last_form_index);
-        var last_index = last_product_name.replace("form-"+last_form_index+"-", "");
-        alert(last_index);
-        last_index = last_index.replace("form-", "");
-        alert(last_index);
-        last_index = last_index.replace("-reward_product", "");
-        alert(last_index);
-        last_index = parseInt(last_index);
-        alert(last_index);
-        var new_index = last_index + 1;
-        var new_row = "<tr>" + first_row;
+        var new_index = last_form_index + 1;
+        var new_row = "<tr data-reward-prefix-index='"+ reward_prefix_index +"'>" + first_row;
         new_row += "<td><span style='cursor: pointer;' class='glyphicon glyphicon-close pull-right remove-promotion-reward-product'>X</span></td>"
         new_row += "</tr>";
+        var name_prefix = reward_prefix + "-" + reward_prefix_index;
+        var id_prefix = "id_"+reward_prefix + "-" + reward_prefix_index;
         $(this).parent().parent().parent().parent().parent().find(".reward-table").first().find("tbody").append(new_row);
         var object_ref = $(this).parent().parent().parent().parent().parent().find(".reward-table").first().find("tbody").find("tr").last();
-        replace_attribute_promotion(object_ref, "reward_product", new_index, "name", form_prefix);
-        replace_attribute_promotion(object_ref, "reward_product", new_index, "id", "id_"+form_prefix);
-        replace_attribute_promotion(object_ref, "reward_is_new", new_index, "name", form_prefix);
-        replace_attribute_promotion(object_ref, "reward_is_new", new_index, "id", "id_"+form_prefix);
-        replace_attribute_promotion(object_ref, "reward_print_type", new_index, "name", form_prefix);
-        replace_attribute_promotion(object_ref, "reward_print_type", new_index, "id", "id_"+form_prefix);
-        replace_attribute_promotion(object_ref, "quantity", new_index, "name", form_prefix);
-        replace_attribute_promotion(object_ref, "quantity", new_index, "id", "id_"+form_prefix);
+        replace_attribute_promotion(object_ref, "-reward_product", new_index, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-reward_product", new_index, "id", id_prefix);
+        replace_attribute_promotion(object_ref, "-reward_is_new", new_index, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-reward_is_new", new_index, "id", id_prefix);
+        replace_attribute_promotion(object_ref, "-reward_print_type", new_index, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-reward_print_type", new_index, id_prefix);
+        replace_attribute_promotion(object_ref, "-quantity", new_index, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-quantity", new_index, "id", id_prefix);
         return false;
     });
 
@@ -422,35 +439,43 @@ $(document).ready(function () {
 
     $("#id_add_promo_reward").click(function (e) {
         var first_reward = $("#id_promo_rewards").find(".promo-reward-entry").first().html();
-        var last_reward_reward_name = $("#id_promo_rewards").find(".promo-reward-entry").first().find("[name$=reward_type]").prop("name");
-        var last_index = last_reward_reward_name.replace("form-", "").replace("-reward_type", "");
+        var last_reward_reward_name = $("#id_promo_rewards").find(".promo-reward-entry").last().find("[name$=reward_type]").prop("name");
+        var reward_form_prefix = "reward-form";
+        var last_index = last_reward_reward_name.replace(reward_form_prefix+"-", "").replace("-reward_type", "");
         last_index = parseInt(last_index);
         var new_index = last_index + 1;
+        var name_prefix = reward_form_prefix;
+        var id_prefix = "id_"+name_prefix;
 
         var new_row = '<div class="promo-reward-entry"><span class="glyphicon glyphicon-close pull-right remove-promo-reward-entry" style="cursor: pointer; padding-bottom: 10px;">X</span>';
         new_row += first_reward;
         new_row += "</div>";
         $("#id_promo_rewards").append(new_row);
         var object_ref = $("#id_promo_rewards").find(".promo-reward-entry").last();
-        replace_attribute_promotion(object_ref, "reward_type", new_index, "name", "form");
-        replace_attribute_promotion(object_ref, "reward_type", new_index, "id", "id_form");
-        replace_attribute_promotion(object_ref, "gift_amount", new_index, "name", "form");
-        replace_attribute_promotion(object_ref, "gift_amount", new_index, "id", "id_form");
-        replace_attribute_promotion(object_ref, "credit_expiry_time", new_index, "name", "form");
-        replace_attribute_promotion(object_ref, "credit_expiry_time", new_index, "id", "id_form");
-        replace_attribute_promotion(object_ref, "gift_amount_in_percentage", new_index, "name", "form");
-        replace_attribute_promotion(object_ref, "gift_amount_in_percentage", new_index, "id", "id_form");
-        replace_attribute_promotion(object_ref, "store_credit", new_index, "name", "form");
-        replace_attribute_promotion(object_ref, "store_credit", new_index, "id", "id_form");
+        replace_attribute_promotion(object_ref, "-reward_type", new_index, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-reward_type", new_index, "id", id_prefix);
+        replace_attribute_promotion(object_ref, "-gift_amount", new_index, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-gift_amount", new_index, "id", id_prefix);
+        replace_attribute_promotion(object_ref, "-credit_expiry_time", new_index, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-credit_expiry_time", new_index, "id", id_prefix);
+        replace_attribute_promotion(object_ref, "-gift_amount_in_percentage", new_index, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-gift_amount_in_percentage", new_index, "id", id_prefix);
+        replace_attribute_promotion(object_ref, "-store_credit", new_index, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-store_credit", new_index, "id", id_prefix);
 
-        replace_attribute_promotion(object_ref, "reward_product", new_index, "name", "form");
-        replace_attribute_promotion(object_ref, "reward_product", new_index, "id", "id_form");
-        replace_attribute_promotion(object_ref, "reward_is_new", new_index, "name", "form");
-        replace_attribute_promotion(object_ref, "reward_is_new", new_index, "id", "id_form");
-        replace_attribute_promotion(object_ref, "reward_print_type", new_index, "name", "form");
-        replace_attribute_promotion(object_ref, "reward_print_type", new_index, "id", "id_form");
-        replace_attribute_promotion(object_ref, "quantity", new_index, "name", "form");
-        replace_attribute_promotion(object_ref, "quantity", new_index, "id", "id_form");
+        $("#id_promo_rewards").find(".promo-reward-entry").last().find(".reward-table").data("reward-prefix-index", new_index);
+
+        var reward_prefix = "reward-product-form";
+        var name_prefix = reward_prefix + "-" + new_index;
+        var id_prefix = "id_" + name_prefix;
+        replace_attribute_promotion(object_ref, "-reward_product", 0, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-reward_product", 0, "id", id_prefix);
+        replace_attribute_promotion(object_ref, "-reward_is_new", 0, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-reward_is_new", 0, "id", id_prefix);
+        replace_attribute_promotion(object_ref, "-reward_print_type", 0, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-reward_print_type", 0, "id", id_prefix);
+        replace_attribute_promotion(object_ref, "-quantity", 0, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-quantity", 0, "id", id_prefix);
         $("#id_promo_rewards").find(".promo-reward-entry").last().find(".remove-promotion-reward-product").parent().parent().remove();
 
         return false;
@@ -487,54 +512,127 @@ $(document).ready(function () {
             $("[id$=rule_product]").prop("disabled", true);
             $("[id$=rule_is_new]").prop("disabled", true);
             $("[id$=rule_print_type]").prop("disabled", true);
+            $("[id$=-min_qty]").prop("disabled", true);
+            $("[id$=-min_amount]").prop("disabled", true);
         }
         else if(value == "by_products") {
             $("[id$=rule_product]").prop("disabled", false);
             $("[id$=rule_is_new]").prop("disabled", false);
             $("[id$=rule_print_type]").prop("disabled", false);
+            var by_amount_choice = $("#id_by_amount_choice").val();
+            if(by_amount_choice == "by_amount") {
+                $("[id$=-min_qty]").prop("disabled", true);
+                $("[id$=-min_amount]").prop("disabled", false);
+            }
+            else if(value == "by_quantity") {
+                $("[id$=-min_qty]").prop("disabled", false);
+                $("[id$=-min_amount]").prop("disabled", true);
+            }
+
         }
         else if(value == "by_date") {
             $("[id$=rule_product]").prop("disabled", true);
             $("[id$=rule_is_new]").prop("disabled", true);
             $("[id$=rule_print_type]").prop("disabled", true);
+            $("[id$=-min_qty]").prop("disabled", true);
+            $("[id$=-min_amount]").prop("disabled", true);
         }
     }
     
     
     $("#id_by_cart_choice").click(function (e) {
-        var value = $(this).val();
-        toggle_promotion_rule_product(value);
+        var by_cart_choice = $("#id_by_cart_choice").val();
+        toggle_promotion_rule_product(by_cart_choice);
+        var by_amount_choice = $("#id_by_amount_choice").val();
+        toggle_promotion_min_qty_amount(by_cart_choice, by_amount_choice);
     });
 
+    function toggle_promotion_min_qty_amount(by_cart_choice, by_amount_choice) {
+        if(by_cart_choice == "by_cart") {
+            if(by_amount_choice == "by_amount") {
+                $("#id_min_qty").prop("disabled", true);
+                $("#id_min_amount").prop("disabled", false);
+            }
+            else if(by_amount_choice == "by_quantity"){
+                $("#id_min_qty").prop("disabled", false);
+                $("#id_min_amount").prop("disabled", true);
+            }
+        }
+        else if(by_cart_choice == "by_products") {
+            if(by_amount_choice == "by_amount") {
+                $("[id$=-min_qty]").prop("disabled", true);
+                $("[id$=-min_amount]").prop("disabled", false);
+            }
+            else if(by_amount_choice == "by_quantity"){
+                $("[id$=-min_qty]").prop("disabled", false);
+                $("[id$=-min_amount]").prop("disabled", true);
+            }
+        }
+        else{
+            $("#id_min_qty").prop("disabled", true);
+            $("#id_min_amount").prop("disabled", true);
+        }
+    }
+
     function initial_product_rule_products() {
-        var value = $("#id_by_cart_choice").val();
-        toggle_promotion_rule_product(value);
+        var by_cart_choice = $("#id_by_cart_choice").val();
+        toggle_promotion_rule_product(by_cart_choice);
+        var by_amount_choice = $("#id_by_amount_choice").val();
+        toggle_promotion_min_qty_amount(by_cart_choice, by_amount_choice);
     }
 
     setTimeout(initial_product_rule_products, 1000);
 
-    function toggle_promotion_rule_by_amount(value) {
-        if(value == "by_amount") {
-            $("[id$=min_qty]").prop("disabled", true);
-            $("[id$=min_amount]").prop("disabled", false);
-        }
-        else if(value == "by_quantity") {
-            $("[id$=min_qty]").prop("disabled", false);
-            $("[id$=min_amount]").prop("disabled", true);
-        }
-    }
-
     $("#id_by_amount_choice").click(function (e) {
-        var value = $(this).val();
-        toggle_promotion_rule_by_amount(value);
+        var by_cart_choice = $("#id_by_cart_choice").val();
+        var by_amount_choice = $("#id_by_amount_choice").val();
+        toggle_promotion_min_qty_amount(by_cart_choice, by_amount_choice);
     });
 
     function initial_product_rule_min_amount() {
-        var value = $("#id_by_amount_choice").val();
-        toggle_promotion_rule_by_amount(value);
+        var by_cart_choice = $("#id_by_cart_choice").val();
+        var by_amount_choice = $("#id_by_amount_choice").val();
+        toggle_promotion_min_qty_amount(by_cart_choice, by_amount_choice);
     }
 
     setTimeout(initial_product_rule_min_amount, 1000);
+
+    function toggle_promotion_reward_fields($object) {
+        $object.closest(".promo-reward-entry").find("[name$=-gift_amount]").prop("disabled", true);
+        $object.closest(".promo-reward-entry").find("[name$=-credit_expiry_time]").prop("disabled", true);
+        $object.closest(".promo-reward-entry").find("[name$=-gift_amount_in_percentage]").prop("disabled", true);
+        $object.closest(".promo-reward-entry").find("[name$=-store_credit]").prop("disabled", true);
+        var reward_type = $object.val();
+        if(reward_type == "0") {
+            $object.closest(".promo-reward-entry").find("[name$=-gift_amount]").prop("disabled", false);
+            $object.closest(".promo-reward-entry").find("[name$=-gift_amount_in_percentage]").prop("disabled", false);
+        }
+        else if(reward_type == "1") {
+
+        }
+        else if(reward_type == "2") {
+
+        }
+        else if(reward_type == "3") {
+
+        }
+        else if(reward_type == "4") {
+
+        }
+    }
+
+    function toggle_promotion_all_reward_fields() {
+        $("[name$=-reward_type]").each(function (i) {
+            toggle_promotion_reward_fields($(this));
+        });
+    }
+
+    $(document).on("change", "[name$=-reward_type]", function (e) {
+        toggle_promotion_reward_fields($(this));
+    });
+    
+    setTimeout(toggle_promotion_all_reward_fields, 500);
+
 
 });
 </script>
