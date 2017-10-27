@@ -8,7 +8,7 @@ from promotion.models.promotion_products_rule import PromotionProductRule
 
 class AdminPromotionRuleForm(BRBaseModelForm):
 
-    id = forms.IntegerField(required=False, widget=forms.HiddenInput())
+    rule_id = forms.IntegerField(required=False, widget=forms.HiddenInput())
 
     rule_product = ProductModelChoiceField(label="Select Product",
                                       queryset=Book.objects.all(),
@@ -22,16 +22,18 @@ class AdminPromotionRuleForm(BRBaseModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AdminPromotionRuleForm, self).__init__(*args, **kwargs)
+        self.fields["min_qty"].widget.attrs["class"] = "form-control"
+        self.fields["min_amount"].widget.attrs["class"] = "form-control"
 
     class Meta:
         model = PromotionProductRule
-        fields = ['id', 'rule_product', 'rule_is_new', 'rule_print_type', 'min_qty', 'min_amount']
+        fields = ['rule_id', 'rule_product', 'rule_is_new', 'rule_print_type', 'min_qty', 'min_amount']
         
     def is_valid(self):
         self.error_messages = []
         self.cleaned_data = {}
         prefix = self.prefix
-        id = self.data.get(prefix + "-id")
+        id = self.data.get(prefix + "-rule_id")
         product = self.data.get(prefix + "-rule_product")
         is_new = self.data.get(prefix + "-rule_is_new")
         print_type = self.data.get(prefix + "-rule_print_type")

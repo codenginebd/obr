@@ -173,6 +173,7 @@
                     {% endif %}
                     <tr data-prefix="{{ rule_form.prefix }}">
                         <td>
+                            {{ rule_form.rule_id.as_hidden }}
                             {{ rule_form.rule_product }}
                         </td>
                         <td>
@@ -224,6 +225,7 @@
                                 {{ reward_form.reward_type.label }}
                             </td>
                             <td>
+                                {{ reward_form.reward_id.as_hidden }}
                                 {{ reward_form.reward_type }}
                             </td>
                             <td>
@@ -297,6 +299,7 @@
                                             {% endif %}
                                             <tr data-prefix="{{ reward_product_form.prefix }}">
                                                 <td>
+                                                    {{ reward_product_form.reward_product_id.as_hidden }}
                                                     {{ reward_product_form.reward_product }}
                                                 </td>
                                                 <td>
@@ -355,6 +358,7 @@ $(document).ready(function () {
     }
     
     function reset_promotion_rule_attributes() {
+        $("#id_promo_rules").find(".table").last().find("[name$=-rule_id]").val("");
         $("#id_promo_rules").find(".table").last().find("[name$=-rule_product]").val("");
         $("#id_promo_rules").find(".table").last().find("[name$=-min_qty]").val("");
         $("#id_promo_rules").find(".table").last().find("[name$=-min_amount]").val("");
@@ -380,6 +384,8 @@ $(document).ready(function () {
         $("#id_promo_rules").append(new_table);
         reset_promotion_rule_attributes();
         var object_ref = $("#id_promo_rules").find(".table").last();
+        replace_attribute_promotion(object_ref, "-rule_id", new_index, "name", prefix);
+        replace_attribute_promotion(object_ref, "-rule_id", new_index, "id", id_prefix);
         replace_attribute_promotion(object_ref, "-rule_product", new_index, "name", prefix);
         replace_attribute_promotion(object_ref, "-rule_product", new_index, "id", id_prefix);
         replace_attribute_promotion(object_ref, "-rule_is_new", new_index, "name", prefix);
@@ -390,6 +396,9 @@ $(document).ready(function () {
         replace_attribute_promotion(object_ref, "-min_qty", new_index, "id", id_prefix);
         replace_attribute_promotion(object_ref, "-min_amount", new_index, "name", prefix);
         replace_attribute_promotion(object_ref, "-min_amount", new_index, "id", id_prefix);
+
+        object_ref.find("[name$=-rule_id]").val("");
+
     }
     
     $("#id_add_promo_rule").click(function (e) {
@@ -412,7 +421,6 @@ $(document).ready(function () {
         var last_row_product_name = $(this).parent().parent().parent().parent().parent().find(".reward-table").last().find("tbody").find("tr").last().find("[name$=reward_product]").prop("name");
         var last_form_index = last_row_product_name.replace(reward_prefix+"-"+reward_prefix_index+"-", "").replace("-reward_type", "");
         last_form_index = parseInt(last_form_index);
-        alert(last_form_index);
         var new_index = last_form_index + 1;
         var new_row = "<tr data-reward-prefix-index='"+ reward_prefix_index +"'>" + first_row;
         new_row += "<td><span style='cursor: pointer;' class='glyphicon glyphicon-close pull-right remove-promotion-reward-product'>X</span></td>"
@@ -421,6 +429,9 @@ $(document).ready(function () {
         var id_prefix = "id_"+reward_prefix + "-" + reward_prefix_index;
         $(this).parent().parent().parent().parent().parent().find(".reward-table").first().find("tbody").append(new_row);
         var object_ref = $(this).parent().parent().parent().parent().parent().find(".reward-table").first().find("tbody").find("tr").last();
+
+        replace_attribute_promotion(object_ref, "-reward_product_id", new_index, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-reward_product_id", new_index, "id", id_prefix);
         replace_attribute_promotion(object_ref, "-reward_product", new_index, "name", name_prefix);
         replace_attribute_promotion(object_ref, "-reward_product", new_index, "id", id_prefix);
         replace_attribute_promotion(object_ref, "-reward_is_new", new_index, "name", name_prefix);
@@ -452,6 +463,8 @@ $(document).ready(function () {
         new_row += "</div>";
         $("#id_promo_rewards").append(new_row);
         var object_ref = $("#id_promo_rewards").find(".promo-reward-entry").last();
+        replace_attribute_promotion(object_ref, "-reward_id", new_index, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-reward_id", new_index, "id", id_prefix);
         replace_attribute_promotion(object_ref, "-reward_type", new_index, "name", name_prefix);
         replace_attribute_promotion(object_ref, "-reward_type", new_index, "id", id_prefix);
         replace_attribute_promotion(object_ref, "-gift_amount", new_index, "name", name_prefix);
@@ -463,11 +476,15 @@ $(document).ready(function () {
         replace_attribute_promotion(object_ref, "-store_credit", new_index, "name", name_prefix);
         replace_attribute_promotion(object_ref, "-store_credit", new_index, "id", id_prefix);
 
+        object_ref.find("[name$=-reward_id]").val("");
+
         $("#id_promo_rewards").find(".promo-reward-entry").last().find(".reward-table").data("reward-prefix-index", new_index);
 
         var reward_prefix = "reward-product-form";
         var name_prefix = reward_prefix + "-" + new_index;
         var id_prefix = "id_" + name_prefix;
+        replace_attribute_promotion(object_ref, "-reward_product_id", 0, "name", name_prefix);
+        replace_attribute_promotion(object_ref, "-reward_product_id", 0, "id", id_prefix);
         replace_attribute_promotion(object_ref, "-reward_product", 0, "name", name_prefix);
         replace_attribute_promotion(object_ref, "-reward_product", 0, "id", id_prefix);
         replace_attribute_promotion(object_ref, "-reward_is_new", 0, "name", name_prefix);
@@ -477,6 +494,8 @@ $(document).ready(function () {
         replace_attribute_promotion(object_ref, "-quantity", 0, "name", name_prefix);
         replace_attribute_promotion(object_ref, "-quantity", 0, "id", id_prefix);
         $("#id_promo_rewards").find(".promo-reward-entry").last().find(".remove-promotion-reward-product").parent().parent().remove();
+
+        object_ref.find("[name$=-reward_product_id]").val("");
 
         return false;
     });
@@ -495,10 +514,6 @@ $(document).ready(function () {
     });
 
     $("#id_promotion_rules_toggle").click(function (e) {
-        var title = $("#id_title").val();
-        if(title == "") {
-            return false;
-        }
         return true;
     });
 

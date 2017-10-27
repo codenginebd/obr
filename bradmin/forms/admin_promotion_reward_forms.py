@@ -8,7 +8,7 @@ from promotion.models.promotion_reward import PromotionReward
 
 class AdminPromotionRewardForm(BRBaseModelForm):
 
-    id = forms.IntegerField(required=False, widget=forms.HiddenInput())
+    reward_id = forms.IntegerField(required=False, widget=forms.HiddenInput())
 
     reward_type = forms.ChoiceField(label="Reward Type",
                                    choices=(
@@ -22,16 +22,19 @@ class AdminPromotionRewardForm(BRBaseModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AdminPromotionRewardForm, self).__init__(*args, **kwargs)
+        self.fields["gift_amount"].widget.attrs["class"] = "form-control"
+        self.fields["store_credit"].widget.attrs["class"] = "form-control"
+        self.fields["credit_expiry_time"].widget.attrs["class"] = "form-control"
 
     class Meta:
         model = PromotionReward
-        fields = ['id', 'reward_type', 'gift_amount', 'gift_amount_in_percentage', 'store_credit', 'credit_expiry_time']
+        fields = ['reward_id', 'reward_type', 'gift_amount', 'gift_amount_in_percentage', 'store_credit', 'credit_expiry_time']
         
     def is_valid(self):
         self.error_messages = []
         self.cleaned_data = {}
         prefix = self.prefix
-        id = self.data.get(prefix + "-id")
+        id = self.data.get(prefix + "-reward_id")
         reward_type = self.data.get(prefix+"-reward_type")
         gift_amount = self.data.get(prefix+"-gift_amount")
         gift_amount_in_percentage = self.data.get(prefix+"-gift_amount_in_percentage")

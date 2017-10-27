@@ -70,7 +70,13 @@ class AdminPromotionCreateView(BRBaseCreateView):
 
         context["rule_formset"] = AdminPromotionRuleFormSet(prefix="rule-form")
         context["reward_formset"] = AdminPromotionRewardFormSet(prefix="reward-form")
-        context["reward_product_formset_dict"] = {0: AdminPromotionRewardProductFormSet(prefix="reward-product-form-0")}
+        reward_product_form_data = {
+            'rule-form-TOTAL_FORMS': '1',
+            'rule-form-INITIAL_FORMS': '1',
+            'rule-form-MAX_NUM_FORMS': '20',
+        }
+        context["reward_product_formset_dict"] = {0: AdminPromotionRewardProductFormSet(prefix="reward-product-form-0",
+                                                                                        data=reward_product_form_data)}
 
         return context
         
@@ -157,7 +163,7 @@ class AdminPromotionUpdateView(BRBaseUpdateView):
         }
         product_rules_objects = self.object.product_rules.all()
         for index, product_rule_object in enumerate(product_rules_objects):
-            product_rule_data["rule-form-%s-id"] = product_rule_object.pk
+            product_rule_data["rule-form-%s-rule_id"] = product_rule_object.pk
             product_rule_data["rule-form-%s-rule_product"] = product_rule_object.get_product_instance()
             product_rule_data["rule-form-%s-rule_is_new"] = product_rule_object.is_new
             product_rule_data["rule-form-%s-rule_print_type"] = product_rule_object.print_type
@@ -178,7 +184,7 @@ class AdminPromotionUpdateView(BRBaseUpdateView):
         
         promotion_reward_objects = self.rewards.all()
         for index, promotion_reward_object in enumerate(promotion_reward_objects):
-            promotion_reward_data["reward-form-%-id"] = promotion_reward_object.pk
+            promotion_reward_data["reward-form-%-reward_id"] = promotion_reward_object.pk
             promotion_reward_data["reward-form-%-reward_type"] = promotion_reward_object.reward_type
             promotion_reward_data["reward-form-%-gift_amount"] = promotion_reward_object.gift_amount
             promotion_reward_data["reward-form-%-gift_amount_in_percentage"] = promotion_reward_object.gift_amount_in_percentage
@@ -193,7 +199,7 @@ class AdminPromotionUpdateView(BRBaseUpdateView):
             }
             promotion_reward_products = promotion_reward_object.products.all()
             for index2, promotion_reward_product in enumerate(promotion_reward_products):
-                promotion_reward_product_data['reward-product-form-%s-%s-id' % (index, index2)] = promotion_reward_product.pk
+                promotion_reward_product_data['reward-product-form-%s-%s-reward_product_id' % (index, index2)] = promotion_reward_product.pk
                 promotion_reward_product_data['reward-product-form-%s-%s-reward_product' % (index, index2)] = promotion_reward_product.get_product_instance()
                 promotion_reward_product_data['reward-product-form-%s-%s-reward_is_new' % (index, index2)] = promotion_reward_product.is_new
                 promotion_reward_product_data['reward-product-form-%s-%s-reward_print_type' % (index, index2)] = promotion_reward_product.print_type
