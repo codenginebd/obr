@@ -21,6 +21,7 @@ class AdminPromotionRuleForm(BRBaseModelForm):
                                    widget=forms.Select(attrs={"class": "form-control"}))
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
         super(AdminPromotionRuleForm, self).__init__(*args, **kwargs)
         self.fields["min_qty"].widget.attrs["class"] = "form-control"
         self.fields["min_amount"].widget.attrs["class"] = "form-control"

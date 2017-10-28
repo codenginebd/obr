@@ -148,6 +148,7 @@
                 <h4 class="promo-heading">Promotion Rules</h4>
                 <hr/>
                 <div id="id_promo_rules">
+                    {{ rule_formset.management_form }}
                     <table class="table">
                     {% for rule_form in rule_formset.forms %}
                     {% if forloop.first %}
@@ -217,6 +218,7 @@
             <h4 class="promo-heading">Promotion Rewards</h4>
             <hr/>
             <div id="id_promo_rewards">
+                {{ reward_formset.management_form }}
                 {% for reward_form in reward_formset.forms %}
                 <div class="promo-reward-entry">
                     <table class="table" data-prefix="{{ reward_form.prefix }}">
@@ -275,6 +277,7 @@
                                         <table class="table reward-table" data-reward-prefix-index="{{ forloop.counter0 }}">
                                         {% with index=forloop.counter0 %}
                                         {% with reward_product_formset=reward_product_formset_dict|get_item_from_dict_by_key:index %}
+                                        {{ reward_product_formset.management_form }}
                                         {% for reward_product_form in reward_product_formset.forms %}
                                             {% if forloop.first %}
                                                 <thead>

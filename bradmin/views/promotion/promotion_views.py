@@ -70,13 +70,7 @@ class AdminPromotionCreateView(BRBaseCreateView):
 
         context["rule_formset"] = AdminPromotionRuleFormSet(prefix="rule-form")
         context["reward_formset"] = AdminPromotionRewardFormSet(prefix="reward-form")
-        reward_product_form_data = {
-            'rule-form-TOTAL_FORMS': '1',
-            'rule-form-INITIAL_FORMS': '1',
-            'rule-form-MAX_NUM_FORMS': '20',
-        }
-        context["reward_product_formset_dict"] = {0: AdminPromotionRewardProductFormSet(prefix="reward-product-form-0",
-                                                                                        data=reward_product_form_data)}
+        context["reward_product_formset_dict"] = {0: AdminPromotionRewardProductFormSet(prefix="reward-product-form-0")}
 
         return context
         
@@ -90,8 +84,11 @@ class AdminPromotionCreateView(BRBaseCreateView):
         promotion_rule_formset = AdminPromotionRuleFormSet(request.POST, prefix="rule-form", form_kwargs={'request': self.request})
         promotion_reward_formset = AdminPromotionRewardFormSet(request.POST, prefix="reward-form", form_kwargs={'request': self.request})
         promotion_reward_product_formset_dict = { i: AdminPromotionRewardProductFormSet(request.POST, prefix="reward-product-form-%s" % i, form_kwargs={'request': self.request, 'reward_form_prefix': 'reward-form'}) for i in range(0, len(promotion_reward_formset.forms))}
-        
-        if promotion_form.is_valid() and promotion_rule_formset.is_valid() and promotion_reward_formset.is_valid():
+
+        promotion_form_valid = promotion_form.is_valid()
+        promotion_rule_formset_valid = promotion_rule_formset.is_valid()
+        promotion_reward_formset_valid = promotion_reward_formset.is_valid()
+        if promotion_form_valid and promotion_rule_formset_valid and promotion_reward_formset_valid:
             if all([promotion_reward_product_formset.is_valid() for index, promotion_reward_product_formset in promotion_reward_product_formset_dict.items()]):
                 
                 promotion_instance = promotion_form.save()

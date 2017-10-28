@@ -21,6 +21,7 @@ class AdminPromotionRewardForm(BRBaseModelForm):
                                    widget=forms.Select(attrs={"class": "form-control"}))
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
         super(AdminPromotionRewardForm, self).__init__(*args, **kwargs)
         self.fields["gift_amount"].widget.attrs["class"] = "form-control"
         self.fields["store_credit"].widget.attrs["class"] = "form-control"
@@ -41,11 +42,17 @@ class AdminPromotionRewardForm(BRBaseModelForm):
         store_credit = self.data.get(prefix+"-store_credit")
         credit_expiry_time = self.data.get(prefix+"-credit_expiry_time")
         self.cleaned_data["reward_type"] = PromotionRewardTypes.FREE_SHIPPING.value
+        try:
+            reward_type = int(reward_type)
+        except:
+            self.error_messages += ["Reward type is invalid"]
+            return False
         if reward_type == PromotionRewardTypes.FREE_SHIPPING.value:
             self.cleaned_data["reward_type"] = reward_type
             return True
         elif reward_type == PromotionRewardTypes.AMOUNT_IN_MONEY.value:
-            if gift_amount and gift_amount_in_percentage is not None:
+            if gift_amount:
+                gift_amount_in_percentage = True if gift_amount_in_percentage is not None else False
                 try:
                     gift_amount = Decimal(gift_amount)
                 except:
