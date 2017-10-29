@@ -1,4 +1,6 @@
 from django.db import models
+
+from generics.libs.loader.loader import load_model
 from generics.models.base_entity import BaseEntity
 
 

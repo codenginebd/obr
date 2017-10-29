@@ -100,14 +100,16 @@ class AdminPromotionCreateView(BRBaseCreateView):
                 promotion_reward_instances = []
                 for index, promotion_reward_form in enumerate(promotion_reward_formset.forms):
                     promotion_reward_instance = promotion_reward_form.save()
-                    promotion_reward_instances += [promotion_reward_instance]
+                    if promotion_reward_instance:
+                        promotion_reward_instances += [promotion_reward_instance]
                     
                     promotion_reward_product_instances = []
                     promotion_reward_product_formset = promotion_reward_product_formset_dict.get(index)
                     if promotion_reward_product_formset:
                         for promotion_reward_product_form in promotion_reward_product_formset.forms:
                             promotion_reward_product_instance = promotion_reward_product_form.save()
-                            promotion_reward_product_instances += [promotion_reward_product_instance]
+                            if promotion_reward_product_instance:
+                                promotion_reward_product_instances += [promotion_reward_product_instance]
                     promotion_reward_instance.products.add(*promotion_reward_product_instances)
                 promotion_instance.rewards.add(*promotion_reward_instances)
                 messages.add_message(request=self.request, level=messages.INFO,
