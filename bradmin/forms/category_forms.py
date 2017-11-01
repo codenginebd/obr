@@ -1,4 +1,6 @@
 from django import forms
+from django.db.models.query_utils import Q
+
 from bradmin.forms.base_model_form import BRBaseModelForm
 from bradmin.forms.fields.category_model_choice_field import CategoryModelChoiceField
 from ecommerce.models.sales.category import ProductCategory
@@ -29,4 +31,24 @@ class AdminCategoryForm(BRBaseModelForm):
             'is_active': "Active",
         }
         fields_required = ['name']
-    
+
+    def save(self, commit=True):
+
+        name = self.cleaned_data.get("name")
+        name_2 = self.cleaned_data.get("name_2")
+
+        filter = Q(name=name)
+
+        if name_2:
+            filter |= (Q(name=name) & Q(name_2__isnull=False) &
+                                                           Q(name_2=name_2))
+
+        category_objects = ProductCategory.objects.filter(filter)
+        if not category_objects.exists():
+            return super(AdminCategoryForm, self).save(commit=commit)
+        error_message = ""
+        if name and not name_2:
+            error_message = "Category with name '%s' already exists." % name
+        elif name_2:
+            error_message = "Category with name '%s' or '%s' already exists." % (name, name_2)
+        return ValueError(error_message)

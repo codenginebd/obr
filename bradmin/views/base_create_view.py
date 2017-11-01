@@ -38,9 +38,15 @@ class BRBaseCreateView(AdminListMenuMixin, CreateView):
         return super(BRBaseCreateView, self).post(request, *args, **kwargs)
 
     def form_valid(self, form):
-        self.object = form.save()
-        messages.add_message(request=self.request, level=messages.INFO,
-                             message="Created Successfully")
+        instance= form.save()
+        if type(instance) is ValueError:
+            self.object = None
+            messages.add_message(request=self.request, level=messages.ERROR,
+                                 message='<p class="alert-danger" style="padding: 20px;">Failed to create. %s</p>' % str(instance))
+        else:
+            self.object = instance
+            messages.add_message(request=self.request, level=messages.INFO,
+                                message='<p class="alert-success" style="padding: 20px;">Created Successfully</p>')
         return super(BRBaseCreateView, self).form_valid(form)
 
     def form_invalid(self, form):

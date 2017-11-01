@@ -1,4 +1,6 @@
 from django import forms
+from django.db.models.query_utils import Q
+
 from book_rental.models.author import Author
 from bradmin.forms.base_model_form import BRBaseModelForm
 from bradmin.forms.fields.image_file_field import BRFormImageField
@@ -31,3 +33,19 @@ class AdminAuthorForm(BRBaseModelForm):
             'is_active': "Active",
         }
         fields_required = ['name', 'description']
+
+    def save(self, commit=True):
+        name = self.cleaned_data.get("name")
+        name_2 = self.cleaned_data.get("name_2")
+        filter = Q(name=name)
+        if name_2:
+            filter |= (Q(name_2__isnull=False) & Q(name_2=name_2))
+        publisher_objects = Author.objects.filter(filter)
+        if not publisher_objects.exists():
+            return super(AdminAuthorForm, self).save(commit=commit)
+        error_message = ""
+        if name and not name_2:
+            error_message = "Author with name '%s' exist." % name
+        elif name_2:
+            error_message = "Author with name '%s' or '%s' exist" % (name, name_2)
+        return ValueError(error_message)
