@@ -118,3 +118,8 @@ label {
     letter-spacing: 0.02em !important;
     text-transform: capitalize !important;
 }
+
+.pagination>li>a, .pagination>li>span {
+    border: none !important;
+    color: #146780 !important;
+}

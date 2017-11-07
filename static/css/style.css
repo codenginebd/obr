@@ -9,9 +9,8 @@
 
 .br-hr-1 {
     padding: 2px;
-    color: #146780 !important;
     border-width: 1px !important;
-    border-color: #146780 !important;
+    border-color: #d8e0e0 !important;
 }
 
 .br-body-container {
@@ -34,10 +33,24 @@
 .br-author-browse-card {
     padding: 20px !important;
     border-radius: 10px !important;
-    border: 1px solid #749090 !important;
+    border: 1px solid #d8e0e0 !important;
     max-width: 180px !important;
     max-height: 180px !important;
     float: left !important;
     margin-right: 10px !important;
     margin-bottom: 10px !important;
+}
+
+.pagination {
+    display:block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width:400px;
+}
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover
+{
+    font-weight: bold;
+    color: blue !important;
+    background-color: aliceblue;
 }
