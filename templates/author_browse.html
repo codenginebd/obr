@@ -1,0 +1,38 @@
+{% extends "master.html" %}
+{% load staticfiles %}
+{% block top_header_menu %}
+{% include "sections/header_top_menu.html" %}
+{% endblock top_header_menu %}
+{% block top_breadcumb %}
+{% include "sections/breadcumb.html" %}
+{% endblock top_breadcumb %}
+{% block top_banner %}
+{% endblock top_banner %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="br-h1">Authors</span>
+                <hr class="br-hr-1"/>
+                <div class="br-body-container">
+                    {% include "sections/author_browse_card.html" %}
+                    {% include "sections/author_browse_card.html" %}
+                    {% include "sections/author_browse_card.html" %}
+                    {% include "sections/author_browse_card.html" %}
+                    {% include "sections/author_browse_card.html" %}
+                    {% include "sections/author_browse_card.html" %}{% include "sections/author_browse_card.html" %}
+                    {% include "sections/author_browse_card.html" %}
+                    {% include "sections/author_browse_card.html" %}
+                    {% include "sections/author_browse_card.html" %}
+                    {% include "sections/author_browse_card.html" %}
+                    {% include "sections/author_browse_card.html" %}{% include "sections/author_browse_card.html" %}
+                    {% include "sections/author_browse_card.html" %}
+                    {% include "sections/author_browse_card.html" %}
+                    {% include "sections/author_browse_card.html" %}
+                    {% include "sections/author_browse_card.html" %}
+                    {% include "sections/author_browse_card.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

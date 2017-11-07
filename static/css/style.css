@@ -1,0 +1,43 @@
+.br-h1-light, .br-h1  {
+    font-size: 15px !important;
+    padding: 6px;
+}
+
+.br-h1 {
+    font-weight: bold !important;
+}
+
+.br-hr-1 {
+    padding: 2px;
+    color: #146780 !important;
+    border-width: 1px !important;
+    border-color: #146780 !important;
+}
+
+.br-body-container {
+    padding: 20px !important;
+}
+
+.br-author-browse-card-img {
+    max-width: 120px !important;
+    max-height: 120px !important;
+}
+
+.br-author-browse-card-header {
+    font-size: 14px !important;
+}
+
+.br-author-browse-card-header > a {
+    margin-bottom: 10px !important;
+}
+
+.br-author-browse-card {
+    padding: 20px !important;
+    border-radius: 10px !important;
+    border: 1px solid #749090 !important;
+    max-width: 180px !important;
+    max-height: 180px !important;
+    float: left !important;
+    margin-right: 10px !important;
+    margin-bottom: 10px !important;
+}

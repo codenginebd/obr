@@ -20,6 +20,7 @@ from bauth.api.views.api_login_view import APILoginView
 from book_rental.api.viewsets.BookListAPIView import BookListAPIView
 from book_rental.api.viewsets.author_api_view import AuthorAPIView, AuthorAPIViewNoPagination
 from book_rental.api.viewsets.publisher_api_view import PublisherAPIView, PublisherAPIViewNoPagination
+from book_rental.views.author_views import AuthorBrowseView
 from book_rental.views.profile_view import ProfileView
 from cart_view import BasketView
 from ecommerce.api.viewsets.category_api_view import CategoryAPIView, CategoryAPIViewNoPagination
@@ -30,15 +31,28 @@ from ecommerce.api.viewsets.sale_options import SaleOptionsAPIView
 from ecommerce.api.viewsets.sale_price_api_view import SalePriceAPIView
 from home_view import HomeView
 from ecommerce.api.viewsets.add_to_cart_api_view import AddToCartAPIView
+# Books Import
+from book_rental.views.book_details import BookDetailsView
+from book_rental.views.book_search_view import BookSearchView
+from book_rental.views.browse_view import BookBrowseView
 
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home_view'),
     url(r'^admin/', include('bradmin.urls')),
     url(r'^auth/', include('bauth.urls')),
-    url(r'^books/', include('book_rental.urls')),
     url(r'^shopping/', include('ecommerce.urls')),
     url(r'^my-cart/', BasketView.as_view(), name='my_cart_view'),
     url(r'^profile/(?P<username>.+)', ProfileView.as_view(), name='profile_view'),
+
+    # Books
+    url(r'^books/browse/$', BookBrowseView.as_view(), name="book_browse_view"),
+    url(r'^books/browse/(?P<slug>.+)/$', BookBrowseView.as_view(), name="book_browse_view"),
+    url(r'^books/search/$', BookSearchView.as_view(), name="book_search_view"),
+    url(r'^books/details/$', BookDetailsView.as_view(), name="book_details_view"),
+
+    #Authors
+    url(r'^authors/browse/$', AuthorBrowseView.as_view(), name="author_browse_view"),
+
 ]
 
 # Include api's
