@@ -28,14 +28,15 @@
 
 .br-author-browse-card-header > a {
     margin-bottom: 10px !important;
+    margin-top: -8px !important;
 }
 
 .br-author-browse-card {
     padding: 20px !important;
     border-radius: 10px !important;
     border: 1px solid #d8e0e0 !important;
-    max-width: 180px !important;
-    max-height: 180px !important;
+    max-width: 190px !important;
+    max-height: 210px !important;
     float: left !important;
     margin-right: 10px !important;
     margin-bottom: 10px !important;
@@ -53,4 +54,13 @@
     font-weight: bold;
     color: blue !important;
     background-color: aliceblue;
+}
+
+.tmenu-active a {
+    color: #31b0d5 !important;
+    background: aliceblue !important;
+}
+
+.navbar-nav>li.tmenu-active>a {
+    color: #31b0d5 !important;
 }

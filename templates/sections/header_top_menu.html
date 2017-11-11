@@ -10,8 +10,8 @@
           </ul>
 
         </li>
-        <li><a href="{% url "author_browse_view" %}">Authors</a></li>
-        <li><a href="#">Publishers</a></li>
+        <li {% if tmenu == "author" %}class="tmenu-active"{% endif %}><a href="{% url "author_browse_view" %}">Authors</a></li>
+        <li {% if tmenu == "publisher" %}class="tmenu-active"{% endif %}><a href="{% url "publisher_browse_view" %}">Publishers</a></li>
       <li><a href="#">New Books</a></li>
       <li><a href="#">Most Popular Books</a></li>
       <li><a href="#">College Books</a></li>

@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.db.models.query_utils import Q
 from django.urls.base import reverse
-
+import os
 from bauth.models.address import Address
 from bauth.models.email import Email
 from bauth.models.phone import Phone
@@ -24,6 +24,18 @@ class BookPublisher(BaseEntity, ThumbnailModelMixin):
     emails = models.ManyToManyField(Email)
     image = models.ImageField(max_length=500, upload_to='publisher/', null=True)
     thumbnail = models.ImageField(max_length=500, upload_to='publisher/thumbnails/', null=True)
+
+    def render_name(self):
+        if self.name_2 and self.show_2:
+            return self.name_2 + " (%s)" % self.name
+        if self.name_2:
+            return self.name + " (%s)" % self.name_2
+
+    def render_thumbnail(self):
+        if self.thumbnail:
+            return os.path.join(settings.MEDIA_URL, self.thumbnail.name)
+        else:
+            return os.path.join(settings.STATIC_URL, 'images', 'author_no_avater.png')
 
     def save(self):
         try:

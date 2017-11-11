@@ -1,8 +1,8 @@
 <div class="br-author-browse-card">
     <div style="width: 128px; height: 128px; border: 1px solid #e0e0e0; background-color: #e3f0f7; padding: 3px; border-radius: 3px;">
-    {% with thumb=author_instance.render_thumbnail %}
+    {% with thumb=instance.render_thumbnail %}
         {% if thumb %}
-            <img class="img-responsive img-rounded br-author-browse-card-img" src="{{ author_instance.render_thumbnail }}"/>
+            <img class="img-responsive img-rounded br-author-browse-card-img" src="{{ instance.render_thumbnail }}"/>
         {% else %}
             <img class="img-responsive img-rounded br-author-browse-card-img" src="#"/>
         {% endif %}
@@ -10,6 +10,6 @@
     </div>
     <p>
         <h3 class="br-author-browse-card-header">
-        <a href="#">{{ author_instance.render_name }}</a></h3>
+        <a href="#">{{ instance.render_name }}</a></h3>
     </p>
 </div>

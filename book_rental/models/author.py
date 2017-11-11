@@ -1,8 +1,8 @@
-from django.conf import settings
+import os
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls.base import reverse
-
+from django.conf import settings
 from bauth.models.address import Address
 from bauth.models.country import Country
 from bauth.models.email import Email
@@ -31,6 +31,18 @@ class Author(BaseEntity, ThumbnailModelMixin):
     nationalities = models.ManyToManyField(Country)
     languages = models.ManyToManyField(Language)
     slug = models.SlugField()
+
+    def render_name(self):
+        if self.name_2 and self.show_2:
+            return self.name_2 + " (%s)" % self.name
+        if self.name_2:
+            return self.name + " (%s)" % self.name_2
+
+    def render_thumbnail(self):
+        if self.thumbnail:
+            return os.path.join(settings.MEDIA_URL, self.thumbnail.name)
+        else:
+            return os.path.join(settings.STATIC_URL, 'images', 'author_no_avater.png')
 
     @property
     def render_author_name_bn(self):

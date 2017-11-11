@@ -13,11 +13,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <span class="br-h1">Authors({{ object_count }})</span>
+                <span class="br-h1">Pubishers({{ object_count }})</span>
                 <hr class="br-hr-1"/>
                 <div class="br-body-container">
-                    {% for author_instance in object_list %}
-                    {% include "sections/author_browse_card.html" with author_instance=author_instance%}
+                    {% for instance in object_list %}
+                    {% include "sections/publisher_browse_card.html" with instance=instance%}
                     {% endfor %}
                 </div>
                 <div style="height: 20px; width: 100%;"></div>
