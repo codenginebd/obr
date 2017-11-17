@@ -1,0 +1,47 @@
+{% extends "master.html" %}
+{% load staticfiles %}
+{% block top_header_menu %}
+{% include "sections/header_top_menu.html" %}
+{% endblock top_header_menu %}
+{% block top_breadcumb %}
+{% include "sections/breadcumb.html" %}
+{% endblock top_breadcumb %}
+{% block top_banner %}
+{% endblock top_banner %}
+{% block content %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
+    <div class="container">
+    <!-- Top filter area !-->
+        <div class="row">
+            <div class="col-md-12" id="filter_template_container">
+                <!-- Add here the browse filter !-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="padding: 10px;">
+                Total 3902 Authors
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" id="id_filter_list_content" style="padding: 20px;">
+                {% include "sections/book_browse_row.html" %}
+                {% include "sections/book_browse_row.html" %}
+                {% include "sections/book_browse_row.html" %}
+                {% include "sections/book_browse_row.html" %}
+                {% include "sections/book_browse_row.html" %}
+                {% include "sections/book_browse_row.html" %}
+            </div>
+        </div>
+    </div>
+<script>
+$(document).ready(function () {
+   $('#framework').multiselect({
+      nonSelectedText: 'Select Framework',
+      enableFiltering: true,
+      enableCaseInsensitiveFiltering: true,
+      buttonWidth:'400px'
+     });
+});
+</script>
+{% endblock content %}

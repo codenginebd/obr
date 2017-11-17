@@ -20,7 +20,7 @@ from bauth.api.views.api_login_view import APILoginView
 from book_rental.api.viewsets.BookListAPIView import BookListAPIView
 from book_rental.api.viewsets.author_api_view import AuthorAPIView, AuthorAPIViewNoPagination
 from book_rental.api.viewsets.publisher_api_view import PublisherAPIView, PublisherAPIViewNoPagination
-from book_rental.views.author_views import AuthorBrowseView
+from book_rental.views.author_views import AuthorBrowseView, AuthorFilterListView
 from book_rental.views.profile_view import ProfileView
 from book_rental.views.publisher_views import PublisherBrowseView
 from cart_view import BasketView
@@ -53,6 +53,7 @@ urlpatterns = [
 
     #Authors
     url(r'^authors/browse/$', AuthorBrowseView.as_view(), name="author_browse_view"),
+    url(r'^author/(?P<pk>[0-9]+)/$', AuthorFilterListView.as_view(), name="author_browse_filter_view"),
 
     #Publishers
     url(r'^publishers/browse/$', PublisherBrowseView.as_view(), name="publisher_browse_view"),
