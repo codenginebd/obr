@@ -1,0 +1,13 @@
+{% extends "base_filter_list_view.html" %}
+{% load staticfiles %}
+{% block top_header_menu %}
+{% include "sections/header_top_menu.html" %}
+{% endblock top_header_menu %}
+{% block top_breadcumb %}
+{% include "sections/breadcumb.html" %}
+{% endblock top_breadcumb %}
+{% block top_banner %}
+{% endblock top_banner %}
+{% block filter_options %}
+    {% include "sections/author_browse_filter.html" %}
+{% endblock filter_options %}

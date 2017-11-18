@@ -14,3 +14,4 @@ class AuthorBrowseView(BaseListView, CommonDataMixin):
 
 class AuthorFilterListView(BaseFilterListView):
     model = Author
+    template_name = "author_filter_list_view.html"

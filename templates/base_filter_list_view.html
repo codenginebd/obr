@@ -9,39 +9,54 @@
 {% block top_banner %}
 {% endblock top_banner %}
 {% block content %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
     <div class="container">
     <!-- Top filter area !-->
         <div class="row">
-            <div class="col-md-12" id="filter_template_container">
-                <!-- Add here the browse filter !-->
+            <div class="col-md-12">
+                <div class="browse-filter-pane" style="background-color: #f7f8fb !important; padding: 10px; border: 1px solid #dadae6; margin-top: 10px !important; border-radius: 4px !important;">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <a href="#" class="pull-left" style="">
+                        <label style="cursor: pointer; ">
+                            <input type="checkbox" name="out_of_stock_checkbox" style="position: relative; bottom: -1px; "> Exclude Out of stock</label></a>
+                        <a href="#" class="btn-browse-filter btn pull-right" style="color: white !important;background-color: #31b0d5 !important;">
+                        <span class="glyphicon glyphicon-th-list"></span> More Filters</a>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12"  id="id_browse_more_filter_content">
+                        <!-- Add here the browse filter !-->
+                        {% block filter_options %}
+                        {% endblock filter_options %}
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12" style="padding: 10px;">
-                Total 3902 Authors
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12" id="id_filter_list_content" style="padding: 20px;">
-                {% include "sections/book_browse_row.html" %}
-                {% include "sections/book_browse_row.html" %}
-                {% include "sections/book_browse_row.html" %}
-                {% include "sections/book_browse_row.html" %}
-                {% include "sections/book_browse_row.html" %}
-                {% include "sections/book_browse_row.html" %}
+            <div class="col-md-12" style="padding: 20px;" id="id_filter_list_content">
+                {% block filter_result_list %}
+                <div class="row">
+                    <div class="col-md-12" style="padding: 10px;">
+                        Total 3902 Authors
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include "sections/book_browse_row.html" %}
+                        {% include "sections/book_browse_row.html" %}
+                        {% include "sections/book_browse_row.html" %}
+                        {% include "sections/book_browse_row.html" %}
+                        {% include "sections/book_browse_row.html" %}
+                        {% include "sections/book_browse_row.html" %}
+                    </div>
+                </div>
+                {% endblock filter_result_list %}
             </div>
         </div>
     </div>
 <script>
 $(document).ready(function () {
-   $('#framework').multiselect({
-      nonSelectedText: 'Select Framework',
-      enableFiltering: true,
-      enableCaseInsensitiveFiltering: true,
-      buttonWidth:'400px'
-     });
+
 });
 </script>
 {% endblock content %}
