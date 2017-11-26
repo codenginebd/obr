@@ -8,6 +8,43 @@
 {% endblock top_breadcumb %}
 {% block top_banner %}
 {% endblock top_banner %}
+{% block filter_stylesheet %}
+<style type="text/css">
+.filter-list {
+    max-height: 180px !important;
+    height: 180px !important;
+    overflow-y: auto;
+}
+.badge-custom {
+    padding: 9px !important;
+    min-height: 20px !important;
+    font-weight: bold;
+    background-color: rgb(49, 176, 213) !important;
+}
+.badge-custom span:last-of-type {
+    margin-left: 10px !important;
+}
+.badge-custom span:first-of-type {
+    font-size: 14px !important;
+}
+{#::-webkit-scrollbar {#}
+{#    width: 9px;#}
+{#}#}
+{##}
+{#::-webkit-scrollbar-track {#}
+{#    -webkit-box-shadow: inset 0 0 9px rgb(0, 0, 0);#}
+{##}
+{#}#}
+{##}
+{#::-webkit-scrollbar-thumb {#}
+{#    border-radius: 10px;#}
+{#    -webkit-box-shadow: inset 3px 0 9px rgb(0, 0, 0);#}
+{#}#}
+.browse-filter-pane {
+
+}
+</style>
+{% endblock filter_stylesheet %}
 {% block filter_options %}
-    {% include "sections/author_browse_filter.html" %}
+    {{ filter_template }}
 {% endblock filter_options %}

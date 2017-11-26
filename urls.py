@@ -53,7 +53,7 @@ urlpatterns = [
 
     #Authors
     url(r'^authors/browse/$', AuthorBrowseView.as_view(), name="author_browse_view"),
-    url(r'^author/(?P<pk>[0-9]+)/$', AuthorFilterListView.as_view(), name="author_browse_filter_view"),
+    url(r'^author/(?P<slug>[\w-]+)/$', AuthorFilterListView.as_view(), name="author_browse_filter_view"),
 
     #Publishers
     url(r'^publishers/browse/$', PublisherBrowseView.as_view(), name="publisher_browse_view"),

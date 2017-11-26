@@ -1,65 +1,110 @@
-<div style="height: 10px;">
-
+<div class="row">
+    <div class="col-md-8" style="background: transparent; padding: 10px;">
+        <label class="badge badge-custom"><span>Mathematics</span> <span class="close-tag">X</span></label>
+        <label class="badge badge-custom"><span>English</span> <span class="close-tag">X</span></label>
+        <label class="badge badge-custom"><span>Eco</span> <span class="close-tag">X</span></label>
+    </div>
+    <div class="col-md-4" style="padding: 10px;">
+        <input class="form-control pull-right" style="max-width: 300px;" name="filter_keyword" placeholder="Enter keyword"/>
+    </div>
 </div>
 <div class="row">
-    <div class="col-md-4">
-
-    </div>
-    <div class="col-md-4">
-
-    </div>
-    <div class="col-md-4">
-        <input class="form-control pull-right" style="max-width: 250px;" name="filter_keyword" placeholder="Enter keyword"/>
+    <div class="col-md-12" style="background-color: transparent; padding: 10px;">
+        <label style="cursor: pointer; text-transform: capitalize !important; margin-right: 10px !important;">
+            <input type="checkbox" name="out_of_stock_checkbox" style="position: relative; bottom: -1px; "> Exclude Out of stock
+        </label>
+        <label style="cursor: pointer; text-transform: capitalize !important; margin-right: 10px !important;">
+            <input type="checkbox" name="out_of_stock_checkbox" style="position: relative; bottom: -1px; "> Used Copy Available
+        </label>
+        <label style="cursor: pointer; text-transform: capitalize !important; margin-right: 10px !important;">
+            <input type="checkbox" name="out_of_stock_checkbox" style="position: relative; bottom: -1px; "> Economy Print
+        </label>
+        <label style="cursor: pointer; text-transform: capitalize !important; margin-right: 10px !important;">
+            <input type="checkbox" name="capitalize" style="position: relative; bottom: -1px; "> Color Print
+        </label>
+        <label style="cursor: pointer; text-transform: capitalize !important; margin-right: 10px !important;">
+            <input type="checkbox" name="out_of_stock_checkbox" style="position: relative; bottom: -1px; "> Original Print
+        </label>
     </div>
 </div>
 <div class="row" style="padding-top: 20px;">
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Browse Other Authors</div>
-                  <div class="panel-body">
-                      <div>
-                      <label><a href="#">Dibya Prokashoni</a></label>
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span>Browse Other Authors</span>
+                        </div>
+                        <div class="col-md-6" style="padding-right: 10px;">
+                            <div class="input-group add-on">
+                              <input class="form-control pull-right" style="width: 120px; padding: 10px !important; " placeholder="Find..." name="keyword" id="id_filter_author_term" type="text">
+                              <div class="input-group-btn">
+                                <button class="btn btn-default" style="padding: 6px;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                              </div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                      <label><a href="#">Onno ProkaSoni</a></label>
-                    </div>
-                    <div>
-                      <label><a href="#">Amar Boi</a></label>
-                    </div>
+                </div>
+                  <div class="panel-body filter-list">
+                      {% for author in other_authors %}
+                        <div>
+                          <label><a href="#">{{ author.render_name }}</a></label>
+                        </div>
+                      {% endfor %}
                   </div>
 
-              </div>
+            </div>
       </div>
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Categories</div>
-              <div class="panel-body">
-                  <div class="checkbox">
-                  <label><input type="checkbox" value=""><a href="#">Dibya Prokashoni</a></label>
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span>Categories</span>
+                        </div>
+                        <div class="col-md-6" style="padding-right: 10px;">
+                            <div class="input-group add-on">
+                              <input class="form-control pull-right" style="width: 120px; padding: 10px !important; " placeholder="Find..." name="keyword" id="id_filter_categories_term" type="text">
+                              <div class="input-group-btn">
+                                <button class="btn btn-default" style="padding: 6px;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="checkbox">
-                  <label><input type="checkbox" value=""><a href="#">Onno ProkaSoni</a></label>
-                </div>
-                <div class="checkbox disabled">
-                  <label><input type="checkbox" value=""><a href="#">Amar Boi</a></label>
-                </div>
-              </div>
+                  <div class="panel-body filter-list">
+                      {% for category in all_categories %}
+                        <div class="checkbox">
+                          <label><input type="checkbox" value=""><a href="#">{{ category }}</a></label>
+                        </div>
+                      {% endfor %}
+                  </div>
 
           </div>
       </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Publishers</div>
-              <div class="panel-body">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span>Publishers</span>
+                        </div>
+                        <div class="col-md-6" style="padding-right: 10px;">
+                            <div class="input-group add-on">
+                              <input class="form-control pull-right" style="width: 120px; padding: 10px !important; " placeholder="Find..." name="keyword" id="id_filter_publishers_term" type="text">
+                              <div class="input-group-btn">
+                                <button class="btn btn-default" style="padding: 6px;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              <div class="panel-body filter-list">
+                  {% for publisher in all_publishers %}
                   <div class="checkbox">
-                  <label><input type="checkbox" value=""><a href="#">Dibya Prokashoni</a></label>
-                </div>
-                <div class="checkbox">
-                  <label><input type="checkbox" value=""><a href="#">Onno ProkaSoni</a></label>
-                </div>
-                <div class="checkbox disabled">
-                  <label><input type="checkbox" value=""><a href="#">Amar Boi</a></label>
-                </div>
+                    <label><input type="checkbox" value=""><a href="#">{{ publisher }}</a></label>
+                  </div>
+                  {% endfor %}
               </div>
 
           </div>

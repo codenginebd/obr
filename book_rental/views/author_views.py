@@ -1,5 +1,7 @@
 from book_rental.mixin.common_data_mixin import CommonDataMixin
 from book_rental.models.author import Author
+from book_rental.models.book_publisher import BookPublisher
+from ecommerce.models.sales.category import ProductCategory
 from generics.views.base_filter_list_view import BaseFilterListView
 from generics.views.base_list_view import BaseListView
 
@@ -17,9 +19,9 @@ class AuthorFilterListView(BaseFilterListView):
     template_name = "author_filter_list_view.html"
     
     def get_filter_context(self, request, **kwargs):
-        author_slug = kwargs.get(self.pk_url_kwarg)
+        author_slug = kwargs.get('slug')
         other_authors = Author.objects.all().exclude(slug=author_slug)
-        all_categories = ProductCaategory.objects.all()
+        all_categories = ProductCategory.objects.all()
         all_publishers = BookPublisher.objects.all()
         selected_categories = request.GET.get('category', None)
         if selected_categories:
@@ -87,6 +89,6 @@ class AuthorFilterListView(BaseFilterListView):
         }
     
     def get_filter_template(self):
-        template_name = "section/author_browse_filter.html"
+        template_name = "sections/author_browse_filter.html"
         return template_name
     
