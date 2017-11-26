@@ -33,24 +33,29 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12" style="padding: 20px;" id="id_filter_list_content">
-                {% block filter_result_list %}
+            <div class="col-md-12" style="padding: 20px;">
                 <div class="row">
                     <div class="col-md-12" style="padding: 10px;">
                         Total 3902 Authors
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12" id="id_filter_list_content">
+                        {% block filter_result_list %}
                         {% include "sections/book_browse_row.html" %}
                         {% include "sections/book_browse_row.html" %}
                         {% include "sections/book_browse_row.html" %}
                         {% include "sections/book_browse_row.html" %}
                         {% include "sections/book_browse_row.html" %}
                         {% include "sections/book_browse_row.html" %}
+                        {% endblock filter_result_list %}
                     </div>
                 </div>
-                {% endblock filter_result_list %}
+                <div class="row">
+                    <div class="col-md-12" style="padding: 10px;">
+                        Pagination
+                    </div>
+                </div>
             </div>
         </div>
     </div>
