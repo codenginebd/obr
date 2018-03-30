@@ -11,17 +11,17 @@ from generics.models.base_entity import BaseEntity
 class FrontList(BaseEntity):
     title = models.CharField(max_length=400)
     title_2 = models.CharField(max_length=400, null=True)
-    show_2 = models.BooleanField(default=False, null=True)
+    show_2 = models.NullBooleanField(default=False, null=True)
     description = models.TextField(null=True)
-    by_rule = models.BooleanField(default=False, null=True)
-    category = models.ForeignKey(ProductCategory, null=True)
+    by_rule = models.NullBooleanField(default=False, null=True)
+    category = models.ForeignKey(ProductCategory, null=True, on_delete=models.CASCADE)
     rule_name = models.CharField(max_length=100, null=True)  # FrontListRule.TOP_X_PTC_DISCOUNT.value
     top_limit = models.IntegerField(default=0, null=True)
     max_limit = models.IntegerField(default=0, null=True)
     exclude_products = models.ManyToManyField(FrontListProduct, related_name="Front_list_exclude_products")
     products = models.ManyToManyField(FrontListProduct)
     detail_url = models.CharField(max_length=200)
-    palette = models.ForeignKey(FrontPalette)
+    palette = models.ForeignKey(FrontPalette, on_delete=models.CASCADE)
 
 
     def get_front_products(self):

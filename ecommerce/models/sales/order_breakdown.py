@@ -11,7 +11,7 @@ class OrderBreakdown(BaseEntity):
     coupon_applied = models.BooleanField(default=False)
     coupon_code = models.CharField(max_length=100, blank=True, null=True)
     promotion_applied = models.BooleanField(default=False)
-    promotion = models.ForeignKey(Promotion, null=True)
+    promotion = models.ForeignKey(Promotion, null=True, on_delete=models.CASCADE)
     unit_price = models.DecimalField(max_digits=20, decimal_places=2)
     total_price = models.DecimalField(max_digits=20, decimal_places=2)
 

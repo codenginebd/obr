@@ -19,7 +19,7 @@ class BookPublisher(BaseEntity, ThumbnailModelMixin):
     description = models.TextField(blank=True)
     description_2 = models.TextField(blank=True)
     show_2 = models.BooleanField(default=False)
-    address = models.ForeignKey(Address, null=True)
+    address = models.ForeignKey(Address, null=True, on_delete=models.CASCADE)
     phones = models.ManyToManyField(Phone)
     emails = models.ManyToManyField(Email)
     image = models.ImageField(max_length=500, upload_to='publisher/', null=True)

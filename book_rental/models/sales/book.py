@@ -15,10 +15,10 @@ class Book(Product):
     isbn = models.CharField(max_length=500, blank=True)  # The 10 digit ISBN code
     isbn13 = models.CharField(max_length=500, blank=True)
     edition = models.CharField(max_length=100)
-    publisher = models.ForeignKey(BookPublisher, null=True)
+    publisher = models.ForeignKey(BookPublisher, null=True, on_delete=models.CASCADE)
     authors = models.ManyToManyField(Author)
     publish_date = models.DateField(null=True)
-    language = models.ForeignKey(BookLanguage)
+    language = models.ForeignKey(BookLanguage, on_delete=models.CASCADE)
     page_count = models.IntegerField(default=0)
 
     def __str__(self):

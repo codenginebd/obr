@@ -14,7 +14,7 @@ class Coupon(BaseEntity):
     coupon_type = models.IntegerField(default=PromotionTypes.BUY.value)
     start_date = models.DateField(null=True)
     expiry_date = models.DateField(null=True)
-    referrer = models.ForeignKey(User, null=True)
+    referrer = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     used_count = models.IntegerField(default=0)
     rewards = models.ManyToManyField(PromotionReward)
 

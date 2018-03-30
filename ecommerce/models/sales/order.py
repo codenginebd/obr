@@ -8,17 +8,17 @@ from promotion.models.promotion import Promotion
 
 
 class Order(BaseEntity):
-    user = models.ForeignKey(User, null=True)
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     status = models.IntegerField(default=0) # placed, in progress, delivered
     addresses = models.ManyToManyField(Address)
-    warehouse = models.ForeignKey(Warehouse, null=True)
-    delivered_by = models.ForeignKey(User, related_name='order_delivered_by', null=True)
+    warehouse = models.ForeignKey(Warehouse, null=True, on_delete=models.CASCADE)
+    delivered_by = models.ForeignKey(User, related_name='order_delivered_by', null=True, on_delete=models.CASCADE)
     payment_status = models.IntegerField(default=0) # Not Processed, Processed and Successful, Processed and Failed
-    payment = models.ForeignKey(PaymentTransaction, null=True)
+    payment = models.ForeignKey(PaymentTransaction, null=True, on_delete=models.CASCADE)
     coupon_applied = models.BooleanField(default=False)
     coupon_code = models.CharField(max_length=200, blank=True, null=True)
     promotion_applied = models.BooleanField(default=False)
-    promotion = models.ForeignKey(Promotion, null=True)
+    promotion = models.ForeignKey(Promotion, null=True, on_delete=models.CASCADE)
 
     class Meta:
         abstract = True

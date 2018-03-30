@@ -12,7 +12,7 @@ from generics.models.base_entity import BaseEntity
 class Inventory(BaseEntity):
     product_id = models.BigIntegerField(default=0)
     product_model = models.CharField(max_length=200)
-    warehouse = models.ForeignKey(Warehouse)
+    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)
     stock = models.BigIntegerField(default=0)
     available_for_buy = models.BooleanField(default=False)
     available_for_rent = models.BooleanField(default=False)

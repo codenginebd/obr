@@ -22,7 +22,7 @@ class Author(BaseEntity, ThumbnailModelMixin):
     description_2 = models.TextField(blank=True)
     show_2 = models.BooleanField(default=False)
     date_of_birth = models.DateField(null=True)
-    address = models.ForeignKey(Address, null=True)
+    address = models.ForeignKey(Address, null=True, on_delete=models.CASCADE)
     phones = models.ManyToManyField(Phone)
     rating = models.FloatField(default=0)
     emails = models.ManyToManyField(Email)

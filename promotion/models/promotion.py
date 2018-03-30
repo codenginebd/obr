@@ -46,7 +46,7 @@ class Promotion(BaseEntity):
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
 
-    currency = models.ForeignKey(Currency)
+    currency = models.ForeignKey(Currency, on_delete=models.CASCADE)
     
     # objects_by_quantity = PromotionManagerByQuantity()
     # objects_by_amount = PromotionManagerByAmount()

@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from book_rental.models.author import Author
 from generics.api.serializers.base_model_serializer import BaseModelSerializer
 from rest_framework import serializers

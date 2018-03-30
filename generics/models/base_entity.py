@@ -23,8 +23,8 @@ class BaseEntity(PermissionModelMixin, FilterModelMixin, TemplateProviderMixin,
     last_updated = models.BigIntegerField()
     is_active = models.BooleanField(default=False)
     is_deleted = models.BooleanField(default=False)
-    created_by = models.ForeignKey(User, related_name='+', null=True)
-    last_updated_by = models.ForeignKey(User, related_name='+', null=True)
+    created_by = models.ForeignKey(User, related_name='+', null=True, on_delete=models.CASCADE)
+    last_updated_by = models.ForeignKey(User, related_name='+', null=True, on_delete=models.CASCADE)
 
     objects = BaseEntityModelManager(filter=settings.GLOBAL_MODEL_FILTER)
 

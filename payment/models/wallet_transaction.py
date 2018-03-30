@@ -4,7 +4,7 @@ from generics.models.base_entity import BaseEntity
 
 
 class WalletTransaction(BaseEntity):
-    wallet = models.ForeignKey("PaymentWallet")
+    wallet = models.ForeignKey("PaymentWallet", on_delete=models.CASCADE)
     transaction_type = models.IntegerField(default=TransactionTypes.CREDIT_STORE.value)
     total = models.DecimalField(decimal_places=2, max_digits=20)
     transaction_status = models.IntegerField(default=PaymentStatus.PENDING.value)

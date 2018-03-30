@@ -10,10 +10,10 @@ from payment.models.wallet_transaction import WalletTransaction
 
 
 class PaymentWallet(BaseEntity):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     total_credit = models.DecimalField(max_digits=20, decimal_places=2, default=0.0)
     credits = models.ManyToManyField(WalletCreditBreakdown)
-    currency = models.ForeignKey(Currency)
+    currency = models.ForeignKey(Currency, on_delete=models.CASCADE)
 
     def post_wallet_transaction(self, total, currency_code, transaction_type):
         pass

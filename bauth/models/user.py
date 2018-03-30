@@ -6,7 +6,7 @@ from generics.models.base_entity import BaseEntity
 
 
 class BUser(BaseEntity):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=200, blank=True)
     is_verified = models.BooleanField(default=False)
     social_signup = models.BooleanField(default=False)

@@ -8,7 +8,7 @@ from generics.models.base_entity import BaseEntity
 class ProductRating(BaseEntity):
     product_model = models.CharField(max_length=250)
     product_id = models.BigIntegerField()
-    rating_by = models.ForeignKey(User, null=True)
+    rating_by = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     rated_by_name = models.CharField(max_length=500)
     rating_value = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
 

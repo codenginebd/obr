@@ -18,8 +18,8 @@ class RentPlanRelationManager(models.Manager):
 
 
 class RentPlanRelation(BaseEntity):
-    plan = models.ForeignKey(RentPlan)
-    price_matrix = models.ForeignKey('PriceMatrix')
+    plan = models.ForeignKey(RentPlan, on_delete=models.CASCADE)
+    price_matrix = models.ForeignKey('PriceMatrix', on_delete=models.CASCADE)
     start_time = models.BigIntegerField(null=True)
     end_time = models.BigIntegerField(null=True)
     is_special_offer = models.BooleanField(default=False)
