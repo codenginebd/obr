@@ -215,13 +215,12 @@ class InventoryUploader(object):
                             supplier_object.phone_number2 = str(phone2)
                             supplier_object.notes = str(note)
                             supplier_object.save()
-
                     inventory_transaction = InventoryTransaction()
                     inventory_transaction.transaction_type = InventoryTXNType.STOCK_IN.value
                     inventory_transaction.qty = new_stock
                     if supplier_object:
                         inventory_object.supplier_id = supplier_object.pk
-                    inventory_object.warehouse_id = warehouse_object.pk
+                    inventory_transaction.warehouse_id = warehouse_object.pk
                     inventory_transaction.product_id = book_object.pk
                     inventory_transaction.product_model = book_object.__class__.__name__
                     inventory_transaction.is_new = is_new

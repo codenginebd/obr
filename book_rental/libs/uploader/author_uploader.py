@@ -105,8 +105,9 @@ class AuthorUploader(object):
 
                     if date_of_birth:
                         try:
-                            date_of_birth = date_of_birth.date() #datetime.strptime(date_of_birth, "%d/%m/%Y")
+                            date_of_birth = datetime.strptime(date_of_birth, "%d/%m/%Y")
                         except Exception as exp:
+                            print(str(exp))
                             date_of_birth = None
                             ErrorLog.log(url='', stacktrace='Author date of birth format incorrect. Correct format: dd/mm/yyyy. skipping...', context='Author')
                             continue
@@ -136,6 +137,7 @@ class AuthorUploader(object):
 
                     if phones:
                         for phone in phones:
+                            phone = phone.replace("'", "")
                             phone_objects = Phone.objects.filter(number=phone)
                             if phone_objects.exists():
                                 phone_object = phone_objects.first()

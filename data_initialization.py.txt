@@ -5,6 +5,10 @@ python3 manage.py br_init
 python3 manage.py makemigrations
 python3 manage.py migrate
 
+Run book_rental/sql/make_unicode.sql
+
+Use either folowing commands or admin panel to upload all the data in the admin.
+
 #After DB activities
 python3 manage.py init_utilities
 python3 manage.py upload_warehouse
@@ -14,5 +18,5 @@ python3 manage.py upload_category
 python3 manage.py upload_currency_list
 python3 manage.py upload_books
 python3 manage.py upload_inventory
-python3 manage.py upload_sale_price
-python3 manage.py upload_rent_price
+#python3 manage.py upload_sale_price
+#python3 manage.py upload_rent_price
