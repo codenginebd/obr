@@ -75,7 +75,9 @@ class BookSerializer(BaseModelSerializer):
         price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
                                                           product_code=obj.code, is_new=1, print_type='ECO',is_rent=True)
         if price_matrix_objects.exists():
-            return RentPlanSerializer(queryset=price_matrix_objects.first().rent_plans.all())
+            rp_objects = price_matrix_objects.first().rent_plans.all()
+            rps = RentPlanSerializer(rp_objects, many=True)
+            return rps.data
         return []
 
     def get_original_available(self, obj):

@@ -20,13 +20,14 @@ $(document).ready(function () {
         $("#id_search_results").html("<p class='loading'>Loading...</p>");
         call_ajax("GET", "/api/v1/books/", search_params, function (data) {
             var pagination_template = $("#id_search_pagination_hb_template").html();
-            var pagination_object = Pager.create_pagination_object(data.count, 3, 2, 10);
+
+            var pagination_object = Pager.create_pagination_object(data.length, 3, 2, 10);
             var pagination_rendered = render_template(pagination_template, pagination_object);
             $("#id_search_results_pagination1").html(pagination_rendered);
             $("#id_search_results_pagination2").html(pagination_rendered);
 
             var search_result_template = $("#id_search_results_hb_template").html();
-            var rendered_results = render_template(search_result_template, data);
+            var rendered_results = render_template(search_result_template, {"results": data});
             $("#id_search_results").html(rendered_results);
         },
         function (jqxhr, status, error) {

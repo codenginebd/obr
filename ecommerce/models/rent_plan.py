@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls.base import reverse
-
 from generics.models.base_entity import BaseEntity
 
 
