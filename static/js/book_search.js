@@ -1,21 +1,65 @@
+String.prototype.isEmpty = function() {
+    return (this.length === 0 || !this.trim());
+};
+
+String.prototype.isBlank = function(str) {
+    return (!str || /^\s*$/.test(str));
+};
+
 $(document).ready(function () {
    $(document).on("click", ".btn-browse-filter", function (e) {
         e.preventDefault();
         $("#id_browse_more_filter_content").slideToggle(500);
     });
     
-    function update_browser_address() {
-        
+    function update_browser_address(search_params) {
+        var url_address = "";
+        for(var key in search_params) {
+            if(url_address != "") {
+                url_address += "&" + key + "=" + search_params[key];
+            }
+            else {
+                url_address += key + "=" + search_params[key];
+            }
+        }
+        window.history.pushState(search_params, "", url_address);
     }
-    
     function collect_search_params(page) {
-
-
+        var data = {};
+        if(typeof page != "undefined") {
+            data["page"] = page;
+        }
+        var sf_isbn = $("input[name=sf-isbn]").val();
+        var sf_keyword = $("input[name=sf-keyword]").val();
+        var sf_bl = $("input[name=sf-bl]").val();
+        var sf_rating = $("input[name=sf-rating]").val();
+        var sf_by_used = $("input[name=sf-by-used]").val();
+        var sf_by_print = $("input[name=sf-by-print]").val();
+        
+        if(!sf_isbn.isEmpty() && !sf_keyword.isBlank()) {
+            data["isbn"] = sf_isbn;
+        }
+        if(!sf_keyword.isEmpty() && !sf_keyword.isBlank()) {
+            data["keyword"] = sf_keyword;
+        }
+        if(!sf_bl.isEmpty() && !sf_bl.isBlank()) {
+            data["bl"] = sf_bl;
+        }
+        if(!sf_rating.isEmpty() && !sf_rating.isBlank()) {
+            data["rating"] = sf_rating;
+        }
+        if(!sf_by_used.isEmpty() && !sf_by_used.isBlank()) {
+            data["used"] = sf_by_used;
+        }
+        if(!sf_by_print.isEmpty() && !sf_by_print.isBlank()) {
+            data["print"] = sf_by_print;
+        }
+        return data;
     }
 
     function perform_search(page) {
         var search_params = collect_search_params(page);
-        update_browser_address();
+        update_browser_address(search_params);
         $("#id_search_results_pagination1").html("<p class='loading'>Loading...</p>");
         $("#id_search_results_pagination2").html("<p class='loading'>Loading...</p>");
         $("#id_search_results").html("<p class='loading'>Loading...</p>");
@@ -93,9 +137,15 @@ $(document).ready(function () {
     });
 
 
-    $(document).on("click", ".search-result-pager-item", function (e) {
+    function search_action_handler(e) {
           e.preventDefault();
-          alert("Hi!");
+          var page = $(this).data("page");
+          perform_search(page);
+    }
+
+
+    $(document).on("click", ".search-result-pager-item", function (e) {
+        search_action_handler(e);
     });
 
 

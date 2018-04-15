@@ -12,18 +12,20 @@
         <ul class="pagination pull-right">
 		  {% verbatim %}{{#if prev_page_available}}{% endverbatim %}
           <li class="pagination-li-item" data-page="{% verbatim %}{{ prev_page }}{% endverbatim %}">
-              <a href="#"><span class="glyphicon glyphicon-menu-left"></span></a>
-          </li>
-		  {% verbatim %}{{else}}{% endverbatim %}
-		  <li class="disabled" style="disabled: disabled;"><a href="#"><span class="glyphicon glyphicon-menu-left"></span></a></li>
-		  {% verbatim %}{{/if}}{% endverbatim %}
-		  {% verbatim %}{{#if next_page_available}}{% endverbatim %}
-          <li class="pagination-li-item" data-page="{% verbatim %}{{ next_page }}{% endverbatim %}">
-              <a href="#"><span class="glyphicon glyphicon-menu-right"></span></a>
+              <a class="search-result-pager-item" href="#"><span class="glyphicon glyphicon-menu-left"></span></a>
           </li>
 		  {% verbatim %}{{else}}{% endverbatim %}
 		  <li class="disabled" style="disabled: disabled;">
-              <a href="#"><span class="glyphicon glyphicon-menu-right"></span></a></li>
+              <a class="search-result-pager-item" href="#"><span class="glyphicon glyphicon-menu-left"></span></a>
+          </li>
+		  {% verbatim %}{{/if}}{% endverbatim %}
+		  {% verbatim %}{{#if next_page_available}}{% endverbatim %}
+          <li class="pagination-li-item" data-page="{% verbatim %}{{ next_page }}{% endverbatim %}">
+              <a class="search-result-pager-item" href="#"><span class="glyphicon glyphicon-menu-right"></span></a>
+          </li>
+		  {% verbatim %}{{else}}{% endverbatim %}
+		  <li class="disabled" style="disabled: disabled;">
+              <a class="search-result-pager-item" href="#"><span class="glyphicon glyphicon-menu-right"></span></a></li>
 		  {% verbatim %}{{/if}}{% endverbatim %}
         </ul>
   </div>
