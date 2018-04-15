@@ -1,3 +1,11 @@
+String.prototype.isEmpty = function() {
+    return (this.length === 0 || !this.trim());
+};
+
+String.prototype.isBlank = function(str) {
+    return (!str || /^\s*$/.test(str));
+};
+
 $(document).ready(function () {
    $(document).on("click", ".btn-browse-filter", function (e) {
         e.preventDefault();
@@ -9,7 +17,21 @@ $(document).ready(function () {
     }
     
     function collect_search_params() {
+        var data = {};
+        var sf_isbn = $("input[name=sf-isbn]").val();
+        var sf_keyword = $("input[name=sf-keyword]").val();
+        var sf_bl = $("input[name=sf-bl]").val();
         
+        if(!sf_isbn.isEmpty() && !sf_keyword.isBlank()) {
+            data["isbn"] = sf_isbn;
+        }
+        if(!sf_keyword.isEmpty() && !sf_keyword.isBlank()) {
+            data["keyword"] = sf_keyword;
+        }
+        if(!sf_bl.isEmpty() && !sf_bl.isBlank()) {
+            data["bl"] = sf_bl;
+        }
+        return data;
     }
 
     function perform_search() {
