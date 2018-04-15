@@ -21,6 +21,9 @@ $(document).ready(function () {
         var sf_isbn = $("input[name=sf-isbn]").val();
         var sf_keyword = $("input[name=sf-keyword]").val();
         var sf_bl = $("input[name=sf-bl]").val();
+        var sf_rating = $("input[name=sf-rating]").val();
+        var sf_by_used = $("input[name=sf-by-used]").val();
+        var sf_by_print = $("input[name=sf-by-print]").val();
         
         if(!sf_isbn.isEmpty() && !sf_keyword.isBlank()) {
             data["isbn"] = sf_isbn;
