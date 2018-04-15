@@ -67,14 +67,14 @@ $(document).ready(function () {
                           <p class="hint small" style="letter-spacing: 0.08em;">
                               Type Book ISBN or Keywords below and then press ENTER to filter the search result
                           </p>
-                          <p><input type="text" class="form-control" placeholder="Enter ISBN"></p>
-                          <p><input type="text" class="form-control" placeholder="Enter keyword e.g Algebra"></p>
+                          <p><input type="text" name="sf-isbn" class="form-control" placeholder="Enter ISBN"></p>
+                          <p><input type="text" name="sf-keyword" class="form-control" placeholder="Enter keyword e.g Algebra"></p>
                           <br/>
                           <div>
                               <p>Book Language</p>
                               <hr style="margin: 2px 0px 9px 0px;"/>
-                              <label style="cursor: pointer;"><input type="radio" value="en" name="filter_by_bl"/> English</label>
-                              <label style="cursor: pointer;"><input type="radio" value="bn" name="filter_by_bl"/> Bangla</label>
+                              <label style="cursor: pointer;"><input type="radio" value="en" name="sf-bl"/> English</label>
+                              <label style="cursor: pointer;"><input type="radio" value="bn" name="sf-bl"/> Bangla</label>
                           </div>
                           <br/>
                           <div>
@@ -82,22 +82,22 @@ $(document).ready(function () {
                               <hr style="margin: 2px 0px 9px 0px;"/>
                               <ul class="list-group">
                                   <li class="list-group-item">
-                                      <input style="position: relative; bottom: -3px;" type="checkbox" name="filter-rating-checkbox"/> <div style="display: inline;" data-rating="1" class="product-rating"></div>
+                                      <input style="position: relative; bottom: -3px;" type="checkbox" name="sf-rating"/> <div style="display: inline;" data-rating="1" class="product-rating"></div>
                                   </li>
                                   <li class="list-group-item">
-                                      <input style="position: relative; bottom: -3px;" type="checkbox" name="filter-rating-checkbox"/> <div style="display: inline;" data-rating="2" class="product-rating"></div>
+                                      <input style="position: relative; bottom: -3px;" type="checkbox" name="sf-rating"/> <div style="display: inline;" data-rating="2" class="product-rating"></div>
                                   </li>
                                   <li class="list-group-item">
-                                      <input style="position: relative; bottom: -3px;" type="checkbox" name="filter-rating-checkbox"/> <div style="display: inline;" data-rating="3" class="product-rating"></div>
+                                      <input style="position: relative; bottom: -3px;" type="checkbox" name="sf-rating"/> <div style="display: inline;" data-rating="3" class="product-rating"></div>
                                   </li>
                                   <li class="list-group-item">
-                                      <input style="position: relative; bottom: -3px;" type="checkbox" name="filter-rating-checkbox"/> <div style="display: inline;" data-rating="4" class="product-rating"></div>
+                                      <input style="position: relative; bottom: -3px;" type="checkbox" name="sf-rating"/> <div style="display: inline;" data-rating="4" class="product-rating"></div>
                                   </li>
                                   <li class="list-group-item">
-                                      <input style="position: relative; bottom: -3px;" type="checkbox" name="filter-rating-checkbox"/> <div style="display: inline;" data-rating="5" class="product-rating"></div>
+                                      <input style="position: relative; bottom: -3px;" type="checkbox" name="sf-rating"/> <div style="display: inline;" data-rating="5" class="product-rating"></div>
                                   </li>
                                   <li class="list-group-item">
-                                      <input style="position: relative; bottom: -1px;" type="checkbox" name="filter-rating-checkbox"/> <div style="display: inline;">Any Rating</div>
+                                      <input style="position: relative; bottom: -1px;" type="checkbox" name="sf-rating"/> <div style="display: inline;">Any Rating</div>
                                   </li>
                               </ul>
                           </div>
@@ -108,13 +108,13 @@ $(document).ready(function () {
                               <hr style="margin: 2px 0px 9px 0px;"/>
                               <ul class="list-group">
                                   <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
-                                      <label style="cursor: pointer;"><input type="radio" value="new" name="filter_by_used"/> New Books</label>
+                                      <label style="cursor: pointer;"><input type="radio" value="new" name="sf-by-used"/> New Books</label>
                                   </li>
                                   <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
-                                      <label style="cursor: pointer;"><input type="radio" value="used" name="filter_by_used"/> Used Books</label>
+                                      <label style="cursor: pointer;"><input type="radio" value="used" name="sf-by-used"/> Used Books</label>
                                   </li>
                                   <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
-                                      <label style="cursor: pointer;"><input checked="checked" type="radio" value="any" name="filter_by_used"/> Any</label>
+                                      <label style="cursor: pointer;"><input checked="checked" type="radio" value="any" name="sf-by-used"/> Any</label>
                                   </li>
                               </ul>
                           </div>
@@ -125,16 +125,16 @@ $(document).ready(function () {
                               <hr style="margin: 2px 0px 9px 0px;"/>
                               <ul class="list-group">
                                   <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
-                                      <label style="cursor: pointer;"><input type="radio" value="ORI" name="filter_by_print"/> Original Print</label>
+                                      <label style="cursor: pointer;"><input type="radio" value="ORI" name="sf-by-print"/> Original Print</label>
                                   </li>
                                   <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
-                                      <label style="cursor: pointer;"><input type="radio" value="COL" name="filter_by_print"/> Color Print</label>
+                                      <label style="cursor: pointer;"><input type="radio" value="COL" name="sf-by-print"/> Color Print</label>
                                   </li>
                                   <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
-                                      <label style="cursor: pointer;"><input type="radio" value="ECO" name="filter_by_print"/> Economy Print</label>
+                                      <label style="cursor: pointer;"><input type="radio" value="ECO" name="sf-by-print"/> Economy Print</label>
                                   </li>
                                   <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
-                                      <label style="cursor: pointer;"><input checked="checked" type="radio" value="any" name="filter_by_print"/> Any</label>
+                                      <label style="cursor: pointer;"><input checked="checked" type="radio" value="any" name="sf-by-print"/> Any</label>
                                   </li>
                               </ul>
                           </div>
@@ -145,7 +145,7 @@ $(document).ready(function () {
                                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <a href="#" class="pull-left" style="">
                                         <label style="cursor: pointer; ">
-                                            <input type="checkbox" name="out_of_stock_checkbox" style="position: relative; bottom: -1px; "> Exclude Out of stock</label></a>
+                                            <input type="checkbox" name="sf-out-of-stock" style="position: relative; bottom: -1px; "> Exclude Out of stock</label></a>
                                         <a href="#" class="btn-browse-filter btn pull-right" style="color: white !important;background-color: #31b0d5 !important;">
                                         <span class="glyphicon glyphicon-th-list"></span> More Filters</a>
                                   </div>
