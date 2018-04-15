@@ -4,7 +4,7 @@
       <ul class="pagination">
           {% verbatim %}{{#each pages}}{% endverbatim %}
           <li class="pagination-li-item" data-page="{% verbatim %}{{ this }}{% endverbatim %}">
-              <a href="#">{% verbatim %}{{ this }}{% endverbatim %}</a></li>
+              <a class="search-result-pager-item" href="#">{% verbatim %}{{ this }}{% endverbatim %}</a></li>
 		  {% verbatim %}{{/each}}{% endverbatim %}
         </ul>
   </div>

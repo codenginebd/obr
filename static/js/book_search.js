@@ -8,18 +8,19 @@ $(document).ready(function () {
         
     }
     
-    function collect_search_params() {
-        
+    function collect_search_params(page) {
+
+
     }
 
-    function perform_search() {
-        var search_params = collect_search_params();
+    function perform_search(page) {
+        var search_params = collect_search_params(page);
         update_browser_address();
         $("#id_search_results_pagination1").html("<p class='loading'>Loading...</p>");
         $("#id_search_results_pagination2").html("<p class='loading'>Loading...</p>");
         $("#id_search_results").html("<p class='loading'>Loading...</p>");
         call_ajax("GET", "/api/v1/books/", search_params, function (data) {
-            console.log(data);
+            //console.log(data);
             var pagination_template = $("#id_search_pagination_hb_template").html();
 
             var pagination_object = Pager.create_pagination_object(data.count, 10, 1, 10);
@@ -39,7 +40,7 @@ $(document).ready(function () {
         });
     };
 
-    setTimeout(perform_search, 1000);
+    setTimeout(perform_search, 500);
 
     $(document).on("click", ".search-filter-by-category", function (e) {
         if($(this).is(":checked")) {
@@ -55,7 +56,7 @@ $(document).ready(function () {
                     function (data) {
                         var author_template = $("#id_search_author_mustache_template").html();
                         var template = render_template(author_template, data);
-                        console.log(template);
+                        //console.log(template);
                     },
                     function (jqxhr, status, error) {
 
@@ -90,5 +91,12 @@ $(document).ready(function () {
 
             });
     });
+
+
+    $(document).on("click", ".search-result-pager-item", function (e) {
+          e.preventDefault();
+          alert("Hi!");
+    });
+
 
 });
