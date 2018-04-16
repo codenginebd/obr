@@ -85,7 +85,8 @@
                                   <input type="radio" name="sr-rent-option"/> Used Copy
                               </label>
                               <p>Calculated Price = BDT 230</p>
-                              <button style="width: 160px;" class="btn btn-sm btn-danger pull-right">Add To Cart</button>
+                              <input type="hidden" name="buy-calculated-price-{{id}}" value="" class="buy-calculated-price"/>
+                              <button style="width: 160px;" data-product-id="{{id}}" class="btn btn-sm btn-danger pull-right add-to-buy-cart">Add To Cart</button>
                           </div>
                         </div>
                       </div>
@@ -133,7 +134,8 @@
                               <p class="small">
                                   Rent price calculated = BDT 350
                               </p>
-                              <p><button style="width: 160px;" class="btn btn-sm btn-danger pull-right">Add To Cart</button></p>
+                              <input type="hidden" name="rent-calculated-price-{{id}}" value="" class="rent-calculated-price"/>
+                              <p><button style="width: 160px;" data-product-id="{{id}}" class="btn btn-sm btn-danger pull-right add-to-rent-cart">Add To Cart</button></p>
                           </div>
                         </div>
                       </div>
