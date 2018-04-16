@@ -28,18 +28,47 @@ class BookSerializer(BaseModelSerializer):
     used_copy_available = serializers.SerializerMethodField()
     buy_options = serializers.SerializerMethodField()
     rent_options_eco_new = serializers.SerializerMethodField()
-    rent_price_available = serializers.SerializerMethodField()
     is_rent_available = serializers.SerializerMethodField()
+    rent_options = serializers.SerializerMethodField()
+
+    def get_rent_options(self, obj):
+        options = {
+            "New": [],
+            "Used": []
+        }
+        price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
+                                                          product_code=obj.code, is_new=1, is_rent=True)
+        if price_matrix_objects.exists():
+            price_matrix_object = price_matrix_objects.first()
+            rent_plans = price_matrix_object.rent_plans.all()
+            for rent_plan_object in rent_plans:
+                options["New"] += [
+                    {
+                        "name": rent_plan_object.verbose_name(),
+                        "days": rent_plan_object.days
+                    }
+                ]
+        price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
+                                                          product_code=obj.code, is_new=0, is_rent=True)
+        if price_matrix_objects.exists():
+            price_matrix_object = price_matrix_objects.first()
+            rent_plans = price_matrix_object.rent_plans.all()
+            for rent_plan_object in rent_plans:
+                options["Used"] += [
+                    {
+                        "name": rent_plan_object.verbose_name(),
+                        "days": rent_plan_object.days
+                    }
+                ]
+        options["new_options_available"] = True if options["New"] else False
+        options["used_options_available"] = True if options["Used"] else False
+        return options
+
     
     def get_is_rent_available(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
                                                      product_id=obj.pk, stock__gt=0, available_for_rent=True)
         return inventory_objects.exists()
-
-    def get_rent_price_available(self, obj):
-        price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
-                                                          product_code=obj.code)
-        return price_matrix_objects.exists()
 
     def get_price_currency(self, obj):
         price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
@@ -52,9 +81,12 @@ class BookSerializer(BaseModelSerializer):
     def get_buy_options(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
                                                      product_id=obj.pk, stock__gt=0, is_new=1)
-        options = []
+        options = {
+            "New": [],
+            "Used": []
+        }
         for inventory_object in inventory_objects:
-            options += [
+            options["New"] += [
                 {
                     "short_name": inventory_object.print_type,
                     "full_name": inventory_object.print_type_full_name
@@ -63,10 +95,10 @@ class BookSerializer(BaseModelSerializer):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
                                                      product_id=obj.pk, stock__gt=0, is_new=0)
         for inventory_object in inventory_objects:
-            options += [
+            options["Used"] += [
                 {
-                    "short_name": "used_"+inventory_object.print_type,
-                    "full_name": "Used "+inventory_object.print_type_full_name
+                    "short_name": inventory_object.print_type,
+                    "full_name": inventory_object.print_type_full_name
                 }
             ]
         return options
@@ -120,6 +152,7 @@ class BookSerializer(BaseModelSerializer):
     class Meta:
         model = Book
         fields = ('id', 'code', 'title', 'title_2', 'isbn', 'edition', 'publish_date', 'subtitle', 'subtitle_2', 'description', 'description_2', 'show_2',
-                  'sale_available', 'rent_price_available', 'market_price', 'price_currency', 'is_rent_available', 'buy_options', 'rent_options_eco_new', 'base_price', 'page_count', 'categories', 'publisher', 'authors', 'tags', 'images',
+                  'sale_available', 'market_price', 'price_currency', 'is_rent_available', 'buy_options', 'rent_options', 'rent_options_eco_new',
+                  'base_price', 'page_count', 'categories', 'publisher', 'authors', 'tags', 'images',
                   'language', 'rent_available', 'slug', 'original_available', 'color_available', 'date_created',
                   'economy_available', 'used_copy_available', 'last_updated')

@@ -10,6 +10,7 @@ from ecommerce.models.sales.rent_plan_relation import RentPlanRelation
 
 PriceMatrix = load_model(app_label="ecommerce", model_name="PriceMatrix")
 
+
 class Product(BaseEntity):
     title = models.CharField(max_length=500)
     title_2 = models.CharField(max_length=500)

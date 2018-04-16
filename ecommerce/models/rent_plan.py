@@ -10,6 +10,9 @@ class RentPlan(BaseEntity):
     def __str__(self):
         return self.code + ":" + self.name
 
+    def verbose_name(self):
+        return (" ".join(self.name.lower().replace("_plan", "").split("_"))).capitalize()
+
     @classmethod
     def show_create(cls):
         return True

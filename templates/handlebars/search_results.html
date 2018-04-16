@@ -40,7 +40,7 @@
                         <div class="small">Market Price: <strike> {% verbatim %}{{market_price}}{% endverbatim %} </strike> {% verbatim %}{{price_currency}}{% endverbatim %}
                         </div>
                         <div class="small">Our Price: {% verbatim %}{{base_price}}{% endverbatim %} {% verbatim %}{{price_currency}}{% endverbatim %}</div>
-                        <div><small>Rent Available from {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{rent_available_from}}{% endverbatim %}</small></div>
+{#                        <div><small>Rent Available from {% verbatim %}{{price_currency}}{% endverbatim %} {% verbatim %}{{rent_available_from}}{% endverbatim %}</small></div>#}
                         <div class="small">Initial Payable {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{base_price}}{% endverbatim %}</div>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xs-6">
@@ -72,21 +72,31 @@
                         </div>
                         <div id="collapse1_{% verbatim %}{{id}}{% endverbatim %}" class="panel-collapse collapse">
                           <div class="panel-body">
-                              <label>
-                                  <input type="radio" name="sr-rent-option"/> Original Copy
-                              </label>
-                              <label>
-                                  <input type="radio" name="sr-rent-option"/> Color Copy
-                              </label>
-                              <label>
-                                  <input type="radio" name="sr-rent-option"/> Economy Copy
-                              </label>
-                              <label>
-                                  <input type="radio" name="sr-rent-option"/> Used Copy
-                              </label>
+                              {% verbatim %}{{#buy_options}}{% endverbatim %}
+                                  {% verbatim %}{{#each New}}{% endverbatim %}
+                                  <div style="padding: 10px; background: #e2f1e0; color: #2f9459; font-weight: bold;">
+                                      New Copy
+                                  </div>
+                                  <div style="padding: 10px;">
+                                      <label class="price-label">
+                                          <input type="radio" name="sr-rent-option" value="{% verbatim %}{{short_name}}{% endverbatim %}"/> {% verbatim %}{{full_name}}{% endverbatim %}
+                                      </label>
+                                  </div>
+                                  {% verbatim %}{{/each}}{% endverbatim %}
+                                  {% verbatim %}{{#each Used}}{% endverbatim %}
+                                  <div style="padding: 10px; background: #e2f1e0; color: #2f9459; font-weight: bold;">
+                                      Used Copy
+                                  </div>
+                                  <div style="padding: 10px;">
+                                      <label class="price-label">
+                                          <input type="radio" name="sr-rent-option" value="{% verbatim %}{{short_name}}{% endverbatim %}"/> {% verbatim %}{{full_name}}{% endverbatim %}
+                                      </label>
+                                  </div>
+                                  {% verbatim %}{{/each}}{% endverbatim %}
+                              {% verbatim %}{{/buy_options}}{% endverbatim %}
                               <p>Calculated Price = BDT 230</p>
                               <input type="hidden" name="buy-calculated-price-{{id}}" value="" class="buy-calculated-price"/>
-                              <button style="width: 160px;" data-product-id="{{id}}" class="btn btn-sm btn-danger pull-right add-to-buy-cart">Add To Cart</button>
+                              <button style="font-weight: bold;" data-product-id="{{id}}" class="btn btn-sm btn-danger pull-right add-to-buy-cart">Add To Cart</button>
                           </div>
                         </div>
                       </div>
@@ -94,7 +104,7 @@
 					  <div class="panel panel-default">
                         <div class="panel-heading">
                           <h4 class="panel-title">
-                            <a href="#" style="disabled: disabled;">
+                            <a href="#" style="disabled: disabled;" onclick="return false;">
                             This Item is not available to buy</a>
                           </h4>
                         </div>
@@ -110,32 +120,41 @@
                         </div>
                         <div id="collapse2_{% verbatim %}{{id}}{% endverbatim %}" class="panel-collapse collapse">
                           <div class="panel-body">
-                              <label>
-                                  <input type="radio" name="sr-rent-option"/> 7 days
-                              </label>
-                              <label>
-                                  <input type="radio" name="sr-rent-option"/> 15 days
-                              </label>
-                              <label>
-                                  <input type="radio" name="sr-rent-option"/> 30 days
-                              </label>
-                              <label>
-                                  <input type="radio" name="sr-rent-option"/> 45 days
-                              </label>
-                              <label>
-                                  <input type="radio" name="sr-rent-option"/> 60 days
-                              </label>
-                              <label>
-                                  <input type="radio" name="sr-rent-option"/> 90 days
-                              </label>
-                              <label>
-                                  <input type="radio" name="sr-rent-option"/> 120 days
-                              </label>
+                              {% verbatim %}{{#rent_options}}{% endverbatim %}
+                                  {% verbatim %}{{#if new_options_available}}{% endverbatim %}
+                                  <div style="padding: 10px; background: #e2f1e0; color: #2f9459; font-weight: bold;">
+                                      New Copy
+                                  </div>
+                                 <div style="padding: 10px;">
+                                 <select class="form-control">
+                                  {% verbatim %}{{#each New}}{% endverbatim %}
+
+                                        <option value="{% verbatim %}{{value}}{% endverbatim %}">{% verbatim %}{{name}}{% endverbatim %}</option>
+
+                                  {% verbatim %}{{/each}}{% endverbatim %}
+                                  </select>
+                                 </div>
+                                  {% verbatim %}{{/if}}{% endverbatim %}
+                                   {% verbatim %}{{#if used_options_available}}{% endverbatim %}
+                                   <div style="padding: 10px; background: #e2f1e0; color: #2f9459; font-weight: bold;">
+                                          Used Copy
+                                   </div>
+                                  <div style="padding: 10px;">
+                                   <select class="form-control">
+                                  {% verbatim %}{{#each Used}}{% endverbatim %}
+
+                                        <option value="{% verbatim %}{{value}}{% endverbatim %}">{% verbatim %}{{name}}{% endverbatim %}</option>
+
+                                  {% verbatim %}{{/each}}{% endverbatim %}
+                                  </select>
+                                  </div>
+                                  {% verbatim %}{{/if}}{% endverbatim %}
+                              {% verbatim %}{{/rent_options}}{% endverbatim %}
                               <p class="small">
                                   Rent price calculated = BDT 350
                               </p>
                               <input type="hidden" name="rent-calculated-price-{{id}}" value="" class="rent-calculated-price"/>
-                              <p><button style="width: 160px;" data-product-id="{{id}}" class="btn btn-sm btn-danger pull-right add-to-rent-cart">Add To Cart</button></p>
+                              <p><button style="font-weight: bold;" data-product-id="{{id}}" class="btn btn-sm btn-danger pull-right add-to-rent-cart">Add To Cart</button></p>
                           </div>
                         </div>
                       </div>
@@ -143,7 +162,7 @@
 					  <div class="panel panel-default">
                         <div class="panel-heading">
                           <h4 class="panel-title">
-                            <a href="#" style="disabled: disabled;">
+                            <a href="#" style="disabled: disabled;" onclick="return false;">
                             This Item is not available for rent</a>
                           </h4>
                         </div>

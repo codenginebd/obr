@@ -2,7 +2,6 @@ from django.db import models
 from datetime import datetime
 from django.db.models.query_utils import Q
 from django.urls.base import reverse
-
 from book_rental.libs.downloader.rent_price_downloader import RentPriceDownloader
 from book_rental.libs.uploader.price_matrix_uploader import PriceMatrixUploader
 from ecommerce.models.rent_plan import RentPlan
