@@ -61,16 +61,16 @@
 
                 <hr style="margin: 6px 0px 6px 0px"/>
                 <div>
-                    <div class="panel-group" id="accordion">
+                    <div class="panel-group" id="accordion_{% verbatim %}{{id}}{% endverbatim %}">
 					  {% verbatim %}{{#if sale_available}}{% endverbatim %}
                       <div class="panel panel-default">
                         <div class="panel-heading">
                           <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                            <a data-toggle="collapse" data-parent="#accordion_{% verbatim %}{{id}}{% endverbatim %}" href="#collapse1_{% verbatim %}{{id}}{% endverbatim %}">
                             I want to Buy This</a>
                           </h4>
                         </div>
-                        <div id="collapse1" class="panel-collapse collapse">
+                        <div id="collapse1_{% verbatim %}{{id}}{% endverbatim %}" class="panel-collapse collapse">
                           <div class="panel-body">
                               <label>
                                   <input type="radio" name="sr-rent-option"/> Original Copy
@@ -103,11 +103,11 @@
                       <div class="panel panel-default">
                         <div class="panel-heading">
                           <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                            <a data-toggle="collapse" data-parent="#accordion_{% verbatim %}{{id}}{% endverbatim %}" href="#collapse2_{% verbatim %}{{id}}{% endverbatim %}">
                             I want to Rent this</a>
                           </h4>
                         </div>
-                        <div id="collapse2" class="panel-collapse collapse">
+                        <div id="collapse2_{% verbatim %}{{id}}{% endverbatim %}" class="panel-collapse collapse">
                           <div class="panel-body">
                               <label>
                                   <input type="radio" name="sr-rent-option"/> 7 days
