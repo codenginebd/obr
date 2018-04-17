@@ -30,6 +30,7 @@ class BookSerializer(BaseModelSerializer):
     rent_options_eco_new = serializers.SerializerMethodField()
     is_rent_available = serializers.SerializerMethodField()
     rent_options = serializers.SerializerMethodField()
+    is_sale_available = serializers.SerializerMethodField()
 
     def get_rent_options(self, obj):
         options = {
@@ -64,7 +65,12 @@ class BookSerializer(BaseModelSerializer):
         options["used_options_available"] = True if options["Used"] else False
         return options
 
-    
+
+    def get_is_sale_available(self, obj):
+        inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
+                                                     product_id=obj.pk, stock__gt=0, available_for_sale=True)
+        return inventory_objects.exists()
+
     def get_is_rent_available(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
                                                      product_id=obj.pk, stock__gt=0, available_for_rent=True)
@@ -101,6 +107,8 @@ class BookSerializer(BaseModelSerializer):
                     "full_name": inventory_object.print_type_full_name
                 }
             ]
+        options["new_available"] = True if options["New"] else False
+        options["used_available"] = True if options["Used"] else False
         return options
 
     def get_rent_options_eco_new(self, obj):
@@ -152,7 +160,7 @@ class BookSerializer(BaseModelSerializer):
     class Meta:
         model = Book
         fields = ('id', 'code', 'title', 'title_2', 'isbn', 'edition', 'publish_date', 'subtitle', 'subtitle_2', 'description', 'description_2', 'show_2',
-                  'sale_available', 'market_price', 'price_currency', 'is_rent_available', 'buy_options', 'rent_options', 'rent_options_eco_new',
+                  'sale_available', 'market_price', 'price_currency', 'is_sale_available', 'is_rent_available', 'buy_options', 'rent_options', 'rent_options_eco_new',
                   'base_price', 'page_count', 'categories', 'publisher', 'authors', 'tags', 'images',
                   'language', 'rent_available', 'slug', 'original_available', 'color_available', 'date_created',
                   'economy_available', 'used_copy_available', 'last_updated')

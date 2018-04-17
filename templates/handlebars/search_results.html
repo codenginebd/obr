@@ -62,7 +62,7 @@
                 <hr style="margin: 6px 0px 6px 0px"/>
                 <div>
                     <div class="panel-group" id="accordion_{% verbatim %}{{id}}{% endverbatim %}">
-					  {% verbatim %}{{#if sale_available}}{% endverbatim %}
+					  {% verbatim %}{{#if is_sale_available}}{% endverbatim %}
                       <div class="panel panel-default">
                         <div class="panel-heading">
                           <h4 class="panel-title">
@@ -72,31 +72,51 @@
                         </div>
                         <div id="collapse1_{% verbatim %}{{id}}{% endverbatim %}" class="panel-collapse collapse">
                           <div class="panel-body">
+
                               {% verbatim %}{{#buy_options}}{% endverbatim %}
-                                  {% verbatim %}{{#each New}}{% endverbatim %}
-                                  <div style="padding: 10px; background: #e2f1e0; color: #2f9459; font-weight: bold;">
-                                      New Copy
+                              <ul class="nav nav-tabs search-tabs">
+                                  {% verbatim %}{{#if new_available}}{% endverbatim %}
+                                  <li class="active"><a data-toggle="tab" href="#slider_tab1_{% verbatim %}{{../id}}{% endverbatim %}">New Copy</a></li>
+                                  {% verbatim %}{{/if}}{% endverbatim %}
+                                  {% verbatim %}{{#if used_available}}{% endverbatim %}
+                                  <li><a data-toggle="tab" href="#slider_tab2_{% verbatim %}{{../id}}{% endverbatim %}">Used Copy</a></li>
+                                  {% verbatim %}{{/if}}{% endverbatim %}
+                              </ul>
+                              <div class="tab-content">
+                                  {% verbatim %}{{#if new_available}}{% endverbatim %}
+                                  <div id="slider_tab1_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade active in">
+                                    {% verbatim %}{{#each New}}{% endverbatim %}
+                                      <div style="padding: 10px;">
+                                          <label class="price-label">
+                                              <input type="radio" name="sr-buy-option-input sr-rent-option" value="{% verbatim %}{{short_name}}{% endverbatim %}"/> {% verbatim %}{{full_name}}{% endverbatim %}
+                                          </label>
+                                      </div>
+                                      {% verbatim %}{{/each}}{% endverbatim %}
                                   </div>
-                                  <div style="padding: 10px;">
-                                      <label class="price-label">
-                                          <input type="radio" name="sr-rent-option" value="{% verbatim %}{{short_name}}{% endverbatim %}"/> {% verbatim %}{{full_name}}{% endverbatim %}
-                                      </label>
+                                  {% verbatim %}{{/if}}{% endverbatim %}
+                                  {% verbatim %}{{#if used_available}}{% endverbatim %}
+                                  <div id="slider_tab2_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade">
+                                    {% verbatim %}{{#each Used}}{% endverbatim %}
+                                      <div style="padding: 10px;">
+                                          <label class="price-label">
+                                              <input type="radio" name="sr-buy-option-input sr-rent-option" value="{% verbatim %}{{short_name}}{% endverbatim %}"/> {% verbatim %}{{full_name}}{% endverbatim %}
+                                          </label>
+                                      </div>
+                                      {% verbatim %}{{/each}}{% endverbatim %}
                                   </div>
-                                  {% verbatim %}{{/each}}{% endverbatim %}
-                                  {% verbatim %}{{#each Used}}{% endverbatim %}
-                                  <div style="padding: 10px; background: #e2f1e0; color: #2f9459; font-weight: bold;">
-                                      Used Copy
-                                  </div>
-                                  <div style="padding: 10px;">
-                                      <label class="price-label">
-                                          <input type="radio" name="sr-rent-option" value="{% verbatim %}{{short_name}}{% endverbatim %}"/> {% verbatim %}{{full_name}}{% endverbatim %}
-                                      </label>
-                                  </div>
-                                  {% verbatim %}{{/each}}{% endverbatim %}
+                                  {% verbatim %}{{/if}}{% endverbatim %}
+                              </div>
                               {% verbatim %}{{/buy_options}}{% endverbatim %}
-                              <p>Calculated Price = BDT 230</p>
-                              <input type="hidden" name="buy-calculated-price-{{id}}" value="" class="buy-calculated-price"/>
-                              <button style="font-weight: bold;" data-product-id="{{id}}" class="btn btn-sm btn-danger pull-right add-to-buy-cart">Add To Cart</button>
+                              <hr/>
+                              <div class="row">
+                                  <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                      <p class="hidden">Calculated Price = <span class="sale-price-currency-span">BDT</span>  <span class="sale-price-span">250</span></p>
+                                      <input type="hidden" name="buy-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="buy-calculated-price"/>
+                                  </div>
+                                  <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                      <button style="font-weight: bold;" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-buy-cart">Add To Cart</button>
+                                  </div>
+                              </div>
                           </div>
                         </div>
                       </div>
@@ -120,41 +140,55 @@
                         </div>
                         <div id="collapse2_{% verbatim %}{{id}}{% endverbatim %}" class="panel-collapse collapse">
                           <div class="panel-body">
-                              {% verbatim %}{{#rent_options}}{% endverbatim %}
-                                  {% verbatim %}{{#if new_options_available}}{% endverbatim %}
-                                  <div style="padding: 10px; background: #e2f1e0; color: #2f9459; font-weight: bold;">
-                                      New Copy
+                                  {% verbatim %}{{#rent_options}}{% endverbatim %}
+
+                                  <ul class="nav nav-tabs search-tabs">
+                                      {% verbatim %}{{#if new_options_available}}{% endverbatim %}
+                                      <li class="active"><a data-toggle="tab" href="#slider_tab3_{% verbatim %}{{../id}}{% endverbatim %}">New Copy</a></li>
+                                      {% verbatim %}{{/if}}{% endverbatim %}
+                                      {% verbatim %}{{#if used_options_available}}{% endverbatim %}
+                                      <li><a data-toggle="tab" href="#slider_tab4_{% verbatim %}{{../id}}{% endverbatim %}">Used Copy</a></li>
+                                      {% verbatim %}{{/if}}{% endverbatim %}
+                                  </ul>
+                                  <div class="tab-content">
+                                      {% verbatim %}{{#if new_options_available}}{% endverbatim %}
+                                      <div id="slider_tab3_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade active in">
+                                        <div style="padding: 10px;">
+                                            <select class="form-control rent-option-new">
+                                              {% verbatim %}{{#each New}}{% endverbatim %}
+
+                                                    <option value="{% verbatim %}{{value}}{% endverbatim %}">{% verbatim %}{{name}}{% endverbatim %}</option>
+
+                                              {% verbatim %}{{/each}}{% endverbatim %}
+                                            </select>
+                                        </div>
+                                      </div>
+                                      {% verbatim %}{{/if}}{% endverbatim %}
+                                      {% verbatim %}{{#if used_options_available}}{% endverbatim %}
+                                      <div id="slider_tab4_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade">
+                                        <div style="padding: 10px;">
+                                          <select class="form-control rent-option-used">
+                                              {% verbatim %}{{#each Used}}{% endverbatim %}
+
+                                                    <option value="{% verbatim %}{{value}}{% endverbatim %}">{% verbatim %}{{name}}{% endverbatim %}</option>
+
+                                              {% verbatim %}{{/each}}{% endverbatim %}
+                                            </select>
+                                          </div>
+                                      </div>
+                                      {% verbatim %}{{/if}}{% endverbatim %}
                                   </div>
-                                 <div style="padding: 10px;">
-                                 <select class="form-control">
-                                  {% verbatim %}{{#each New}}{% endverbatim %}
-
-                                        <option value="{% verbatim %}{{value}}{% endverbatim %}">{% verbatim %}{{name}}{% endverbatim %}</option>
-
-                                  {% verbatim %}{{/each}}{% endverbatim %}
-                                  </select>
-                                 </div>
-                                  {% verbatim %}{{/if}}{% endverbatim %}
-                                   {% verbatim %}{{#if used_options_available}}{% endverbatim %}
-                                   <div style="padding: 10px; background: #e2f1e0; color: #2f9459; font-weight: bold;">
-                                          Used Copy
-                                   </div>
-                                  <div style="padding: 10px;">
-                                   <select class="form-control">
-                                  {% verbatim %}{{#each Used}}{% endverbatim %}
-
-                                        <option value="{% verbatim %}{{value}}{% endverbatim %}">{% verbatim %}{{name}}{% endverbatim %}</option>
-
-                                  {% verbatim %}{{/each}}{% endverbatim %}
-                                  </select>
-                                  </div>
-                                  {% verbatim %}{{/if}}{% endverbatim %}
                               {% verbatim %}{{/rent_options}}{% endverbatim %}
-                              <p class="small">
-                                  Rent price calculated = BDT 350
-                              </p>
-                              <input type="hidden" name="rent-calculated-price-{{id}}" value="" class="rent-calculated-price"/>
-                              <p><button style="font-weight: bold;" data-product-id="{{id}}" class="btn btn-sm btn-danger pull-right add-to-rent-cart">Add To Cart</button></p>
+                              <hr/>
+                              <div class="row">
+                                  <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                      <p class="hidden">Rent price calculated = <span class="rent-price-currency-span">BDT</span> <span class="rent-price-span">250</span></p>
+                                      <input type="hidden" name="rent-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="rent-calculated-price"/>
+                                  </div>
+                                  <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                      <button style="font-weight: bold;" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-rent-cart">Add To Cart</button>
+                                  </div>
+                              </div>
                           </div>
                         </div>
                       </div>
