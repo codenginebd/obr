@@ -1,12 +1,14 @@
+{% load  staticfiles %}
 <script id="id_search_results_hb_template" type="text/x-handlebars-template">
 {% verbatim %}{{#if results}}{% endverbatim %}
 {% verbatim %}{{#each results}}{% endverbatim %}
-<div class="row book_entry search_entry" data-item-id="{% verbatim %}{{id}}{% endverbatim %}" style="border: 1px solid #f7f7f7; margin-left: 1px;">
+<div class="row book_entry search_entry" data-item-type="{% verbatim %}{{product_type}}{% endverbatim %}" data-item-code="{% verbatim %}{{code}}{% endverbatim %}" data-item-id="{% verbatim %}{{id}}{% endverbatim %}" style="border: 1px solid #f7f7f7; margin-left: 1px;">
     <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
         <div class="row">
             <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3">
 
                 <img style="margin: 20px; width: 130px; height: 186px; " src="https://s3-ap-southeast-1.amazonaws.com/rokomari110/productNew/130X186/880410348_90657.jpg" class="img-responsive book-img-grid">
+                <img src={%  static "images/special-offer.png" %} style="width: 100px; height: 60px; position: relative; left: 10px; bottom: 60px;"/>
                 <div data-rating="4.5" class="product-rating text-center"></div>
             </div>
             <div class="col-md-9 col-sm-9 col-xs-9 col-lg-9 text-left pad-10 margin-left--9" style="padding: 14px; ">
@@ -41,7 +43,6 @@
                         </div>
                         <div class="small">Our Price: {% verbatim %}{{base_price}}{% endverbatim %} {% verbatim %}{{price_currency}}{% endverbatim %}</div>
 {#                        <div><small>Rent Available from {% verbatim %}{{price_currency}}{% endverbatim %} {% verbatim %}{{rent_available_from}}{% endverbatim %}</small></div>#}
-                        <div class="small">Initial Payable {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{base_price}}{% endverbatim %}</div>
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xs-6">
 						{% verbatim %}{{#if original_available}}{% endverbatim %}
@@ -88,7 +89,7 @@
                                     {% verbatim %}{{#each New}}{% endverbatim %}
                                       <div style="padding: 10px;">
                                           <label class="price-label">
-                                              <input type="radio" name="sr-buy-option-input sr-rent-option" value="{% verbatim %}{{short_name}}{% endverbatim %}"/> {% verbatim %}{{full_name}}{% endverbatim %}
+                                              <input type="radio" class="sr-rent-option new" name="sr-buy-option-input" value="{% verbatim %}{{short_name}}{% endverbatim %}"/> {% verbatim %}{{full_name}}{% endverbatim %}
                                           </label>
                                       </div>
                                       {% verbatim %}{{/each}}{% endverbatim %}
@@ -99,7 +100,7 @@
                                     {% verbatim %}{{#each Used}}{% endverbatim %}
                                       <div style="padding: 10px;">
                                           <label class="price-label">
-                                              <input type="radio" name="sr-buy-option-input sr-rent-option" value="{% verbatim %}{{short_name}}{% endverbatim %}"/> {% verbatim %}{{full_name}}{% endverbatim %}
+                                              <input type="radio" class="sr-rent-option used" name="sr-buy-option-input" value="{% verbatim %}{{short_name}}{% endverbatim %}"/> {% verbatim %}{{full_name}}{% endverbatim %}
                                           </label>
                                       </div>
                                       {% verbatim %}{{/each}}{% endverbatim %}
@@ -114,7 +115,7 @@
                                       <input type="hidden" name="buy-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="buy-calculated-price"/>
                                   </div>
                                   <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
-                                      <button style="font-weight: bold;" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-buy-cart">Add To Cart</button>
+                                      <button disabled style="font-weight: bold;" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-buy-cart">Add To Cart</button>
                                   </div>
                               </div>
                           </div>
@@ -182,11 +183,12 @@
                               <hr/>
                               <div class="row">
                                   <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                      <div class="small">Initial Payable {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{base_price}}{% endverbatim %}</div>
                                       <p class="hidden">Rent price calculated = <span class="rent-price-currency-span">BDT</span> <span class="rent-price-span">250</span></p>
                                       <input type="hidden" name="rent-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="rent-calculated-price"/>
                                   </div>
                                   <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
-                                      <button style="font-weight: bold;" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-rent-cart">Add To Cart</button>
+                                      <button disabled style="font-weight: bold;" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-rent-cart">Add To Cart</button>
                                   </div>
                               </div>
                           </div>

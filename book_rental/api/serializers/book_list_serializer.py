@@ -31,6 +31,10 @@ class BookSerializer(BaseModelSerializer):
     is_rent_available = serializers.SerializerMethodField()
     rent_options = serializers.SerializerMethodField()
     is_sale_available = serializers.SerializerMethodField()
+    product_type = serializers.SerializerMethodField()
+
+    def get_product_type(self, obj):
+        return obj.__class__.__name__
 
     def get_rent_options(self, obj):
         options = {
@@ -159,7 +163,7 @@ class BookSerializer(BaseModelSerializer):
 
     class Meta:
         model = Book
-        fields = ('id', 'code', 'title', 'title_2', 'isbn', 'edition', 'publish_date', 'subtitle', 'subtitle_2', 'description', 'description_2', 'show_2',
+        fields = ('id', 'code', 'product_type', 'title', 'title_2', 'isbn', 'edition', 'publish_date', 'subtitle', 'subtitle_2', 'description', 'description_2', 'show_2',
                   'sale_available', 'market_price', 'price_currency', 'is_sale_available', 'is_rent_available', 'buy_options', 'rent_options', 'rent_options_eco_new',
                   'base_price', 'page_count', 'categories', 'publisher', 'authors', 'tags', 'images',
                   'language', 'rent_available', 'slug', 'original_available', 'color_available', 'date_created',
