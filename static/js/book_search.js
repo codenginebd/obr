@@ -168,11 +168,11 @@ $(document).ready(function () {
         var product_code = $(this).closest(".book_entry").data("item-code");
         var product_type = $(this).closest(".book_entry").data("item-type");
 
-        call_ajax("GET", "/api/v1/sale-price/", { "ptype": value, "pcode": product_code, "pr-type": product_type, "used": new_item },
+        call_ajax("GET", "/api/v1/sale-price/", { "ptype": product_type, "pcode": product_code, "pr-type": value, "used": !new_item },
         function (data) {
             $(buy_cart_btn).prop("disabled", false);
-            $(price_currency_span).text("BDT");
-            $(price_span).text(500);
+            $(price_currency_span).text(data.currency_code);
+            $(price_span).text(data.sale_price);
             $(price_currency_span).parent().removeClass("hidden");
         },
         function (jqxhr, status, error) {

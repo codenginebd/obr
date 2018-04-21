@@ -15,7 +15,7 @@ class SalePriceAPIView(BRAPIView):
         product_code = request.GET.get('pcode')
         print_type  = request.GET.get('pr-type', 'ECO')
         is_used = request.GET.get('used', 0)
-        is_new = True if not is_used else False
+        is_new = 1 if not is_used or is_used == '0' or is_used == 'false' else 0
         queryset = queryset.filter(product_model=product_type,product_code=product_code,print_type=print_type,is_new=is_new)
         return queryset
         
@@ -32,6 +32,7 @@ class SalePriceAPIView(BRAPIView):
             response['market_price'] = q_object.market_price
             response['currency_code'] = q_object.currency.short_name
             response['special_price'] = q_object.special_price
+            response["sale_price"] = q_object.get_product_sale_price
             response['o_price_p'] = q_object.offer_price_p
             response['o_price_v'] = q_object.offer_price_v
             response['offer_date_start'] = q_object.offer_date_start

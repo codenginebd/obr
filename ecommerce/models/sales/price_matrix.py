@@ -53,6 +53,19 @@ class PriceMatrix(BaseEntity):
             if book_objects.exists():
                 return book_objects.first()
 
+    @property
+    def get_product_sale_price(self):
+        base_price = self.base_price
+        if self.special_price:
+            tday = Clock.utc_timestamp()
+            if self.offer_date_start <= tday and self.offer_date_end >= tday:
+                if self.offer_price_p > 0:
+                    return self.base_price * (self.offer_price_p / 100)
+                elif self.offer_price_v:
+                    return self.offer_price_v
+        return base_price
+
+
     @classmethod
     def show_create(cls):
         return True
