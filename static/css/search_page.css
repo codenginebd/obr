@@ -43,3 +43,8 @@
     text-transform: uppercase !important;
     letter-spacing: 0.06em;
 }
+
+hr {
+    padding: 0px !important;
+    margin: 5px 5px 10px 0px !important;
+}

@@ -30,6 +30,7 @@ from ecommerce.api.viewsets.rent_plan_api_view import RentPlanAPIView
 from ecommerce.api.viewsets.rent_plan_options import RentPlanOptionsAPIView
 from ecommerce.api.viewsets.sale_options import SaleOptionsAPIView
 from ecommerce.api.viewsets.sale_price_api_view import SalePriceAPIView
+from ecommerce.api.viewsets.rent_price_api_view import RentPriceAPIView
 from home_view import HomeView
 from ecommerce.api.viewsets.add_to_cart_api_view import AddToCartAPIView
 # Books Import
@@ -78,6 +79,7 @@ urlpatterns += [
     url('^api/v1/rent-plan-options/$', RentPlanOptionsAPIView.as_view()),
     url('^api/v1/shopping/add-to-cart/$', AddToCartAPIView.as_view()),
     url('^api/v1/sale-price/$', SalePriceAPIView.as_view()),
+    url('^api/v1/rent-price/$', RentPriceAPIView.as_view()),
     url('^api/v1/product-productprices/$', PriceMatrixAPIView.as_view()),
     url('^api/v1/login/$', APILoginView.as_view())
 ]

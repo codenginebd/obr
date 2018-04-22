@@ -29,6 +29,7 @@ class BookSerializer(BaseModelSerializer):
     buy_options = serializers.SerializerMethodField()
     rent_options_eco_new = serializers.SerializerMethodField()
     is_rent_available = serializers.SerializerMethodField()
+    rent_plans = serializers.SerializerMethodField()
     rent_options = serializers.SerializerMethodField()
     is_sale_available = serializers.SerializerMethodField()
     product_type = serializers.SerializerMethodField()
@@ -36,7 +37,7 @@ class BookSerializer(BaseModelSerializer):
     def get_product_type(self, obj):
         return obj.__class__.__name__
 
-    def get_rent_options(self, obj):
+    def get_rent_plans(self, obj):
         options = {
             "New": [],
             "Used": []
@@ -69,6 +70,32 @@ class BookSerializer(BaseModelSerializer):
         options["used_options_available"] = True if options["Used"] else False
         return options
 
+    def get_rent_options(self, obj):
+        inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
+                                                     product_id=obj.pk, stock__gt=0, is_new=1, available_for_rent=True)
+        options = {
+            "New": [],
+            "Used": []
+        }
+        for inventory_object in inventory_objects:
+            options["New"] += [
+                {
+                    "short_name": inventory_object.print_type,
+                    "full_name": inventory_object.print_type_full_name
+                }
+            ]
+        inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
+                                                     product_id=obj.pk, stock__gt=0, is_new=0, available_for_rent=True)
+        for inventory_object in inventory_objects:
+            options["Used"] += [
+                {
+                    "short_name": inventory_object.print_type,
+                    "full_name": inventory_object.print_type_full_name
+                }
+            ]
+        options["new_available"] = True if options["New"] else False
+        options["used_available"] = True if options["Used"] else False
+        return options
 
     def get_is_sale_available(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
@@ -90,7 +117,7 @@ class BookSerializer(BaseModelSerializer):
 
     def get_buy_options(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
-                                                     product_id=obj.pk, stock__gt=0, is_new=1)
+                                                     product_id=obj.pk, stock__gt=0, is_new=1, available_for_buy=True)
         options = {
             "New": [],
             "Used": []
@@ -103,7 +130,7 @@ class BookSerializer(BaseModelSerializer):
                 }
             ]
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
-                                                     product_id=obj.pk, stock__gt=0, is_new=0)
+                                                     product_id=obj.pk, stock__gt=0, is_new=0, available_for_buy=True)
         for inventory_object in inventory_objects:
             options["Used"] += [
                 {
@@ -164,7 +191,8 @@ class BookSerializer(BaseModelSerializer):
     class Meta:
         model = Book
         fields = ('id', 'code', 'product_type', 'title', 'title_2', 'isbn', 'edition', 'publish_date', 'subtitle', 'subtitle_2', 'description', 'description_2', 'show_2',
-                  'sale_available', 'market_price', 'price_currency', 'is_sale_available', 'is_rent_available', 'buy_options', 'rent_options', 'rent_options_eco_new',
+                  'sale_available', 'market_price', 'price_currency', 'is_sale_available', 'is_rent_available', 'buy_options',
+                  'rent_plans', 'rent_options', 'rent_options_eco_new',
                   'base_price', 'page_count', 'categories', 'publisher', 'authors', 'tags', 'images',
                   'language', 'rent_available', 'slug', 'original_available', 'color_available', 'date_created',
                   'economy_available', 'used_copy_available', 'last_updated')

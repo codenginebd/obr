@@ -86,24 +86,26 @@
                               <div class="tab-content">
                                   {% verbatim %}{{#if new_available}}{% endverbatim %}
                                   <div id="slider_tab1_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade active in">
-                                    {% verbatim %}{{#each New}}{% endverbatim %}
-                                      <div style="padding: 10px;">
-                                          <label class="price-label">
-                                              <input type="radio" class="sr-rent-option new" name="sr-buy-option-input" value="{% verbatim %}{{short_name}}{% endverbatim %}"/> {% verbatim %}{{full_name}}{% endverbatim %}
-                                          </label>
+                                    <div style="padding: 20px 10px 10px 0px;">
+                                          <select class="form-control sr-rent-option new" style="max-width: 270px;">
+                                                <option value="-1">Select Printing Type</option>
+                                                {% verbatim %}{{#each New}}{% endverbatim %}
+                                                <option value="{% verbatim %}{{short_name}}{% endverbatim %}">{% verbatim %}{{full_name}}{% endverbatim %}</option>
+                                                {% verbatim %}{{/each}}{% endverbatim %}
+                                            </select>
                                       </div>
-                                      {% verbatim %}{{/each}}{% endverbatim %}
                                   </div>
                                   {% verbatim %}{{/if}}{% endverbatim %}
                                   {% verbatim %}{{#if used_available}}{% endverbatim %}
                                   <div id="slider_tab2_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade">
-                                    {% verbatim %}{{#each Used}}{% endverbatim %}
-                                      <div style="padding: 10px;">
-                                          <label class="price-label">
-                                              <input type="radio" class="sr-rent-option used" name="sr-buy-option-input" value="{% verbatim %}{{short_name}}{% endverbatim %}"/> {% verbatim %}{{full_name}}{% endverbatim %}
-                                          </label>
-                                      </div>
-                                      {% verbatim %}{{/each}}{% endverbatim %}
+                                    <div style="padding: 20px 10px 10px 0px;">
+                                        <select class="form-control sr-rent-option used" style="max-width: 270px;">
+                                            <option value="-1">Select Printing Type</option>
+                                            {% verbatim %}{{#each Used}}{% endverbatim %}
+                                            <option value="{% verbatim %}{{short_name}}{% endverbatim %}">{% verbatim %}{{full_name}}{% endverbatim %}</option>
+                                            {% verbatim %}{{/each}}{% endverbatim %}
+                                        </select>
+                                    </div>
                                   </div>
                                   {% verbatim %}{{/if}}{% endverbatim %}
                               </div>
@@ -111,7 +113,7 @@
                               <hr/>
                               <div class="row">
                                   <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
-                                      <p class="hidden">Calculated Price = <span class="sale-price-currency-span">BDT</span>  <span class="sale-price-span">250</span></p>
+                                      <p class="hidden">Calculated Price = <span class="sale-price-currency-span"></span>  <span class="sale-price-span"></span></p>
                                       <input type="hidden" name="buy-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="buy-calculated-price"/>
                                   </div>
                                   <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
@@ -144,34 +146,40 @@
                                   {% verbatim %}{{#rent_options}}{% endverbatim %}
 
                                   <ul class="nav nav-tabs search-tabs">
-                                      {% verbatim %}{{#if new_options_available}}{% endverbatim %}
+                                      {% verbatim %}{{#if new_available}}{% endverbatim %}
                                       <li class="active"><a data-toggle="tab" href="#slider_tab3_{% verbatim %}{{../id}}{% endverbatim %}">New Copy</a></li>
                                       {% verbatim %}{{/if}}{% endverbatim %}
-                                      {% verbatim %}{{#if used_options_available}}{% endverbatim %}
+                                      {% verbatim %}{{#if used_available}}{% endverbatim %}
                                       <li><a data-toggle="tab" href="#slider_tab4_{% verbatim %}{{../id}}{% endverbatim %}">Used Copy</a></li>
                                       {% verbatim %}{{/if}}{% endverbatim %}
                                   </ul>
                                   <div class="tab-content">
-                                      {% verbatim %}{{#if new_options_available}}{% endverbatim %}
+                                      {% verbatim %}{{#if new_available}}{% endverbatim %}
                                       <div id="slider_tab3_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade active in">
-                                        <div style="padding: 10px;">
-                                            <select class="form-control rent-option-new">
-                                              {% verbatim %}{{#each New}}{% endverbatim %}
+                                        <div style="padding: 20px 10px 10px 0px;">
+                                            <select class="form-control rent-option-printing-type" style="max-width: 270px;">
+                                                <option value="-1">Select Printing Type</option>
+                                                {% verbatim %}{{#each New}}{% endverbatim %}
 
-                                                    <option value="{% verbatim %}{{value}}{% endverbatim %}">{% verbatim %}{{name}}{% endverbatim %}</option>
+                                                    <option value="{% verbatim %}{{short_name}}{% endverbatim %}">{% verbatim %}{{full_name}}{% endverbatim %}</option>
 
-                                              {% verbatim %}{{/each}}{% endverbatim %}
+                                                {% verbatim %}{{/each}}{% endverbatim %}
+                                            </select>
+                                            <br/>
+                                            <select class="form-control rent-option-new hidden" style="max-width: 270px;">
+                                              <option value="-1">Select Rent Plan</option>
                                             </select>
                                         </div>
                                       </div>
                                       {% verbatim %}{{/if}}{% endverbatim %}
-                                      {% verbatim %}{{#if used_options_available}}{% endverbatim %}
+                                      {% verbatim %}{{#if used_available}}{% endverbatim %}
                                       <div id="slider_tab4_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade">
-                                        <div style="padding: 10px;">
-                                          <select class="form-control rent-option-used">
+                                        <div style="padding: 20px 10px 10px 0px;">
+                                          <select class="form-control rent-option-used" style="max-width: 270px;">
+                                              <option value="-1">Select Rent Plan</option>
                                               {% verbatim %}{{#each Used}}{% endverbatim %}
 
-                                                    <option value="{% verbatim %}{{value}}{% endverbatim %}">{% verbatim %}{{name}}{% endverbatim %}</option>
+                                                    <option value="{% verbatim %}{{short_name}}{% endverbatim %}">{% verbatim %}{{full_name}}{% endverbatim %}</option>
 
                                               {% verbatim %}{{/each}}{% endverbatim %}
                                             </select>
@@ -183,8 +191,8 @@
                               <hr/>
                               <div class="row">
                                   <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
-                                      <div class="small">Initial Payable {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{base_price}}{% endverbatim %}</div>
-                                      <p class="hidden">Rent price calculated = <span class="rent-price-currency-span">BDT</span> <span class="rent-price-span">250</span></p>
+                                      <div class="small hidden">Initial Payable {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{base_price}}{% endverbatim %}</div>
+                                      <p class="hidden">Rent price calculated = <span class="rent-price-currency-span"></span> <span class="rent-price-span"></span></p>
                                       <input type="hidden" name="rent-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="rent-calculated-price"/>
                                   </div>
                                   <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">

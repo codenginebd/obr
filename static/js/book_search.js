@@ -185,4 +185,22 @@ $(document).ready(function () {
     });
 
 
+    function handle_rent_option_change(event, value) {
+        alert("sads");
+    }
+    
+
+    $(document).on("change", ".rent-option-new", function (e) {
+        e.preventDefault();
+        var value = $(this).val();
+        handle_rent_option_change(e, value);
+    });
+
+    $(document).on("change", ".rent-option-used", function (e) {
+        e.preventDefault();
+        var value = $(this).val();
+        handle_rent_option_change(e, value);
+    });
+
+
 });

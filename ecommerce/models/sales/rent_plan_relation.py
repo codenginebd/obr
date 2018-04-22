@@ -28,4 +28,11 @@ class RentPlanRelation(BaseEntity):
     
     
     objects = RentPlanRelationManager()
-    
+
+    @property
+    def rent_price(self):
+        return self.price_matrix.base_price * (self.rent_rate / 100)
+
+    @property
+    def special_rent_price(self):
+        return self.price_matrix.base_price * (self.special_rate / 100)
