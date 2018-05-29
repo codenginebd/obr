@@ -24,6 +24,7 @@ class BookPublisher(BaseEntity, ThumbnailModelMixin):
     emails = models.ManyToManyField(Email)
     image = models.ImageField(max_length=500, upload_to='publisher/', null=True)
     thumbnail = models.ImageField(max_length=500, upload_to='publisher/thumbnails/', null=True)
+    slug = models.SlugField()
 
     def render_name(self):
         if self.name_2 and self.show_2:
@@ -38,6 +39,7 @@ class BookPublisher(BaseEntity, ThumbnailModelMixin):
             return os.path.join(settings.STATIC_URL, 'images', 'author_no_avater.png')
 
     def save(self):
+        self.slug = slugify(self.name)
         try:
             self.create_thumbnail()
             # self.save()

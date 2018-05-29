@@ -1,5 +1,7 @@
 from ecommerce.models.sales.category import ProductCategory
 from generics.views.base_template_view import BaseTemplateView
+from book_rental.models.author import Author
+from book_rental.models.book_publisher import BookPublisher
 
 
 class BookSearchView(BaseTemplateView):
@@ -17,6 +19,14 @@ class BookSearchView(BaseTemplateView):
             parent_cat = ProductCategory.objects.get(pk=cat_id)
             return parent_cat, ProductCategory.get_all_children(cat_id=cat_id)
 
+    def get_filter_authors(self):
+        author_objects = Author.objects.all()
+        return author_objects
+
+    def get_filter_publisher(self):
+        publishers = BookPublisher.objects.all()
+        return publishers
+
     def get_query_params(self, request):
         items = {}
         for key, value in request.GET.items():
@@ -28,6 +38,8 @@ class BookSearchView(BaseTemplateView):
         context['page_title'] = 'Search Books'
         parent_cat, childrens = self.get_filter_categories()
         context['filter_categories'] = childrens
+        context["filter_authors"] = self.get_filter_authors()
+        context["filter_publishers"] = self.get_filter_publisher()
         context['parent_cat'] = parent_cat
         query_params = self.get_query_params(request=self.request)
         context = dict(**context, **query_params)

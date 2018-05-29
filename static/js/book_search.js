@@ -2,8 +2,8 @@ String.prototype.isEmpty = function() {
     return (this.length === 0 || !this.trim());
 };
 
-String.prototype.isBlank = function(str) {
-    return (!str || /^\s*$/.test(str));
+String.prototype.isBlank = function() {
+    return (!this || /^\s*$/.test(this));
 };
 
 $(document).ready(function () {
@@ -13,52 +13,125 @@ $(document).ready(function () {
     });
     
     function update_browser_address(search_params) {
-        var url_address = "";
+        var url_address = "?";
         for(var key in search_params) {
-            if(url_address != "") {
-                url_address += "&" + key + "=" + search_params[key];
+            if(url_address != "?") {
+                url_address += key + "=" + search_params[key] + "&";
             }
             else {
-                url_address += key + "=" + search_params[key];
+                url_address += key + "=" + search_params[key] + "&";
             }
+        }
+        if(url_address != "?") {
+            url_address = url_address.substr(0, url_address.length - 1);
         }
         window.history.pushState(search_params, "", url_address);
     }
     function collect_search_params(page) {
         var data = {};
-        if(typeof page != "undefined") {
-            data["page"] = page;
-        }
+        var page = $("input[name=sf-current-page]").val();
         var sf_isbn = $("input[name=sf-isbn]").val();
         var sf_keyword = $("input[name=sf-keyword]").val();
-        var sf_bl = $("input[name=sf-bl]").val();
-        var sf_rating = $("input[name=sf-rating]").val();
-        var sf_by_used = $("input[name=sf-by-used]").val();
-        var sf_by_print = $("input[name=sf-by-print]").val();
-        
-        if(!sf_isbn.isEmpty() && !sf_keyword.isBlank()) {
+        var sf_bl = "";
+        var sf_rating = "";
+
+        var bl_values = [];
+        $('input[name=sf-bl]:checked').each(function(index, elem) {
+            bl_values.push($(elem).val());
+        });
+        sf_bl = bl_values.join(',');
+
+        var rating_values = [];
+        $('input[name=sf-rating]:checked').each(function(index, elem) {
+            rating_values.push($(elem).val());
+        });
+        sf_rating = rating_values.join(',');
+
+        var sf_by_used = "";
+
+        var by_used_values = [];
+        $('input[name=sf-by-used]:checked').each(function(index, elem) {
+            by_used_values.push($(elem).val());
+        });
+        sf_by_used = by_used_values.join(',');
+
+        var sf_by_print = "";
+
+        var by_print_values = [];
+        $('input[name=sf-by-print]:checked').each(function(index, elem) {
+            by_print_values.push($(elem).val());
+        });
+        sf_by_print = by_print_values.join(',');
+
+        if($("input[name=sf-out-of-stock]").is(":checked")) {
+            data["out-of-stock"] = 0
+        }
+
+        if(typeof page != "undefined" && !page.isEmpty() && !page.isBlank()) {
+            try {
+                page = parseInt(page);
+            }catch(err) {
+                page = null;
+            }
+            if(page != null) {
+                data["page"] = page;
+            }
+        }
+        if(typeof sf_isbn != "undefined" && !sf_isbn.isEmpty() && !sf_isbn.isBlank()) {
             data["isbn"] = sf_isbn;
         }
-        if(!sf_keyword.isEmpty() && !sf_keyword.isBlank()) {
+        if(typeof sf_keyword != "undefined" && !sf_keyword.isEmpty() && !sf_keyword.isBlank()) {
             data["keyword"] = sf_keyword;
         }
-        if(!sf_bl.isEmpty() && !sf_bl.isBlank()) {
-            data["bl"] = sf_bl;
+        if(typeof sf_bl != "undefined" && !sf_bl.isEmpty() && !sf_bl.isBlank()) {
+            data["lng"] = sf_bl;
         }
-        if(!sf_rating.isEmpty() && !sf_rating.isBlank()) {
+        if(typeof sf_rating != "undefined" && !sf_rating.isEmpty() && !sf_rating.isBlank()) {
             data["rating"] = sf_rating;
         }
-        if(!sf_by_used.isEmpty() && !sf_by_used.isBlank()) {
-            data["used"] = sf_by_used;
+        if(typeof sf_by_used != "undefined" && !sf_by_used.isEmpty() && !sf_by_used.isBlank() && sf_by_used != "any") {
+            data["use-status"] = sf_by_used;
         }
-        if(!sf_by_print.isEmpty() && !sf_by_print.isBlank()) {
-            data["print"] = sf_by_print;
+        if(typeof sf_by_print != "undefined" && !sf_by_print.isEmpty() && !sf_by_print.isBlank() && sf_by_print != "any") {
+            data["print-type"] = sf_by_print;
         }
+
+        var category_values = [];
+        $('input[name=search-filter-by-category]:checked').each(function(index, elem) {
+            category_values.push($(elem).val());
+        });
+        var category = category_values.join(',');
+
+        if(typeof category != "undefined" && !category.isEmpty() && !category.isBlank()) {
+            data["cat"] = category;
+        }
+
+        var author_values = [];
+        $('input[name=filter-author-name]:checked').each(function(index, elem) {
+            author_values.push($(elem).val());
+        });
+        var author = author_values.join(',');
+
+        if(typeof author != "undefined" && !author.isEmpty() && !author.isBlank()) {
+            data["author"] = author;
+        }
+
+        var publisher_values = [];
+        $('input[name=filter-publisher]:checked').each(function(index, elem) {
+            publisher_values.push($(elem).val());
+        });
+        var publishers = publisher_values.join(',');
+        if(typeof publishers != "undefined" && !publishers.isEmpty() && !publishers.isBlank()) {
+            data["publisher"] = publishers;
+        }
+        console.log(data);
         return data;
     }
 
     function perform_search(page) {
         var search_params = collect_search_params(page);
+        console.log("Search params...");
+        console.log(search_params);
         update_browser_address(search_params);
         $("#id_search_results_pagination1").html("<p class='loading'>Loading...</p>");
         $("#id_search_results_pagination2").html("<p class='loading'>Loading...</p>");
@@ -139,12 +212,13 @@ $(document).ready(function () {
 
     function search_action_handler(e) {
           e.preventDefault();
-          var page = $(this).data("page");
-          perform_search(page);
+          perform_search();
     }
 
 
     $(document).on("click", ".search-result-pager-item", function (e) {
+        var page = $(this).data("page");
+        $("input[name=sf-current-page]").val(page);
         search_action_handler(e);
     });
 
@@ -184,23 +258,47 @@ $(document).ready(function () {
 
     });
 
+    $(document).on("keyup", "input[name=sf-isbn]", function (e) {
+        if(e.keyCode == 13) {
+            perform_search();
+        }
+    });
 
-    function handle_rent_option_change(event, value) {
-        alert("sads");
-    }
+    $(document).on("keyup", "input[name=sf-keyword]", function (e) {
+        if(e.keyCode == 13) {
+            perform_search();
+        }
+    });
+
+    $(document).on("change", "input[name=sf-bl]", function(e) {
+        perform_search();
+    });
+
+    $(document).on("change", "input[name=sf-rating]", function(e) {
+        perform_search();
+    });
+
+    $(document).on("change", "input[name=sf-by-used]", function(e) {
+        perform_search();
+    });
+
+    $(document).on("change", "input[name=sf-by-print]", function(e) {
+        perform_search();
+    });
+
+    $(document).on("change", "input[name=sf-out-of-stock]", function(e) {
+        perform_search();
+    });
     
-
-    $(document).on("change", ".rent-option-new", function (e) {
-        e.preventDefault();
-        var value = $(this).val();
-        handle_rent_option_change(e, value);
+    $(document).on("change", "input[name=search-filter-by-category]", function (e) {
+        perform_search();
     });
-
-    $(document).on("change", ".rent-option-used", function (e) {
-        e.preventDefault();
-        var value = $(this).val();
-        handle_rent_option_change(e, value);
+    
+    $(document).on("change", "input[name=filter-author-name]", function (e) {
+        perform_search();
     });
-
-
+    
+    $(document).on("change", "input[name=filter-publisher]", function (e) {
+        perform_search();
+    });
 });
