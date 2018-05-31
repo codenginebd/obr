@@ -1,4 +1,5 @@
 from decimal import Decimal
+import copy
 from django.db.models.query_utils import Q
 from book_rental.api.serializers.book_list_serializer import BookSerializer
 from book_rental.models.sales.book import Book
@@ -11,6 +12,33 @@ class BookListAPIView(GenericAPIView):
     serializer_class = BookSerializer
 
     def filter_criteria(self, request, queryset):
+        out_of_stock = request.GET.get("out-of-stock")
+        isbn = request.GET.get("isbn")
+        keyword = request.GET.get('keyword')
+
+        if isbn:
+            if len(isbn) == 10:
+                queryset = queryset.filter(Q(isbn__isnull=False) & Q(isbn=isbn))
+            elif len(isbn) == 13:
+                queryset = queryset.filter(Q(isbn13__isnull=False) & Q(isbn13=isbn))
+            else:
+                queryset = queryset.model.objects.none()
+
+        if keyword:
+            queryset = queryset.filter(tags__name__icontains=keyword)
+
+        inventory_objects = Inventory.objects.filter(product_model=Book.__name__)
+        if out_of_stock:
+            # Get all products from the queryset which has stock in inventory only.
+            product_ids = queryset.values_list('pk', flat=True)
+
+            inventory_objects = inventory_objects.filter(product_id__in=product_ids, stock__gt=0)
+
+            pass
+
+        return queryset
+
+    def filter_criteria1(self, request, queryset):
         keyword = request.GET.get('q')
         if keyword:
             queryset = queryset.filter(Q(isbn__iexact=keyword) | Q(title__icontains=keyword) | Q(title_2__icontains=keyword)

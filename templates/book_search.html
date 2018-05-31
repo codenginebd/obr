@@ -64,7 +64,7 @@ $(document).ready(function () {
         </div>
           <div class="container">
               <div class="row">
-                  <div class="col-md-10">
+                  <div class="col-md-12">
                       <div class="col-md-3">
                           <h4>Search Filter</h4>
                           <hr/>
@@ -150,35 +150,43 @@ $(document).ready(function () {
                                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">Browse By Category</div>
-                                                  <div class="panel-body" style="max-height: 250px; overflow-y: auto;">
-                                                      <div class="small">
-                                                          {% if parent_cat %}
-                                                          {% if parent_cat.show_2 %}
-                                                          <a class="filter_search_prev_cat" data-name="{{ parent_cat.name_2 }}" href="#">
-                                                          <span class="glyphicon glyphicon-menu-left"></span> <span>{{ parent_cat.name_2 }}</span></a>
-                                                          {% else %}
-                                                          <a class="filter_search_prev_cat" data-name="{{ parent_cat.name }}" href="#">
-                                                          <span class="glyphicon glyphicon-menu-left"></span> <span>{{ parent_cat.name }}</span></a>
-                                                          {% endif %}
-                                                          {% else %}
-                                                          <a style="display: none;" class="filter_search_prev_cat" data-name="" href="#">
-                                                          <span class="glyphicon glyphicon-menu-left"></span> <span></span></a>
-                                                          {% endif %}
+                                                      <div class="panel-body" style="max-height: 250px; overflow-y: auto;">
+                                                          <div class="small">
+                                                              {% if parent_cat %}
+                                                              {% if parent_cat.show_2 %}
+                                                              <a class="filter_search_prev_cat" data-name="{{ parent_cat.name_2 }}" href="#">
+                                                              <span class="glyphicon glyphicon-menu-left"></span> <span>{{ parent_cat.name_2 }}</span></a>
+                                                              {% else %}
+                                                              <a class="filter_search_prev_cat" data-name="{{ parent_cat.name }}" href="#">
+                                                              <span class="glyphicon glyphicon-menu-left"></span> <span>{{ parent_cat.name }}</span></a>
+                                                              {% endif %}
+                                                              {% else %}
+                                                              <a style="display: none;" class="filter_search_prev_cat" data-name="" href="#">
+                                                              <span class="glyphicon glyphicon-menu-left"></span> <span></span></a>
+                                                              {% endif %}
+                                                          </div>
+                                                          <div>
+                                                              <div class="input-group add-on">
+                                                              <input class="form-control pull-right" style="width: 100%; " placeholder="Find..." name="filter_search_category" id="id_filter_search_category" type="text">
+                                                              <div class="input-group-btn">
+                                                                <button class="btn btn-default" style="padding: 6px;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                          <div id="id_search_filter_category_panel" style="overflow-y: auto; max-height: 200px !important;">
+                                                          {% for cat_object in filter_categories %}
+                                                          <div class="checkbox">
+                                                           <label><input type="checkbox" value="{{ cat_object.slug }}" data-name="{{ cat_object.name }}" name="search-filter-by-category" class="search-filter-by-category" value="{{ cat_object.pk }}">
+                                                               {% if cat_object.show_2 %}
+                                                               <a href="{% url "book_browse_view" cat_object.slug %}">{{ cat_object.name_2 }}</a>
+                                                               {% else %}
+                                                               <a href="{% url "book_browse_view" cat_object.slug %}">{{ cat_object.name }}</a>
+                                                               {% endif %}
+                                                           </label>
+                                                          </div>
+                                                          {% endfor %}
+                                                          </div>
                                                       </div>
-                                                      <div id="id_search_filter_category_panel" style="overflow-y: auto; max-height: 200px !important;">
-                                                      {% for cat_object in filter_categories %}
-                                                      <div class="checkbox">
-                                                       <label><input type="checkbox" value="{{ cat_object.slug }}" data-name="{{ cat_object.name }}" name="search-filter-by-category" class="search-filter-by-category" value="{{ cat_object.pk }}">
-                                                           {% if cat_object.show_2 %}
-                                                           <a href="{% url "book_browse_view" cat_object.slug %}">{{ cat_object.name_2 }}</a>
-                                                           {% else %}
-                                                           <a href="{% url "book_browse_view" cat_object.slug %}">{{ cat_object.name }}</a>
-                                                           {% endif %}
-                                                       </label>
-                                                      </div>
-                                                      {% endfor %}
-                                                      </div>
-                                                  </div>
 
                                               </div>
                                           </div>
@@ -186,6 +194,14 @@ $(document).ready(function () {
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">Browse By Authors</div>
                                                       <div class="panel-body" style="max-height: 250px; overflow-y: auto;">
+                                                            <div>
+                                                              <div class="input-group add-on">
+                                                              <input class="form-control pull-right" style="width: 100%; " placeholder="Find..." name="filter_search_author" id="id_filter_search_author" type="text">
+                                                              <div class="input-group-btn">
+                                                                <button class="btn btn-default" style="padding: 6px;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                                              </div>
+                                                            </div>
+                                                          </div>
                                                           {% for filter_author in filter_authors %}
                                                               <div class="checkbox">
                                                                   <label><input type="checkbox" name="filter-author-name" value="{{ filter_author.slug }}"><a href="{% url "author_browse_filter_view" filter_author.slug %}">{{ filter_author.name }}</a></label>
@@ -199,6 +215,13 @@ $(document).ready(function () {
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">Browse By Publishers</div>
                                                       <div class="panel-body">
+                                                            <div>
+                                                              <div class="input-group add-on">
+                                                              <input class="form-control pull-right" style="width: 100%; " placeholder="Find..." name="filter_search_publisher" id="id_filter_search_publisher" type="text">
+                                                              <div class="input-group-btn">
+                                                                <button class="btn btn-default" style="padding: 6px;" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                                              </div>
+                                                            </div>
                                                           {% for filter_publisher in filter_publishers %}
                                                           <div class="checkbox">
                                                               <label><input type="checkbox" name="filter-publisher" value="{{ filter_publisher.slug }}"><a href="#">{{ filter_publisher.name }}</a></label>
@@ -210,15 +233,24 @@ $(document).ready(function () {
                                           </div>
                                       </div>
                           </div>
+                          <div style="padding-top: 4px;">
+                              <hr/>
+                          </div>
 
                           <div id="id_search_results_container">
                           <div id="id_search_results_pagination1">
                           <p class='loading'>Loading...</p>
                           </div>
+                          <div style="padding-top: 4px;">
+                              <hr/>
+                          </div>
                           <div class="row">
                               <div class="col-md-12" id="id_search_results">
                                     <p class='loading'>Loading...</p>
                               </div>
+                            </div>
+                            <div style="padding-top: 4px;">
+                              <hr/>
                             </div>
                             <div id="id_search_results_pagination2">
                             <p class='loading'>Loading...</p>
@@ -226,51 +258,51 @@ $(document).ready(function () {
                             </div>
                       </div>
                   </div>
-                  <div class="col-md-2">
-                      <div class="row">
-                          <div class="col-md-12 cart_block" style="margin-top: 8px; border-radius: 9px;">
-                              <div class="cart_title">
-                                  Your Cart
-                                  <hr/>
-                              </div>
-                              <div class="cart_content">
-                                  No items found
-                              </div>
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-md-12 cart_block" style="margin-top: 8px; border-radius: 9px;">
-                              <div class="cart_title">
-                                  Recommended Books
-                                  <hr/>
-                              </div>
-                              <div class="cart_content">
-                                  <a href="#">
-                                  <img style="margin: 9px; width: 130px; height: 186px; " src="https://s3-ap-southeast-1.amazonaws.com/rokomari110/productNew/130X186/880410348_90657.jpg" class="img-responsive book-img-grid">
-                                  </a>
-                              </div>
-                              <div class="cart_content">
-                                  <a href="#">
-                                  <img style="margin: 9px; width: 130px; height: 186px; " src="https://s3-ap-southeast-1.amazonaws.com/rokomari110/productNew/130X186/880410348_90657.jpg" class="img-responsive book-img-grid">
-                                  </a>
-                              </div>
-                              <div class="cart_content">
-                                  <a href="#">
-                                  <img style="margin: 9px; width: 130px; height: 186px; " src="https://s3-ap-southeast-1.amazonaws.com/rokomari110/productNew/130X186/880410348_90657.jpg" class="img-responsive book-img-grid">
-                                  </a>
-                              </div>
-                              <div class="cart_content">
-                                  <a href="#">
-                                  <img style="margin: 9px; width: 130px; height: 186px; " src="https://s3-ap-southeast-1.amazonaws.com/rokomari110/productNew/130X186/880410348_90657.jpg" class="img-responsive book-img-grid">
-                                  </a>
-                              </div>
-                              <div>
-                                  <hr style="margin: 9px 0px 9px 0px;"/>
-                                  <a class="pull-right" href="#">View All</a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+{#                  <div class="col-md-2">#}
+{#                      <div class="row">#}
+{#                          <div class="col-md-12 cart_block" style="margin-top: 8px; border-radius: 9px;">#}
+{#                              <div class="cart_title">#}
+{#                                  Your Cart#}
+{#                                  <hr/>#}
+{#                              </div>#}
+{#                              <div class="cart_content">#}
+{#                                  No items found#}
+{#                              </div>#}
+{#                          </div>#}
+{#                      </div>#}
+{#                      <div class="row">#}
+{#                          <div class="col-md-12 cart_block" style="margin-top: 8px; border-radius: 9px;">#}
+{#                              <div class="cart_title">#}
+{#                                  Recommended Books#}
+{#                                  <hr/>#}
+{#                              </div>#}
+{#                              <div class="cart_content">#}
+{#                                  <a href="#">#}
+{#                                  <img style="margin: 9px; width: 130px; height: 186px; " src="https://s3-ap-southeast-1.amazonaws.com/rokomari110/productNew/130X186/880410348_90657.jpg" class="img-responsive book-img-grid">#}
+{#                                  </a>#}
+{#                              </div>#}
+{#                              <div class="cart_content">#}
+{#                                  <a href="#">#}
+{#                                  <img style="margin: 9px; width: 130px; height: 186px; " src="https://s3-ap-southeast-1.amazonaws.com/rokomari110/productNew/130X186/880410348_90657.jpg" class="img-responsive book-img-grid">#}
+{#                                  </a>#}
+{#                              </div>#}
+{#                              <div class="cart_content">#}
+{#                                  <a href="#">#}
+{#                                  <img style="margin: 9px; width: 130px; height: 186px; " src="https://s3-ap-southeast-1.amazonaws.com/rokomari110/productNew/130X186/880410348_90657.jpg" class="img-responsive book-img-grid">#}
+{#                                  </a>#}
+{#                              </div>#}
+{#                              <div class="cart_content">#}
+{#                                  <a href="#">#}
+{#                                  <img style="margin: 9px; width: 130px; height: 186px; " src="https://s3-ap-southeast-1.amazonaws.com/rokomari110/productNew/130X186/880410348_90657.jpg" class="img-responsive book-img-grid">#}
+{#                                  </a>#}
+{#                              </div>#}
+{#                              <div>#}
+{#                                  <hr style="margin: 9px 0px 9px 0px;"/>#}
+{#                                  <a class="pull-right" href="#">View All</a>#}
+{#                              </div>#}
+{#                          </div>#}
+{#                      </div>#}
+{#                  </div>#}
               </div>
           </div>
       </div>
