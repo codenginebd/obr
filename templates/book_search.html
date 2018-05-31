@@ -72,14 +72,14 @@ $(document).ready(function () {
                           <p class="hint small" style="letter-spacing: 0.08em;">
                               Type Book ISBN or Keywords below and then press ENTER to filter the search result
                           </p>
-                          <p><input type="text" name="sf-isbn" class="form-control sf-form-control" placeholder="Enter ISBN"></p>
+                          <p><input type="text" name="sf-isbn" {% if isbn %}value="{{ isbn }}"{% endif %} class="form-control sf-form-control" placeholder="Enter ISBN"></p>
                           <p><input type="text" name="sf-keyword" class="form-control sf-form-control" placeholder="Enter keyword e.g Algebra" {% if keyword %}value="{{ keyword }}" {% endif %}></p>
                           <br/>
                           <div>
                               <p>Book Language</p>
                               <hr style="margin: 2px 0px 9px 0px;"/>
-                              <label style="cursor: pointer;"><input type="checkbox" value="en" name="sf-bl" class=" sf-form-control"/> English</label>
-                              <label style="cursor: pointer;"><input type="checkbox" value="bn" name="sf-bl" class=" sf-form-control"/> Bangla</label>
+                              <label style="cursor: pointer;"><input type="checkbox" {% if lang_en %}checked="checked"{% endif %} value="en" name="sf-bl" class=" sf-form-control"/> English</label>
+                              <label style="cursor: pointer;"><input type="checkbox" value="bn" {% if lang_bn %}checked="checked"{% endif %} name="sf-bl" class=" sf-form-control"/> Bangla</label>
                           </div>
                           <br/>
                           <div>
@@ -87,19 +87,19 @@ $(document).ready(function () {
                               <hr style="margin: 2px 0px 9px 0px;"/>
                               <ul class="list-group">
                                   <li class="list-group-item">
-                                      <input style="position: relative; bottom: -3px;" type="checkbox" name="sf-rating" value="1" class="sf-form-control"/> <div style="display: inline;" data-rating="1" class="product-rating"></div>
+                                      <input style="position: relative; bottom: -3px;" type="checkbox" {% if rating_1 %}checked="checked"{% endif %} name="sf-rating" value="1" class="sf-form-control"/> <div style="display: inline;" data-rating="1" class="product-rating"></div>
                                   </li>
                                   <li class="list-group-item">
-                                      <input style="position: relative; bottom: -3px;" type="checkbox" name="sf-rating" value="2" class="sf-form-control"/> <div style="display: inline;" data-rating="2" class="product-rating"></div>
+                                      <input style="position: relative; bottom: -3px;" type="checkbox" {% if rating_2 %}checked="checked"{% endif %} name="sf-rating" value="2" class="sf-form-control"/> <div style="display: inline;" data-rating="2" class="product-rating"></div>
                                   </li>
                                   <li class="list-group-item">
-                                      <input style="position: relative; bottom: -3px;" type="checkbox" name="sf-rating" value="3" class="sf-form-control"/> <div style="display: inline;" data-rating="3" class="product-rating"></div>
+                                      <input style="position: relative; bottom: -3px;" type="checkbox" {% if rating_3 %}checked="checked"{% endif %} name="sf-rating" value="3" class="sf-form-control"/> <div style="display: inline;" data-rating="3" class="product-rating"></div>
                                   </li>
                                   <li class="list-group-item">
-                                      <input style="position: relative; bottom: -3px;" type="checkbox" name="sf-rating" value="4" class="sf-form-control"/> <div style="display: inline;" data-rating="4" class="product-rating"></div>
+                                      <input style="position: relative; bottom: -3px;" type="checkbox" {% if rating_4 %}checked="checked"{% endif %} name="sf-rating" value="4" class="sf-form-control"/> <div style="display: inline;" data-rating="4" class="product-rating"></div>
                                   </li>
                                   <li class="list-group-item">
-                                      <input style="position: relative; bottom: -3px;" type="checkbox" name="sf-rating" value="5" class="sf-form-control"/> <div style="display: inline;" data-rating="5" class="product-rating"></div>
+                                      <input style="position: relative; bottom: -3px;" type="checkbox" {% if rating_5 %}checked="checked"{% endif %} name="sf-rating" value="5" class="sf-form-control"/> <div style="display: inline;" data-rating="5" class="product-rating"></div>
                                   </li>
                               </ul>
                           </div>

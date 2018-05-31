@@ -84,7 +84,7 @@ $(document).ready(function () {
             data["keyword"] = sf_keyword;
         }
         if(typeof sf_bl != "undefined" && !sf_bl.isEmpty() && !sf_bl.isBlank()) {
-            data["lng"] = sf_bl;
+            data["lang"] = sf_bl;
         }
         if(typeof sf_rating != "undefined" && !sf_rating.isEmpty() && !sf_rating.isBlank()) {
             data["rating"] = sf_rating;

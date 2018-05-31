@@ -30,7 +30,19 @@ class BookSearchView(BaseTemplateView):
     def get_query_params(self, request):
         items = {}
         for key, value in request.GET.items():
-            items[key] = value
+            if key == "lang":
+                for lang_val in value.split(","):
+                    items["lang_%s" % lang_val] = True
+            elif key == "rating":
+                rating_list = value.split(",")
+                try:
+                    rating_list = [int(r) for r in rating_list]
+                except:
+                    rating_list = []
+                for r in rating_list:
+                    items["rating_%s" % r] = True
+            else:
+                items[key] = value
         return items
 
     def get_context_data(self, **kwargs):

@@ -15,6 +15,13 @@ class BookListAPIView(GenericAPIView):
         out_of_stock = request.GET.get("out-of-stock")
         isbn = request.GET.get("isbn")
         keyword = request.GET.get('keyword')
+        language = request.GET.get("lang")
+        rating = request.GET.get("rating")
+        use_status = request.GET.get("use-status")
+
+        inventory_objects = Inventory.objects.filter(product_model=Book.__name__)
+
+        inventory_used = False
 
         if isbn:
             if len(isbn) == 10:
@@ -27,14 +34,48 @@ class BookListAPIView(GenericAPIView):
         if keyword:
             queryset = queryset.filter(tags__name__icontains=keyword)
 
-        inventory_objects = Inventory.objects.filter(product_model=Book.__name__)
+        if language:
+            language_list = language.split(",")
+            queryset = queryset.filter(language__short_name__in=language_list)
+
+        if rating:
+            rating_list = rating.split(",")
+            try:
+                rating_list = [Decimal(r) for r in rating_list]
+            except:
+                rating_list = []
+
+            if rating_list:
+                rating_min = min(rating_list) - Decimal(0.5)
+                rating_max = max(rating_list) + Decimal(0.5)
+                queryset = queryset.filter(rating__gte=rating_min, rating__lte=rating_max)
+            else:
+                queryset = queryset.model.objects.none()
+
+        if use_status:
+            us_list = []
+            use_status_list = use_status.split(",")
+            for us in use_status_list:
+                if us == "new":
+                    us_list += [0]
+                elif us == "used":
+                    us_list += [1]
+            if us_list:
+                inventory_objects = inventory_objects.filter(is_new__in=us_list)
+                inventory_used = True
+
         if out_of_stock:
             # Get all products from the queryset which has stock in inventory only.
+
+            inventory_objects = inventory_objects.filter(stock__gt=0)
+
+            inventory_used = True
+
+        if inventory_used:
             product_ids = queryset.values_list('pk', flat=True)
-
-            inventory_objects = inventory_objects.filter(product_id__in=product_ids, stock__gt=0)
-
-            pass
+            inventory_objects = inventory_objects.filter(product_id__in=product_ids)
+            inventory_product_ids = inventory_objects.values_list('product_id', flat=True)
+            queryset = queryset.filter(pk__in=inventory_product_ids)
 
         return queryset
 
