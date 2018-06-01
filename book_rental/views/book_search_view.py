@@ -41,6 +41,22 @@ class BookSearchView(BaseTemplateView):
                     rating_list = []
                 for r in rating_list:
                     items["rating_%s" % r] = True
+            elif key == "use-status":
+                use_status_list = value.split(",")
+                for u in use_status_list:
+                    items["use_status_%s" % u] = True
+            elif key == "print-type":
+                print_type_list = value.split(",")
+                for pt in print_type_list:
+                    items["print_type_%s" % pt] = True
+            elif key == "out-of-stock":
+                items["out_of_stock"] = True
+            elif key == "cat":
+                items["categories"] = value.split(",")
+            elif key == "author":
+                items["authors"] = value.split(",")
+            elif key == "publisher":
+                items["publishers"] = value.split(",")
             else:
                 items[key] = value
         return items
@@ -53,6 +69,7 @@ class BookSearchView(BaseTemplateView):
         context["filter_authors"] = self.get_filter_authors()
         context["filter_publishers"] = self.get_filter_publisher()
         context['parent_cat'] = parent_cat
+        context["filter_expand"] = self.request.GET.get("cat") or self.request.GET.get("author") or self.request.GET.get("publisher")
         query_params = self.get_query_params(request=self.request)
         context = dict(**context, **query_params)
         return context

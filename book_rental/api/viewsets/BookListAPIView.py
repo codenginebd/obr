@@ -18,6 +18,10 @@ class BookListAPIView(GenericAPIView):
         language = request.GET.get("lang")
         rating = request.GET.get("rating")
         use_status = request.GET.get("use-status")
+        print_type = request.GET.get("print-type")
+        category = request.GET.get("cat")
+        author = request.GET.get("author")
+        publisher = request.GET.get("publisher")
 
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__)
 
@@ -36,7 +40,14 @@ class BookListAPIView(GenericAPIView):
 
         if language:
             language_list = language.split(",")
-            queryset = queryset.filter(language__short_name__in=language_list)
+            if language_list:
+                OR_FILTER = Q(language__short_name=language_list[0])
+                for i, lang in enumerate(language_list):
+                    if i == 0:
+                        continue
+                    else:
+                        OR_FILTER |= Q(language__short_name=lang)
+            queryset = queryset.filter(OR_FILTER)
 
         if rating:
             rating_list = rating.split(",")
@@ -55,21 +66,67 @@ class BookListAPIView(GenericAPIView):
         if use_status:
             us_list = []
             use_status_list = use_status.split(",")
-            for us in use_status_list:
-                if us == "new":
-                    us_list += [0]
-                elif us == "used":
-                    us_list += [1]
+            if use_status_list:
+                OR_FILTER = Q(is_new=use_status_list[0])
+                for i, us in enumerate(use_status_list):
+                    if i == 0:
+                        continue
+                    else:
+                        OR_FILTER |= Q(is_new=us)
             if us_list:
-                inventory_objects = inventory_objects.filter(is_new__in=us_list)
+                inventory_objects = inventory_objects.filter(OR_FILTER)
+                inventory_used = True
+
+        if print_type:
+            print_type_list = print_type.split(",")
+            if print_type_list:
+                OR_FILTER = Q(print_type=print_type_list[0])
+                for i, pt in enumerate(print_type_list):
+                    if i == 0:
+                        continue
+                    else:
+                        OR_FILTER |= Q(print_type=pt)
+                inventory_objects = inventory_objects.filter(OR_FILTER)
                 inventory_used = True
 
         if out_of_stock:
             # Get all products from the queryset which has stock in inventory only.
-
             inventory_objects = inventory_objects.filter(stock__gt=0)
 
             inventory_used = True
+
+        if category:
+            category_list = category.split(",")
+            if category_list:
+                OR_FILTER = Q(categories__slug=category_list[0])
+                for i, cat in enumerate(category_list):
+                    if i == 0:
+                        continue
+                    else:
+                        OR_FILTER |= Q(categories__slug=cat)
+                queryset = queryset.filter(OR_FILTER)
+
+        if author:
+            author_list = author.split(",")
+            if author_list:
+                OR_FILTER = Q(authors__slug=author_list[0])
+                for i, a in enumerate(author_list):
+                    if i == 0:
+                        continue
+                    else:
+                        OR_FILTER |= Q(authors__slug=a)
+                queryset = queryset.filter(OR_FILTER)
+
+        if publisher:
+            publisher_list = publisher.split(",")
+            if publisher_list:
+                OR_FILTER = Q(publisher__slug=publisher_list[0])
+                for i, pub in enumerate(publisher_list):
+                    if i == 0:
+                        continue
+                    else:
+                        OR_FILTER |= Q(publisher__slug=pub)
+                queryset = queryset.filter(OR_FILTER)
 
         if inventory_used:
             product_ids = queryset.values_list('pk', flat=True)

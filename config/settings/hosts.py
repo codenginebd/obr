@@ -1,2 +1,3 @@
 BR_ALLOWED_HOSTS = ["159.203.133.234", "127.0.0.1", "localhost",
-                    "bdreads.com", "www.bdreads.com", "develop.bdreads.com"]
+                    "bdreads.com", "www.bdreads.com", "develop.bdreads.com",
+                    "f9d7a7cf.ngrok.io"]

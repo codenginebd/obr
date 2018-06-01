@@ -87,6 +87,9 @@ $(document).ready(function () {
                               <hr style="margin: 2px 0px 9px 0px;"/>
                               <ul class="list-group">
                                   <li class="list-group-item">
+                                      <input style="position: relative; bottom: -3px;" type="checkbox" {% if rating_0 %}checked="checked"{% endif %} name="sf-rating" value="0" class="sf-form-control"/> <div style="display: inline;" data-rating="0" class="product-rating"></div>
+                                  </li>
+                                  <li class="list-group-item">
                                       <input style="position: relative; bottom: -3px;" type="checkbox" {% if rating_1 %}checked="checked"{% endif %} name="sf-rating" value="1" class="sf-form-control"/> <div style="display: inline;" data-rating="1" class="product-rating"></div>
                                   </li>
                                   <li class="list-group-item">
@@ -110,10 +113,10 @@ $(document).ready(function () {
                               <hr style="margin: 2px 0px 9px 0px;"/>
                               <ul class="list-group">
                                   <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
-                                      <label style="cursor: pointer;"><input type="checkbox" value="new" name="sf-by-used" class="sf-form-control"/> New Books</label>
+                                      <label style="cursor: pointer;"><input type="checkbox" {% if use_status_new %}checked="checked"{% endif %} value="new" name="sf-by-used" class="sf-form-control"/> New Books</label>
                                   </li>
                                   <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
-                                      <label style="cursor: pointer;"><input type="checkbox" value="used" name="sf-by-used" class="sf-form-control"/> Used Books</label>
+                                      <label style="cursor: pointer;"><input type="checkbox" {% if use_status_used %}checked="checked"{% endif %} value="used" name="sf-by-used" class="sf-form-control"/> Used Books</label>
                                   </li>
                               </ul>
                           </div>
@@ -124,13 +127,13 @@ $(document).ready(function () {
                               <hr style="margin: 2px 0px 9px 0px;"/>
                               <ul class="list-group">
                                   <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
-                                      <label style="cursor: pointer;"><input type="checkbox" value="ORI" name="sf-by-print" class="sf-form-control"/> Original Print</label>
+                                      <label style="cursor: pointer;"><input type="checkbox" {% if print_type_ORI %}checked="checked"{% endif %} value="ORI" name="sf-by-print" class="sf-form-control"/> Original Print</label>
                                   </li>
                                   <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
-                                      <label style="cursor: pointer;"><input type="checkbox" value="COL" name="sf-by-print" class="sf-form-control"/> Color Print</label>
+                                      <label style="cursor: pointer;"><input type="checkbox" {% if print_type_COL %}checked="checked"{% endif %} value="COL" name="sf-by-print" class="sf-form-control"/> Color Print</label>
                                   </li>
                                   <li class="list-group-item" style="padding: 0px 0px 0px 0px !important;">
-                                      <label style="cursor: pointer;"><input type="checkbox" value="ECO" name="sf-by-print" class="sf-form-control"/> Economy Print</label>
+                                      <label style="cursor: pointer;"><input type="checkbox" {% if print_type_ECO %}checked="checked"{% endif %} value="ECO" name="sf-by-print" class="sf-form-control"/> Economy Print</label>
                                   </li>
                               </ul>
                           </div>
@@ -141,12 +144,12 @@ $(document).ready(function () {
                                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <a href="#" class="pull-left" style="">
                                         <label style="cursor: pointer; ">
-                                            <input type="checkbox" name="sf-out-of-stock" style="position: relative; bottom: -1px; " class="sf-form-control"> Exclude Out of stock</label></a>
+                                            <input type="checkbox" {% if out_of_stock %}checked="checked"{% endif %} name="sf-out-of-stock" style="position: relative; bottom: -1px; " class="sf-form-control"> Exclude Out of stock</label></a>
                                         <a href="#" class="btn-browse-filter btn pull-right" style="color: white !important;background-color: #31b0d5 !important;">
                                         <span class="glyphicon glyphicon-th-list"></span> More Filters</a>
                                   </div>
                               </div>
-                              <div id="id_browse_more_filter_content" class="row" style="padding-top: 20px; display: none;">
+                              <div id="id_browse_more_filter_content" class="row" style="padding-top: 20px; {% if not filter_expand %}display: none;{% endif %}">
                                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">Browse By Category</div>
@@ -176,7 +179,7 @@ $(document).ready(function () {
                                                           <div id="id_search_filter_category_panel" style="overflow-y: auto; max-height: 200px !important;">
                                                           {% for cat_object in filter_categories %}
                                                           <div class="checkbox">
-                                                           <label><input type="checkbox" value="{{ cat_object.slug }}" data-name="{{ cat_object.name }}" name="search-filter-by-category" class="search-filter-by-category" value="{{ cat_object.pk }}">
+                                                           <label><input type="checkbox" {% if cat_object.slug in categories %}checked="checked"{% endif %} value="{{ cat_object.slug }}" data-name="{{ cat_object.name }}" name="search-filter-by-category" class="search-filter-by-category" value="{{ cat_object.pk }}">
                                                                {% if cat_object.show_2 %}
                                                                <a href="{% url "book_browse_view" cat_object.slug %}">{{ cat_object.name_2 }}</a>
                                                                {% else %}
@@ -204,7 +207,7 @@ $(document).ready(function () {
                                                           </div>
                                                           {% for filter_author in filter_authors %}
                                                               <div class="checkbox">
-                                                                  <label><input type="checkbox" name="filter-author-name" value="{{ filter_author.slug }}"><a href="{% url "author_browse_filter_view" filter_author.slug %}">{{ filter_author.name }}</a></label>
+                                                                  <label><input type="checkbox" {% if filter_author.slug in authors %}checked="checked"{% endif %} name="filter-author-name" value="{{ filter_author.slug }}"><a href="{% url "author_browse_filter_view" filter_author.slug %}">{{ filter_author.name }}</a></label>
                                                               </div>
                                                           {% endfor %}
                                                       </div>
@@ -224,7 +227,7 @@ $(document).ready(function () {
                                                             </div>
                                                           {% for filter_publisher in filter_publishers %}
                                                           <div class="checkbox">
-                                                              <label><input type="checkbox" name="filter-publisher" value="{{ filter_publisher.slug }}"><a href="#">{{ filter_publisher.name }}</a></label>
+                                                              <label><input type="checkbox" {% if filter_publisher.slug in publishers %}checked="checked"{% endif %} name="filter-publisher" value="{{ filter_publisher.slug }}"><a href="#">{{ filter_publisher.name }}</a></label>
                                                           </div>
                                                           {% endfor %}
                                                       </div>
