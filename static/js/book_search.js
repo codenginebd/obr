@@ -288,47 +288,61 @@ $(document).ready(function () {
 
     });
 
+    function reset_current_page() {
+        $("input[name=sf-current-page]").val(1);
+    }
+
     $(document).on("keyup", "input[name=sf-isbn]", function (e) {
         if(e.keyCode == 13) {
+            reset_current_page();
             perform_search();
         }
     });
 
     $(document).on("keyup", "input[name=sf-keyword]", function (e) {
         if(e.keyCode == 13) {
+            reset_current_page();
             perform_search();
         }
     });
 
     $(document).on("change", "input[name=sf-bl]", function(e) {
+        reset_current_page();
         perform_search();
     });
 
     $(document).on("change", "input[name=sf-rating]", function(e) {
+        reset_current_page();
         perform_search();
     });
 
     $(document).on("change", "input[name=sf-by-used]", function(e) {
+        reset_current_page();
         perform_search();
     });
 
     $(document).on("change", "input[name=sf-by-print]", function(e) {
+        reset_current_page();
         perform_search();
     });
 
     $(document).on("change", "input[name=sf-out-of-stock]", function(e) {
+        reset_current_page();
         perform_search();
     });
     
     $(document).on("change", "input[name=search-filter-by-category]", function (e) {
+        reset_current_page();
         perform_search();
     });
     
     $(document).on("change", "input[name=filter-author-name]", function (e) {
+        reset_current_page();
         perform_search();
     });
     
     $(document).on("change", "input[name=filter-publisher]", function (e) {
+        reset_current_page();
         perform_search();
     });
 });
