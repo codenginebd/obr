@@ -6,7 +6,18 @@ var Pager = {
 		else {
 			display_page_count = parseInt(display_page_count);
 		}
+
+		var number_of_pages = total_objects / page_size;
+
 		var first_page_start = (current_page - 1) * page_size + 1;
+
+		if(current_page <= 5) {
+			first_page_start = 1;
+		}
+		else {
+			first_page_start = (current_page - 5) * page_size + 1;
+		}
+
 		if(first_page_start > total_objects) {
 			return [];
 		}
@@ -57,13 +68,24 @@ var Pager = {
 		var is_prev_page_available = this.prev_page_available(page_size, total_objects, current_page);
 		var next_page = this.next_page(current_page);
 		var prev_page = this.prev_page(current_page);
+		var modified_pages = [];
+		for(var i = 0 ; i < pages.length; i++) {
+			if(current_page == pages[i]) {
+				modified_pages.push({'page': pages[i], 'is_active': true});
+			}
+			else {
+				modified_pages.push({'page': pages[i], 'is_active': false});
+			}
+		}
 		var pagination_object = {
-			pages: pages,
+			pages: modified_pages,
 			prev_page_available: is_prev_page_available,
 			next_page_available: is_next_page_available,
 			prev_page: prev_page,
-			next_page: next_page
+			next_page: next_page,
+			current_page: current_page
 		}
+		// console.log(pagination_object);
 		return pagination_object;
 	}
 };

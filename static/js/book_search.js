@@ -139,8 +139,39 @@ $(document).ready(function () {
         call_ajax("GET", "/api/v1/books/", search_params, function (data) {
             //console.log(data);
             var pagination_template = $("#id_search_pagination_hb_template").html();
+            var current_page = -1;
+            var prev_page = data.previous;
+            var next_page = data.next;
 
-            var pagination_object = Pager.create_pagination_object(data.count, 10, 1, 10);
+            if(next_page != null) {
+                var i = next_page.lastIndexOf("?");
+                if(i != -1) {
+                    var page_number = next_page.substr(i + 6, next_page.length);
+                    if (page_number != null && page_number != "") {
+                        current_page = parseInt(page_number) - 1;
+                    }
+                }
+            }
+            if(current_page == -1) {
+                if(prev_page != null) {
+                    var i = prev_page.lastIndexOf("?");
+                    if(i != -1) {
+                        var page_number = prev_page.substr(i + 6, prev_page.length);
+                        if (page_number != null && page_number != "") {
+                            current_page = parseInt(page_number) + 1;
+                        }
+                    }
+                    else {
+                        current_page = 2;
+                    }
+                }
+            }
+
+            if(current_page == -1) {
+                current_page = 1;
+            }
+
+            var pagination_object = Pager.create_pagination_object(data.count, 2, current_page, 10);
             var pagination_rendered = render_template(pagination_template, pagination_object);
             $("#id_search_results_pagination1").html(pagination_rendered);
             $("#id_search_results_pagination2").html(pagination_rendered);
@@ -215,8 +246,7 @@ $(document).ready(function () {
           perform_search();
     }
 
-
-    $(document).on("click", ".search-result-pager-item", function (e) {
+    $(document).on("click", ".pagination-li-item", function (e) {
         var page = $(this).data("page");
         $("input[name=sf-current-page]").val(page);
         search_action_handler(e);

@@ -3,8 +3,8 @@
   <div class="col-md-9">
       <ul class="pagination">
           {% verbatim %}{{#each pages}}{% endverbatim %}
-          <li class="pagination-li-item" data-page="{% verbatim %}{{ this }}{% endverbatim %}">
-              <a class="search-result-pager-item" href="#">{% verbatim %}{{ this }}{% endverbatim %}</a></li>
+          <li class="pagination-li-item {% verbatim %}{{#if this.is_active}}{% endverbatim %}active{% verbatim %}{{/if}}{% endverbatim %}" data-page="{% verbatim %}{{ this.page }}{% endverbatim %}">
+              <a class="search-result-pager-item" href="#">{% verbatim %}{{ this.page }}{% endverbatim %}</a></li>
 		  {% verbatim %}{{/each}}{% endverbatim %}
         </ul>
   </div>
@@ -14,18 +14,18 @@
           <li class="pagination-li-item" data-page="{% verbatim %}{{ prev_page }}{% endverbatim %}">
               <a class="search-result-pager-item" href="#"><span class="glyphicon glyphicon-menu-left"></span></a>
           </li>
-		  {% verbatim %}{{else}}{% endverbatim %}
-		  <li class="disabled" style="disabled: disabled;">
-              <a class="search-result-pager-item" href="#"><span class="glyphicon glyphicon-menu-left"></span></a>
-          </li>
+{#		  {% verbatim %}{{else}}{% endverbatim %}#}
+{#		  <li class="disabled" style="disabled: disabled;">#}
+{#              <a class="search-result-pager-item" href="#"><span class="glyphicon glyphicon-menu-left"></span></a>#}
+{#          </li>#}
 		  {% verbatim %}{{/if}}{% endverbatim %}
 		  {% verbatim %}{{#if next_page_available}}{% endverbatim %}
           <li class="pagination-li-item" data-page="{% verbatim %}{{ next_page }}{% endverbatim %}">
               <a class="search-result-pager-item" href="#"><span class="glyphicon glyphicon-menu-right"></span></a>
           </li>
-		  {% verbatim %}{{else}}{% endverbatim %}
-		  <li class="disabled" style="disabled: disabled;">
-              <a class="search-result-pager-item" href="#"><span class="glyphicon glyphicon-menu-right"></span></a></li>
+{#		  {% verbatim %}{{else}}{% endverbatim %}#}
+{#		  <li class="disabled" style="disabled: disabled;">#}
+{#              <a class="search-result-pager-item" href="#"><span class="glyphicon glyphicon-menu-right"></span></a></li>#}
 		  {% verbatim %}{{/if}}{% endverbatim %}
         </ul>
   </div>
