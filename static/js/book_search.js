@@ -171,7 +171,7 @@ $(document).ready(function () {
                 current_page = 1;
             }
 
-            var pagination_object = Pager.create_pagination_object(data.count, 2, current_page, 10);
+            var pagination_object = Pager.create_pagination_object(data.count, 10, current_page, 10);
             var pagination_rendered = render_template(pagination_template, pagination_object);
             $("#id_search_results_pagination1").html(pagination_rendered);
             $("#id_search_results_pagination2").html(pagination_rendered);

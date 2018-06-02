@@ -7,7 +7,7 @@ class GenericAPIView(ListAPIView):
     authentication_classes = ()
     http_method_names = ['get']
     permission_classes = ()
-    paginate_by = 2
+    paginate_by = 10
 
     def filter_criteria(self, request, queryset):
         return queryset
