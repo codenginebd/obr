@@ -5,6 +5,9 @@ from ecommerce.models.sales.price_matrix import PriceMatrix
 from generics.api.views.br_api_view import BRAPIView
 
 
+# http://127.0.0.1:8003/api/v1/sale-price/?ptype=Book&pcode=B-000001&pr-type=ORI&used=true
+
+
 class SalePriceAPIView(BRAPIView):
 
     def get_queryset(self, **kwargs):
