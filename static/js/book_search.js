@@ -346,28 +346,63 @@ $(document).ready(function () {
         perform_search();
     });
     
-    function handle_add_to_cart(buy_type, product_id, product_type, qty) {
-        
+    function handle_add_to_cart(action_url, buy_type, product_id, product_type, qty, success_callback, error_callback, complete_callback) {
+        var post_data = {
+            "buy_type": buy_type,
+            "product_id": product_id,
+            "product_type": product_type,
+            "qty": qty
+        };
+        call_ajax("POST", action_url, post_data,
+                    function (data) {
+                        if(typeof success_callback != "undefined") {
+                            success_callback(data);
+                        }
+                    },
+                    function (jqxhr, status, error) {
+                        if(typeof error_callback != "undefined") {
+                            error_callback(jqxhr, status, error);
+                        }
+                    },
+                    function (msg) {
+                        if(typeof complete_callback != "undefined") {
+                            complete_callback(msg);
+                        }
+                    });
     }
     
     $(document).on("click", ".add-to-buy-cart", function(e) {
         e.preventDefault();
+        var action_url = $(this).data("action-url");
         var product_id = $(this).data("product-id");
         var product_type = $(this).data("product-type");
         var buy_type = "buy";
         var qty = $(this).parent().find(".buy-qty").val();
         
-        handle_add_to_cart(buy_type, product_id, product_type, qty);
+        $(this).prop("disabled", true);
+        handle_add_to_cart(action_url, buy_type, product_id, product_type, qty, function(data) {
+            $(this).prop("disabled", false);
+        },
+        function (jqxhr, status, error) {
+            $(this).prop("disabled", false);
+        });
     });
     
     $(document).on("click", ".add-to-rent-cart", function(e) {
         e.preventDefault();
+        var action_url = $(this).data("action-url");
         var product_id = $(this).data("product-id");
         var product_type = $(this).data("product-type");
         var buy_type = "rent";
         var qty = $(this).parent().find(".rent-qty").val();
         
-        handle_add_to_cart(buy_type, product_id, product_type, qty);
+        $(this).prop("disabled", true);
+        handle_add_to_cart(action_url, buy_type, product_id, product_type, qty, function(data) {
+            $(this).prop("disabled", false);
+        },
+        function (jqxhr, status, error) {
+            $(this).prop("disabled", false);
+        });
     });
     
 });
