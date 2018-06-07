@@ -346,11 +346,13 @@ $(document).ready(function () {
         perform_search();
     });
     
-    function handle_add_to_cart(action_url, buy_type, product_id, product_type, qty, success_callback, error_callback, complete_callback) {
+    function handle_add_to_cart(action_url, buy_type, product_id, product_type, is_new, print_type, qty, success_callback, error_callback, complete_callback) {
         var post_data = {
             "buy_type": buy_type,
             "product_id": product_id,
             "product_type": product_type,
+            "is_new": is_new,
+            "print_type": print_type,
             "qty": qty
         };
         call_ajax("POST", action_url, post_data,
@@ -377,10 +379,12 @@ $(document).ready(function () {
         var product_id = $(this).data("product-id");
         var product_type = $(this).data("product-type");
         var buy_type = "buy";
+        var is_new = $(this).parent().find("input[name=buy-product-is-new]").val();
+        var print_type = $(this).parent().find("input[name=buy-product-print-type]").val();
         var qty = $(this).parent().find(".buy-qty").val();
         
         $(this).prop("disabled", true);
-        handle_add_to_cart(action_url, buy_type, product_id, product_type, qty, function(data) {
+        handle_add_to_cart(action_url, buy_type, product_id, product_type, is_new, print_type, qty, function(data) {
             $(this).prop("disabled", false);
         },
         function (jqxhr, status, error) {
@@ -394,10 +398,12 @@ $(document).ready(function () {
         var product_id = $(this).data("product-id");
         var product_type = $(this).data("product-type");
         var buy_type = "rent";
+        var is_new = $(this).parent().find("input[name=rent-product-is-new]").val();
+        var print_type = $(this).parent().find("input[name=rent-product-print-type]").val();
         var qty = $(this).parent().find(".rent-qty").val();
         
         $(this).prop("disabled", true);
-        handle_add_to_cart(action_url, buy_type, product_id, product_type, qty, function(data) {
+        handle_add_to_cart(action_url, buy_type, product_id, product_type, is_new, print_type, qty, function(data) {
             $(this).prop("disabled", false);
         },
         function (jqxhr, status, error) {
