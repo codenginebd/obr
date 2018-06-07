@@ -131,7 +131,7 @@
                                           <option value="9">9</option>
                                           <option value="10">10</option>
                                       </select>
-                                      <button disabled style="font-weight: bold;" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" data-product-type="{% verbatim %}{{product_type}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-buy-cart">Add To Cart</button>
+                                      <button disabled style="font-weight: bold;" data-action-url="{% url "shopping_add_to_cart_view" %}" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" data-product-type="{% verbatim %}{{product_type}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-buy-cart">Add To Cart</button>
                                   </div>
                               </div>
                           </div>
@@ -222,7 +222,7 @@
                                           <option value="9">9</option>
                                           <option value="10">10</option>
                                       </select>
-                                      <button disabled style="font-weight: bold;" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" data-product-type="{% verbatim %}{{product_type}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-rent-cart">Add To Cart</button>
+                                      <button disabled style="font-weight: bold;" data-action-url="{% url "shopping_add_to_cart_view" %}" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" data-product-type="{% verbatim %}{{product_type}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-rent-cart">Add To Cart</button>
                                   </div>
                               </div>
                           </div>
