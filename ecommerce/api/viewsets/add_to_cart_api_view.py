@@ -55,12 +55,12 @@ class AddToCartAPIView(BRAPIView):
         pass 
 
     def handle_post(self, request):
-        product_type = request.query_params.get('ptype')
-        product_code = request.query_params.get('pcode')
-        used = request.query_params.get('used', 0)
-        is_new = True if not used else False
-        print_type = request.query_params.get('pr-type')
-        buy_type = request.query_params.get('buy-type') # buy or rent
+        product_type = request.query_params.get('product_type') # Book
+        product_id = request.query_params.get('product_id')
+        is_new = request.query_params.get('is_new', 0) # 1/0
+        print_type = request.query_params.get('print_type') # ORI/COL/ECO
+        buy_type = request.query_params.get('buy_type') # buy/rent
+        qty = request.query_params.get('qty')
         if buy_type == 'rent':
             rent_days = request.query_params.get('days')
             rent_days = int(rent_days)
