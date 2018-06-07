@@ -345,4 +345,29 @@ $(document).ready(function () {
         reset_current_page();
         perform_search();
     });
+    
+    function handle_add_to_cart(buy_type, product_id, product_type, qty) {
+        
+    }
+    
+    $(document).on("click", ".add-to-buy-cart", function(e) {
+        e.preventDefault();
+        var product_id = $(this).data("product-id");
+        var product_type = $(this).data("product-type");
+        var buy_type = "buy";
+        var qty = $(this).parent().find(".buy-qty").val();
+        
+        handle_add_to_cart(buy_type, product_id, product_type, qty);
+    });
+    
+    $(document).on("click", ".add-to-rent-cart", function(e) {
+        e.preventDefault();
+        var product_id = $(this).data("product-id");
+        var product_type = $(this).data("product-type");
+        var buy_type = "rent";
+        var qty = $(this).parent().find(".rent-qty").val();
+        
+        handle_add_to_cart(buy_type, product_id, product_type, qty);
+    });
+    
 });
