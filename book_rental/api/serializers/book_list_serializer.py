@@ -100,12 +100,14 @@ class BookSerializer(BaseModelSerializer):
     def get_is_sale_available(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
                                                      product_id=obj.pk, stock__gt=0, available_for_sale=True)
-        return inventory_objects.exists()
+        price_matrix_objects = PriceMatrix.objects.filter(is_rent=False, product_model=Book.__name__, product_code=obj.code)
+        return inventory_objects.exists() and price_matrix_objects.exists()
 
     def get_is_rent_available(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
                                                      product_id=obj.pk, stock__gt=0, available_for_rent=True)
-        return inventory_objects.exists()
+        price_matrix_objects = PriceMatrix.objects.filter(is_rent=True, product_model=Book.__name__, product_code=obj.code)
+        return inventory_objects.exists() and price_matrix_objects.exists()
 
     def get_price_currency(self, obj):
         price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
