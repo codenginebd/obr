@@ -6,6 +6,12 @@ from generics.models.base_entity import BaseEntity
 class ProductImage(BaseEntity, ThumbnailModelMixin):
     image = models.ImageField(max_length=500, upload_to='books/', null=True)
     thumbnail = models.ImageField(max_length=500, upload_to='books/thumbnails/', null=True)
+    
+    def get_image_url(self):
+        return self.image
+        
+    def get_thumbnail_url(self):
+        return self.thumbnail
 
     def save(self):
         try:
