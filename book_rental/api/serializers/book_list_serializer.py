@@ -29,9 +29,13 @@ class BookSerializer(BaseModelSerializer):
     buy_options = serializers.SerializerMethodField()
     rent_options_eco_new = serializers.SerializerMethodField()
     is_rent_available = serializers.SerializerMethodField()
+    is_new_rent_available = serializers.SerializerMethodField()
+    is_used_rent_available = serializers.SerializerMethodField()
     rent_plans = serializers.SerializerMethodField()
     rent_options = serializers.SerializerMethodField()
     is_sale_available = serializers.SerializerMethodField()
+    is_new_sale_available = serializers.SerializerMethodField()
+    is_used_sale_available = serializers.SerializerMethodField()
     product_type = serializers.SerializerMethodField()
 
     def get_product_type(self, obj):
@@ -73,40 +77,75 @@ class BookSerializer(BaseModelSerializer):
     def get_rent_options(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
                                                      product_id=obj.pk, stock__gt=0, is_new=1, available_for_rent=True)
+
+        price_matrix_objects = PriceMatrix.objects.filter(is_rent=True, is_new=1, product_model=Book.__name__,
+                                                          product_code=obj.code)
         options = {
             "New": [],
             "Used": []
         }
-        for inventory_object in inventory_objects:
-            options["New"] += [
-                {
-                    "short_name": inventory_object.print_type,
-                    "full_name": inventory_object.print_type_full_name
-                }
-            ]
+        if inventory_objects.exists() and price_matrix_objects.exists():
+            price_matrix_print_types = price_matrix_objects.values_list('print_type', flat=True)
+            inventory_objects = inventory_objects.filter(print_type__in=price_matrix_print_types)
+
+            for inventory_object in inventory_objects:
+                options["New"] += [
+                    {
+                        "short_name": inventory_object.print_type,
+                        "full_name": inventory_object.print_type_full_name
+                    }
+                ]
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
                                                      product_id=obj.pk, stock__gt=0, is_new=0, available_for_rent=True)
-        for inventory_object in inventory_objects:
-            options["Used"] += [
-                {
-                    "short_name": inventory_object.print_type,
-                    "full_name": inventory_object.print_type_full_name
-                }
-            ]
+        price_matrix_objects = PriceMatrix.objects.filter(is_rent=True, is_new=0, product_model=Book.__name__,
+                                                          product_code=obj.code)
+        if inventory_objects.exists() and price_matrix_objects.exists():
+            price_matrix_print_types = price_matrix_objects.values_list('print_type', flat=True)
+            inventory_objects = inventory_objects.filter(print_type__in=price_matrix_print_types)
+
+            for inventory_object in inventory_objects:
+                options["Used"] += [
+                    {
+                        "short_name": inventory_object.print_type,
+                        "full_name": inventory_object.print_type_full_name
+                    }
+                ]
         options["new_available"] = True if options["New"] else False
         options["used_available"] = True if options["Used"] else False
         return options
 
     def get_is_sale_available(self, obj):
+        return self.get_buy_options(obj)['New'] or self.get_buy_options(obj)['Used']
+
+    def get_is_new_sale_available(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
                                                      product_id=obj.pk, stock__gt=0, available_for_sale=True)
-        price_matrix_objects = PriceMatrix.objects.filter(is_rent=False, product_model=Book.__name__, product_code=obj.code)
+        price_matrix_objects = PriceMatrix.objects.filter(is_rent=False, is_new=1, product_model=Book.__name__,
+                                                          product_code=obj.code)
+        return inventory_objects.exists() and price_matrix_objects.exists()
+
+    def get_is_used_sale_available(self, obj):
+        inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
+                                                     product_id=obj.pk, stock__gt=0, available_for_sale=True)
+        price_matrix_objects = PriceMatrix.objects.filter(is_rent=False, is_new=0, product_model=Book.__name__,
+                                                          product_code=obj.code)
         return inventory_objects.exists() and price_matrix_objects.exists()
 
     def get_is_rent_available(self, obj):
+        return self.get_rent_options(obj)['New'] or self.get_rent_options(obj)['Used']
+
+    def get_is_new_rent_available(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
                                                      product_id=obj.pk, stock__gt=0, available_for_rent=True)
-        price_matrix_objects = PriceMatrix.objects.filter(is_rent=True, product_model=Book.__name__, product_code=obj.code)
+        price_matrix_objects = PriceMatrix.objects.filter(is_rent=True, is_new=1, product_model=Book.__name__,
+                                                          product_code=obj.code)
+        return inventory_objects.exists() and price_matrix_objects.exists()
+
+    def get_is_used_rent_available(self, obj):
+        inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
+                                                     product_id=obj.pk, stock__gt=0, available_for_rent=True)
+        price_matrix_objects = PriceMatrix.objects.filter(is_rent=True, is_new=0, product_model=Book.__name__,
+                                                          product_code=obj.code)
         return inventory_objects.exists() and price_matrix_objects.exists()
 
     def get_price_currency(self, obj):
@@ -124,22 +163,36 @@ class BookSerializer(BaseModelSerializer):
             "New": [],
             "Used": []
         }
-        for inventory_object in inventory_objects:
-            options["New"] += [
-                {
-                    "short_name": inventory_object.print_type,
-                    "full_name": inventory_object.print_type_full_name
-                }
-            ]
+        price_matrix_objects = PriceMatrix.objects.filter(is_new=1, product_model=Book.__name__,
+                                                          product_code=obj.code)
+
+        if inventory_objects.exists() and price_matrix_objects.exists():
+            price_matrix_print_types = price_matrix_objects.values_list('print_type', flat=True)
+            inventory_objects = inventory_objects.filter(print_type__in=price_matrix_print_types)
+
+            for inventory_object in inventory_objects:
+                options["New"] += [
+                    {
+                        "short_name": inventory_object.print_type,
+                        "full_name": inventory_object.print_type_full_name
+                    }
+                ]
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
                                                      product_id=obj.pk, stock__gt=0, is_new=0, available_for_buy=True)
-        for inventory_object in inventory_objects:
-            options["Used"] += [
-                {
-                    "short_name": inventory_object.print_type,
-                    "full_name": inventory_object.print_type_full_name
-                }
-            ]
+        price_matrix_objects = PriceMatrix.objects.filter(is_new=0, product_model=Book.__name__,
+                                                          product_code=obj.code)
+
+        if inventory_objects.exists() and price_matrix_objects.exists():
+            price_matrix_print_types = price_matrix_objects.values_list('print_type', flat=True)
+            inventory_objects = inventory_objects.filter(print_type__in=price_matrix_print_types)
+
+            for inventory_object in inventory_objects:
+                options["Used"] += [
+                    {
+                        "short_name": inventory_object.print_type,
+                        "full_name": inventory_object.print_type_full_name
+                    }
+                ]
         options["new_available"] = True if options["New"] else False
         options["used_available"] = True if options["Used"] else False
         return options
@@ -155,27 +208,38 @@ class BookSerializer(BaseModelSerializer):
 
     def get_original_available(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
-                                                          product_id=obj.pk, is_new=1,print_type='ORI', stock__gt=0)
+                                                          product_id=obj.pk, print_type='ORI', stock__gt=0)
+        price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
+                                                         product_code=obj.code, print_type='ORI')
 
-        return inventory_objects.exists()
+        return inventory_objects.exists() and price_matrix_objects.exists()
 
     def get_color_available(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
-                                                     product_id=obj.pk, is_new=1,print_type='COL', stock__gt=0)
+                                                     product_id=obj.pk, print_type='COL', stock__gt=0)
 
-        return inventory_objects.exists()
+        price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
+                                                          product_code=obj.code, print_type='COL')
+
+        return inventory_objects.exists() and price_matrix_objects.exists()
 
     def get_economy_available(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
-                                                     product_id=obj.pk, is_new=1,print_type='ECO', stock__gt=0)
+                                                     product_id=obj.pk, print_type='ECO', stock__gt=0)
 
-        return inventory_objects.exists()
+        price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
+                                                          product_code=obj.code, print_type='ECO')
+
+        return inventory_objects.exists() and price_matrix_objects.exists()
 
     def get_used_copy_available(self, obj):
         inventory_objects = Inventory.objects.filter(product_model=Book.__name__,
                                                      product_id=obj.pk, is_new=0, stock__gt=0)
 
-        return inventory_objects.exists()
+        price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
+                                                          product_code=obj.code, is_new=0)
+
+        return inventory_objects.exists() and price_matrix_objects.exists()
 
     def get_market_price(self, obj):
         price_matrix_objects = PriceMatrix.objects.filter(product_model=Book.__name__,
@@ -195,6 +259,7 @@ class BookSerializer(BaseModelSerializer):
         fields = ('id', 'code', 'product_type', 'title', 'title_2', 'isbn', 'edition', 'publish_date', 'subtitle', 'subtitle_2', 'description', 'description_2', 'show_2',
                   'sale_available', 'market_price', 'price_currency', 'is_sale_available', 'is_rent_available', 'buy_options',
                   'rent_plans', 'rent_options', 'rent_options_eco_new',
+                  'is_new_sale_available', 'is_used_sale_available', 'is_new_rent_available', 'is_used_rent_available',
                   'base_price', 'page_count', 'categories', 'publisher', 'authors', 'tags', 'images',
                   'language', 'rent_available', 'slug', 'original_available', 'color_available', 'date_created',
                   'economy_available', 'used_copy_available', 'last_updated')

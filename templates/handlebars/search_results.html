@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xs-6">
 						{% verbatim %}{{#if original_available}}{% endverbatim %}
-                        <div><span class="glyphicon glyphicon-ok" style="color: green;"></span> <small>Original Print Available</small></div>
+                        <div><span class="glyphicon glyphicon-ok" style="color: green;"></span> <small>Original Copy Available</small></div>
 						{% verbatim %}{{/if}}{% endverbatim %}
 						{% verbatim %}{{#if used_copy_available}}{% endverbatim %}
                         <div><span class="glyphicon glyphicon-ok" style="color: green;"></span> <small>Used copy available with less price</small></div>
@@ -57,8 +57,12 @@
 						{% verbatim %}{{#if economy_available}}{% endverbatim %}
                         <div><span class="glyphicon glyphicon-ok" style="color: green;"></span> <small>Economy Print Available</small></div>
 						{% verbatim %}{{/if}}{% endverbatim %}
+                        {% verbatim %}{{#if is_sale_available}}{% endverbatim %}
                         <div><span class="glyphicon glyphicon-ok" style="color: green;"></span> <small>Stock Available for Buy</small></div>
+                        {% verbatim %}{{/if}}{% endverbatim %}
+                        {% verbatim %}{{#if is_rent_available}}{% endverbatim %}
                         <div><span class="glyphicon glyphicon-ok" style="color: green;"></span> <small>Stock Available for Rent</small></div>
+                        {% verbatim %}{{/if}}{% endverbatim %}
                     </div>
                 </div>
 
@@ -78,12 +82,8 @@
 
                               {% verbatim %}{{#buy_options}}{% endverbatim %}
                               <ul class="nav nav-tabs search-tabs">
-                                  {% verbatim %}{{#if new_available}}{% endverbatim %}
                                   <li class="active"><a data-toggle="tab" href="#slider_tab1_{% verbatim %}{{../id}}{% endverbatim %}">New Copy</a></li>
-                                  {% verbatim %}{{/if}}{% endverbatim %}
-                                  {% verbatim %}{{#if used_available}}{% endverbatim %}
                                   <li><a data-toggle="tab" href="#slider_tab2_{% verbatim %}{{../id}}{% endverbatim %}">Used Copy</a></li>
-                                  {% verbatim %}{{/if}}{% endverbatim %}
                               </ul>
                               <div class="tab-content">
                                   {% verbatim %}{{#if new_available}}{% endverbatim %}
@@ -95,6 +95,36 @@
                                                 <option value="{% verbatim %}{{short_name}}{% endverbatim %}">{% verbatim %}{{full_name}}{% endverbatim %}</option>
                                                 {% verbatim %}{{/each}}{% endverbatim %}
                                             </select>
+                                      </div>
+                                      <hr/>
+                                      <div class="row">
+                                          <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                              <p class="hidden">Calculated Price = <span class="sale-price-currency-span"></span>  <span class="sale-price-span"></span></p>
+                                              <input type="hidden" name="buy-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="buy-calculated-price"/>
+                                          </div>
+                                          <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                              <input type="hidden" name="buy-product-is-new" value="" class="buy-product-is-new"/>
+                                              <input type="hidden" name="buy-product-print-type" value="" class="buy-product-print-type"/>
+                                              <select class="buy-qty" style="position: absolute;bottom: 0px;right: 100px;height: 30px;">
+                                                  <option value="1">1</option>
+                                                  <option value="2">2</option>
+                                                  <option value="3">3</option>
+                                                  <option value="4">4</option>
+                                                  <option value="5">5</option>
+                                                  <option value="6">6</option>
+                                                  <option value="7">7</option>
+                                                  <option value="8">8</option>
+                                                  <option value="9">9</option>
+                                                  <option value="10">10</option>
+                                              </select>
+                                              <button disabled style="font-weight: bold;" data-action-url="{% url "shopping_add_to_cart_view" %}" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" data-product-type="{% verbatim %}{{product_type}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-buy-cart">Add To Cart</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  {% verbatim %}{{else}}{% endverbatim %}
+                                  <div id="slider_tab1_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade active in">
+                                    <div style="padding: 20px 10px 10px 0px;">
+                                        <p>No new copy available to buy</p>
                                       </div>
                                   </div>
                                   {% verbatim %}{{/if}}{% endverbatim %}
@@ -108,34 +138,41 @@
                                             {% verbatim %}{{/each}}{% endverbatim %}
                                         </select>
                                     </div>
+                                    <hr/>
+                                      <div class="row">
+                                          <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                              <p class="hidden">Calculated Price = <span class="sale-price-currency-span"></span>  <span class="sale-price-span"></span></p>
+                                              <input type="hidden" name="buy-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="buy-calculated-price"/>
+                                          </div>
+                                          <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                              <input type="hidden" name="buy-product-is-new" value="" class="buy-product-is-new"/>
+                                              <input type="hidden" name="buy-product-print-type" value="" class="buy-product-print-type"/>
+                                              <select class="buy-qty" style="position: absolute;bottom: 0px;right: 100px;height: 30px;">
+                                                  <option value="1">1</option>
+                                                  <option value="2">2</option>
+                                                  <option value="3">3</option>
+                                                  <option value="4">4</option>
+                                                  <option value="5">5</option>
+                                                  <option value="6">6</option>
+                                                  <option value="7">7</option>
+                                                  <option value="8">8</option>
+                                                  <option value="9">9</option>
+                                                  <option value="10">10</option>
+                                              </select>
+                                              <button disabled style="font-weight: bold;" data-action-url="{% url "shopping_add_to_cart_view" %}" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" data-product-type="{% verbatim %}{{product_type}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-buy-cart">Add To Cart</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  {% verbatim %}{{else}}{% endverbatim %}
+                                  <div id="slider_tab2_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade">
+                                    <div style="padding: 20px 10px 10px 0px;">
+                                        <p>No used copy available to buy</p>
+                                    </div>
                                   </div>
                                   {% verbatim %}{{/if}}{% endverbatim %}
                               </div>
+
                               {% verbatim %}{{/buy_options}}{% endverbatim %}
-                              <hr/>
-                              <div class="row">
-                                  <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
-                                      <p class="hidden">Calculated Price = <span class="sale-price-currency-span"></span>  <span class="sale-price-span"></span></p>
-                                      <input type="hidden" name="buy-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="buy-calculated-price"/>
-                                  </div>
-                                  <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
-                                      <input type="hidden" name="buy-product-is-new" value="" class="buy-product-is-new"/>
-                                      <input type="hidden" name="buy-product-print-type" value="" class="buy-product-print-type"/>
-                                      <select class="buy-qty">
-                                          <option value="1">1</option>
-                                          <option value="2">2</option>
-                                          <option value="3">3</option>
-                                          <option value="4">4</option>
-                                          <option value="5">5</option>
-                                          <option value="6">6</option>
-                                          <option value="7">7</option>
-                                          <option value="8">8</option>
-                                          <option value="9">9</option>
-                                          <option value="10">10</option>
-                                      </select>
-                                      <button disabled style="font-weight: bold;" data-action-url="{% url "shopping_add_to_cart_view" %}" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" data-product-type="{% verbatim %}{{product_type}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-buy-cart">Add To Cart</button>
-                                  </div>
-                              </div>
                           </div>
                         </div>
                       </div>
@@ -144,7 +181,7 @@
                         <div class="panel-heading">
                           <h4 class="panel-title">
                             <a href="#" style="disabled: disabled;" onclick="return false;">
-                            This Item is not available to buy</a>
+                                <strike>Stock unavailable for buy</strike></a>
                           </h4>
                         </div>
 					  </div>
@@ -162,12 +199,8 @@
                                   {% verbatim %}{{#rent_options}}{% endverbatim %}
 
                                   <ul class="nav nav-tabs search-tabs">
-                                      {% verbatim %}{{#if new_available}}{% endverbatim %}
                                       <li class="active"><a data-toggle="tab" href="#slider_tab3_{% verbatim %}{{../id}}{% endverbatim %}">New Copy</a></li>
-                                      {% verbatim %}{{/if}}{% endverbatim %}
-                                      {% verbatim %}{{#if used_available}}{% endverbatim %}
                                       <li><a data-toggle="tab" href="#slider_tab4_{% verbatim %}{{../id}}{% endverbatim %}">Used Copy</a></li>
-                                      {% verbatim %}{{/if}}{% endverbatim %}
                                   </ul>
                                   <div class="tab-content">
                                       {% verbatim %}{{#if new_available}}{% endverbatim %}
@@ -186,6 +219,37 @@
                                               <option value="-1">Select Rent Plan</option>
                                             </select>
                                         </div>
+                                        <hr/>
+                                          <div class="row">
+                                              <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                                  <div class="small hidden">Initial Payable {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{base_price}}{% endverbatim %}</div>
+                                                  <p class="hidden">Rent price calculated = <span class="rent-price-currency-span"></span> <span class="rent-price-span"></span></p>
+                                                  <input type="hidden" name="rent-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="rent-calculated-price"/>
+                                              </div>
+                                              <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                                  <input type="hidden" name="rent-product-is-new" value="" class="rent-product-is-new"/>
+                                                  <input type="hidden" name="rent-product-print-type" value="" class="rent-product-print-type"/>
+                                                  <select class="rent-qty" style="position: absolute;bottom: 0px;right: 100px;height: 30px;">
+                                                      <option value="1">1</option>
+                                                      <option value="2">2</option>
+                                                      <option value="3">3</option>
+                                                      <option value="4">4</option>
+                                                      <option value="5">5</option>
+                                                      <option value="6">6</option>
+                                                      <option value="7">7</option>
+                                                      <option value="8">8</option>
+                                                      <option value="9">9</option>
+                                                      <option value="10">10</option>
+                                                  </select>
+                                                  <button disabled style="font-weight: bold;" data-action-url="{% url "shopping_add_to_cart_view" %}" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" data-product-type="{% verbatim %}{{product_type}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-rent-cart">Add To Cart</button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      {% verbatim %}{{else}}{% endverbatim %}
+                                      <div id="slider_tab3_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade active in">
+                                        <div style="padding: 20px 10px 10px 0px;">
+                                            <p>No new copy is available for rent</p>
+                                        </div>
                                       </div>
                                       {% verbatim %}{{/if}}{% endverbatim %}
                                       {% verbatim %}{{#if used_available}}{% endverbatim %}
@@ -200,35 +264,42 @@
                                               {% verbatim %}{{/each}}{% endverbatim %}
                                             </select>
                                           </div>
+                                          <hr/>
+                                          <div class="row">
+                                              <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                                  <div class="small hidden">Initial Payable {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{base_price}}{% endverbatim %}</div>
+                                                  <p class="hidden">Rent price calculated = <span class="rent-price-currency-span"></span> <span class="rent-price-span"></span></p>
+                                                  <input type="hidden" name="rent-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="rent-calculated-price"/>
+                                              </div>
+                                              <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                                  <input type="hidden" name="rent-product-is-new" value="" class="rent-product-is-new"/>
+                                                  <input type="hidden" name="rent-product-print-type" value="" class="rent-product-print-type"/>
+                                                  <select class="rent-qty" style="position: absolute;bottom: 0px;right: 100px;height: 30px;">
+                                                      <option value="1">1</option>
+                                                      <option value="2">2</option>
+                                                      <option value="3">3</option>
+                                                      <option value="4">4</option>
+                                                      <option value="5">5</option>
+                                                      <option value="6">6</option>
+                                                      <option value="7">7</option>
+                                                      <option value="8">8</option>
+                                                      <option value="9">9</option>
+                                                      <option value="10">10</option>
+                                                  </select>
+                                                  <button disabled style="font-weight: bold;" data-action-url="{% url "shopping_add_to_cart_view" %}" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" data-product-type="{% verbatim %}{{product_type}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-rent-cart">Add To Cart</button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      {% verbatim %}{{else}}{% endverbatim %}
+                                      <div id="slider_tab4_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade">
+                                        <div style="padding: 20px 10px 10px 0px;">
+                                          <p>No used copy is available for rent</p>
+                                        </div>
                                       </div>
                                       {% verbatim %}{{/if}}{% endverbatim %}
                                   </div>
                               {% verbatim %}{{/rent_options}}{% endverbatim %}
-                              <hr/>
-                              <div class="row">
-                                  <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
-                                      <div class="small hidden">Initial Payable {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{base_price}}{% endverbatim %}</div>
-                                      <p class="hidden">Rent price calculated = <span class="rent-price-currency-span"></span> <span class="rent-price-span"></span></p>
-                                      <input type="hidden" name="rent-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="rent-calculated-price"/>
-                                  </div>
-                                  <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
-                                      <input type="hidden" name="rent-product-is-new" value="" class="rent-product-is-new"/>
-                                      <input type="hidden" name="rent-product-print-type" value="" class="rent-product-print-type"/>
-                                      <select class="rent-qty">
-                                          <option value="1">1</option>
-                                          <option value="2">2</option>
-                                          <option value="3">3</option>
-                                          <option value="4">4</option>
-                                          <option value="5">5</option>
-                                          <option value="6">6</option>
-                                          <option value="7">7</option>
-                                          <option value="8">8</option>
-                                          <option value="9">9</option>
-                                          <option value="10">10</option>
-                                      </select>
-                                      <button disabled style="font-weight: bold;" data-action-url="{% url "shopping_add_to_cart_view" %}" data-product-id="{% verbatim %}{{id}}{% endverbatim %}" data-product-type="{% verbatim %}{{product_type}}{% endverbatim %}" class="btn btn-sm btn-danger pull-right add-to-rent-cart">Add To Cart</button>
-                                  </div>
-                              </div>
+
                           </div>
                         </div>
                       </div>
@@ -237,7 +308,7 @@
                         <div class="panel-heading">
                           <h4 class="panel-title">
                             <a href="#" style="disabled: disabled;" onclick="return false;">
-                            This Item is not available for rent</a>
+                                <strike>Stock unavailable for rent</strike></a>
                           </h4>
                         </div>
 					  </div>

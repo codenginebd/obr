@@ -5,6 +5,7 @@ from book_rental.api.serializers.book_list_serializer import BookSerializer
 from book_rental.models.sales.book import Book
 from generics.api.views.generic_api_view import GenericAPIView
 from inventory.models.inventory import Inventory
+from ecommerce.models.sales.price_matrix import PriceMatrix
 
 
 class BookListAPIView(GenericAPIView):
@@ -91,7 +92,24 @@ class BookListAPIView(GenericAPIView):
 
         if out_of_stock:
             # Get all products from the queryset which has stock in inventory only.
-            inventory_objects = inventory_objects.filter(stock__gt=0)
+            inventory_objects = inventory_objects.filter(Q(stock__gt=0) & (Q(available_for_buy=True) | Q(available_for_rent=True)))
+
+            inventory_product_id_list = inventory_objects.values_list('product_id', flat=True)
+
+            product_object_list = Book.objects.filter(pk__in=inventory_product_id_list)
+
+            product_codes = product_object_list.values_list('code', flat=True)
+
+            product_price_objects = PriceMatrix.objects.filter(product_code__in=product_codes)
+
+            product_price_product_codes = product_price_objects.values_list('product_code', flat=True)
+
+            product_id_list = Book.objects.filter(code__in=product_price_product_codes).values_list('pk', flat=True)
+
+            # price_matrix_print_types = product_price_objects.values_list('print_type', flat=True)
+            # inventory_objects = inventory_objects.filter(print_type__in=price_matrix_print_types)
+
+            inventory_objects = inventory_objects.filter(product_id__in=product_id_list)
 
             inventory_used = True
 
