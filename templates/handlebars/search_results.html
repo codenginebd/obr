@@ -89,7 +89,7 @@
                                   {% verbatim %}{{#if new_available}}{% endverbatim %}
                                   <div id="slider_tab1_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade active in">
                                     <div style="padding: 20px 10px 10px 0px;">
-                                          <select class="form-control sr-rent-option new" style="max-width: 270px;">
+                                          <select class="form-control sr-buy-option new" style="max-width: 270px;">
                                                 <option value="-1">Select Printing Type</option>
                                                 {% verbatim %}{{#each New}}{% endverbatim %}
                                                 <option value="{% verbatim %}{{short_name}}{% endverbatim %}">{% verbatim %}{{full_name}}{% endverbatim %}</option>
@@ -105,7 +105,7 @@
                                           <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
                                               <input type="hidden" name="buy-product-is-new" value="" class="buy-product-is-new"/>
                                               <input type="hidden" name="buy-product-print-type" value="" class="buy-product-print-type"/>
-                                              <select class="buy-qty" style="position: absolute;bottom: 0px;right: 100px;height: 30px;">
+                                              <select class="buy-qty" style="position: absolute;bottom: 0px;right: 105px;height: 30px;">
                                                   <option value="1">1</option>
                                                   <option value="2">2</option>
                                                   <option value="3">3</option>
@@ -131,7 +131,7 @@
                                   {% verbatim %}{{#if used_available}}{% endverbatim %}
                                   <div id="slider_tab2_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade">
                                     <div style="padding: 20px 10px 10px 0px;">
-                                        <select class="form-control sr-rent-option used" style="max-width: 270px;">
+                                        <select class="form-control sr-buy-option used" style="max-width: 270px;">
                                             <option value="-1">Select Printing Type</option>
                                             {% verbatim %}{{#each Used}}{% endverbatim %}
                                             <option value="{% verbatim %}{{short_name}}{% endverbatim %}">{% verbatim %}{{full_name}}{% endverbatim %}</option>
@@ -147,7 +147,7 @@
                                           <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
                                               <input type="hidden" name="buy-product-is-new" value="" class="buy-product-is-new"/>
                                               <input type="hidden" name="buy-product-print-type" value="" class="buy-product-print-type"/>
-                                              <select class="buy-qty" style="position: absolute;bottom: 0px;right: 100px;height: 30px;">
+                                              <select class="buy-qty" style="position: absolute;bottom: 0px;right: 105px;height: 30px;">
                                                   <option value="1">1</option>
                                                   <option value="2">2</option>
                                                   <option value="3">3</option>
@@ -206,7 +206,7 @@
                                       {% verbatim %}{{#if new_available}}{% endverbatim %}
                                       <div id="slider_tab3_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade active in">
                                         <div style="padding: 20px 10px 10px 0px;">
-                                            <select class="form-control rent-option-printing-type" style="max-width: 270px;">
+                                            <select class="form-control sr-rent-option rent-option-printing-type new rent" style="max-width: 270px;">
                                                 <option value="-1">Select Printing Type</option>
                                                 {% verbatim %}{{#each New}}{% endverbatim %}
 
@@ -229,7 +229,7 @@
                                               <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
                                                   <input type="hidden" name="rent-product-is-new" value="" class="rent-product-is-new"/>
                                                   <input type="hidden" name="rent-product-print-type" value="" class="rent-product-print-type"/>
-                                                  <select class="rent-qty" style="position: absolute;bottom: 0px;right: 100px;height: 30px;">
+                                                  <select class="rent-qty" style="position: absolute;bottom: 0px;right: 105px;height: 30px;">
                                                       <option value="1">1</option>
                                                       <option value="2">2</option>
                                                       <option value="3">3</option>
@@ -255,7 +255,7 @@
                                       {% verbatim %}{{#if used_available}}{% endverbatim %}
                                       <div id="slider_tab4_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade">
                                         <div style="padding: 20px 10px 10px 0px;">
-                                          <select class="form-control rent-option-used" style="max-width: 270px;">
+                                          <select class="form-control sr-rent-option rent-option-used used rent" style="max-width: 270px;">
                                               <option value="-1">Select Rent Plan</option>
                                               {% verbatim %}{{#each Used}}{% endverbatim %}
 
@@ -274,7 +274,7 @@
                                               <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
                                                   <input type="hidden" name="rent-product-is-new" value="" class="rent-product-is-new"/>
                                                   <input type="hidden" name="rent-product-print-type" value="" class="rent-product-print-type"/>
-                                                  <select class="rent-qty" style="position: absolute;bottom: 0px;right: 100px;height: 30px;">
+                                                  <select class="rent-qty" style="position: absolute;bottom: 0px;right: 105px;height: 30px;">
                                                       <option value="1">1</option>
                                                       <option value="2">2</option>
                                                       <option value="3">3</option>

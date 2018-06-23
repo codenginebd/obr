@@ -254,9 +254,22 @@ $(document).ready(function () {
 
 
     
-    $(document).on("change", ".sr-rent-option", function (e) {
+    $(document).on("change", ".sr-buy-option", function (e) {
         e.preventDefault();
         var value = $(this).val();
+
+        if(value == -1){
+            var parent_panel = $(this).closest(".panel-body").parent();
+            var buy_cart_btn = $(parent_panel).find(".add-to-buy-cart");
+            var price_currency_span = $(parent_panel).find(".sale-price-currency-span");
+            var price_span = $(parent_panel).find(".sale-price-span");
+
+            $(buy_cart_btn).prop("disabled", true);
+            $(price_currency_span).text("");
+            $(price_span).text("");
+            $(price_currency_span).parent().addClass("hidden");
+            return;
+        }
         var new_item = true;
         if($(this).hasClass("new")) {
             new_item = true;
@@ -287,6 +300,55 @@ $(document).ready(function () {
         });
 
     });
+
+
+    $(document).on("change", ".sr-rent-option", function (e) {
+        e.preventDefault();
+        var value = $(this).val();
+
+        if(value == -1){
+            var parent_panel = $(this).closest(".panel-body").parent();
+            var buy_cart_btn = $(parent_panel).find(".add-to-buy-cart");
+            var price_currency_span = $(parent_panel).find(".sale-price-currency-span");
+            var price_span = $(parent_panel).find(".sale-price-span");
+
+            $(buy_cart_btn).prop("disabled", true);
+            $(price_currency_span).text("");
+            $(price_span).text("");
+            $(price_currency_span).parent().addClass("hidden");
+            return;
+        }
+        var new_item = true;
+        if($(this).hasClass("new")) {
+            new_item = true;
+        }
+        else if($(this).hasClass("used")) {
+            new_item = false;
+        }
+        var parent_panel = $(this).closest(".panel-body").parent();
+        var buy_cart_btn = $(parent_panel).find(".add-to-buy-cart");
+        var price_currency_span = $(parent_panel).find(".sale-price-currency-span");
+        var price_span = $(parent_panel).find(".sale-price-span");
+
+        var product_code = $(this).closest(".book_entry").data("item-code");
+        var product_type = $(this).closest(".book_entry").data("item-type");
+
+        call_ajax("GET", "/api/v1/sale-price/", { "ptype": product_type, "pcode": product_code, "pr-type": value, "used": !new_item },
+        function (data) {
+            $(buy_cart_btn).prop("disabled", false);
+            $(price_currency_span).text(data.currency_code);
+            $(price_span).text(data.sale_price);
+            $(price_currency_span).parent().removeClass("hidden");
+        },
+        function (jqxhr, status, error) {
+
+        },
+        function (msg) {
+
+        });
+
+    });
+
 
     function reset_current_page() {
         $("input[name=sf-current-page]").val(1);

@@ -99,7 +99,7 @@ class AdminProductPriceForm(BRBaseModelForm):
         Book = load_model(app_label="book_rental", model_name="Book")
         product = Book.objects.get(pk=int(product))
         currency = Currency.objects.get(pk=int(currency))
-        is_new = 0 if not is_new else 1
+        is_new = int(is_new)
         is_new = bool(is_new)
 
         try:
