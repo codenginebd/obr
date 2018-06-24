@@ -99,8 +99,9 @@
                                       <hr/>
                                       <div class="row">
                                           <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
-                                              <p class="hidden">Calculated Price = <span class="sale-price-currency-span"></span>  <span class="sale-price-span"></span></p>
-                                              <input type="hidden" name="buy-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="buy-calculated-price"/>
+                                              <p class="hidden" style="color: green;">Calculated Price = <span class="sale-price-currency-span"></span>  <span class="sale-price-span"></span></p>
+                                              <input type="hidden" name="buy-calculated-price-{% verbatim %}{{../id}}{% endverbatim %}" value="" class="buy-calculated-price"/>
+                                              <input type="hidden" name="buy-calculated-price-currency-{% verbatim %}{{../id}}{% endverbatim %}" value="" class="buy-calculated-price-currency"/>
                                           </div>
                                           <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
                                               <input type="hidden" name="buy-product-is-new" value="" class="buy-product-is-new"/>
@@ -141,8 +142,9 @@
                                     <hr/>
                                       <div class="row">
                                           <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
-                                              <p class="hidden">Calculated Price = <span class="sale-price-currency-span"></span>  <span class="sale-price-span"></span></p>
-                                              <input type="hidden" name="buy-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="buy-calculated-price"/>
+                                              <p class="hidden" style="color: green;">Calculated Price = <span class="sale-price-currency-span"></span>  <span class="sale-price-span"></span></p>
+                                              <input type="hidden" name="buy-calculated-price-{% verbatim %}{{../id}}{% endverbatim %}" value="" class="buy-calculated-price"/>
+                                              <input type="hidden" name="buy-calculated-price-currency-{% verbatim %}{{../id}}{% endverbatim %}" value="" class="buy-calculated-price-currency"/>
                                           </div>
                                           <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
                                               <input type="hidden" name="buy-product-is-new" value="" class="buy-product-is-new"/>
@@ -215,16 +217,24 @@
                                                 {% verbatim %}{{/each}}{% endverbatim %}
                                             </select>
                                             <br/>
-                                            <select class="form-control rent-option-new hidden" style="max-width: 270px;">
+                                            {% verbatim %}{{#rent_plans}}{% endverbatim %}
+                                            <select class="form-control sr-rent-plan-option rent-option-plan-used new rent-plan" style="max-width: 270px;">
                                               <option value="-1">Select Rent Plan</option>
+                                              {% verbatim %}{{#each New}}{% endverbatim %}
+
+                                                    <option value="{% verbatim %}{{days}}{% endverbatim %}">{% verbatim %}{{name}}{% endverbatim %}</option>
+
+                                              {% verbatim %}{{/each}}{% endverbatim %}
                                             </select>
+                                            {% verbatim %}{{/rent_plans}}{% endverbatim %}
                                         </div>
                                         <hr/>
                                           <div class="row">
                                               <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
                                                   <div class="small hidden">Initial Payable {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{base_price}}{% endverbatim %}</div>
-                                                  <p class="hidden">Rent price calculated = <span class="rent-price-currency-span"></span> <span class="rent-price-span"></span></p>
-                                                  <input type="hidden" name="rent-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="rent-calculated-price"/>
+                                                  <p class="hidden" style="color: green;">Rent price calculated = <span class="rent-price-currency-span"></span> <span class="rent-price-span"></span></p>
+                                                  <input type="hidden" name="rent-calculated-price-{% verbatim %}{{../id}}{% endverbatim %}" value="" class="rent-calculated-price"/>
+                                              <input type="hidden" name="rent-calculated-price-currency-{% verbatim %}{{../id}}{% endverbatim %}" value="" class="rent-calculated-price-currency"/>
                                               </div>
                                               <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
                                                   <input type="hidden" name="rent-product-is-new" value="" class="rent-product-is-new"/>
@@ -256,20 +266,32 @@
                                       <div id="slider_tab4_{% verbatim %}{{../id}}{% endverbatim %}" class="tab-pane fade">
                                         <div style="padding: 20px 10px 10px 0px;">
                                           <select class="form-control sr-rent-option rent-option-used used rent" style="max-width: 270px;">
-                                              <option value="-1">Select Rent Plan</option>
+                                              <option value="-1">Select Printing Type</option>
                                               {% verbatim %}{{#each Used}}{% endverbatim %}
 
                                                     <option value="{% verbatim %}{{short_name}}{% endverbatim %}">{% verbatim %}{{full_name}}{% endverbatim %}</option>
 
                                               {% verbatim %}{{/each}}{% endverbatim %}
                                             </select>
+                                            <br/>
+                                            {% verbatim %}{{#rent_plans}}{% endverbatim %}
+                                            <select class="form-control sr-rent-plan-option rent-option-plan-used used rent-plan" style="max-width: 270px;">
+                                              <option value="-1">Select Rent Plan</option>
+                                              {% verbatim %}{{#each Used}}{% endverbatim %}
+
+                                                    <option value="{% verbatim %}{{days}}{% endverbatim %}">{% verbatim %}{{name}}{% endverbatim %}</option>
+
+                                              {% verbatim %}{{/each}}{% endverbatim %}
+                                            </select>
+                                            {% verbatim %}{{/rent_plans}}{% endverbatim %}
                                           </div>
                                           <hr/>
                                           <div class="row">
                                               <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
                                                   <div class="small hidden">Initial Payable {% verbatim %}{{currency}}{% endverbatim %} {% verbatim %}{{base_price}}{% endverbatim %}</div>
-                                                  <p class="hidden">Rent price calculated = <span class="rent-price-currency-span"></span> <span class="rent-price-span"></span></p>
-                                                  <input type="hidden" name="rent-calculated-price-{% verbatim %}{{id}}{% endverbatim %}" value="" class="rent-calculated-price"/>
+                                                  <p class="hidden" style="color: green;">Rent price calculated = <span class="rent-price-currency-span"></span> <span class="rent-price-span"></span></p>
+                                                  <input type="hidden" name="rent-calculated-price-{% verbatim %}{{../id}}{% endverbatim %}" value="" class="rent-calculated-price"/>
+                                                  <input type="hidden" name="rent-calculated-price-currency-{% verbatim %}{{../id}}{% endverbatim %}" value="" class="rent-calculated-price-currency"/>
                                               </div>
                                               <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
                                                   <input type="hidden" name="rent-product-is-new" value="" class="rent-product-is-new"/>

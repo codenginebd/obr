@@ -112,6 +112,7 @@ class BookSerializer(BaseModelSerializer):
                 ]
         options["new_available"] = True if options["New"] else False
         options["used_available"] = True if options["Used"] else False
+        options["rent_plans"] = self.get_rent_plans(obj)
         return options
 
     def get_is_sale_available(self, obj):

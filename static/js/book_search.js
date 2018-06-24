@@ -259,15 +259,27 @@ $(document).ready(function () {
         var value = $(this).val();
 
         if(value == -1){
-            var parent_panel = $(this).closest(".panel-body").parent();
+            var parent_panel = $(this).parent().parent();
             var buy_cart_btn = $(parent_panel).find(".add-to-buy-cart");
             var price_currency_span = $(parent_panel).find(".sale-price-currency-span");
             var price_span = $(parent_panel).find(".sale-price-span");
+            var hidden_print_type = $(parent_panel).find("input[name=buy-product-print-type]");
+            var buy_qty_element = $(parent_panel).find(".buy-qty");
+
+            var hidden_price_element = $(parent_panel).find("input[name^=buy-calculated-price-]");
+            var hidden_price_currency_element = $(parent_panel).find("input[name^=buy-calculated-price-currency-]");
 
             $(buy_cart_btn).prop("disabled", true);
             $(price_currency_span).text("");
             $(price_span).text("");
             $(price_currency_span).parent().addClass("hidden");
+
+            $(hidden_price_element).val("");
+            $(hidden_price_currency_element).val("");
+
+            $(hidden_print_type).val("");
+
+            $(buy_qty_element).prop("disabled", true);
             return;
         }
         var new_item = true;
@@ -277,23 +289,65 @@ $(document).ready(function () {
         else if($(this).hasClass("used")) {
             new_item = false;
         }
-        var parent_panel = $(this).closest(".panel-body").parent();
+        var parent_panel = $(this).parent().parent();
         var buy_cart_btn = $(parent_panel).find(".add-to-buy-cart");
         var price_currency_span = $(parent_panel).find(".sale-price-currency-span");
         var price_span = $(parent_panel).find(".sale-price-span");
+        var is_new_hidden = $(parent_panel).find("input[name=buy-product-is-new]");
+        var hidden_print_type = $(parent_panel).find("input[name=buy-product-print-type]");
+        var buy_qty_element = $(parent_panel).find(".buy-qty");
+        var hidden_price_element = $(parent_panel).find("input[name^=buy-calculated-price-]");
+        var hidden_price_currency_element = $(parent_panel).find("input[name^=buy-calculated-price-currency-]");
 
         var product_code = $(this).closest(".book_entry").data("item-code");
         var product_type = $(this).closest(".book_entry").data("item-type");
 
         call_ajax("GET", "/api/v1/sale-price/", { "ptype": product_type, "pcode": product_code, "pr-type": value, "used": !new_item },
         function (data) {
-            $(buy_cart_btn).prop("disabled", false);
-            $(price_currency_span).text(data.currency_code);
-            $(price_span).text(data.sale_price);
-            $(price_currency_span).parent().removeClass("hidden");
+            if(data.length != 0){
+                $(buy_cart_btn).prop("disabled", false);
+                $(price_currency_span).text(data.currency_code);
+                $(price_span).text(data.sale_price);
+                $(price_currency_span).parent().removeClass("hidden");
+
+                $(hidden_price_element).val(data.sale_price);
+                $(hidden_price_currency_element).val(data.currency_code);
+
+                if(new_item){
+                    $(is_new_hidden).val("1");
+                }
+                else{
+                    $(is_new_hidden).val("0");
+                }
+                $(hidden_print_type).val(value);
+
+                $(buy_qty_element).prop("disabled", false);
+            }
+            else {
+                $(buy_cart_btn).prop("disabled", true);
+                $(price_currency_span).text("");
+                $(price_span).text("");
+                $(price_currency_span).parent().addClass("hidden");
+
+                $(hidden_price_element).val("");
+                $(hidden_price_currency_element).val("");
+
+                $(hidden_print_type).val("");
+
+                $(buy_qty_element).prop("disabled", true);
+            }
+
         },
         function (jqxhr, status, error) {
+            $(buy_cart_btn).prop("disabled", true);
+            $(price_currency_span).text("");
+            $(price_span).text("");
+            $(price_currency_span).parent().addClass("hidden");
 
+            $(hidden_price_element).val("");
+            $(hidden_price_currency_element).val("");
+
+            $(hidden_print_type).val("");
         },
         function (msg) {
 
@@ -302,20 +356,36 @@ $(document).ready(function () {
     });
 
 
-    $(document).on("change", ".sr-rent-option", function (e) {
+    function rent_option_change_handler(e){
         e.preventDefault();
         var value = $(this).val();
+        var parent_panel = $(this).parent().parent();
+        var add_to_cart_btn = $(parent_panel).find(".add-to-rent-cart");
+        var price_currency_span = $(parent_panel).find(".rent-price-currency-span");
+        var price_span = $(parent_panel).find(".rent-price-span");
+        var hidden_print_type = $(parent_panel).find("input[name=rent-product-print-type]");
+        var rent_qty_element = $(parent_panel).find(".rent-qty");
 
-        if(value == -1){
-            var parent_panel = $(this).closest(".panel-body").parent();
-            var buy_cart_btn = $(parent_panel).find(".add-to-buy-cart");
-            var price_currency_span = $(parent_panel).find(".sale-price-currency-span");
-            var price_span = $(parent_panel).find(".sale-price-span");
+        var hidden_price_element = $(parent_panel).find("input[name^=rent-calculated-price-]");
+        var hidden_price_currency_element = $(parent_panel).find("input[name^=rent-calculated-price-currency-]");
 
-            $(buy_cart_btn).prop("disabled", true);
+        var rent_plan_element = $(parent_panel).find(".sr-rent-plan-option");
+
+        var rent_plan = $(rent_plan_element).val();
+
+        if(value == -1 || rent_plan == -1){
+
+            $(add_to_cart_btn).prop("disabled", true);
             $(price_currency_span).text("");
             $(price_span).text("");
             $(price_currency_span).parent().addClass("hidden");
+
+            $(hidden_price_element).val("");
+            $(hidden_price_currency_element).val("");
+
+            $(hidden_print_type).val("");
+
+            $(rent_qty_element).prop("disabled", true);
             return;
         }
         var new_item = true;
@@ -325,29 +395,68 @@ $(document).ready(function () {
         else if($(this).hasClass("used")) {
             new_item = false;
         }
-        var parent_panel = $(this).closest(".panel-body").parent();
-        var buy_cart_btn = $(parent_panel).find(".add-to-buy-cart");
-        var price_currency_span = $(parent_panel).find(".sale-price-currency-span");
-        var price_span = $(parent_panel).find(".sale-price-span");
 
         var product_code = $(this).closest(".book_entry").data("item-code");
         var product_type = $(this).closest(".book_entry").data("item-type");
 
-        call_ajax("GET", "/api/v1/sale-price/", { "ptype": product_type, "pcode": product_code, "pr-type": value, "used": !new_item },
+        call_ajax("GET", "/api/v1/rent-price/", { "ptype": product_type, "pcode": product_code, "pr-type": value, "used": !new_item, "days": rent_plan },
         function (data) {
-            $(buy_cart_btn).prop("disabled", false);
-            $(price_currency_span).text(data.currency_code);
-            $(price_span).text(data.sale_price);
-            $(price_currency_span).parent().removeClass("hidden");
+            if(data.length != 0){
+                $(add_to_cart_btn).prop("disabled", false);
+                $(price_currency_span).text(data.currency_code);
+                $(price_span).text(data.sale_price);
+                $(price_currency_span).parent().removeClass("hidden");
+
+                $(hidden_price_element).val(data.sale_price);
+                $(hidden_price_currency_element).val(data.currency_code);
+
+                if(new_item){
+                    $(is_new_hidden).val("1");
+                }
+                else{
+                    $(is_new_hidden).val("0");
+                }
+                $(hidden_print_type).val(value);
+
+                $(rent_qty_element).prop("disabled", false);
+            }
+            else {
+                $(add_to_cart_btn).prop("disabled", true);
+                $(price_currency_span).text("");
+                $(price_span).text("");
+                $(price_currency_span).parent().addClass("hidden");
+
+                $(hidden_price_element).val("");
+                $(hidden_price_currency_element).val("");
+
+                $(hidden_print_type).val("");
+
+                $(rent_qty_element).prop("disabled", true);
+            }
+
         },
         function (jqxhr, status, error) {
+            $(add_to_cart_btn).prop("disabled", true);
+            $(price_currency_span).text("");
+            $(price_span).text("");
+            $(price_currency_span).parent().addClass("hidden");
 
+            $(hidden_price_element).val("");
+            $(hidden_price_currency_element).val("");
+
+            $(hidden_print_type).val("");
+
+            $(rent_qty_element).prop("disabled", true);
         },
         function (msg) {
 
         });
+    }
 
-    });
+
+    $(document).on("change", ".sr-rent-option", rent_option_change_handler);
+    
+    $(document).on("change", ".sr-rent-plan-option", rent_option_change_handler);
 
 
     function reset_current_page() {
