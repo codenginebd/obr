@@ -20,10 +20,10 @@ class RentPriceAPIView(BRAPIView):
         days = request.GET.get('days')
         days = int(days)
         price_matrix_objects = PriceMatrix.objects.filter(product_model=product_type, product_code=product_code, print_type=print_type,
-                                   is_new=is_new)
+                                   is_new=is_new, is_rent=True)
         if price_matrix_objects.exists():
             price_matrix_object = price_matrix_objects.first()
-            rent_plans = RentPlan.objects.filter(days=days)
+            rent_plans = price_matrix_object.rent_plans.filter(days=days)
             if rent_plans.exists():
                 rent_plan = rent_plans.first()
 
@@ -42,4 +42,6 @@ class RentPriceAPIView(BRAPIView):
             response["special_rate"] = q_object.special_rate
             response["start_time"] = q_object.start_time
             response["end_time"] = q_object.end_time
+            response["currency_code"] = q_object.price_matrix.currency.short_name
+            response["price_promotion_text"] = ""
         return response
