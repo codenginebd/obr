@@ -5,6 +5,8 @@ from ecommerce.models.sales.rent_plan_relation import RentPlanRelation
 from ecommerce.models.sales.price_matrix import PriceMatrix
 from generics.api.views.br_api_view import BRAPIView
 
+from engine.clock.Clock import Clock
+
 
 class RentPriceAPIView(BRAPIView):
 
@@ -34,14 +36,30 @@ class RentPriceAPIView(BRAPIView):
     def create_response(self, request, queryset):
         response = {}
         if queryset.exists():
+            utc_ts_now = Clock.utc_timestamp()
             q_object = queryset.first()
             response["rent_rate"] = q_object.rent_rate
             response["rent_price"] = q_object.rent_price
             response["special_rent_price"] = q_object.special_rent_price
             response["is_special_offer"] = q_object.is_special_offer
+            is_special_offer = False
+            if q_object.is_special_offer:
+                if q_object.start_time <= utc_ts_now and q_object.end_time >= utc_ts_now:
+                    is_special_offer = True
+                else:
+                    is_special_offer = False
+            else:
+                is_special_offer = False
+
+            response["is_special_offer"] = is_special_offer
+
             response["special_rate"] = q_object.special_rate
             response["start_time"] = q_object.start_time
             response["end_time"] = q_object.end_time
             response["currency_code"] = q_object.price_matrix.currency.short_name
-            response["price_promotion_text"] = ""
+            response["initial_payable"] = q_object.price_matrix.initial_payable_rent_price
+            if is_special_offer:
+                response["price_promotion_text"] = "%.1f" % (100 - q_object.special_rate) + "% Less"
+            else:
+                response["price_promotion_text"] = ""
         return response
