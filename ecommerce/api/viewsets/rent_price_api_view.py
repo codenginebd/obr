@@ -42,4 +42,5 @@ class RentPriceAPIView(BRAPIView):
             response["special_rate"] = q_object.special_rate
             response["start_time"] = q_object.start_time
             response["end_time"] = q_object.end_time
+            response["currency"] = q_object.price_matrix.currency.short_name
         return response
