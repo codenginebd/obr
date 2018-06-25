@@ -23,7 +23,7 @@ class RentPriceAPIView(BRAPIView):
                                    is_new=is_new, is_rent=True)
         if price_matrix_objects.exists():
             price_matrix_object = price_matrix_objects.first()
-            rent_plans = RentPlan.objects.filter(days=days)
+            rent_plans = price_matrix_object.rent_plans.filter(days=days)
             if rent_plans.exists():
                 rent_plan = rent_plans.first()
 
