@@ -456,7 +456,7 @@ $(document).ready(function () {
 
     $(document).on("change", ".sr-rent-option", rent_option_change_handler);
     
-    $(document).on("change", ".sr-rent-plan-option", rent_option_change_handler);
+    $(document).on("change", ".sr-rent-plan-option", rent_option_change_handler);e
 
 
     function reset_current_page() {
