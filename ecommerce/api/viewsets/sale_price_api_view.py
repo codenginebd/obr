@@ -63,7 +63,7 @@ class SalePriceAPIView(BRAPIView):
             
             promotion_text = ""
             if is_special_offer:
-                promotion_text = "%.1f" % (100 - q_object.offer_price_p) + " Less"
+                promotion_text = "%.1f" % (100 - q_object.offer_price_p) + "% Less"
             
             response["promotion_text"] = promotion_text
             
