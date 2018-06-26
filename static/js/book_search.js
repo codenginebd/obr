@@ -307,10 +307,18 @@ $(document).ready(function () {
             if(data.length != 0){
                 $(buy_cart_btn).prop("disabled", false);
                 $(price_currency_span).text(data.currency_code);
-                $(price_span).text(data.sale_price);
+                var price = data.sale_price;
+                if(data.special_price){
+                    price = data.o_price_v;
+                }
+                var price_text = price;
+                if(data.special_price && data.promotion_text != ''){
+                    price_text = price + "(" + data.promotion_text + ")";
+                }
+                $(price_span).text(price_text);
                 $(price_currency_span).parent().removeClass("hidden");
 
-                $(hidden_price_element).val(data.sale_price);
+                $(hidden_price_element).val(price);
                 $(hidden_price_currency_element).val(data.currency_code);
 
                 if(new_item){
