@@ -375,6 +375,10 @@ $(document).ready(function () {
         var hidden_price_element = $(parent_panel).find("input[name^=rent-calculated-price-]");
         var hidden_price_currency_element = $(parent_panel).find("input[name^=rent-calculated-price-currency-]");
         
+        var initial_payable_price_element = $(parent_panel).find(".rent-initial-payable-span");
+        var initial_payable_price_currency_element = $(parent_model).find(".rent-initial-payable-currency-span");
+        var initial_payable_hidden_element = $(parent_model).find("input[name^=rent-initial-payabl]");
+        
         var rent_qty = $(rent_qty_element).val();
 
         var rent_plan_element = $(parent_panel).find(".sr-rent-plan-option");
@@ -390,6 +394,7 @@ $(document).ready(function () {
             $(price_currency_span).text("");
             $(price_span).text("");
             $(price_currency_span).parent().addClass("hidden");
+            $(initial_payable_price_element).parent().addClass("hidden");
 
             $(hidden_price_element).val("");
             $(hidden_price_currency_element).val("");
@@ -423,6 +428,7 @@ $(document).ready(function () {
                 }                
                 $(price_span).text(price_text);
                 $(price_currency_span).parent().removeClass("hidden");
+                $(initial_payable_price_element).parent().removeClass("hidden");
 
                 $(hidden_price_element).val(data.rent_price);
                 $(hidden_price_currency_element).val(data.currency_code);
@@ -434,6 +440,10 @@ $(document).ready(function () {
                     $(is_new_hidden).val("0");
                 }
                 $(hidden_print_type).val(print_type);
+                
+                $(initial_payable_price_element).text(data.initial_payable * rent_qty);
+                $(initial_payable_price_currency_element).text(data.currency_code);
+                $(initial_payable_hidden_element).val(data.initial_payable);
 
                 $(rent_qty_element).prop("disabled", false);
             }
@@ -442,6 +452,7 @@ $(document).ready(function () {
                 $(price_currency_span).text("");
                 $(price_span).text("");
                 $(price_currency_span).parent().addClass("hidden");
+                $(initial_payable_price_element).parent().addClass("hidden");
 
                 $(hidden_price_element).val("");
                 $(hidden_price_currency_element).val("");
@@ -457,6 +468,7 @@ $(document).ready(function () {
             $(price_currency_span).text("");
             $(price_span).text("");
             $(price_currency_span).parent().addClass("hidden");
+            $(initial_payable_price_element).parent().addClass("hidden");
 
             $(hidden_price_element).val("");
             $(hidden_price_currency_element).val("");
@@ -631,6 +643,8 @@ $(document).ready(function () {
         var currency = $(this).parent().parent().find("input[name^=rent-calculated-price-currency]").val();
         
         var rent_plan = $(this).parent().parent().parent().find(".sr-rent-plan-option").val();
+        
+        var initial_payable_price = $(this).parent().parent().find("input[name^=rent-initial-payable]").val();
         
         
     }
