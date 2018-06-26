@@ -1,6 +1,6 @@
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
-
+from engine.clock.Clock import Clock
 from ecommerce.models.sales.price_matrix import PriceMatrix
 from generics.api.views.br_api_view import BRAPIView
 
@@ -25,7 +25,20 @@ class SalePriceAPIView(BRAPIView):
     def create_response(self, request, queryset):
         response = {}
         if queryset.exists():
+        
+            utc_ts_now = Clock.utc_timestamp()
+        
             q_object = queryset.first()
+            
+            is_special_offer = False
+            if q_object.is_special_offer:
+                if q_object.offer_date_start <= utc_ts_now and q_object.offer_date_end >= utc_ts_now:
+                    is_special_offer = True
+                else:
+                    is_special_offer = False
+            else:
+                is_special_offer = False
+            
             response['product_type'] = q_object.product_model 
             response['product_code'] = q_object.product_code 
             response['product_id'] = q_object.pk
@@ -34,10 +47,24 @@ class SalePriceAPIView(BRAPIView):
             response['base_price'] = q_object.base_price
             response['market_price'] = q_object.market_price
             response['currency_code'] = q_object.currency.short_name
-            response['special_price'] = q_object.special_price
+            if is_special_offer:
+                response['special_price'] = True
+                response['o_price_p'] = q_object.offer_price_p
+                response['o_price_v'] = (q_object.offer_price_p/100) * q_object.base_price
+                response['offer_date_start'] = q_object.offer_date_start
+                response['offer_date_end'] = q_object.offer_date_end
+            else:
+                response['special_price'] = False
+                response['o_price_p'] = 0
+                response['o_price_v'] = 0
+                response['offer_date_start'] = 0
+                response['offer_date_end'] = 0
             response["sale_price"] = q_object.get_product_sale_price
-            response['o_price_p'] = q_object.offer_price_p
-            response['o_price_v'] = q_object.offer_price_v
-            response['offer_date_start'] = q_object.offer_date_start
-            response['offer_date_end'] = q_object.offer_date_end
+            
+            promotion_text = ""
+            if is_special_offer:
+                promotion_text = "%.1f" % (100 - q_object.offer_price_p) + " Less"
+            
+            response["promotion_text"] = promotion_text
+            
         return response
