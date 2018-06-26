@@ -50,12 +50,25 @@ class RentPriceAPIView(BRAPIView):
                     is_special_offer = False
             else:
                 is_special_offer = False
+                
+            if is_special_offer:
+                response["special_rent_price"] = q_object.special_rent_price
+            else:
+                response["special_rent_price"] = 0
 
             response["is_special_offer"] = is_special_offer
-
-            response["special_rate"] = q_object.special_rate
-            response["start_time"] = q_object.start_time
-            response["end_time"] = q_object.end_time
+            
+            if is_special_offer:
+                response["special_rate"] = q_object.special_rate
+            else:
+                response["special_rate"] = 0
+            
+            if is_special_offer:
+                response["start_time"] = q_object.start_time
+                response["end_time"] = q_object.end_time
+            else:
+                response["start_time"] = 0
+                response["end_time"] = 0
             response["currency_code"] = q_object.price_matrix.currency.short_name
             response["initial_payable"] = q_object.price_matrix.initial_payable_rent_price
             if is_special_offer:
