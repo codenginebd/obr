@@ -253,22 +253,23 @@ $(document).ready(function () {
     });
 
 
-    
-    $(document).on("change", ".sr-buy-option", function (e) {
+    function buy_option_change_handler(e){
         e.preventDefault();
         var value = $(this).val();
+        
+        var parent_panel = $(this).parent().parent();
+        var buy_cart_btn = $(parent_panel).find(".add-to-buy-cart");
+        var price_currency_span = $(parent_panel).find(".sale-price-currency-span");
+        var price_span = $(parent_panel).find(".sale-price-span");
+        var is_new_hidden = $(parent_panel).find("input[name=buy-product-is-new]");
+        var hidden_print_type = $(parent_panel).find("input[name=buy-product-print-type]");
+        var buy_qty_element = $(parent_panel).find(".buy-qty");
+        var hidden_price_element = $(parent_panel).find("input[name^=buy-calculated-price-]");
+        var hidden_price_currency_element = $(parent_panel).find("input[name^=buy-calculated-price-currency-]");
+        
+        var print_type_element = $(parent_model).find(".sr-buy-option");
 
         if(value == -1){
-            var parent_panel = $(this).parent().parent();
-            var buy_cart_btn = $(parent_panel).find(".add-to-buy-cart");
-            var price_currency_span = $(parent_panel).find(".sale-price-currency-span");
-            var price_span = $(parent_panel).find(".sale-price-span");
-            var hidden_print_type = $(parent_panel).find("input[name=buy-product-print-type]");
-            var buy_qty_element = $(parent_panel).find(".buy-qty");
-
-            var hidden_price_element = $(parent_panel).find("input[name^=buy-calculated-price-]");
-            var hidden_price_currency_element = $(parent_panel).find("input[name^=buy-calculated-price-currency-]");
-
             $(buy_cart_btn).prop("disabled", true);
             $(price_currency_span).text("");
             $(price_span).text("");
@@ -289,27 +290,21 @@ $(document).ready(function () {
         else if($(this).hasClass("used")) {
             new_item = false;
         }
-        var parent_panel = $(this).parent().parent();
-        var buy_cart_btn = $(parent_panel).find(".add-to-buy-cart");
-        var price_currency_span = $(parent_panel).find(".sale-price-currency-span");
-        var price_span = $(parent_panel).find(".sale-price-span");
-        var is_new_hidden = $(parent_panel).find("input[name=buy-product-is-new]");
-        var hidden_print_type = $(parent_panel).find("input[name=buy-product-print-type]");
-        var buy_qty_element = $(parent_panel).find(".buy-qty");
-        var hidden_price_element = $(parent_panel).find("input[name^=buy-calculated-price-]");
-        var hidden_price_currency_element = $(parent_panel).find("input[name^=buy-calculated-price-currency-]");
+        
+        var print_type = $(print_type_element).val();
+        var buy_qty = $(buy_qty_element).val();
 
         var product_code = $(this).closest(".book_entry").data("item-code");
         var product_type = $(this).closest(".book_entry").data("item-type");
 
-        call_ajax("GET", "/api/v1/sale-price/", { "ptype": product_type, "pcode": product_code, "pr-type": value, "used": !new_item },
+        call_ajax("GET", "/api/v1/sale-price/", { "ptype": product_type, "pcode": product_code, "pr-type": print_type, "used": !new_item },
         function (data) {
             if(data.length != 0){
                 $(buy_cart_btn).prop("disabled", false);
                 $(price_currency_span).text(data.currency_code);
-                var price = data.sale_price;
+                var price = data.sale_price * buy_qty;
                 if(data.special_price){
-                    price = data.o_price_v;
+                    price = data.o_price_v * buy_qty;
                 }
                 var price_text = price;
                 if(data.special_price && data.promotion_text != ''){
@@ -327,7 +322,7 @@ $(document).ready(function () {
                 else{
                     $(is_new_hidden).val("0");
                 }
-                $(hidden_print_type).val(value);
+                $(hidden_print_type).val(print_type);
 
                 $(buy_qty_element).prop("disabled", false);
             }
@@ -360,8 +355,12 @@ $(document).ready(function () {
         function (msg) {
 
         });
+    }
 
-    });
+    
+    $(document).on("change", ".sr-buy-option", buy_option_change_handler);
+    
+    $(document).on("change", ".buy-qty", buy_option_change_handler);
 
 
     function rent_option_change_handler(e){
@@ -375,6 +374,8 @@ $(document).ready(function () {
 
         var hidden_price_element = $(parent_panel).find("input[name^=rent-calculated-price-]");
         var hidden_price_currency_element = $(parent_panel).find("input[name^=rent-calculated-price-currency-]");
+        
+        var rent_qty = $(rent_qty_element).val();
 
         var rent_plan_element = $(parent_panel).find(".sr-rent-plan-option");
         var print_type_element = $(parent_model).find(".sr-rent-option");
@@ -416,14 +417,14 @@ $(document).ready(function () {
                 $(price_currency_span).text(data.currency_code);
                 
                 // Prepare the price promotion text
-                var price_text = data.rent_price;
+                var price_text = data.rent_price * rent_qty;
                 if(data.price_promotion_text != "") {
-                    price_text = data.rent_price + "(" + data.price_promotion_text + ")";
+                    price_text = ( data.rent_price * rent_qty ) + "(" + data.price_promotion_text + ")";
                 }                
                 $(price_span).text(price_text);
                 $(price_currency_span).parent().removeClass("hidden");
 
-                $(hidden_price_element).val(data.rent_price);
+                $(hidden_price_element).val(data.rent_price * rent_qty);
                 $(hidden_price_currency_element).val(data.currency_code);
 
                 if(new_item){
@@ -432,7 +433,7 @@ $(document).ready(function () {
                 else{
                     $(is_new_hidden).val("0");
                 }
-                $(hidden_print_type).val(value);
+                $(hidden_print_type).val(print_type);
 
                 $(rent_qty_element).prop("disabled", false);
             }
@@ -472,7 +473,9 @@ $(document).ready(function () {
 
     $(document).on("change", ".sr-rent-option", rent_option_change_handler);
     
-    $(document).on("change", ".sr-rent-plan-option", rent_option_change_handler);e
+    $(document).on("change", ".sr-rent-plan-option", rent_option_change_handler);
+    
+    $(document).on("change", ".rent-qty", rent_option_change_handler);
 
 
     function reset_current_page() {
