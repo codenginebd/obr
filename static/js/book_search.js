@@ -302,13 +302,13 @@ $(document).ready(function () {
             if(data.length != 0){
                 $(buy_cart_btn).prop("disabled", false);
                 $(price_currency_span).text(data.currency_code);
-                var price = data.sale_price * buy_qty;
+                var price = data.sale_price
                 if(data.special_price){
-                    price = data.o_price_v * buy_qty;
+                    price = data.o_price_v;
                 }
-                var price_text = price;
+                var price_text = price * buy_qty;
                 if(data.special_price && data.promotion_text != ''){
-                    price_text = price + "(" + data.promotion_text + ")";
+                    price_text = ( price * buy_qty ) + "(" + data.promotion_text + ")";
                 }
                 $(price_span).text(price_text);
                 $(price_currency_span).parent().removeClass("hidden");
@@ -424,7 +424,7 @@ $(document).ready(function () {
                 $(price_span).text(price_text);
                 $(price_currency_span).parent().removeClass("hidden");
 
-                $(hidden_price_element).val(data.rent_price * rent_qty);
+                $(hidden_price_element).val(data.rent_price);
                 $(hidden_price_currency_element).val(data.currency_code);
 
                 if(new_item){
@@ -600,5 +600,42 @@ $(document).ready(function () {
             $(this).prop("disabled", false);
         });
     });
+    
+    function add_to_buy_cart_handler(e) {
+        var action_url = $(this).data("action-url");
+        var product_type = $(this).data("product-type");
+        var product_id = $(this).data("product-id");
+        
+        var is_new = $(this).parent().find("input[name=buy-product-is-new]").val();
+        var print_type = $(this).parent().find("input[name=buy-product-print-type]").val();
+        var buy_qty = $(this).parent().find(".buy-qty").val();
+        
+        var price = $(this).parent().parent().find("input[name^=buy-calculated-price]").val();
+        var currency = $(this).parent().parent().find("input[name^=buy-calculated-price-currency]").val();
+        
+        
+    }
+    
+    $(document).on("click", ".add-to-buy-cart", add_to_buy_cart_handler);
+    
+    function add_to_rent_cart_handler(e) {
+        var action_url = $(this).data("action-url");
+        var product_type = $(this).data("product-type");
+        var product_id = $(this).data("product-id");
+        
+        var is_new = $(this).parent().find("input[name=rent-product-is-new]").val();
+        var print_type = $(this).parent().find("input[name=rent-product-print-type]").val();
+        var buy_qty = $(this).parent().find(".rent-qty").val();
+        
+        var price = $(this).parent().parent().find("input[name^=rent-calculated-price]").val();
+        var currency = $(this).parent().parent().find("input[name^=rent-calculated-price-currency]").val();
+        
+        var rent_plan = $(this).parent().parent().parent().find(".sr-rent-plan-option").val();
+        
+        
+    }
+    
+    $(document).on("click", ".add-to-rent-cart", add_to_buy_cart_handler);
+    
     
 });
