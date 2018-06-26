@@ -366,7 +366,6 @@ $(document).ready(function () {
 
     function rent_option_change_handler(e){
         e.preventDefault();
-        var value = $(this).val();
         var parent_panel = $(this).parent().parent();
         var add_to_cart_btn = $(parent_panel).find(".add-to-rent-cart");
         var price_currency_span = $(parent_panel).find(".rent-price-currency-span");
@@ -378,8 +377,11 @@ $(document).ready(function () {
         var hidden_price_currency_element = $(parent_panel).find("input[name^=rent-calculated-price-currency-]");
 
         var rent_plan_element = $(parent_panel).find(".sr-rent-plan-option");
+        var print_type_element = $(parent_model).find(".sr-rent-option");
 
         var rent_plan = $(rent_plan_element).val();
+        
+        var print_type = $(print_type_element).val();
 
         if(value == -1 || rent_plan == -1){
 
@@ -407,7 +409,7 @@ $(document).ready(function () {
         var product_code = $(this).closest(".book_entry").data("item-code");
         var product_type = $(this).closest(".book_entry").data("item-type");
 
-        call_ajax("GET", "/api/v1/rent-price/", { "ptype": product_type, "pcode": product_code, "pr-type": value, "used": !new_item, "days": rent_plan },
+        call_ajax("GET", "/api/v1/rent-price/", { "ptype": product_type, "pcode": product_code, "pr-type": print_type, "used": !new_item, "days": rent_plan },
         function (data) {
             if(data.length != 0){
                 $(add_to_cart_btn).prop("disabled", false);
