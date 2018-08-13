@@ -29,6 +29,15 @@ class Product(BaseEntity):
     images = models.ManyToManyField(ProductImage)
     rating = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
 
+    def get_title(self):
+        return self.title_2 if self.title_2 and self.show_2 else self.title
+
+    def get_subtitle(self):
+        return self.subtitle_2 if self.subtitle_2 and self.show_2 else self.subtitle
+
+    def get_description(self):
+        return self.description_2 if self.description_2 and self.show_2 else self.description
+
     def get_category_codes(self):
         return ','.join(self.categories.values_list('code', flat=True))
 

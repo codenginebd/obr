@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models.query_utils import Q
 from django.urls.base import reverse
-
 from book_rental.libs.downloader.book_downloader import BookDownloader
 from book_rental.libs.uploader.book_uploader import BookUploader
 from book_rental.models.author import Author
@@ -16,10 +15,17 @@ class Book(Product):
     isbn13 = models.CharField(max_length=500, blank=True)
     edition = models.CharField(max_length=100)
     publisher = models.ForeignKey(BookPublisher, null=True, on_delete=models.CASCADE)
-    authors = models.ManyToManyField(Author)
+    authors = models.ManyToManyField(Author, related_name='+')
+    translators = models.ManyToManyField(Author, related_name='+')
     publish_date = models.DateField(null=True)
     language = models.ForeignKey(BookLanguage, on_delete=models.CASCADE)
     page_count = models.IntegerField(default=0)
+
+    def get_authors(self):
+        authors = []
+        for author in self.authors.all():
+            authors += ["<a href='#'/>%s</a>" % author.name]
+        return ', '.join(authors)
 
     def __str__(self):
         return self.code + ":" + self.title

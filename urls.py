@@ -50,7 +50,7 @@ urlpatterns = [
     url(r'^books/browse/$', BookBrowseView.as_view(), name="book_browse_view"),
     url(r'^books/browse/(?P<slug>.+)/$', BookBrowseView.as_view(), name="book_browse_view"),
     url(r'^books/search/$', BookSearchView.as_view(), name="book_search_view"),
-    url(r'^books/details/$', BookDetailsView.as_view(), name="book_details_view"),
+    url(r'^books/details/(?P<pk>[0-9]+)/$', BookDetailsView.as_view(), name="book_details_view"),
 
     #Authors
     url(r'^authors/browse/$', AuthorBrowseView.as_view(), name="author_browse_view"),

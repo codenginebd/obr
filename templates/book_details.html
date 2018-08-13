@@ -18,47 +18,14 @@
                           </div>
                           <div class="col-md-9">
                               <h3 class="title" style="margin-top: 0px;">
-                                  Basic Algebra  Part I
+                                  {{ object.get_title }}
                               </h3>
                               <div>
-                                  Author: <a href="#">James Kameroon</a>
+                                  Author: {{ object.get_authors|safe }}
                               </div>
                               <hr/>
-                              <div class="description small" style="letter-spacing: 0.08em;">
-
-Webmaster EDU
-Video Search
-Overview
-Introduction to Video Markup
-Schema.org for Videos
-Video Sitemaps
-Alternate Markups for Videos
-Testing your video markup
-Notifying Google of Video Updates
-Video Platform Restrictions
-Video Country Restrictions
-Common Video Indexing Pitfalls
-Mobile Friendly Websites
-Make your site mobile-friendly
-Hacked Website Recovery
-Overview
-Build a Support Team
-Quarantine Your Site
-Use Search Console
-Assess spam damage
-Assess malware damage
-Identify the vulnerability
-Clean and maintain your site
-Request a Review
-Glossary for Hacked Sites
-FAQs for Hacked Sites
-Contents
-What the user sees, what the crawler sees
-Current practice
-An agreement between crawler and server
-Making AJAX applications crawlable
-
-If you're running an AJAX application with content that you'd like to appear in search results, we have a new process that, when implemented, can help Google (and potentially other search engines) crawl and index your content. Historically, AJAX applications have been difficult for search engines to process because AJAX content is produced dynamically by the browser and thus not visible to crawlers. While there are existing methods for dealing with this problem, they involve regular manual maintenance to keep the content up-to-date.
+                              <div class="description small" style="font-size: 13px; letter-spacing: 0.02em;">
+                              {{ object.get_description }}
                               </div>
                               <div class="review">
                                   <br/>
