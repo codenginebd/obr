@@ -8,6 +8,7 @@ from ecommerce.models.sales.price_matrix import PriceMatrixManager, PriceMatrix
 from ecommerce.models.sales.product import Product
 from ecommerce.models.sales.product_images import ProductImage
 from ecommerce.models.sales.product_rating import ProductRating
+from ecommerce.models.sales.product_review import ProductReview
 from ecommerce.models.sales.rent_plan_relation import RentPlanRelationManager, RentPlanRelation
 from ecommerce.models.sales.shipping_charge import ShippingCharge
 from ecommerce.models.sales.warehouse import Warehouse
@@ -27,6 +28,7 @@ __all__ += ['PriceMatrix']
 __all__ += ['Product']
 __all__ += ['ProductImage']
 __all__ += ['ProductRating']
+__all__ += ['ProductReview']
 __all__ += ['RentPlanRelationManager']
 __all__ += ['RentPlanRelation']
 __all__ += ['ShippingCharge']
