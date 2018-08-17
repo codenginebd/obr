@@ -18,6 +18,9 @@
                  <div class="cart_title"> <a class="cart_title" href="#">{% verbatim %}{{title}}{% endverbatim %}</a>
                  {% verbatim %}{{/if}}{% endverbatim %}
                 </div>
+                {% verbatim %}{{#if edition}}{% endverbatim %}
+                <div class="cart_content"> Edition: {% verbatim %}{{edition}}{% endverbatim %} </div>
+                {% verbatim %}{{/if}}{% endverbatim %}
                 <div class="cart_content"> Authors: 
 				{% verbatim %}{{#each authors}}{% endverbatim %}
 				<a href="{% verbatim %}{{link}}{% endverbatim %}">{% verbatim %}{{name}}{% endverbatim %}</a> 

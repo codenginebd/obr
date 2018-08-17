@@ -267,7 +267,7 @@ $(document).ready(function () {
         var hidden_price_element = $(parent_panel).find("input[name^=buy-calculated-price-]");
         var hidden_price_currency_element = $(parent_panel).find("input[name^=buy-calculated-price-currency-]");
         
-        var print_type_element = $(parent_model).find(".sr-buy-option");
+        var print_type_element = $(parent_panel).find(".sr-buy-option");
 
         if(value == -1){
             $(buy_cart_btn).prop("disabled", true);
@@ -376,19 +376,21 @@ $(document).ready(function () {
         var hidden_price_currency_element = $(parent_panel).find("input[name^=rent-calculated-price-currency-]");
         
         var initial_payable_price_element = $(parent_panel).find(".rent-initial-payable-span");
-        var initial_payable_price_currency_element = $(parent_model).find(".rent-initial-payable-currency-span");
-        var initial_payable_hidden_element = $(parent_model).find("input[name^=rent-initial-payabl]");
+        var initial_payable_price_currency_element = $(parent_panel).find(".rent-initial-payable-currency-span");
+        var initial_payable_hidden_element = $(parent_panel).find("input[name^=rent-initial-payabl]");
+
+        var is_new_hidden = $(parent_panel).find("input[name=buy-product-is-new]");
         
         var rent_qty = $(rent_qty_element).val();
 
         var rent_plan_element = $(parent_panel).find(".sr-rent-plan-option");
-        var print_type_element = $(parent_model).find(".sr-rent-option");
+        var print_type_element = $(parent_panel).find(".sr-rent-option");
 
         var rent_plan = $(rent_plan_element).val();
         
         var print_type = $(print_type_element).val();
 
-        if(value == -1 || rent_plan == -1){
+        if(print_type == -1 || rent_plan == -1){
 
             $(add_to_cart_btn).prop("disabled", true);
             $(price_currency_span).text("");
@@ -440,7 +442,7 @@ $(document).ready(function () {
                     $(is_new_hidden).val("0");
                 }
                 $(hidden_print_type).val(print_type);
-                
+
                 $(initial_payable_price_element).text(data.initial_payable * rent_qty);
                 $(initial_payable_price_currency_element).text(data.currency_code);
                 $(initial_payable_hidden_element).val(data.initial_payable);

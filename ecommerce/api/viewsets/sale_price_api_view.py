@@ -31,7 +31,7 @@ class SalePriceAPIView(BRAPIView):
             q_object = queryset.first()
             
             is_special_offer = False
-            if q_object.is_special_offer:
+            if q_object.special_price:
                 if q_object.offer_date_start <= utc_ts_now and q_object.offer_date_end >= utc_ts_now:
                     is_special_offer = True
                 else:
